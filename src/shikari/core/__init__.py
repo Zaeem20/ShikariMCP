@@ -1,0 +1,1 @@
+# ShikariMCP — Core Module

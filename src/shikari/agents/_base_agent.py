@@ -1,0 +1,180 @@
+# ShikariMCP — Base Agent Class
+
+import logging
+from abc import ABC, abstractmethod
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any
+
+from fastmcp import Context
+
+logger = logging.getLogger("shikari.agents")
+
+
+class AgentPhase(str, Enum):
+    """Phases of agent execution workflow."""
+    PLANNING = "planning"
+    EXECUTING = "executing"
+    ANALYZING = "analyzing"
+    REPORTING = "reporting"
+
+
+@dataclass
+class AgentResult:
+    """Structured result from an agent execution."""
+    agent_name: str
+    success: bool
+    summary: str
+    findings: list[dict[str, Any]] = field(default_factory=list)
+    recommendations: list[str] = field(default_factory=list)
+    raw_outputs: dict[str, str] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def to_report(self) -> str:
+        """Generate a readable report from the agent results."""
+        lines = [
+            f"# {self.agent_name} Report",
+            "",
+            f"**Status:** {'✅ Success' if self.success else '❌ Failed'}",
+            "",
+            f"## Summary",
+            self.summary,
+            "",
+        ]
+
+        if self.findings:
+            lines.append("## Findings")
+            lines.append("")
+            for i, finding in enumerate(self.findings, 1):
+                severity = finding.get("severity", "INFO")
+                title = finding.get("title", "Finding")
+                detail = finding.get("detail", "")
+                lines.append(f"### {i}. [{severity}] {title}")
+                if detail:
+                    lines.append(detail)
+                lines.append("")
+
+        if self.recommendations:
+            lines.append("## Recommendations")
+            lines.append("")
+            for rec in self.recommendations:
+                lines.append(f"- {rec}")
+
+        return "\n".join(lines)
+
+
+class BaseAgent(ABC):
+    """
+    Base class for all ShikariMCP AI subagents.
+
+    Each agent follows a structured workflow:
+    1. plan()     — Decide which tools to run and in what order
+    2. execute()  — Run the tools, passing results between steps
+    3. analyze()  — Interpret the results and identify findings
+    4. report()   — Generate a structured report
+
+    Subclasses must implement plan() and execute().
+    """
+
+    name: str = "BaseAgent"
+    description: str = ""
+    audience: list[str] = []  # e.g., ["red", "blue", "purple"]
+
+    def __init__(self):
+        self.logger = logging.getLogger(f"shikari.agents.{self.name}")
+        self._results: dict[str, Any] = {}
+
+    async def run(self, ctx: Context | None = None, **kwargs: Any) -> AgentResult:
+        """
+        Execute the full agent workflow.
+        """
+        self.logger.info(f"Starting {self.name}...")
+
+        try:
+            # Phase 1: Plan
+            if ctx:
+                await ctx.info(f"[{self.name}] Phase 1/4: Planning...")
+            plan = await self.plan(**kwargs)
+            self.logger.info(f"Plan created: {len(plan)} steps")
+
+            # Phase 2: Execute
+            if ctx:
+                await ctx.info(f"[{self.name}] Phase 2/4: Executing {len(plan)} steps...")
+            results = await self.execute(plan, ctx=ctx, **kwargs)
+            self._results = results
+
+            # Phase 3: Analyze
+            if ctx:
+                await ctx.info(f"[{self.name}] Phase 3/4: Analyzing results...")
+            findings = await self.analyze(results)
+
+            # Phase 4: Report
+            if ctx:
+                await ctx.info(f"[{self.name}] Phase 4/4: Generating report...")
+            report = await self.report(findings, results)
+
+            self.logger.info(f"{self.name} completed successfully")
+            return report
+
+        except Exception as e:
+            self.logger.error(f"{self.name} failed: {e}")
+            return AgentResult(
+                agent_name=self.name,
+                success=False,
+                summary=f"Agent execution failed: {str(e)}",
+            )
+
+    @abstractmethod
+    async def plan(self, **kwargs: Any) -> list[dict[str, Any]]:
+        """
+        Create an execution plan — a list of steps to perform.
+
+        Each step is a dict like:
+        {"tool": "nmap_scan", "args": {"target": "...", "ports": "..."}, "depends_on": []}
+
+        Returns:
+            Ordered list of tool execution steps.
+        """
+        ...
+
+    @abstractmethod
+    async def execute(
+        self,
+        plan: list[dict[str, Any]],
+        ctx: Context | None = None,
+        **kwargs: Any,
+    ) -> dict[str, Any]:
+        """
+        Execute the plan, running tools in order and passing results between steps.
+
+        Returns:
+            Dict of step_name -> result mappings.
+        """
+        ...
+
+    async def analyze(self, results: dict[str, Any]) -> list[dict[str, Any]]:
+        """
+        Analyze raw results and extract findings.
+        Override in subclasses for custom analysis logic.
+
+        Returns:
+            List of finding dicts with 'severity', 'title', 'detail' keys.
+        """
+        return []
+
+    async def report(
+        self,
+        findings: list[dict[str, Any]],
+        results: dict[str, Any],
+    ) -> AgentResult:
+        """
+        Generate the final agent report.
+        Override in subclasses for custom reporting.
+        """
+        return AgentResult(
+            agent_name=self.name,
+            success=True,
+            summary=f"{self.name} completed with {len(findings)} findings.",
+            findings=findings,
+            raw_outputs={k: str(v)[:1000] for k, v in results.items()},
+        )
