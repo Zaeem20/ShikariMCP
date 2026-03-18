@@ -13,3 +13,5 @@ wheels/
 .agents/
 .env
 .pytest_cache/
+
+scripts/
