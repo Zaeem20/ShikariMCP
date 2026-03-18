@@ -8,3 +8,8 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Configs and Workspaces 
+.agents/
+.env
+.pytest_cache/
