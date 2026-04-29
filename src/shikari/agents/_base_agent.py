@@ -1,4 +1,4 @@
-# ShikariMCP — Base Agent Class
+﻿# ShikariMCP â€” Base Agent Class
 
 import logging
 from abc import ABC, abstractmethod
@@ -7,6 +7,8 @@ from enum import Enum
 from typing import Any
 
 from fastmcp import Context
+
+from shikari.core.executor import execute_command
 
 logger = logging.getLogger("shikari.agents")
 
@@ -35,7 +37,7 @@ class AgentResult:
         lines = [
             f"# {self.agent_name} Report",
             "",
-            f"**Status:** {'✅ Success' if self.success else '❌ Failed'}",
+            f"**Status:** {'âœ… Success' if self.success else 'âŒ Failed'}",
             "",
             f"## Summary",
             self.summary,
@@ -68,10 +70,10 @@ class BaseAgent(ABC):
     Base class for all ShikariMCP AI subagents.
 
     Each agent follows a structured workflow:
-    1. plan()     — Decide which tools to run and in what order
-    2. execute()  — Run the tools, passing results between steps
-    3. analyze()  — Interpret the results and identify findings
-    4. report()   — Generate a structured report
+    1. plan()     â€” Decide which tools to run and in what order
+    2. execute()  â€” Run the tools, passing results between steps
+    3. analyze()  â€” Interpret the results and identify findings
+    4. report()   â€” Generate a structured report
 
     Subclasses must implement plan() and execute().
     """
@@ -127,7 +129,7 @@ class BaseAgent(ABC):
     @abstractmethod
     async def plan(self, **kwargs: Any) -> list[dict[str, Any]]:
         """
-        Create an execution plan — a list of steps to perform.
+        Create an execution plan â€” a list of steps to perform.
 
         Each step is a dict like:
         {"tool": "nmap_scan", "args": {"target": "...", "ports": "..."}, "depends_on": []}
@@ -161,6 +163,33 @@ class BaseAgent(ABC):
             List of finding dicts with 'severity', 'title', 'detail' keys.
         """
         return []
+
+    async def execute_plan(
+        self,
+        plan: list[dict[str, Any]],
+        ctx: Context | None = None,
+        **kwargs: Any,
+    ) -> dict[str, Any]:
+        """Execute a command-oriented plan and return step outputs."""
+        results: dict[str, Any] = {}
+
+        for i, step in enumerate(plan):
+            step_name = step.get("name", f"step_{i + 1}")
+            tool_name = step.get("tool", "command")
+            cmd = step.get("cmd")
+
+            if ctx:
+                await ctx.report_progress(i, len(plan))
+                await ctx.info(f"[{self.name}] Running {tool_name}...")
+
+            if not cmd:
+                results[step_name] = "Skipped: no command was defined for this step."
+                continue
+
+            result = await execute_command(cmd, timeout=int(step.get("timeout", 300)))
+            results[step_name] = result.output
+
+        return results
 
     async def report(
         self,

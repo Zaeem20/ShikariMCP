@@ -1,1 +1,1 @@
-# ShikariMCP — Agents Module
+﻿# ShikariMCP â€” Agents Module
