@@ -1,0 +1,1 @@
+"""Packaged Shikari manifests."""

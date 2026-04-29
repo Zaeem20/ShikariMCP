@@ -1,6 +1,7 @@
-# ShikariMCP — HTTP Authentication Middleware
+# ShikariMCP - HTTP authentication provider
 
 import logging
+
 from fastmcp.server.auth import StaticTokenVerifier
 
 from shikari.config import get_config
@@ -10,27 +11,26 @@ logger = logging.getLogger("shikari.auth")
 
 def get_auth_provider() -> StaticTokenVerifier | None:
     """
-    Get the FastMCP authentication provider based on current configuration.
-    Returns None if auth is explicitly disabled (e.g., stdio transport).
+    Return the FastMCP auth provider for HTTP transports.
+
+    STDIO inherits security from the local client. HTTP requires an API key by
+    default; unauthenticated HTTP must be explicitly enabled for development.
     """
     config = get_config()
 
-    # Skip auth for stdio transport
-    if not config.requires_auth:
+    if not config.is_http:
         return None
 
-    # API key must be configured for HTTP
-    if not config.api_key:
-        logger.warning(
-            "⚠️ HTTP transport requested but no API key provided. "
-            "Set --api-key or SHIKARI_API_KEY environment variable. "
-            "Starting WITHOUT authentication!"
-        )
+    if config.allow_unauthenticated_http:
+        logger.warning("HTTP authentication is explicitly disabled.")
         return None
+
+    if not config.api_key:
+        raise ValueError(
+            "HTTP transport requires SHIKARI_API_KEY or --api-key. "
+            "Use --allow-unauthenticated-http only for local development."
+        )
 
     return StaticTokenVerifier(
-        tokens={
-            config.api_key: {"client_id": "shikari-client", "scopes": []}
-        }
+        tokens={config.api_key: {"client_id": "shikari-client", "scopes": []}}
     )
-

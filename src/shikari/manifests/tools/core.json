@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "profile": "core",
+  "description": "Local-first verified core profile for reconnaissance, web probing, vulnerability scanning, and local code/container checks.",
+  "tools": [
+    {
+      "id": "nmap_scan",
+      "display_name": "Nmap Scan",
+      "binary": "nmap",
+      "category": "reconnaissance",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["active_network"],
+      "approval": "active_tools",
+      "target_types": ["host", "ip", "cidr"],
+      "version_command": ["nmap", "--version"],
+      "install": {"apt": ["nmap"]},
+      "command_templates": {
+        "safe": {
+          "argv": ["nmap", "-oX", "-", "-sV", "--version-light", "--reason", "{target}"],
+          "timeout": 300,
+          "output_format": "xml"
+        }
+      },
+      "parser": "shikari.parsers.nmap.parse_xml"
+    },
+    {
+      "id": "subfinder_enum",
+      "display_name": "Subfinder Enumeration",
+      "binary": "subfinder",
+      "category": "reconnaissance",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["domain"],
+      "version_command": ["subfinder", "-version"],
+      "install": {"go": "github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest"},
+      "command_templates": {
+        "safe": {
+          "argv": ["subfinder", "-d", "{target}", "-silent", "-oJ"],
+          "timeout": 300,
+          "output_format": "jsonl"
+        }
+      },
+      "parser": "shikari.parsers.subfinder.parse_jsonl"
+    },
+    {
+      "id": "httpx_probe",
+      "display_name": "httpx Probe",
+      "binary": "httpx",
+      "category": "reconnaissance",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["active_network"],
+      "approval": "active_tools",
+      "target_types": ["url", "host", "stdin_list"],
+      "version_command": ["httpx", "-version"],
+      "install": {"go": "github.com/projectdiscovery/httpx/cmd/httpx@latest"},
+      "command_templates": {
+        "safe": {
+          "argv": ["httpx", "-silent", "-json", "-status-code", "-title", "-tech-detect", "-content-length", "-response-time"],
+          "stdin": "{targets}",
+          "timeout": 300,
+          "output_format": "jsonl"
+        }
+      },
+      "parser": "shikari.parsers.httpx.parse_jsonl"
+    },
+    {
+      "id": "nuclei_scan",
+      "display_name": "Nuclei Scan",
+      "binary": "nuclei",
+      "category": "vulnerability_scanning",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["vulnerability_scan", "active_network"],
+      "approval": "active_tools",
+      "target_types": ["url", "host", "stdin_list"],
+      "version_command": ["nuclei", "-version"],
+      "install": {"go": "github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest"},
+      "command_templates": {
+        "safe": {
+          "argv": ["nuclei", "-j", "-omit-raw", "-severity", "low,medium,high,critical", "-rl", "50", "-duc"],
+          "stdin": "{targets}",
+          "timeout": 900,
+          "output_format": "jsonl"
+        }
+      },
+      "parser": "shikari.parsers.nuclei.parse_jsonl"
+    },
+    {
+      "id": "naabu_scan",
+      "display_name": "Naabu Port Scan",
+      "binary": "naabu",
+      "category": "reconnaissance",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["active_network"],
+      "approval": "active_tools",
+      "target_types": ["host", "ip", "cidr", "stdin_list"],
+      "version_command": ["naabu", "-version"],
+      "install": {
+        "apt": ["libpcap-dev"],
+        "go": "github.com/projectdiscovery/naabu/v2/cmd/naabu@latest"
+      },
+      "command_templates": {
+        "safe": {
+          "argv": ["naabu", "-silent", "-j", "-top-ports", "100", "-rate", "500"],
+          "stdin": "{targets}",
+          "timeout": 600,
+          "output_format": "jsonl"
+        }
+      },
+      "parser": "shikari.parsers.naabu.parse_jsonl"
+    },
+    {
+      "id": "katana_crawl",
+      "display_name": "Katana Crawl",
+      "binary": "katana",
+      "category": "web_application",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["active_network"],
+      "approval": "active_tools",
+      "target_types": ["url", "stdin_list"],
+      "version_command": ["katana", "-version"],
+      "install": {"go": "github.com/projectdiscovery/katana/cmd/katana@latest"},
+      "command_templates": {
+        "safe": {
+          "argv": ["katana", "-silent", "-jsonl", "-depth", "2", "-field", "url", "-rl", "50"],
+          "stdin": "{targets}",
+          "timeout": 600,
+          "output_format": "jsonl"
+        }
+      },
+      "parser": "shikari.parsers.katana.parse_jsonl"
+    },
+    {
+      "id": "ffuf_fuzz",
+      "display_name": "ffuf Fuzz",
+      "binary": "ffuf",
+      "category": "web_application",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["active_network"],
+      "approval": "active_tools",
+      "target_types": ["url"],
+      "version_command": ["ffuf", "-V"],
+      "install": {"go": "github.com/ffuf/ffuf/v2@latest"},
+      "command_templates": {
+        "safe": {
+          "argv": ["ffuf", "-u", "{url}", "-w", "{wordlist}", "-json", "-rate", "50"],
+          "timeout": 900,
+          "output_format": "jsonl"
+        }
+      },
+      "parser": "shikari.parsers.ffuf.parse_jsonl"
+    },
+    {
+      "id": "gobuster_dir",
+      "display_name": "Gobuster Directory Scan",
+      "binary": "gobuster",
+      "category": "web_application",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["active_network"],
+      "approval": "active_tools",
+      "target_types": ["url"],
+      "version_command": ["gobuster", "version"],
+      "install": {"go": "github.com/OJ/gobuster/v3@latest"},
+      "command_templates": {
+        "safe": {
+          "argv": ["gobuster", "dir", "-u", "{url}", "-w", "{wordlist}", "-q", "--no-progress", "-t", "20"],
+          "timeout": 900,
+          "output_format": "text"
+        }
+      },
+      "parser": "shikari.parsers.gobuster.parse_text"
+    },
+    {
+      "id": "nikto_scan",
+      "display_name": "Nikto Scan",
+      "binary": "nikto",
+      "category": "web_application",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["vulnerability_scan", "active_network"],
+      "approval": "active_tools",
+      "target_types": ["url", "host"],
+      "version_command": ["nikto", "-Version"],
+      "install": {"apt": ["nikto"]},
+      "command_templates": {
+        "safe": {
+          "argv": ["nikto", "-host", "{target}", "-nointeractive", "-Format", "json", "-output", "{output_file}"],
+          "timeout": 900,
+          "output_format": "json"
+        }
+      },
+      "parser": "shikari.parsers.nikto.parse_json"
+    },
+    {
+      "id": "sqlmap_scan",
+      "display_name": "SQLMap Scan",
+      "binary": "sqlmap",
+      "category": "web_application",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["vulnerability_scan", "active_network"],
+      "approval": "active_tools",
+      "target_types": ["url", "request_file"],
+      "version_command": ["sqlmap", "--version"],
+      "install": {"apt": ["sqlmap"]},
+      "command_templates": {
+        "safe": {
+          "argv": ["sqlmap", "-u", "{url}", "--batch", "--level", "1", "--risk", "1", "--smart"],
+          "timeout": 1200,
+          "output_format": "text"
+        }
+      },
+      "parser": "shikari.parsers.sqlmap.parse_text"
+    },
+    {
+      "id": "trivy_scan",
+      "display_name": "Trivy Scan",
+      "binary": "trivy",
+      "category": "cloud_security",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["local_analysis", "cloud_audit"],
+      "approval": "none",
+      "target_types": ["filesystem", "image", "repository"],
+      "version_command": ["trivy", "--version"],
+      "install": {"official": "https://trivy.dev/docs/latest/getting-started/installation/"},
+      "command_templates": {
+        "safe": {
+          "argv": ["trivy", "fs", "--format", "json", "{path}"],
+          "timeout": 900,
+          "output_format": "json"
+        }
+      },
+      "parser": "shikari.parsers.trivy.parse_json"
+    },
+    {
+      "id": "whois_lookup",
+      "display_name": "Whois Lookup",
+      "binary": "whois",
+      "category": "reconnaissance",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["domain", "ip"],
+      "version_command": ["whois", "--version"],
+      "install": {"apt": ["whois"]},
+      "command_templates": {
+        "safe": {
+          "argv": ["whois", "{target}"],
+          "timeout": 60,
+          "output_format": "text"
+        }
+      },
+      "parser": "shikari.parsers.whois.parse_text"
+    }
+  ]
+}

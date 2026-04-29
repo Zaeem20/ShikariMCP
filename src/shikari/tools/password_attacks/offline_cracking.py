@@ -51,3 +51,47 @@ async def john_crack(hash_file: str, wordlist: str = "", extra_args: str = "") -
         cmd.extend(shlex.split(extra_args))
     result = await execute_command(cmd, timeout=3600)
     return result.output
+
+@shikari_tool(
+    name="john_show",
+    category="password_attacks",
+    scope=ToolScope.LOCAL,
+    binary="john",
+    description="Show cracked passwords from John the Ripper potfile."
+)
+async def john_show(hash_file: str, extra_args: str = "") -> str:
+    """
+    Show already cracked passwords for a hash file.
+    
+    Args:
+        hash_file: Path to the hash file
+        extra_args: Additional flags like '--format=NT'
+    """
+    cmd = ["john", "--show", hash_file]
+    if extra_args:
+        cmd.extend(shlex.split(extra_args))
+    result = await execute_command(cmd, timeout=60)
+    return result.output
+
+@shikari_tool(
+    name="hashcat_show",
+    category="password_attacks",
+    scope=ToolScope.LOCAL,
+    binary="hashcat",
+    description="Show cracked passwords from Hashcat potfile."
+)
+async def hashcat_show(hash_file: str, hash_type: str = "0", extra_args: str = "") -> str:
+    """
+    Show already cracked hashes.
+    
+    Args:
+        hash_file: Path to the file containing hashes
+        hash_type: Hashcat type code
+        extra_args: Additional flags
+    """
+    cmd = ["hashcat", "-m", hash_type, "--show", hash_file]
+    if extra_args:
+        cmd.extend(shlex.split(extra_args))
+    result = await execute_command(cmd, timeout=60)
+    return result.output
+

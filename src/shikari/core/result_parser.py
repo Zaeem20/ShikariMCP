@@ -64,3 +64,41 @@ def truncate_output(output: str, max_chars: int = 50000) -> str:
         + f"\n\n--- [TRUNCATED: {len(output) - max_chars} chars omitted] ---\n\n"
         + output[-half:]
     )
+
+
+def extract_security_findings(raw: str, source: str = "tool") -> list[dict[str, str]]:
+    """Extract lightweight findings from common security tool output."""
+    findings: list[dict[str, str]] = []
+    seen: set[tuple[str, str]] = set()
+
+    for line in raw.splitlines():
+        normalized = line.strip()
+        if not normalized:
+            continue
+        lower = normalized.lower()
+        severity = ""
+        if "critical" in lower:
+            severity = "CRITICAL"
+        elif "high" in lower:
+            severity = "HIGH"
+        elif "medium" in lower:
+            severity = "MEDIUM"
+        elif "low" in lower:
+            severity = "LOW"
+        elif re.search(r"\bopen\b", lower) and "/tcp" in lower:
+            severity = "INFO"
+        elif "cve-" in lower or "vulnerab" in lower:
+            severity = "MEDIUM"
+
+        if not severity:
+            continue
+
+        cve_match = re.search(r"CVE-\d{4}-\d{4,7}", normalized, re.IGNORECASE)
+        title = cve_match.group(0).upper() if cve_match else f"{source} signal"
+        key = (title, normalized)
+        if key in seen:
+            continue
+        seen.add(key)
+        findings.append({"severity": severity, "title": title, "detail": normalized})
+
+    return findings
