@@ -1,7 +1,7 @@
 [project]
 name = "shikari"
 version = "0.1.0"
-description = "AI-powered MCP server for ethical hackers and penetration testers — 1000+ security tools, 50 AI subagents, dual transport"
+description = "Local-first MCP server that lets AI systems orchestrate verified security tools with stdio and HTTP transport"
 readme = "README.md"
 authors = [
     { name = "Zaeem20", email = "duranizaeem@gmail.com" }

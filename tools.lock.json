@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-05-16",
+  "profile": "core",
+  "go_version": "1.25.0",
+  "notes": [
+    "This lock file records the install refs used by the local-first core profile.",
+    "ProjectDiscovery tools move quickly; refresh pins only after installer and parser smoke tests pass."
+  ],
+  "go_tools": {
+    "subfinder": {
+      "module": "github.com/projectdiscovery/subfinder/v2/cmd/subfinder",
+      "ref": "v2.14.0",
+      "source": "https://github.com/projectdiscovery/subfinder"
+    },
+    "httpx": {
+      "module": "github.com/projectdiscovery/httpx/cmd/httpx",
+      "ref": "latest",
+      "source": "https://github.com/projectdiscovery/httpx"
+    },
+    "nuclei": {
+      "module": "github.com/projectdiscovery/nuclei/v3/cmd/nuclei",
+      "ref": "v3.8.0",
+      "source": "https://github.com/projectdiscovery/nuclei"
+    },
+    "naabu": {
+      "module": "github.com/projectdiscovery/naabu/v2/cmd/naabu",
+      "ref": "latest",
+      "source": "https://github.com/projectdiscovery/naabu"
+    },
+    "katana": {
+      "module": "github.com/projectdiscovery/katana/cmd/katana",
+      "ref": "latest",
+      "source": "https://github.com/projectdiscovery/katana"
+    },
+    "ffuf": {
+      "module": "github.com/ffuf/ffuf/v2",
+      "ref": "latest",
+      "source": "https://github.com/ffuf/ffuf"
+    },
+    "gobuster": {
+      "module": "github.com/OJ/gobuster/v3",
+      "ref": "latest",
+      "source": "https://github.com/OJ/gobuster"
+    },
+    "dnsx": {
+      "module": "github.com/projectdiscovery/dnsx/cmd/dnsx",
+      "ref": "v1.2.3",
+      "source": "https://github.com/projectdiscovery/dnsx"
+    },
+    "tlsx": {
+      "module": "github.com/projectdiscovery/tlsx/cmd/tlsx",
+      "ref": "v1.2.2",
+      "source": "https://github.com/projectdiscovery/tlsx"
+    },
+    "mapcidr": {
+      "module": "github.com/projectdiscovery/mapcidr/cmd/mapcidr",
+      "ref": "v1.1.97",
+      "source": "https://github.com/projectdiscovery/mapcidr"
+    },
+    "uncover": {
+      "module": "github.com/projectdiscovery/uncover/cmd/uncover",
+      "ref": "latest",
+      "source": "https://github.com/projectdiscovery/uncover"
+    },
+    "dalfox": {
+      "module": "github.com/hahwul/dalfox/v2",
+      "ref": "latest",
+      "source": "https://github.com/hahwul/dalfox"
+    }
+  },
+  "future_arsenal_candidates": {
+    "dnsx": {
+      "module": "github.com/projectdiscovery/dnsx/cmd/dnsx",
+      "ref": "v1.2.3",
+      "reason": "DNS enrichment and brute-force profile candidate"
+    },
+    "tlsx": {
+      "module": "github.com/projectdiscovery/tlsx/cmd/tlsx",
+      "ref": "v1.2.2",
+      "reason": "TLS certificate and protocol intelligence"
+    },
+    "mapcidr": {
+      "module": "github.com/projectdiscovery/mapcidr/cmd/mapcidr",
+      "ref": "v1.1.97",
+      "reason": "CIDR expansion, filtering, and target normalization"
+    },
+    "uncover": {
+      "module": "github.com/projectdiscovery/uncover/cmd/uncover",
+      "ref": "latest",
+      "reason": "Search-engine-backed exposed-host discovery"
+    }
+  }
+}

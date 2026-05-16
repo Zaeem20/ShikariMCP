@@ -1,6 +1,9 @@
 # Python-generated files
 __pycache__/
 *.py[oc]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 build/
 dist/
 wheels/
@@ -9,9 +12,14 @@ wheels/
 # Virtual environments
 .venv
 
-# Configs and Workspaces 
-.agents/
-.env
-.pytest_cache/
+# Runtime artifacts
+.tmp/
+.shikari/
+output/
+artifacts/
+*.log
 
-scripts/
+# Configs and Workspaces
+.agents/
+.agent/
+.env
