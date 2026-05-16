@@ -1,0 +1,3 @@
+FROM shikari:latest
+ENV SHIKARI_TOOL_PROFILE=core
+RUN shikari tools list --json >/tmp/shikari-profiles.json

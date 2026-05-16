@@ -1,0 +1,8 @@
+FROM shikari:latest
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    masscan whatweb wafw00f testssl.sh sslscan yara radare2 john hashcat hydra pipx \
+    && rm -rf /var/lib/apt/lists/*
+USER shikari
+ENV SHIKARI_TOOL_PROFILE=full
+RUN shikari tools list --json >/tmp/shikari-profiles.json

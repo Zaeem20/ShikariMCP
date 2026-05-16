@@ -1,0 +1,7 @@
+FROM shikari:latest
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends whatweb wafw00f testssl.sh sslscan pipx \
+    && rm -rf /var/lib/apt/lists/*
+USER shikari
+ENV SHIKARI_TOOL_PROFILE=web
+RUN shikari tools list --json >/tmp/shikari-profiles.json
