@@ -1,0 +1,62 @@
+{
+  "assets": [
+    {"value": "example.com", "type": "domain", "source": "subfinder", "metadata": {}},
+    {"value": "www.example.com", "type": "domain", "source": "subfinder", "metadata": {}},
+    {"value": "admin.example.com", "type": "domain", "source": "subfinder", "metadata": {}},
+    {"value": "mail.example.com", "type": "domain", "source": "subfinder", "metadata": {}},
+    {"value": "api.example.com", "type": "domain", "source": "subfinder", "metadata": {}},
+    {"value": "cdn.example.com", "type": "domain", "source": "subfinder", "metadata": {}}
+  ],
+  "services": [
+    {"host": "example.com", "port": 80, "protocol": "tcp", "name": "http", "product": "nginx", "version": "1.24.0", "metadata": {}},
+    {"host": "example.com", "port": 443, "protocol": "tcp", "name": "https", "product": "nginx", "version": "1.24.0", "metadata": {}},
+    {"host": "mail.example.com", "port": 25, "protocol": "tcp", "name": "smtp", "product": "Postfix", "version": "3.7.2", "metadata": {}},
+    {"host": "mail.example.com", "port": 993, "protocol": "tcp", "name": "imaps", "product": "Dovecot", "version": "2.3.19", "metadata": {}}
+  ],
+  "endpoints": [
+    {"url": "https://example.com", "status_code": 200, "title": "Example Domain", "technologies": ["nginx"], "metadata": {}},
+    {"url": "https://www.example.com", "status_code": 200, "title": "Example Domain", "technologies": ["nginx"], "metadata": {}},
+    {"url": "https://admin.example.com/login", "status_code": 200, "title": "Admin Login", "technologies": ["nginx", "PHP"], "metadata": {}},
+    {"url": "https://api.example.com/v1/health", "status_code": 200, "title": "", "technologies": ["nginx", "Express"], "metadata": {}}
+  ],
+  "findings": [
+    {
+      "title": "Exposed Admin Panel",
+      "severity": "high",
+      "target": "https://admin.example.com",
+      "description": "Administrative panel accessible without IP restriction",
+      "evidence": [
+        {"source": "nuclei", "value": "exposed-panels/admin-panel.yaml matched at https://admin.example.com/login", "metadata": {}}
+      ],
+      "metadata": {}
+    },
+    {
+      "title": "Missing Security Headers",
+      "severity": "medium",
+      "target": "https://www.example.com",
+      "description": "Response missing Content-Security-Policy and X-Frame-Options headers",
+      "evidence": [
+        {"source": "httpx", "value": "Missing headers: Content-Security-Policy, X-Frame-Options, X-Content-Type-Options", "metadata": {}}
+      ],
+      "metadata": {}
+    },
+    {
+      "title": "Outdated TLS Configuration",
+      "severity": "low",
+      "target": "https://mail.example.com",
+      "description": "Server supports TLS 1.0 and TLS 1.1",
+      "evidence": [
+        {"source": "nuclei", "value": "tls/tls-version.yaml matched at https://mail.example.com:443", "metadata": {}}
+      ],
+      "metadata": {}
+    }
+  ],
+  "metadata": {
+    "tool": "recon_workflow",
+    "target": "example.com",
+    "tools_executed": ["subfinder_enum", "httpx_probe", "nuclei_scan"],
+    "total_subdomains": 47,
+    "live_hosts": 34,
+    "total_endpoints": 89
+  }
+}

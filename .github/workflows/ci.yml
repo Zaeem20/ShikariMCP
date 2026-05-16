@@ -1,0 +1,126 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+env:
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  lint:
+    name: Lint (shellcheck)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install shellcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+      - name: Run shellcheck on all scripts
+        run: |
+          shellcheck scripts/*.sh
+
+  test:
+    name: Test Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --group dev
+
+      - name: Run tests
+        run: uv run pytest tests/ -v --tb=short
+
+      - name: Run smoke test
+        run: uv run pytest tests/test_smoke.py -v
+
+  integration:
+    name: Integration Tests (fake binaries)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: uv sync --group dev
+
+      - name: Set up fake binaries
+        run: |
+          mkdir -p /tmp/fake-bin
+          for tool in nmap subfinder httpx nuclei naabu katana ffuf gobuster nikto sqlmap trivy whois masscan sslscan sslyze whatweb wafw00f dnsx tlsx mapcidr uncover dalfox arjun semgrep gitleaks checkov yara radare2 john hashcat hydra; do
+            echo '#!/bin/bash' > /tmp/fake-bin/$tool
+            echo 'echo "{}"' >> /tmp/fake-bin/$tool
+            chmod +x /tmp/fake-bin/$tool
+          done
+          echo "/tmp/fake-bin" >> $GITHUB_PATH
+
+      - name: Run integration tests
+        run: uv run pytest tests/test_integration.py -v --tb=short
+
+  docker:
+    name: Docker Build Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build base image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          push: false
+          load: true
+          tags: shikari:ci-test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build core profile image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile.core
+          push: false
+          load: true
+          tags: shikari-core:ci-test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build web profile image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile.web
+          push: false
+          load: true
+          tags: shikari-web:ci-test
+          cache-from: type=gha
+
+      - name: Build full profile image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile.full
+          push: false
+          load: true
+          tags: shikari-full:ci-test
+          cache-from: type=gha

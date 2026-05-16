@@ -1,0 +1,38 @@
+{
+  "run_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "tool": "nmap_scan",
+  "status": "success",
+  "target": {"type": "target", "value": "scanme.nmap.org"},
+  "command": {
+    "argv": ["nmap", "-oX", "-", "-sV", "--version-light", "--reason", "scanme.nmap.org"],
+    "stdin": null,
+    "timeout": 300,
+    "output_format": "xml",
+    "redacted": false
+  },
+  "duration_ms": 12450,
+  "findings": [
+    {
+      "title": "Open SSH Service",
+      "severity": "info",
+      "target": "scanme.nmap.org:22",
+      "description": "SSH service detected on port 22",
+      "evidence": [
+        {"source": "nmap", "value": "port 22/tcp open ssh OpenSSH 6.6.1p1", "metadata": {}}
+      ],
+      "metadata": {}
+    }
+  ],
+  "assets": [
+    {"value": "scanme.nmap.org", "type": "host", "source": "nmap", "metadata": {}},
+    {"host": "scanme.nmap.org", "port": 22, "protocol": "tcp", "name": "ssh", "product": "OpenSSH", "version": "6.6.1p1", "metadata": {}},
+    {"host": "scanme.nmap.org", "port": 80, "protocol": "tcp", "name": "http", "product": "Apache httpd", "version": "2.4.7", "metadata": {}}
+  ],
+  "artifacts": [
+    {"name": "nmap_scan_raw", "kind": "text", "path": ".shikari/artifacts/a1b2c3d4-e5f6-7890-abcd-ef1234567890_nmap_scan_raw.txt", "bytes": 4521},
+    {"name": "nmap_scan_parsed", "kind": "json", "path": ".shikari/artifacts/a1b2c3d4-e5f6-7890-abcd-ef1234567890_nmap_scan_parsed.json", "bytes": 1832}
+  ],
+  "raw_output": "",
+  "errors": [],
+  "next_suggestions": ["Review raw output and correlate with other verified tools."]
+}

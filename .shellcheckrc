@@ -1,0 +1,18 @@
+# ShellCheck configuration for ShikariMCP scripts
+# https://github.com/koalaman/shellcheck
+
+# Use bash dialect
+shell: bash
+
+# Output format
+format: gcc
+
+# Rules to exclude
+exclude: [
+  "SC1090",  # Can't follow non-constant source
+  "SC1091",  # Not following sourced file
+  "SC2317",  # Command appears to be unreachable (false positive in functions)
+]
+
+# Minimum severity to report
+severity: style
