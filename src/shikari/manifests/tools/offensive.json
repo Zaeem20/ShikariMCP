@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "profile": "offensive",
+  "description": "Explicit opt-in offensive and credential profile. Local-only and safety-gated.",
+  "tools": [
+    {
+      "id": "john_crack",
+      "display_name": "John Offline Crack",
+      "binary": "john",
+      "category": "password_attacks",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["credential_attack"],
+      "approval": "credential_tools",
+      "target_types": ["file"],
+      "version_command": ["john", "--list=build-info"],
+      "install": {"apt": ["john"]},
+      "command_templates": {
+        "safe": {"argv": ["john", "{hash_file}"], "timeout": 3600, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "hashcat_crack",
+      "display_name": "Hashcat Offline Crack",
+      "binary": "hashcat",
+      "category": "password_attacks",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["credential_attack"],
+      "approval": "credential_tools",
+      "target_types": ["file"],
+      "version_command": ["hashcat", "--version"],
+      "install": {"apt": ["hashcat"]},
+      "command_templates": {
+        "safe": {"argv": ["hashcat", "-m", "{mode}", "{hash_file}", "{wordlist}", "--status", "--status-timer", "60"], "timeout": 3600, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "hydra_login_check",
+      "display_name": "Hydra Login Check",
+      "binary": "hydra",
+      "category": "password_attacks",
+      "quality": "experimental",
+      "scope": "local",
+      "capabilities": ["credential_attack", "active_network"],
+      "approval": "credential_tools",
+      "target_types": ["host"],
+      "version_command": ["hydra", "-h"],
+      "install": {"apt": ["hydra"]},
+      "command_templates": {
+        "safe": {"argv": ["hydra", "-L", "{users}", "-P", "{passwords}", "-t", "4", "{target}", "{service}"], "timeout": 1800, "output_format": "text"}
+      },
+      "parser": null
+    }
+  ]
+}

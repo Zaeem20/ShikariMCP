@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "profile": "recon",
+  "description": "Expanded reconnaissance utilities for target normalization, DNS, and internet-exposure discovery.",
+  "tools": [
+    {
+      "id": "masscan_scan",
+      "display_name": "Masscan",
+      "binary": "masscan",
+      "category": "reconnaissance",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["active_network"],
+      "approval": "active_tools",
+      "target_types": ["cidr", "ip"],
+      "version_command": ["masscan", "--version"],
+      "install": {"apt": ["masscan"]},
+      "command_templates": {
+        "safe": {"argv": ["masscan", "{target}", "--top-ports", "100", "--rate", "1000"], "timeout": 900, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "dnsx_query",
+      "display_name": "DNSX Query",
+      "binary": "dnsx",
+      "category": "reconnaissance",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["domain", "stdin_list"],
+      "version_command": ["dnsx", "-version"],
+      "install": {"go": "github.com/projectdiscovery/dnsx/cmd/dnsx@latest"},
+      "command_templates": {
+        "safe": {"argv": ["dnsx", "-json", "-silent", "-a", "-resp"], "stdin": "{targets}", "timeout": 300, "output_format": "jsonl"}
+      },
+      "parser": null
+    },
+    {
+      "id": "mapcidr_expand",
+      "display_name": "MapCIDR Expand",
+      "binary": "mapcidr",
+      "category": "reconnaissance",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["local_analysis"],
+      "approval": "none",
+      "target_types": ["cidr"],
+      "version_command": ["mapcidr", "-version"],
+      "install": {"go": "github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest"},
+      "command_templates": {
+        "safe": {"argv": ["mapcidr", "-cidr", "{target}", "-silent"], "timeout": 120, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "uncover_search",
+      "display_name": "Uncover Search",
+      "binary": "uncover",
+      "category": "reconnaissance",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["query"],
+      "version_command": ["uncover", "-version"],
+      "install": {"go": "github.com/projectdiscovery/uncover/cmd/uncover@latest"},
+      "command_templates": {
+        "safe": {"argv": ["uncover", "-q", "{query}", "-json", "-silent"], "timeout": 300, "output_format": "jsonl"}
+      },
+      "parser": null
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "profile": "cloud",
+  "description": "Local code, IaC, secret, and cloud-adjacent scanning profile.",
+  "tools": [
+    {
+      "id": "semgrep_scan",
+      "display_name": "Semgrep Scan",
+      "binary": "semgrep",
+      "category": "code_analysis",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["local_analysis"],
+      "approval": "none",
+      "target_types": ["filesystem", "repository"],
+      "version_command": ["semgrep", "--version"],
+      "install": {"pipx": "semgrep"},
+      "command_templates": {
+        "safe": {"argv": ["semgrep", "scan", "--json", "{path}"], "timeout": 900, "output_format": "json"}
+      },
+      "parser": null
+    },
+    {
+      "id": "gitleaks_scan",
+      "display_name": "Gitleaks Scan",
+      "binary": "gitleaks",
+      "category": "code_analysis",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["local_analysis"],
+      "approval": "none",
+      "target_types": ["filesystem", "repository"],
+      "version_command": ["gitleaks", "version"],
+      "install": {"official": "https://github.com/gitleaks/gitleaks"},
+      "command_templates": {
+        "safe": {"argv": ["gitleaks", "detect", "--source", "{path}", "--report-format", "json", "--no-banner"], "timeout": 900, "output_format": "json"}
+      },
+      "parser": null
+    },
+    {
+      "id": "checkov_scan",
+      "display_name": "Checkov Scan",
+      "binary": "checkov",
+      "category": "cloud_security",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["local_analysis", "cloud_audit"],
+      "approval": "none",
+      "target_types": ["filesystem", "repository"],
+      "version_command": ["checkov", "--version"],
+      "install": {"pipx": "checkov"},
+      "command_templates": {
+        "safe": {"argv": ["checkov", "-d", "{path}", "-o", "json"], "timeout": 900, "output_format": "json"}
+      },
+      "parser": null
+    }
+  ]
+}

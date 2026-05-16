@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "profile": "forensics",
+  "description": "Local-only file, malware triage, and forensics profile.",
+  "tools": [
+    {
+      "id": "yara_scan",
+      "display_name": "YARA Scan",
+      "binary": "yara",
+      "category": "forensics",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["local_forensics"],
+      "approval": "none",
+      "target_types": ["filesystem"],
+      "version_command": ["yara", "--version"],
+      "install": {"apt": ["yara"]},
+      "command_templates": {
+        "safe": {"argv": ["yara", "-r", "{rules}", "{path}"], "timeout": 900, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "volatility3_scan",
+      "display_name": "Volatility3",
+      "binary": "vol",
+      "category": "forensics",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["local_forensics"],
+      "approval": "none",
+      "target_types": ["file"],
+      "version_command": ["vol", "--version"],
+      "install": {"pipx": "volatility3"},
+      "command_templates": {
+        "safe": {"argv": ["vol", "-f", "{file}", "{plugin}"], "timeout": 1200, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "radare2_info",
+      "display_name": "Radare2 Info",
+      "binary": "rabin2",
+      "category": "reverse_engineering",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["local_analysis"],
+      "approval": "none",
+      "target_types": ["file"],
+      "version_command": ["rabin2", "-v"],
+      "install": {"apt": ["radare2"]},
+      "command_templates": {
+        "safe": {"argv": ["rabin2", "-Ij", "{file}"], "timeout": 300, "output_format": "json"}
+      },
+      "parser": null
+    }
+  ]
+}
