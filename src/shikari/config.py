@@ -3,7 +3,7 @@
 import os
 from enum import Enum
 from pathlib import Path
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from dotenv import load_dotenv
 
@@ -30,6 +30,11 @@ def _env_int(name: str, default: int) -> int:
     return int(value)
 
 
+def _env_list(name: str) -> list[str]:
+    value = os.getenv(name, "")
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
 @dataclass
 class ShikariConfig:
     """Central configuration for the ShikariMCP server."""
@@ -48,11 +53,17 @@ class ShikariConfig:
     default_timeout: int = 300  # 5 minutes
     max_concurrent_tools: int = 10
     max_output_chars: int = 50000
+    tool_profile: str = "core"
 
     # Safety policy
     enable_generated_tools: bool = False
+    enable_experimental_tools: bool = False
     require_tool_dependencies: bool = False
     enable_remote_active_tools: bool = False
+    enable_active_tools: bool = False
+    enable_offensive_tools: bool = False
+    enable_credential_tools: bool = False
+    target_allowlist: list[str] = field(default_factory=list)
     audit_enabled: bool = True
     audit_log_path: str = ".shikari/audit.jsonl"
 
@@ -72,9 +83,15 @@ class ShikariConfig:
             default_timeout=_env_int("SHIKARI_TIMEOUT", 300),
             max_concurrent_tools=_env_int("SHIKARI_MAX_CONCURRENT", 10),
             max_output_chars=_env_int("SHIKARI_MAX_OUTPUT_CHARS", 50000),
+            tool_profile=os.getenv("SHIKARI_TOOL_PROFILE", "core"),
             enable_generated_tools=_env_bool("SHIKARI_ENABLE_GENERATED_TOOLS", False),
+            enable_experimental_tools=_env_bool("SHIKARI_ENABLE_EXPERIMENTAL_TOOLS", False),
             require_tool_dependencies=_env_bool("SHIKARI_REQUIRE_TOOL_DEPENDENCIES", False),
             enable_remote_active_tools=_env_bool("SHIKARI_ENABLE_REMOTE_ACTIVE_TOOLS", False),
+            enable_active_tools=_env_bool("SHIKARI_ENABLE_ACTIVE_TOOLS", False),
+            enable_offensive_tools=_env_bool("SHIKARI_ENABLE_OFFENSIVE_TOOLS", False),
+            enable_credential_tools=_env_bool("SHIKARI_ENABLE_CREDENTIAL_TOOLS", False),
+            target_allowlist=_env_list("SHIKARI_TARGET_ALLOWLIST"),
             audit_enabled=_env_bool("SHIKARI_AUDIT_ENABLED", True),
             audit_log_path=os.getenv("SHIKARI_AUDIT_LOG_PATH", ".shikari/audit.jsonl"),
             log_level=os.getenv("SHIKARI_LOG_LEVEL", "INFO"),

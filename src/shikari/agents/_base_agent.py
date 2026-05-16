@@ -9,6 +9,7 @@ from typing import Any
 from fastmcp import Context
 
 from shikari.core.executor import execute_command
+from shikari.core.tool_runner import run_verified_tool
 
 logger = logging.getLogger("shikari.agents")
 
@@ -190,6 +191,61 @@ class BaseAgent(ABC):
             results[step_name] = result.output
 
         return results
+
+    async def execute_verified_plan(
+        self,
+        plan: list[dict[str, Any]],
+        ctx: Context | None = None,
+        **kwargs: Any,
+    ) -> dict[str, Any]:
+        """Execute a manifest-backed plan and return structured step results."""
+        results: dict[str, Any] = {}
+        for i, step in enumerate(plan):
+            step_name = step.get("name", f"step_{i + 1}")
+            tool_id = step.get("tool")
+            inputs = dict(step.get("inputs", {}))
+
+            for key, source in step.get("inputs_from", {}).items():
+                inputs[key] = self._extract_targets(results.get(source))
+
+            if ctx:
+                await ctx.report_progress(i, len(plan))
+                await ctx.info(f"[{self.name}] Running {tool_id}...")
+
+            if not tool_id:
+                results[step_name] = {"status": "skipped", "errors": ["No tool id defined."]}
+                continue
+
+            if any(value == "" for value in inputs.values()):
+                results[step_name] = {
+                    "status": "skipped",
+                    "errors": ["Required input from previous step was empty."],
+                }
+                continue
+
+            results[step_name] = await run_verified_tool(
+                tool_id=tool_id,
+                inputs=inputs,
+                profile=step.get("profile", "core"),
+                template=step.get("template", "safe"),
+                dry_run=bool(step.get("dry_run", False)),
+            )
+        return results
+
+    def _extract_targets(self, result: Any) -> str:
+        """Extract newline-separated targets from a structured run result."""
+        if not isinstance(result, dict):
+            return str(result or "")
+        values: list[str] = []
+        for asset in result.get("assets", []):
+            value = asset.get("value") or asset.get("host") or asset.get("url")
+            if value:
+                values.append(str(value))
+        for endpoint in result.get("endpoints", []):
+            value = endpoint.get("url")
+            if value:
+                values.append(str(value))
+        return "\n".join(dict.fromkeys(values))
 
     async def report(
         self,

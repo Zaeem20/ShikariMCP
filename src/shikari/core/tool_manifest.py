@@ -64,6 +64,25 @@ def load_tool_manifest(profile: str = "core") -> ToolManifest:
     if not profile.replace("-", "_").replace("_", "").isalnum():
         raise ValueError(f"Invalid tool profile: {profile}")
 
+    if profile == "full":
+        manifests = [
+            load_tool_manifest(name)
+            for name in ("core", "recon", "web", "cloud", "forensics", "offensive")
+        ]
+        tools = []
+        seen = set()
+        for manifest in manifests:
+            for tool in manifest.tools:
+                if tool.id not in seen:
+                    seen.add(tool.id)
+                    tools.append(tool)
+        return ToolManifest(
+            schema_version=1,
+            profile="full",
+            description="Aggregate profile containing all packaged Shikari verified tool profiles.",
+            tools=tools,
+        )
+
     manifest_path = resources.files("shikari.manifests.tools").joinpath(f"{profile}.json")
     try:
         raw = manifest_path.read_text(encoding="utf-8")
@@ -75,7 +94,8 @@ def load_tool_manifest(profile: str = "core") -> ToolManifest:
 def list_tool_profiles() -> list[str]:
     """Return packaged tool profile names."""
     tool_files = resources.files("shikari.manifests.tools").iterdir()
-    return sorted(path.name.removesuffix(".json") for path in tool_files if path.name.endswith(".json"))
+    profiles = sorted(path.name.removesuffix(".json") for path in tool_files if path.name.endswith(".json"))
+    return [*profiles, "full"] if "full" not in profiles else profiles
 
 
 def verify_tool_profile(profile: str = "core", timeout: int = 8) -> dict[str, Any]:
@@ -104,6 +124,36 @@ def manifest_public_catalog(profile: str = "core") -> dict[str, Any]:
         "schema_version": manifest.schema_version,
         "tools": [tool.model_dump() for tool in manifest.tools],
     }
+
+
+def explain_tool(tool_id: str, profile: str = "core") -> dict[str, Any]:
+    """Return manifest details for one verified tool."""
+    manifest = load_tool_manifest(profile)
+    for tool in manifest.tools:
+        if tool.id == tool_id or tool.binary == tool_id:
+            return {
+                "profile": manifest.profile,
+                "tool": tool.model_dump(),
+                "safe_templates": {
+                    name: template.model_dump()
+                    for name, template in tool.command_templates.items()
+                },
+                "notes": _tool_notes(tool),
+            }
+    raise ValueError(f"Tool '{tool_id}' is not present in profile '{profile}'")
+
+
+def _tool_notes(tool: ToolManifestEntry) -> list[str]:
+    notes: list[str] = []
+    if tool.approval != "none":
+        notes.append(f"Requires local safety gate: {tool.approval}.")
+    if "active_network" in tool.capabilities:
+        notes.append("Runs active network traffic; use only against authorized targets.")
+    if tool.scope == "local":
+        notes.append("Local-first tool; remote HTTP should expose it only in local mode.")
+    if tool.parser:
+        notes.append(f"Expected parser: {tool.parser}.")
+    return notes
 
 
 def _verify_tool(tool: ToolManifestEntry, timeout: int) -> ToolVerification:

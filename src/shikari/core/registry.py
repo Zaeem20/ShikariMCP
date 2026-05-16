@@ -120,6 +120,7 @@ def get_tool_health() -> dict[str, object]:
     available = 0
     usable = 0
     generated = 0
+    experimental = 0
     missing_deps = 0
     by_category: dict[str, int] = {}
     by_quality: dict[str, int] = {}
@@ -132,6 +133,8 @@ def get_tool_health() -> dict[str, object]:
 
         if metadata.quality == ToolQuality.GENERATED:
             generated += 1
+        if metadata.quality == ToolQuality.EXPERIMENTAL:
+            experimental += 1
         if metadata.is_available():
             available += 1
         else:
@@ -147,6 +150,7 @@ def get_tool_health() -> dict[str, object]:
         "available_by_policy": available,
         "usable_with_installed_dependencies": usable,
         "generated_wrappers": generated,
+        "experimental_wrappers": experimental,
         "tools_with_missing_dependencies": missing_deps,
         "categories": by_category,
         "quality": by_quality,

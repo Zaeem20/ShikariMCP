@@ -11,12 +11,15 @@ from fastmcp import FastMCP
 
 from shikari.config import ShikariConfig, TransportMode, get_config, set_config
 from shikari.core.auth import get_auth_provider
+from shikari.core.policy import explain_policy
 from shikari.core.registry import discover_tools, get_tool_health, register_tools_with_mcp
 from shikari.core.tool_manifest import (
+    explain_tool,
     list_tool_profiles,
     manifest_public_catalog,
     verify_tool_profile,
 )
+from shikari.core.tool_runner import dry_run_verified_tool, run_verified_tool
 
 logging.basicConfig(
     level=logging.INFO,
@@ -57,26 +60,65 @@ def create_server(config: ShikariConfig) -> FastMCP:
             "local_mode": config.local_mode,
             "auth_enabled": config.auth_enabled,
             "generated_tools_enabled": config.enable_generated_tools,
+            "experimental_tools_enabled": config.enable_experimental_tools,
             "remote_active_tools_enabled": config.enable_remote_active_tools,
+            "active_tools_enabled": config.enable_active_tools,
+            "offensive_tools_enabled": config.enable_offensive_tools,
+            "credential_tools_enabled": config.enable_credential_tools,
+            "target_allowlist": config.target_allowlist,
             "require_tool_dependencies": config.require_tool_dependencies,
+            "tool_profile": config.tool_profile,
             "max_concurrent_tools": config.max_concurrent_tools,
             "audit_enabled": config.audit_enabled,
             "tools": get_tool_health(),
         }
 
     @mcp.tool()
-    async def shikari_list_verified_tools(profile: str = "core") -> dict:
+    async def shikari_list_verified_tools(profile: str | None = None) -> dict:
         """
         List the manifest-backed verified tools for a profile.
         """
-        return manifest_public_catalog(profile)
+        return manifest_public_catalog(profile or get_config().tool_profile)
 
     @mcp.tool()
-    async def shikari_verify_tool_profile(profile: str = "core") -> dict:
+    async def shikari_verify_tool_profile(profile: str | None = None) -> dict:
         """
         Check which manifest-backed tool binaries are installed on this machine.
         """
-        return verify_tool_profile(profile)
+        return verify_tool_profile(profile or get_config().tool_profile)
+
+    @mcp.tool()
+    async def shikari_explain_tool(tool_id: str, profile: str | None = None) -> dict:
+        """
+        Explain a manifest-backed tool, including command templates and safety notes.
+        """
+        return explain_tool(tool_id, profile or get_config().tool_profile)
+
+    @mcp.tool()
+    async def shikari_run_verified_tool(
+        tool_id: str,
+        inputs: dict,
+        profile: str | None = None,
+        template: str = "safe",
+        dry_run: bool = True,
+    ) -> dict:
+        """
+        Build or run a manifest-backed tool. Defaults to dry-run for safety.
+        """
+        return await run_verified_tool(
+            tool_id=tool_id,
+            inputs=inputs,
+            profile=profile or get_config().tool_profile,
+            template=template,
+            dry_run=dry_run,
+        )
+
+    @mcp.tool()
+    async def shikari_policy_explain(inputs: dict | None = None) -> dict:
+        """
+        Explain local safety gates and target allowlist settings.
+        """
+        return explain_policy(inputs)
 
     logger.info("Discovering tools...")
     discover_tools()
@@ -123,7 +165,12 @@ def parse_args() -> ShikariConfig:
     parser.add_argument(
         "--enable-generated-tools",
         action="store_true",
-        help="Expose generated/experimental placeholder wrappers.",
+        help="Expose generated placeholder wrappers.",
+    )
+    parser.add_argument(
+        "--enable-experimental-tools",
+        action="store_true",
+        help="Expose experimental wrappers and catalog-only agents.",
     )
     parser.add_argument(
         "--require-tool-dependencies",
@@ -136,9 +183,32 @@ def parse_args() -> ShikariConfig:
         help="Allow active/dangerous tools over remote HTTP.",
     )
     parser.add_argument(
+        "--enable-active-tools",
+        action="store_true",
+        help="Allow active network and vulnerability scanning tools locally.",
+    )
+    parser.add_argument(
+        "--enable-offensive-tools",
+        action="store_true",
+        help="Allow offensive tools such as exploitation, payloads, MITM, and wireless tools.",
+    )
+    parser.add_argument(
+        "--enable-credential-tools",
+        action="store_true",
+        help="Allow credential attack tools.",
+    )
+    parser.add_argument(
+        "--target-allowlist",
+        help="Comma-separated authorized domains, hosts, IPs, CIDRs, or paths.",
+    )
+    parser.add_argument(
         "--log-level",
         choices=["DEBUG", "INFO", "WARNING", "ERROR"],
         help="Logging level. Defaults to SHIKARI_LOG_LEVEL or INFO.",
+    )
+    parser.add_argument(
+        "--tool-profile",
+        help="Verified tool profile. Defaults to SHIKARI_TOOL_PROFILE or core.",
     )
 
     args = parser.parse_args()
@@ -160,12 +230,26 @@ def parse_args() -> ShikariConfig:
         config.allow_unauthenticated_http = True
     if args.enable_generated_tools:
         config.enable_generated_tools = True
+    if args.enable_experimental_tools:
+        config.enable_experimental_tools = True
     if args.require_tool_dependencies:
         config.require_tool_dependencies = True
     if args.enable_remote_active_tools:
         config.enable_remote_active_tools = True
+    if args.enable_active_tools:
+        config.enable_active_tools = True
+    if args.enable_offensive_tools:
+        config.enable_offensive_tools = True
+    if args.enable_credential_tools:
+        config.enable_credential_tools = True
+    if args.target_allowlist:
+        config.target_allowlist = [
+            item.strip() for item in args.target_allowlist.split(",") if item.strip()
+        ]
     if args.log_level:
         config.log_level = args.log_level
+    if args.tool_profile:
+        config.tool_profile = args.tool_profile
 
     return config
 
@@ -184,6 +268,44 @@ def run_tools_cli(argv: list[str]) -> int:
 
     list_parser = subparsers.add_parser("list", help="List packaged tool profiles")
     list_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
+
+    explain_parser = subparsers.add_parser("explain", help="Explain one manifest-backed tool")
+    explain_parser.add_argument("tool_id", help="Tool id or binary name")
+    explain_parser.add_argument("--profile", default="core", help="Tool profile to inspect")
+    explain_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
+
+    dry_run_parser = subparsers.add_parser("dry-run", help="Build a verified tool command")
+    dry_run_parser.add_argument("tool_id", help="Tool id or binary name")
+    dry_run_parser.add_argument("--profile", default="core", help="Tool profile to inspect")
+    dry_run_parser.add_argument("--template", default="safe", help="Command template name")
+    dry_run_parser.add_argument(
+        "--input",
+        action="append",
+        default=[],
+        metavar="KEY=VALUE",
+        help="Input value for template placeholders. Can be repeated.",
+    )
+    dry_run_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
+
+    run_parser = subparsers.add_parser("run", help="Run a verified tool")
+    run_parser.add_argument("tool_id", help="Tool id or binary name")
+    run_parser.add_argument("--profile", default="core", help="Tool profile to inspect")
+    run_parser.add_argument("--template", default="safe", help="Command template name")
+    run_parser.add_argument(
+        "--input",
+        action="append",
+        default=[],
+        metavar="KEY=VALUE",
+        help="Input value for template placeholders. Can be repeated.",
+    )
+    run_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
+    run_parser.add_argument("--enable-active-tools", action="store_true", help="Allow active tools for this run")
+    run_parser.add_argument("--enable-offensive-tools", action="store_true", help="Allow offensive tools for this run")
+    run_parser.add_argument("--enable-credential-tools", action="store_true", help="Allow credential tools for this run")
+    run_parser.add_argument("--target-allowlist", help="Comma-separated authorized targets for this run")
+
+    policy_parser = subparsers.add_parser("policy", help="Explain local safety policy")
+    policy_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
 
     args = parser.parse_args(argv)
     if args.command == "verify":
@@ -207,7 +329,91 @@ def run_tools_cli(argv: list[str]) -> int:
                 print(profile)
         return 0
 
+    if args.command == "explain":
+        result = explain_tool(args.tool_id, args.profile)
+        if args.json:
+            print(json.dumps(result, indent=2, sort_keys=True))
+        else:
+            tool = result["tool"]
+            print(f"{tool['display_name']} ({tool['id']})")
+            print(f"Binary: {tool['binary']}")
+            print(f"Category: {tool['category']}")
+            print(f"Scope: {tool['scope']}")
+            print(f"Capabilities: {', '.join(tool['capabilities']) or 'none'}")
+            for note in result["notes"]:
+                print(f"- {note}")
+        return 0
+
+    if args.command == "dry-run":
+        inputs = _parse_key_values(args.input)
+        result = dry_run_verified_tool(args.tool_id, inputs, args.profile, args.template)
+        if args.json:
+            print(json.dumps(result, indent=2, sort_keys=True))
+        else:
+            command = result["command"]
+            print(" ".join(command["argv"]))
+            if command.get("stdin"):
+                print("[stdin]")
+                print(command["stdin"])
+        return 0
+
+    if args.command == "run":
+        import asyncio
+
+        inputs = _parse_key_values(args.input)
+        config = get_config()
+        if args.enable_active_tools:
+            config.enable_active_tools = True
+        if args.enable_offensive_tools:
+            config.enable_offensive_tools = True
+        if args.enable_credential_tools:
+            config.enable_credential_tools = True
+        if args.target_allowlist:
+            config.target_allowlist = [
+                item.strip() for item in args.target_allowlist.split(",") if item.strip()
+            ]
+        set_config(config)
+        result = asyncio.run(
+            run_verified_tool(
+                args.tool_id,
+                inputs,
+                profile=args.profile,
+                template=args.template,
+                dry_run=False,
+            )
+        )
+        if args.json:
+            print(json.dumps(result, indent=2, sort_keys=True))
+        else:
+            print(f"{result['tool']}: {result['status']}")
+            for error in result.get("errors", []):
+                print(f"- {error}")
+            for artifact in result.get("artifacts", []):
+                print(f"artifact: {artifact['path']}")
+        return 0 if result["status"] == "success" else 1
+
+    if args.command == "policy":
+        result = explain_policy()
+        if args.json:
+            print(json.dumps(result, indent=2, sort_keys=True))
+        else:
+            for key, value in result.items():
+                print(f"{key}: {value}")
+        return 0
+
     return 2
+
+
+def _parse_key_values(values: list[str]) -> dict[str, str]:
+    parsed: dict[str, str] = {}
+    for value in values:
+        if "=" not in value:
+            raise ValueError(f"Expected KEY=VALUE input, got: {value}")
+        key, item = value.split("=", 1)
+        if not key:
+            raise ValueError(f"Input key cannot be empty: {value}")
+        parsed[key] = item
+    return parsed
 
 
 def main() -> None:

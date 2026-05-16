@@ -96,6 +96,10 @@ class ToolMetadata:
         return self.quality == ToolQuality.GENERATED
 
     @property
+    def is_experimental(self) -> bool:
+        return self.quality == ToolQuality.EXPERIMENTAL
+
+    @property
     def requires_remote_opt_in(self) -> bool:
         if self.scope == ToolScope.REMOTE:
             return False
@@ -110,6 +114,9 @@ class ToolMetadata:
         config = get_config()
 
         if self.is_generated and not config.enable_generated_tools:
+            return False
+
+        if self.is_experimental and not config.enable_experimental_tools:
             return False
 
         if self.scope == ToolScope.LOCAL and config.is_remote:
@@ -135,6 +142,8 @@ class ToolMetadata:
         config = get_config()
         if self.is_generated and not config.enable_generated_tools:
             return "generated wrapper disabled; set SHIKARI_ENABLE_GENERATED_TOOLS=true to expose"
+        if self.is_experimental and not config.enable_experimental_tools:
+            return "experimental wrapper disabled; set SHIKARI_ENABLE_EXPERIMENTAL_TOOLS=true to expose"
         if self.scope == ToolScope.LOCAL and config.is_remote:
             return "local-only tool blocked in remote HTTP mode"
         if (
@@ -219,7 +228,7 @@ def shikari_tool(
 
     def decorator(func: Callable) -> Callable:
         module = getattr(func, "__module__", "")
-        wrapper_quality = ToolQuality.GENERATED if "auto_generated" in module else ToolQuality(quality)
+        wrapper_quality = _infer_quality(category, module, quality)
         registered_name = _resolve_registered_name(name, category)
         metadata = ToolMetadata(
             name=registered_name,
@@ -265,6 +274,28 @@ def shikari_tool(
         return wrapper
 
     return decorator
+
+
+def _infer_quality(category: str, module: str, quality: ToolQuality | str) -> ToolQuality:
+    """Infer wrapper quality from provenance and category."""
+    if "auto_generated" in module:
+        return ToolQuality.GENERATED
+
+    explicit_quality = ToolQuality(quality)
+    if explicit_quality != ToolQuality.VERIFIED:
+        return explicit_quality
+
+    catalog_agent_categories = {
+        "agent_defensive",
+        "agent_domain",
+        "agent_infrastructure",
+        "agent_intelligence",
+        "agent_offensive",
+    }
+    if category in catalog_agent_categories:
+        return ToolQuality.EXPERIMENTAL
+
+    return explicit_quality
 
 
 def _resolve_registered_name(name: str, category: str) -> str:

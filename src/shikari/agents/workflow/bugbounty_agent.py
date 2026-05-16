@@ -3,8 +3,6 @@ from typing import Any
 from fastmcp import Context
 
 from shikari.agents._base_agent import BaseAgent
-from shikari.core.executor import execute_command
-from shikari.core.result_parser import extract_security_findings
 from shikari.tools._base import ToolScope, shikari_tool
 
 
@@ -17,28 +15,16 @@ class BugBountyAgent(BaseAgent):
 
     async def plan(self, domain: str, **kwargs: Any) -> list[dict[str, Any]]:
         return [
-            {"name": "subdomains", "tool": "subfinder", "cmd": ["subfinder", "-d", domain, "-silent"]},
+            {"name": "subdomains", "tool": "subfinder_enum", "inputs": {"target": domain}},
             {
                 "name": "live_hosts",
-                "tool": "httpx",
-                "cmd": ["httpx", "-silent", "-tech-detect", "-status-code", "-title"],
-                "stdin_from": "subdomains",
+                "tool": "httpx_probe",
+                "inputs_from": {"targets": "subdomains"},
             },
             {
                 "name": "vulnerability_templates",
-                "tool": "nuclei",
-                "cmd": [
-                    "nuclei",
-                    "-tags",
-                    "cve,sqli,xss,lfi,exposure",
-                    "-severity",
-                    "medium,high,critical",
-                    "-jsonl",
-                    "-silent",
-                    "-no-color",
-                ],
-                "stdin_from": "live_hosts",
-                "timeout": 900,
+                "tool": "nuclei_scan",
+                "inputs_from": {"targets": "live_hosts"},
             },
         ]
 
@@ -48,27 +34,25 @@ class BugBountyAgent(BaseAgent):
         ctx: Context | None = None,
         **kwargs: Any,
     ) -> dict[str, Any]:
-        results: dict[str, Any] = {}
-        for i, step in enumerate(plan):
-            if ctx:
-                await ctx.report_progress(i, len(plan))
-                await ctx.info(f"[{self.name}] Running {step['tool']}...")
-
-            stdin = None
-            if step.get("stdin_from"):
-                stdin = str(results.get(step["stdin_from"], ""))
-                if not stdin.strip():
-                    results[step["name"]] = f"Skipped {step['tool']}: no input from {step['stdin_from']}."
-                    continue
-
-            result = await execute_command(step["cmd"], timeout=int(step.get("timeout", 300)), stdin=stdin)
-            results[step["name"]] = result.output
-        return results
+        return await self.execute_verified_plan(plan, ctx=ctx, **kwargs)
 
     async def analyze(self, results: dict[str, Any]) -> list[dict[str, Any]]:
         findings: list[dict[str, Any]] = []
-        for source, output in results.items():
-            findings.extend(extract_security_findings(str(output), source=source))
+        for source, result in results.items():
+            if not isinstance(result, dict):
+                continue
+            for finding in result.get("findings", []):
+                findings.append({
+                    "severity": finding.get("severity", "INFO").upper(),
+                    "title": finding.get("title", source),
+                    "detail": finding.get("description") or str(finding.get("evidence", ""))[:500],
+                })
+            if result.get("status") in {"blocked", "failed"}:
+                findings.append({
+                    "severity": "INFO",
+                    "title": f"{source} {result.get('status')}",
+                    "detail": "; ".join(result.get("errors", [])),
+                })
         return findings
 
 
