@@ -11,7 +11,7 @@ env:
 
 jobs:
   lint:
-    name: Lint (shellcheck)
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,6 +22,14 @@ jobs:
       - name: Run shellcheck on all scripts
         run: |
           shellcheck scripts/*.sh
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - name: Install Python dependencies
+        run: uv sync --group dev
+      - name: Run Ruff
+        run: uv run ruff check src tests
 
   test:
     name: Test Python ${{ matrix.python-version }}
@@ -90,7 +98,7 @@ jobs:
           file: docker/Dockerfile
           push: false
           load: true
-          tags: shikari:ci-test
+          tags: shikari:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -102,25 +110,7 @@ jobs:
           push: false
           load: true
           tags: shikari-core:ci-test
+          build-args: |
+            BASE_IMAGE=shikari:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      - name: Build web profile image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: docker/Dockerfile.web
-          push: false
-          load: true
-          tags: shikari-web:ci-test
-          cache-from: type=gha
-
-      - name: Build full profile image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: docker/Dockerfile.full
-          push: false
-          load: true
-          tags: shikari-full:ci-test
-          cache-from: type=gha

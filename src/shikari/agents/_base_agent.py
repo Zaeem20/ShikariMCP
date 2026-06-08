@@ -1,5 +1,6 @@
 ﻿# ShikariMCP â€” Base Agent Class
 
+import asyncio
 import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -27,6 +28,7 @@ class AgentResult:
     """Structured result from an agent execution."""
     agent_name: str
     success: bool
+    status: str
     summary: str
     findings: list[dict[str, Any]] = field(default_factory=list)
     recommendations: list[str] = field(default_factory=list)
@@ -38,7 +40,7 @@ class AgentResult:
         lines = [
             f"# {self.agent_name} Report",
             "",
-            f"**Status:** {'âœ… Success' if self.success else 'âŒ Failed'}",
+            f"**Status:** {self.status.title()}",
             "",
             f"## Summary",
             self.summary,
@@ -124,6 +126,7 @@ class BaseAgent(ABC):
             return AgentResult(
                 agent_name=self.name,
                 success=False,
+                status="failed",
                 summary=f"Agent execution failed: {str(e)}",
             )
 
@@ -200,36 +203,56 @@ class BaseAgent(ABC):
     ) -> dict[str, Any]:
         """Execute a manifest-backed plan and return structured step results."""
         results: dict[str, Any] = {}
-        for i, step in enumerate(plan):
-            step_name = step.get("name", f"step_{i + 1}")
-            tool_id = step.get("tool")
-            inputs = dict(step.get("inputs", {}))
+        pending = {
+            step.get("name", f"step_{index + 1}"): step
+            for index, step in enumerate(plan)
+        }
+        completed = 0
 
-            for key, source in step.get("inputs_from", {}).items():
-                inputs[key] = self._extract_targets(results.get(source))
+        while pending:
+            ready = [
+                (name, step)
+                for name, step in pending.items()
+                if set(step.get("inputs_from", {}).values()).issubset(results)
+            ]
+            if not ready:
+                for name in pending:
+                    results[name] = {
+                        "status": "failed",
+                        "errors": ["Workflow dependency cycle or missing source step."],
+                    }
+                break
 
-            if ctx:
-                await ctx.report_progress(i, len(plan))
-                await ctx.info(f"[{self.name}] Running {tool_id}...")
+            async def run_step(name: str, step: dict[str, Any]) -> tuple[str, dict[str, Any]]:
+                tool_id = step.get("tool")
+                inputs = dict(step.get("inputs", {}))
+                for key, source in step.get("inputs_from", {}).items():
+                    inputs[key] = self._extract_targets(results.get(source))
 
-            if not tool_id:
-                results[step_name] = {"status": "skipped", "errors": ["No tool id defined."]}
-                continue
+                if ctx:
+                    await ctx.info(f"[{self.name}] Running {tool_id}...")
+                if not tool_id:
+                    return name, {"status": "skipped", "errors": ["No tool id defined."]}
+                if any(value == "" for value in inputs.values()):
+                    return name, {
+                        "status": "skipped",
+                        "errors": ["Required input from previous step was empty."],
+                    }
+                return name, await run_verified_tool(
+                    tool_id=tool_id,
+                    inputs=inputs,
+                    profile=step.get("profile", "core"),
+                    template=step.get("template", "safe"),
+                    dry_run=bool(step.get("dry_run", False)),
+                )
 
-            if any(value == "" for value in inputs.values()):
-                results[step_name] = {
-                    "status": "skipped",
-                    "errors": ["Required input from previous step was empty."],
-                }
-                continue
-
-            results[step_name] = await run_verified_tool(
-                tool_id=tool_id,
-                inputs=inputs,
-                profile=step.get("profile", "core"),
-                template=step.get("template", "safe"),
-                dry_run=bool(step.get("dry_run", False)),
-            )
+            batch = await asyncio.gather(*(run_step(name, step) for name, step in ready))
+            for name, result in batch:
+                results[name] = result
+                pending.pop(name, None)
+                completed += 1
+                if ctx:
+                    await ctx.report_progress(completed, len(plan))
         return results
 
     def _extract_targets(self, result: Any) -> str:
@@ -245,6 +268,10 @@ class BaseAgent(ABC):
             value = endpoint.get("url")
             if value:
                 values.append(str(value))
+        for service in result.get("services", []):
+            value = service.get("host")
+            if value:
+                values.append(str(value))
         return "\n".join(dict.fromkeys(values))
 
     async def report(
@@ -256,10 +283,26 @@ class BaseAgent(ABC):
         Generate the final agent report.
         Override in subclasses for custom reporting.
         """
+        statuses = {
+            str(value.get("status"))
+            for value in results.values()
+            if isinstance(value, dict) and value.get("status")
+        }
+        if statuses.intersection({"failed"}):
+            status = "failed"
+        elif statuses.intersection({"blocked", "skipped", "degraded"}):
+            status = "degraded"
+        else:
+            status = "success"
         return AgentResult(
             agent_name=self.name,
-            success=True,
-            summary=f"{self.name} completed with {len(findings)} findings.",
+            success=status != "failed",
+            status=status,
+            summary=(
+                f"{self.name} completed with status {status} and "
+                f"{len(findings)} finding(s) across {len(results)} step(s)."
+            ),
             findings=findings,
             raw_outputs={k: str(v)[:1000] for k, v in results.items()},
+            metadata={"step_statuses": sorted(statuses)},
         )

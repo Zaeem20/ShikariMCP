@@ -124,9 +124,9 @@ This is the active implementation checklist for the local-first ShikariMCP goal:
 - [x] Add optional SecLists install.
 - [x] Add macOS Homebrew best-effort support.
 - [x] Add `docker/Dockerfile.core`.
-- [x] Add `docker/Dockerfile.web`.
-- [x] Add `docker/Dockerfile.full`.
-- [x] Add Docker Compose profiles.
+- [x] Keep the production Docker image scoped to the verified core profile.
+- [x] Keep broader workstation profiles in the host installer instead of privileged images.
+- [x] Add hardened root-level Docker Compose deployment.
 - [x] Add Docker verification step: `shikari tools verify --profile core --json`.
 
 ## P6 - Tool Profile Expansion
@@ -183,3 +183,28 @@ These are useful later, but not required for the local-first standalone MCP goal
 - [ ] Multi-user hosted deployment.
 - [ ] Web dashboard.
 - [ ] Full approval workflow with separate approver identity.
+
+## P8 - Production Runtime Hardening
+
+- [x] Kill complete subprocess trees on timeout and MCP cancellation.
+- [x] Drain subprocess output concurrently and bound in-memory output.
+- [x] Store complete stdout/stderr and parsed evidence as confined artifacts.
+- [x] Add background submit, poll, list, cancel, and artifact-read MCP APIs.
+- [x] Move dependency scans, DNS policy checks, and parsing off the event loop.
+- [x] Add stateful Streamable HTTP event replay.
+- [x] Add Host and Origin validation for DNS-rebinding protection.
+- [x] Block local-scope manifest tools in remote HTTP.
+- [x] Fix allowlist prefix bypasses and cloud metadata hostname handling.
+- [x] Hide legacy direct wrappers from the production MCP surface.
+- [x] Reduce the default schema surface to implemented workflows and control APIs.
+- [x] Add bounded tool inputs and target counts.
+- [x] Separate services and endpoints in structured run results.
+- [x] Make agent workflow steps execute independent DAG branches concurrently.
+- [x] Pin the production Python and core external-tool dependency ranges.
+- [x] Make the core installer exclude offensive, credential, and forensic suites.
+- [x] Replace the broad Docker image with a non-root verified core image.
+- [x] Add hardened root Compose deployment.
+- [x] Add cancellation, artifact, HTTP-header, background-run, and policy regression tests.
+- [x] Update README and deployment documentation to match actual behavior.
+- [ ] Verify the Docker build on a machine with Docker Engine or in CI.
+- [ ] Run the CI matrix on Python 3.11, 3.12, and 3.13.

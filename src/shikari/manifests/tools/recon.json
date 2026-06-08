@@ -31,7 +31,7 @@
       "approval": "none",
       "target_types": ["domain", "stdin_list"],
       "version_command": ["dnsx", "-version"],
-      "install": {"go": "github.com/projectdiscovery/dnsx/cmd/dnsx@latest"},
+      "install": {"go": "github.com/projectdiscovery/dnsx/cmd/dnsx@v1.2.3"},
       "command_templates": {
         "safe": {"argv": ["dnsx", "-json", "-silent", "-a", "-resp"], "stdin": "{targets}", "timeout": 300, "output_format": "jsonl"}
       },
@@ -48,7 +48,7 @@
       "approval": "none",
       "target_types": ["cidr"],
       "version_command": ["mapcidr", "-version"],
-      "install": {"go": "github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest"},
+      "install": {"go": "github.com/projectdiscovery/mapcidr/cmd/mapcidr@v1.1.97"},
       "command_templates": {
         "safe": {"argv": ["mapcidr", "-cidr", "{target}", "-silent"], "timeout": 120, "output_format": "text"}
       },
@@ -65,7 +65,7 @@
       "approval": "none",
       "target_types": ["query"],
       "version_command": ["uncover", "-version"],
-      "install": {"go": "github.com/projectdiscovery/uncover/cmd/uncover@latest"},
+      "install": {"go": "github.com/projectdiscovery/uncover/cmd/uncover@v1.2.1"},
       "command_templates": {
         "safe": {"argv": ["uncover", "-q", "{query}", "-json", "-silent"], "timeout": 300, "output_format": "jsonl"}
       },

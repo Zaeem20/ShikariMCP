@@ -35,7 +35,7 @@
       "approval": "none",
       "target_types": ["domain"],
       "version_command": ["subfinder", "-version"],
-      "install": {"go": "github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest"},
+      "install": {"go": "github.com/projectdiscovery/subfinder/v2/cmd/subfinder@v2.14.0"},
       "command_templates": {
         "safe": {
           "argv": ["subfinder", "-d", "{target}", "-silent", "-oJ"],
@@ -56,7 +56,7 @@
       "approval": "active_tools",
       "target_types": ["url", "host", "stdin_list"],
       "version_command": ["httpx", "-version"],
-      "install": {"go": "github.com/projectdiscovery/httpx/cmd/httpx@latest"},
+      "install": {"go": "github.com/projectdiscovery/httpx/cmd/httpx@v1.9.0"},
       "command_templates": {
         "safe": {
           "argv": ["httpx", "-silent", "-json", "-status-code", "-title", "-tech-detect", "-content-length", "-response-time"],
@@ -78,7 +78,7 @@
       "approval": "active_tools",
       "target_types": ["url", "host", "stdin_list"],
       "version_command": ["nuclei", "-version"],
-      "install": {"go": "github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest"},
+      "install": {"go": "github.com/projectdiscovery/nuclei/v3/cmd/nuclei@v3.8.0"},
       "command_templates": {
         "safe": {
           "argv": ["nuclei", "-j", "-omit-raw", "-severity", "low,medium,high,critical", "-rl", "50", "-duc"],
@@ -102,7 +102,7 @@
       "version_command": ["naabu", "-version"],
       "install": {
         "apt": ["libpcap-dev"],
-        "go": "github.com/projectdiscovery/naabu/v2/cmd/naabu@latest"
+        "go": "github.com/projectdiscovery/naabu/v2/cmd/naabu@v2.5.0"
       },
       "command_templates": {
         "safe": {
@@ -125,7 +125,7 @@
       "approval": "active_tools",
       "target_types": ["url", "stdin_list"],
       "version_command": ["katana", "-version"],
-      "install": {"go": "github.com/projectdiscovery/katana/cmd/katana@latest"},
+      "install": {"go": "github.com/projectdiscovery/katana/cmd/katana@v1.6.1"},
       "command_templates": {
         "safe": {
           "argv": ["katana", "-silent", "-jsonl", "-depth", "2", "-field", "url", "-rl", "50"],
@@ -147,7 +147,7 @@
       "approval": "active_tools",
       "target_types": ["url"],
       "version_command": ["ffuf", "-V"],
-      "install": {"go": "github.com/ffuf/ffuf/v2@latest"},
+      "install": {"go": "github.com/ffuf/ffuf/v2@v2.1.0"},
       "command_templates": {
         "safe": {
           "argv": ["ffuf", "-u", "{url}", "-w", "{wordlist}", "-json", "-rate", "50"],
@@ -168,7 +168,7 @@
       "approval": "active_tools",
       "target_types": ["url"],
       "version_command": ["gobuster", "version"],
-      "install": {"go": "github.com/OJ/gobuster/v3@latest"},
+      "install": {"go": "github.com/OJ/gobuster/v3@v3.8.2"},
       "command_templates": {
         "safe": {
           "argv": ["gobuster", "dir", "-u", "{url}", "-w", "{wordlist}", "-q", "--no-progress", "-t", "20"],

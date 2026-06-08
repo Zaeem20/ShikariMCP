@@ -65,7 +65,7 @@
       "approval": "active_tools",
       "target_types": ["url"],
       "version_command": ["dalfox", "version"],
-      "install": {"go": "github.com/hahwul/dalfox/v2@latest"},
+      "install": {"go": "github.com/hahwul/dalfox/v2@v2.12.0"},
       "command_templates": {
         "safe": {"argv": ["dalfox", "url", "{url}", "--format", "json", "--silence"], "timeout": 900, "output_format": "json"}
       },
@@ -116,7 +116,7 @@
       "approval": "active_tools",
       "target_types": ["host", "stdin_list"],
       "version_command": ["tlsx", "-version"],
-      "install": {"go": "github.com/projectdiscovery/tlsx/cmd/tlsx@latest"},
+      "install": {"go": "github.com/projectdiscovery/tlsx/cmd/tlsx@v1.2.2"},
       "command_templates": {
         "safe": {"argv": ["tlsx", "-json", "-silent"], "stdin": "{targets}", "timeout": 300, "output_format": "jsonl"}
       },

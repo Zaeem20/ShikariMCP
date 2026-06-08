@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import threading
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -11,6 +12,7 @@ from typing import Any
 from shikari.config import get_config
 
 logger = logging.getLogger("shikari.audit")
+_audit_lock = threading.Lock()
 
 
 def audit_event(event_type: str, **fields: Any) -> None:
@@ -26,9 +28,10 @@ def audit_event(event_type: str, **fields: Any) -> None:
     }
 
     try:
-        path = Path(config.audit_log_path)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        with path.open("a", encoding="utf-8") as handle:
-            handle.write(json.dumps(record, sort_keys=True) + "\n")
+        with _audit_lock:
+            path = Path(config.audit_log_path)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with path.open("a", encoding="utf-8") as handle:
+                handle.write(json.dumps(record, sort_keys=True) + "\n")
     except Exception as exc:
         logger.warning("Failed to write audit event: %s", exc)

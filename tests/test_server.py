@@ -156,8 +156,14 @@ class TestToolRegistration:
             assert "shikari_status" in tool_names
             assert "shikari_list_verified_tools" in tool_names
             assert "shikari_verify_tool_profile" in tool_names
+            assert "shikari_dependency_health" in tool_names
             assert "shikari_explain_tool" in tool_names
             assert "shikari_run_verified_tool" in tool_names
+            assert "shikari_submit_verified_tool" in tool_names
+            assert "shikari_get_run" in tool_names
+            assert "shikari_list_runs" in tool_names
+            assert "shikari_cancel_run" in tool_names
+            assert "shikari_read_artifact" in tool_names
             assert "shikari_policy_explain" in tool_names
 
     @pytest.mark.asyncio
@@ -171,22 +177,21 @@ class TestToolRegistration:
             assert result.content
             text = result.content[0].text
             assert "ShikariMCP" in text
-            assert "0.1.0" in text
+            assert "0.2.0" in text
 
     @pytest.mark.asyncio
     async def test_tools_registered(self, stdio_config):
-        """Verify that a substantial number of tools are registered."""
+        """The default surface should stay compact enough for AI clients."""
         from fastmcp.client import Client
 
         mcp = create_server(stdio_config)
         async with Client(mcp) as client:
             tools = await client.list_tools()
-            # We should have at least 100 tools registered
-            assert len(tools) > 100, f"Expected 100+ tools, got {len(tools)}"
+            assert 10 <= len(tools) <= 30
 
     @pytest.mark.asyncio
     async def test_known_tools_exist(self, stdio_config):
-        """Verify specific well-known tools are registered."""
+        """Legacy direct wrappers should not bypass the manifest runner."""
         from fastmcp.client import Client
 
         mcp = create_server(stdio_config)
@@ -194,13 +199,10 @@ class TestToolRegistration:
             tools = await client.list_tools()
             tool_names = {t.name for t in tools}
 
-            # Core recon tools
-            assert "nmap_scan" in tool_names
-            assert "masscan" in tool_names
-
-            # Password tools
-            assert "hashcat_crack" in tool_names
-            assert "john_crack" in tool_names
+            assert "shikari_run_verified_tool" in tool_names
+            assert "nmap_scan" not in tool_names
+            assert "masscan" not in tool_names
+            assert "hashcat_crack" not in tool_names
 
     @pytest.mark.asyncio
     async def test_agent_tools_registered(self, stdio_config):

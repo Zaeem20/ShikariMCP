@@ -3,16 +3,20 @@
 from __future__ import annotations
 
 import argparse
+import asyncio
 import json
 import logging
 import sys
 
 from fastmcp import FastMCP
 
+from shikari import __version__
 from shikari.config import ShikariConfig, TransportMode, get_config, set_config
+from shikari.core.artifacts import read_artifact
 from shikari.core.auth import get_auth_provider
 from shikari.core.policy import explain_policy
 from shikari.core.registry import discover_tools, get_tool_health, register_tools_with_mcp
+from shikari.core.run_manager import get_run_manager
 from shikari.core.tool_manifest import (
     explain_tool,
     list_tool_profiles,
@@ -36,6 +40,9 @@ def create_server(config: ShikariConfig) -> FastMCP:
 
     mcp = FastMCP(
         "ShikariMCP",
+        version=__version__,
+        mask_error_details=True,
+        strict_input_validation=True,
         instructions=(
             "ShikariMCP exposes verified security tooling through MCP with "
             "scope-aware execution, dependency health, audit logging, and "
@@ -53,7 +60,7 @@ def create_server(config: ShikariConfig) -> FastMCP:
         config = get_config()
         return {
             "server": "ShikariMCP",
-            "version": "0.1.0",
+            "version": __version__,
             "transport": config.transport.value,
             "host": config.host if config.is_http else None,
             "port": config.port if config.is_http else None,
@@ -61,6 +68,7 @@ def create_server(config: ShikariConfig) -> FastMCP:
             "auth_enabled": config.auth_enabled,
             "generated_tools_enabled": config.enable_generated_tools,
             "experimental_tools_enabled": config.enable_experimental_tools,
+            "legacy_tools_enabled": config.enable_legacy_tools,
             "remote_active_tools_enabled": config.enable_remote_active_tools,
             "active_tools_enabled": config.enable_active_tools,
             "offensive_tools_enabled": config.enable_offensive_tools,
@@ -70,7 +78,8 @@ def create_server(config: ShikariConfig) -> FastMCP:
             "tool_profile": config.tool_profile,
             "max_concurrent_tools": config.max_concurrent_tools,
             "audit_enabled": config.audit_enabled,
-            "tools": get_tool_health(),
+            "background_run_capacity": config.max_background_runs,
+            "tools": get_tool_health(include_dependencies=False),
         }
 
     @mcp.tool()
@@ -85,7 +94,17 @@ def create_server(config: ShikariConfig) -> FastMCP:
         """
         Check which manifest-backed tool binaries are installed on this machine.
         """
-        return verify_tool_profile(profile or get_config().tool_profile)
+        return await asyncio.to_thread(
+            verify_tool_profile,
+            profile or get_config().tool_profile,
+        )
+
+    @mcp.tool()
+    async def shikari_dependency_health() -> dict:
+        """
+        Scan installed binaries for exposed wrappers without blocking the event loop.
+        """
+        return await asyncio.to_thread(get_tool_health, True)
 
     @mcp.tool()
     async def shikari_explain_tool(tool_id: str, profile: str | None = None) -> dict:
@@ -114,6 +133,50 @@ def create_server(config: ShikariConfig) -> FastMCP:
         )
 
     @mcp.tool()
+    async def shikari_submit_verified_tool(
+        tool_id: str,
+        inputs: dict,
+        profile: str | None = None,
+        template: str = "safe",
+    ) -> dict:
+        """
+        Submit a manifest-backed tool as a background run and return immediately.
+
+        Prefer this for scans expected to take more than a few seconds. Poll with
+        shikari_get_run and cancel with shikari_cancel_run.
+        """
+        return await get_run_manager().submit(
+            tool_id=tool_id,
+            inputs=inputs,
+            profile=profile or get_config().tool_profile,
+            template=template,
+        )
+
+    @mcp.tool()
+    async def shikari_get_run(run_id: str) -> dict:
+        """Get status and structured results for a background run."""
+        return await get_run_manager().get(run_id)
+
+    @mcp.tool()
+    async def shikari_list_runs(limit: int = 20) -> dict:
+        """List recent background runs without embedding their full results."""
+        return await get_run_manager().list(limit)
+
+    @mcp.tool()
+    async def shikari_cancel_run(run_id: str) -> dict:
+        """Cancel a queued or running background tool and terminate its process tree."""
+        return await get_run_manager().cancel(run_id)
+
+    @mcp.tool()
+    async def shikari_read_artifact(
+        path: str,
+        offset: int = 0,
+        max_chars: int = 20000,
+    ) -> dict:
+        """Read a bounded segment from a Shikari artifact."""
+        return await asyncio.to_thread(read_artifact, path, offset, max_chars)
+
+    @mcp.tool()
     async def shikari_policy_explain(inputs: dict | None = None) -> dict:
         """
         Explain local safety gates and target allowlist settings.
@@ -121,7 +184,10 @@ def create_server(config: ShikariConfig) -> FastMCP:
         return explain_policy(inputs)
 
     logger.info("Discovering tools...")
-    discover_tools()
+    if config.enable_legacy_tools or config.enable_experimental_tools:
+        discover_tools()
+    else:
+        discover_tools(packages=["shikari.agents.workflow"])
     tool_count = register_tools_with_mcp(mcp)
     logger.info("Server ready with %s exposed tools", tool_count)
 
@@ -168,6 +234,11 @@ def parse_args() -> ShikariConfig:
         help="Expose generated placeholder wrappers.",
     )
     parser.add_argument(
+        "--enable-legacy-tools",
+        action="store_true",
+        help="Expose direct legacy wrappers in addition to the manifest-backed production surface.",
+    )
+    parser.add_argument(
         "--enable-experimental-tools",
         action="store_true",
         help="Expose experimental wrappers and catalog-only agents.",
@@ -210,6 +281,24 @@ def parse_args() -> ShikariConfig:
         "--tool-profile",
         help="Verified tool profile. Defaults to SHIKARI_TOOL_PROFILE or core.",
     )
+    parser.add_argument(
+        "--http-json-response",
+        action="store_true",
+        help="Return plain JSON responses instead of SSE streams for Streamable HTTP.",
+    )
+    parser.add_argument(
+        "--http-stateless",
+        action="store_true",
+        help="Disable HTTP session state. Not recommended for interactive AI clients.",
+    )
+    parser.add_argument(
+        "--http-allowed-hosts",
+        help="Comma-separated allowed Host headers, for example localhost:*,mcp.example.com.",
+    )
+    parser.add_argument(
+        "--http-allowed-origins",
+        help="Comma-separated allowed browser Origin headers.",
+    )
 
     args = parser.parse_args()
     config = ShikariConfig.from_env()
@@ -230,6 +319,8 @@ def parse_args() -> ShikariConfig:
         config.allow_unauthenticated_http = True
     if args.enable_generated_tools:
         config.enable_generated_tools = True
+    if args.enable_legacy_tools:
+        config.enable_legacy_tools = True
     if args.enable_experimental_tools:
         config.enable_experimental_tools = True
     if args.require_tool_dependencies:
@@ -250,6 +341,18 @@ def parse_args() -> ShikariConfig:
         config.log_level = args.log_level
     if args.tool_profile:
         config.tool_profile = args.tool_profile
+    if args.http_json_response:
+        config.http_json_response = True
+    if args.http_stateless:
+        config.http_stateless = True
+    if args.http_allowed_hosts:
+        config.http_allowed_hosts = [
+            item.strip() for item in args.http_allowed_hosts.split(",") if item.strip()
+        ]
+    if args.http_allowed_origins:
+        config.http_allowed_origins = [
+            item.strip() for item in args.http_allowed_origins.split(",") if item.strip()
+        ]
 
     return config
 
@@ -442,13 +545,60 @@ def main() -> None:
         raise SystemExit(2) from exc
 
     if config.is_http:
-        mcp.run(
-            transport="streamable-http",
-            host=config.host,
-            port=config.port,
-        )
+        _run_http_server(mcp, config)
     else:
         mcp.run(transport="stdio")
+
+
+def _run_http_server(mcp: FastMCP, config: ShikariConfig) -> None:
+    """Run stateful Streamable HTTP with resumable events and header validation."""
+    import uvicorn
+    from fastmcp.server.event_store import EventStore
+    from starlette.middleware import Middleware
+
+    from shikari.core.http_security import HostOriginSecurityMiddleware
+
+    allowed_hosts = config.http_allowed_hosts or [
+        "localhost:*",
+        "127.0.0.1:*",
+        "[::1]:*",
+        f"{config.host}:*",
+    ]
+    allowed_origins = config.http_allowed_origins or [
+        "http://localhost:*",
+        "http://127.0.0.1:*",
+        "https://localhost:*",
+        "https://127.0.0.1:*",
+    ]
+    middleware = [
+        Middleware(
+            HostOriginSecurityMiddleware,
+            allowed_hosts=allowed_hosts,
+            allowed_origins=allowed_origins,
+        )
+    ]
+    event_store = None
+    if not config.http_stateless and not config.http_json_response:
+        event_store = EventStore(ttl=config.http_event_ttl)
+
+    app = mcp.http_app(
+        path="/mcp",
+        transport="streamable-http",
+        middleware=middleware,
+        json_response=config.http_json_response,
+        stateless_http=config.http_stateless,
+        event_store=event_store,
+        retry_interval=config.http_retry_interval_ms if event_store else None,
+    )
+    uvicorn.run(
+        app,
+        host=config.host,
+        port=config.port,
+        log_level=config.log_level.lower(),
+        timeout_keep_alive=30,
+        limit_concurrency=max(20, config.max_concurrent_tools * 4),
+        timeout_graceful_shutdown=10,
+    )
 
 
 if __name__ == "__main__":

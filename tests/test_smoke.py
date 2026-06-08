@@ -20,9 +20,9 @@ async def test_server_tools_and_status():
         # Verify our health check tool is available
         assert "shikari_status" in tools_dict
         
-        # Optionally, verify some tools from our Recon package exist
-        assert "nmap_scan" in tools_dict
-        assert "masscan" in tools_dict
+        assert "shikari_list_verified_tools" in tools_dict
+        assert "shikari_submit_verified_tool" in tools_dict
+        assert "nmap_scan" not in tools_dict
 
         # Call the status tool
         result = await client.call_tool("shikari_status", {})
@@ -31,4 +31,3 @@ async def test_server_tools_and_status():
         assert result.content
         assert len(result.content) > 0
         assert "ShikariMCP" in result.content[0].text
-

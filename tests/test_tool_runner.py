@@ -27,6 +27,44 @@ def test_dry_run_reports_missing_input():
         dry_run_verified_tool("nmap_scan", {})
 
 
+def test_common_target_aliases_are_normalized():
+    httpx = dry_run_verified_tool("httpx_probe", {"target": "https://example.com"})
+    trivy = dry_run_verified_tool("trivy_scan", {"target": "."})
+    ffuf = dry_run_verified_tool(
+        "ffuf_fuzz",
+        {"target": "https://example.com/FUZZ"},
+    )
+
+    assert httpx["command"]["stdin"] == "https://example.com"
+    assert trivy["command"]["argv"][-1] == "."
+    assert ffuf["command"]["argv"][2] == "https://example.com/FUZZ"
+    assert "-w" in ffuf["command"]["argv"]
+
+
+def test_input_option_prefix_is_rejected():
+    with pytest.raises(ValueError, match="option prefix"):
+        dry_run_verified_tool("nmap_scan", {"target": "--script=unsafe"})
+
+
+def test_output_file_is_allocated_for_file_output():
+    result = dry_run_verified_tool("nikto_scan", {"target": "https://example.com"})
+    output_index = result["command"]["argv"].index("-output") + 1
+    assert result["command"]["argv"][output_index].endswith(".json")
+
+
+def test_output_file_cannot_escape_artifact_directory(tmp_path):
+    outside = tmp_path / "outside.json"
+    result = dry_run_verified_tool(
+        "nikto_scan",
+        {
+            "target": "https://example.com",
+            "output_file": str(outside),
+        },
+    )
+    output_index = result["command"]["argv"].index("-output") + 1
+    assert result["command"]["argv"][output_index] != str(outside)
+
+
 @pytest.mark.asyncio
 async def test_run_verified_tool_defaults_to_dry_run():
     result = await run_verified_tool("whois_lookup", {"target": "example.com"})

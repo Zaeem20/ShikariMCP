@@ -136,7 +136,12 @@ class TestToolDiscovery:
 class TestScopeFiltering:
     def test_all_tools_available_in_stdio(self):
         """In stdio mode, non-generated tools should be available."""
-        set_config(ShikariConfig(transport=TransportMode.STDIO))
+        set_config(ShikariConfig(
+            transport=TransportMode.STDIO,
+            enable_active_tools=True,
+            enable_offensive_tools=True,
+            enable_credential_tools=True,
+        ))
         discover_tools()
         registry = get_tool_registry()
         for name, meta in registry.items():
@@ -146,7 +151,13 @@ class TestScopeFiltering:
 
     def test_all_tools_available_in_http_local(self):
         """In HTTP+local mode, non-generated tools should be available."""
-        set_config(ShikariConfig(transport=TransportMode.HTTP, local_mode=True))
+        set_config(ShikariConfig(
+            transport=TransportMode.HTTP,
+            local_mode=True,
+            enable_active_tools=True,
+            enable_offensive_tools=True,
+            enable_credential_tools=True,
+        ))
         discover_tools()
         registry = get_tool_registry()
         for name, meta in registry.items():
@@ -156,7 +167,14 @@ class TestScopeFiltering:
 
     def test_local_tools_blocked_in_remote_http(self):
         """In HTTP without --local, LOCAL tools should be blocked."""
-        set_config(ShikariConfig(transport=TransportMode.HTTP, local_mode=False))
+        set_config(ShikariConfig(
+            transport=TransportMode.HTTP,
+            local_mode=False,
+            enable_active_tools=True,
+            enable_offensive_tools=True,
+            enable_credential_tools=True,
+            enable_remote_active_tools=True,
+        ))
         discover_tools()
         registry = get_tool_registry()
         
@@ -168,8 +186,15 @@ class TestScopeFiltering:
                 )
 
     def test_remote_tools_always_available(self):
-        """REMOTE scope tools should be available regardless of transport."""
-        set_config(ShikariConfig(transport=TransportMode.HTTP, local_mode=False))
+        """REMOTE scope tools are available when their safety gates are enabled."""
+        set_config(ShikariConfig(
+            transport=TransportMode.HTTP,
+            local_mode=False,
+            enable_active_tools=True,
+            enable_offensive_tools=True,
+            enable_credential_tools=True,
+            enable_remote_active_tools=True,
+        ))
         discover_tools()
         registry = get_tool_registry()
         

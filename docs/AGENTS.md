@@ -1,6 +1,6 @@
 # Agents
 
-ShikariMCP exposes 50 AI subagents as MCP tools. Each follows a structured **plan → execute → analyze → report** workflow.
+ShikariMCP exposes four implemented workflow agents by default. The repository also retains a larger experimental agent catalog, but those entries are hidden unless experimental compatibility mode is enabled.
 
 ## Workflow Agents (13)
 

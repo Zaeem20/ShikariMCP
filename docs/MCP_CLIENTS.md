@@ -33,7 +33,7 @@ This guide covers configuring ShikariMCP with popular MCP-compatible AI clients.
 }
 ```
 
-### With Generated Tools Enabled
+### With Compatibility Wrappers Enabled
 
 ```json
 {
@@ -42,6 +42,7 @@ This guide covers configuring ShikariMCP with popular MCP-compatible AI clients.
       "command": "shikari",
       "args": [
         "--transport", "stdio",
+        "--enable-legacy-tools",
         "--enable-generated-tools",
         "--require-tool-dependencies"
       ]

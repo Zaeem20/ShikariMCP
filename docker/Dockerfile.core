@@ -1,3 +1,4 @@
-FROM shikari:latest
+ARG BASE_IMAGE=shikari:latest
+FROM ${BASE_IMAGE}
 ENV SHIKARI_TOOL_PROFILE=core
-RUN shikari tools list --json >/tmp/shikari-profiles.json
+RUN shikari tools verify --profile core --json

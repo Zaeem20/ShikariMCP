@@ -1,116 +1,176 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/Tools-Verified%20First-blueviolet?style=for-the-badge&logo=hackthebox&logoColor=white" alt="Tools" />
-  <img src="https://img.shields.io/badge/AI%20Agents-50-ff6600?style=for-the-badge&logo=openai&logoColor=white" alt="Agents" />
-  <img src="https://img.shields.io/badge/Transport-stdio%20%2B%20HTTP-00bcd4?style=for-the-badge&logo=fastapi&logoColor=white" alt="Transport" />
-  <img src="https://img.shields.io/badge/Python-3.11%2B-3776ab?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
-</p>
+# ShikariMCP
 
-<h1 align="center">ShikariMCP</h1>
+Local-first Model Context Protocol server for authorized security testing. Shikari connects AI clients to real security binaries through reviewed manifests, bounded subprocess execution, structured evidence, and non-blocking background jobs.
 
-<p align="center">
-  <strong>Local-first MCP server for authorized security testing</strong><br/>
-  <em>Manifest-driven tool execution · Structured evidence · 50 AI agents · Dual transport</em>
-</p>
+## Production Baseline
 
----
+- `stdio` and stateful Streamable HTTP transports
+- API-key authentication for HTTP
+- resumable HTTP event storage and Host/Origin validation
+- background submit, poll, cancel, and artifact-read APIs
+- process-tree termination on timeout or MCP cancellation
+- bounded in-memory output with complete output saved as artifacts
+- safety gates for active, offensive, and credential tooling
+- exact domain, CIDR, and filesystem allowlist checks
+- cloud metadata endpoint blocking
+- 12 verified core integrations and four implemented workflows
 
-## Overview
+The large compatibility wrapper catalog is retained but hidden by default. The production interface is the manifest runner, which prevents direct wrappers from bypassing policy and output handling.
 
-ShikariMCP is a [Model Context Protocol (MCP)](https://spec.modelcontextprotocol.io/) server that connects AI clients to verified security tools installed on your machine. It provides manifest-driven command execution, structured output parsing, and 50 specialized agents for security workflows.
+## Core Integrations
 
-**Key design principles:**
+| Tool | ID | Use |
+|---|---|---|
+| Nmap | `nmap_scan` | Service and version discovery |
+| Subfinder | `subfinder_enum` | Passive subdomain discovery |
+| httpx | `httpx_probe` | HTTP probing and technology detection |
+| Nuclei | `nuclei_scan` | Rate-limited template scanning |
+| Naabu | `naabu_scan` | Port discovery |
+| Katana | `katana_crawl` | Endpoint crawling |
+| ffuf | `ffuf_fuzz` | Web content discovery |
+| Gobuster | `gobuster_dir` | Directory discovery |
+| Nikto | `nikto_scan` | Web server checks |
+| SQLMap | `sqlmap_scan` | Conservative SQL injection checks |
+| Trivy | `trivy_scan` | Filesystem and dependency scanning |
+| Whois | `whois_lookup` | Domain and IP registration context |
 
-- **Verified-first** — Only manually reviewed wrappers are exposed by default
-- **Manifest-driven** — Commands are built from declarative templates, not hardcoded per wrapper
-- **Structured output** — Tool results are parsed into normalized models (assets, services, findings)
-- **Safety controls** — Target allowlisting, risk-class gating, and dry-run previews
-- **Local-first** — Runs on your machine; HTTP transport requires explicit authentication
+Additional `recon`, `web`, `cloud`, `forensics`, and explicitly gated `offensive` profiles are documented in [Tools and Profiles](docs/TOOLS.md).
 
-## Quick Start
+## Install
 
-### Prerequisites
-
-- Python 3.11+
-- uv (recommended) or pip
-- Security tools installed on your system (see [Supported Profiles](docs/TOOLS.md))
-
-### Install
+Python 3.11 or newer is required.
 
 ```bash
 git clone https://github.com/Zaeem20/ShikariMCP.git
 cd ShikariMCP
-uv sync
+uv sync --group dev
 ```
 
-### Run
+Install the external core binaries on Debian, Ubuntu, Kali, or macOS:
 
 ```bash
-# stdio mode — for Claude Desktop, Cursor, VS Code
-shikari
-
-# HTTP mode — for remote or browser-based clients
-shikari --transport http --port 8080 --api-key your-secret-key
+./scripts/install-tools.sh --profile core
+./scripts/verify-tools.sh --profile core --json
 ```
 
-### Configure Your AI Client
+Preview installer actions without changing the machine:
 
-**Claude Desktop** — add to `claude_desktop_config.json`:
+```bash
+./scripts/install-tools.sh --profile core --dry-run
+```
+
+## Run With Stdio
+
+```bash
+uv run shikari --transport stdio
+```
+
+Example MCP client configuration:
 
 ```json
 {
   "mcpServers": {
     "shikari": {
-      "command": "shikari",
-      "args": ["--transport", "stdio"]
+      "command": "uv",
+      "args": ["run", "shikari", "--transport", "stdio"],
+      "cwd": "/absolute/path/to/ShikariMCP"
     }
   }
 }
 ```
 
-See [MCP Client Configuration](docs/MCP_CLIENTS.md) for Cursor, VS Code, Codex, and other clients.
+## Run With Streamable HTTP
+
+HTTP requires authentication unless the development-only opt-out is explicitly used.
+
+```bash
+uv run shikari \
+  --transport http \
+  --host 127.0.0.1 \
+  --port 8080 \
+  --api-key "replace-with-a-long-random-secret" \
+  --local
+```
+
+Connect to `http://127.0.0.1:8080/mcp` with:
+
+```text
+Authorization: Bearer replace-with-a-long-random-secret
+```
+
+The default HTTP mode is stateful SSE with replayable events during the server process lifetime. JSON-only and stateless modes exist for simple integrations, but interactive AI clients should use the default.
+
+## Non-Blocking Runs
+
+Long scans should use the job API so the AI client is not held inside one MCP request:
+
+1. Call `shikari_submit_verified_tool`.
+2. Poll `shikari_get_run` or inspect `shikari_list_runs`.
+3. Retrieve large evidence with `shikari_read_artifact`.
+4. Stop work with `shikari_cancel_run`.
+
+`shikari_run_verified_tool` remains useful for dry runs and short commands. It defaults to `dry_run=true`.
+
+## Docker
+
+The production container includes the verified core profile only. It runs as a non-root user with a read-only root filesystem under Compose.
+
+```bash
+cp .env.docker.example .env
+# Set a strong SHIKARI_API_KEY in .env
+docker compose up --build
+```
+
+The MCP endpoint is `http://127.0.0.1:8080/mcp`.
+
+Direct image usage:
+
+```bash
+docker build -t shikari:local -f docker/Dockerfile .
+docker run --rm -p 127.0.0.1:8080:8080 \
+  --cap-drop ALL --cap-add NET_RAW \
+  --security-opt no-new-privileges \
+  -e SHIKARI_API_KEY="replace-with-a-long-random-secret" \
+  -v shikari-data:/app/.shikari \
+  -v shikari-home:/home/shikari \
+  shikari:local
+```
+
+See [Docker](docs/DOCKER.md) for capabilities, persistence, and verification.
+
+## Safety
+
+Active scans are disabled until enabled:
+
+```bash
+uv run shikari \
+  --transport stdio \
+  --enable-active-tools \
+  --target-allowlist "example.com,10.10.0.0/16,/absolute/lab/path"
+```
+
+Offensive and credential profiles have separate opt-ins. Remote HTTP also requires `--enable-remote-active-tools`. Use only against systems you own or are explicitly authorized to test.
+
+Legacy direct wrappers are disabled by default. Compatibility testing requires `--enable-legacy-tools`; generated wrappers additionally require `--enable-generated-tools`.
+
+## Verify
+
+```bash
+uv run pytest tests -q
+uv run ruff check src tests
+uv run shikari tools verify --profile core --json
+```
 
 ## Documentation
 
-| Document | Contents |
-|----------|----------|
-| [Architecture](docs/ARCHITECTURE.md) | Project structure, core components, how it works |
-| [Tools & Profiles](docs/TOOLS.md) | Supported integrations, profiles, install and verify |
-| [Agents](docs/AGENTS.md) | All 50 agents organized by category |
-| [Configuration](docs/CONFIGURATION.md) | Environment variables, CLI flags, .env setup |
-| [MCP Clients](docs/MCP_CLIENTS.md) | Client-specific configuration guides |
-| [Development](docs/DEVELOPMENT.md) | Setup, adding tools/agents, running tests |
-| [Docker](docs/DOCKER.md) | Build, run, and customize Docker images |
-| [Sample Reports](docs/samples/) | Example structured output from tool runs |
-
-## Security Model
-
-| Control | Default | Override |
-|---------|---------|----------|
-| HTTP authentication | Required | `--allow-unauthenticated-http` (dev only) |
-| Active tools | Blocked | `--enable-active-tools` |
-| Offensive tools | Blocked | `--enable-offensive-tools` |
-| Credential tools | Blocked | `--enable-credential-tools` |
-| Target scope | Unrestricted | `--target-allowlist` |
-| Generated wrappers | Hidden | `--enable-generated-tools` |
-| Audit logging | Enabled | `SHIKARI_AUDIT_ENABLED=false` |
-
-Dry-run mode shows the exact command that would execute before any tool runs. Use `shikari tools explain <tool_id>` or `shikari tools dry-run <tool_id> --input target=...` to preview.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-tool`)
-3. Add your tool or agent following the patterns in [Development](docs/DEVELOPMENT.md)
-4. Write tests for your additions
-5. Submit a pull request
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+- [Architecture](docs/ARCHITECTURE.md)
+- [Production Readiness Report](SHIKARI_PRODUCTION_READINESS_REPORT.md)
+- [Tools and Profiles](docs/TOOLS.md)
+- [Configuration](docs/CONFIGURATION.md)
+- [MCP Clients](docs/MCP_CLIENTS.md)
+- [Docker](docs/DOCKER.md)
+- [Development](docs/DEVELOPMENT.md)
 
 ## License
 
-MIT — see [LICENSE](LICENSE) for details.
-
-## Disclaimer
-
-ShikariMCP is designed for authorized security testing only. Obtain proper written authorization before testing any systems you do not own. The authors are not responsible for misuse of this software.
+MIT. See [LICENSE](LICENSE).

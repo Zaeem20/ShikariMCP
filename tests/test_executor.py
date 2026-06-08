@@ -3,7 +3,9 @@
 import pytest
 import asyncio
 import sys
+from pathlib import Path
 
+from shikari.config import ShikariConfig, set_config
 from shikari.core.executor import execute_command, ExecutionResult
 
 
@@ -85,3 +87,41 @@ class TestExecuteCommand:
         result = await execute_command([sys.executable, "-c", "import sys; sys.exit(42)"])
         assert result.success is False
         assert result.return_code == 42
+
+    @pytest.mark.asyncio
+    async def test_large_output_is_bounded_and_preserved(self, tmp_path):
+        stdout_path = tmp_path / "stdout.txt"
+        set_config(ShikariConfig(max_output_chars=1024))
+        result = await execute_command(
+            [sys.executable, "-c", "print('x' * 20000)"],
+            stdout_path=stdout_path,
+        )
+
+        assert result.success
+        assert result.output_truncated is True
+        assert len(result.stdout) <= 1024
+        assert stdout_path.stat().st_size > 19000
+
+    @pytest.mark.asyncio
+    async def test_cancellation_terminates_child_process_tree(self, tmp_path):
+        marker = tmp_path / "child-survived.txt"
+        child = (
+            "import time, pathlib; "
+            "time.sleep(2); "
+            f"pathlib.Path({str(marker)!r}).write_text('alive')"
+        )
+        parent = (
+            "import subprocess, sys, time; "
+            f"subprocess.Popen([sys.executable, '-c', {child!r}]); "
+            "time.sleep(30)"
+        )
+        task = asyncio.create_task(
+            execute_command([sys.executable, "-c", parent], timeout=60)
+        )
+        await asyncio.sleep(0.4)
+        task.cancel()
+
+        with pytest.raises(asyncio.CancelledError):
+            await task
+        await asyncio.sleep(2.2)
+        assert not Path(marker).exists()

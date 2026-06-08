@@ -126,7 +126,6 @@ class WebAppWorkflowAgent(BaseAgent):
     scope=ToolScope.LOCAL,
     binary="httpx",
     requires_binaries=["httpx", "katana", "nuclei", "whatweb", "arjun"],
-    capabilities=["active_network", "vulnerability_scan"],
     description=(
         "Run a verified web application workflow: whatweb, httpx, katana, "
         "nuclei, arjun, and optional ffuf content discovery."

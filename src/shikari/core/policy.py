@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import ipaddress
+import os
+import socket
+from pathlib import Path
 from urllib.parse import urlparse
 
 from shikari.config import ShikariConfig, get_config
@@ -11,7 +14,14 @@ from shikari.core.tool_manifest import ToolManifestEntry
 
 METADATA_IPS = {
     ipaddress.ip_address("169.254.169.254"),
+    ipaddress.ip_address("169.254.170.2"),
     ipaddress.ip_address("100.100.100.200"),
+    ipaddress.ip_address("fd00:ec2::254"),
+}
+METADATA_HOSTNAMES = {
+    "metadata.google.internal",
+    "metadata.goog",
+    "instance-data.ec2.internal",
 }
 
 
@@ -22,15 +32,28 @@ def evaluate_tool_policy(
 ) -> dict:
     """Return allow/block policy decision for one tool invocation."""
     config = config or get_config()
-    target = _target_value(inputs)
+    targets = _target_values(inputs)
 
-    if target:
+    if tool.scope == "local" and config.is_remote:
+        return _deny("Local-scope tool is blocked in remote HTTP mode. Start with --local only on the user's machine.")
+
+    if (
+        config.is_remote
+        and set(tool.capabilities).intersection({"active_network", "vulnerability_scan"})
+        and not config.enable_remote_active_tools
+    ):
+        return _deny(
+            "Active tools are blocked in remote HTTP mode. "
+            "Set SHIKARI_ENABLE_REMOTE_ACTIVE_TOOLS=true only for an authorized deployment."
+        )
+
+    for target in targets:
         metadata = _blocked_metadata_target(target)
         if metadata:
             return _deny(f"Target resolves to blocked cloud metadata endpoint: {metadata}")
 
-    if target and config.target_allowlist:
-        if not _matches_allowlist(target, config.target_allowlist):
+    if targets and config.target_allowlist:
+        if any(not _matches_allowlist(target, config.target_allowlist) for target in targets):
             return _deny(
                 "Target is outside SHIKARI_TARGET_ALLOWLIST. "
                 "Add an authorized domain, host, IP, CIDR, or path before running."
@@ -58,7 +81,7 @@ def evaluate_tool_policy(
     return {
         "allowed": True,
         "reason": "allowed",
-        "target": target,
+        "targets": targets,
         "capabilities": sorted(capabilities),
     }
 
@@ -72,6 +95,7 @@ def explain_policy(inputs: dict | None = None) -> dict:
         "credential_tools_enabled": config.enable_credential_tools,
         "target_allowlist": config.target_allowlist,
         "blocked_metadata_ips": sorted(str(ip) for ip in METADATA_IPS),
+        "blocked_metadata_hostnames": sorted(METADATA_HOSTNAMES),
         "inputs": inputs or {},
     }
 
@@ -80,29 +104,50 @@ def _deny(reason: str) -> dict:
     return {"allowed": False, "reason": reason}
 
 
-def _target_value(inputs: dict) -> str:
-    for key in ("target", "url", "host", "path", "targets"):
+def _target_values(inputs: dict) -> list[str]:
+    targets: list[str] = []
+    for key in (
+        "target",
+        "url",
+        "host",
+        "path",
+        "targets",
+        "file",
+        "hash_file",
+    ):
         if key in inputs and inputs[key]:
             value = str(inputs[key])
             if key == "targets":
-                return value.splitlines()[0].strip()
-            return value
-    return ""
+                targets.extend(item.strip() for item in value.splitlines() if item.strip())
+            else:
+                targets.append(value.strip())
+    return list(dict.fromkeys(targets))
 
 
 def _blocked_metadata_target(target: str) -> str:
     parsed = urlparse(target if "://" in target else f"//{target}")
-    host = parsed.hostname or target
+    host = (parsed.hostname or target).strip("[]").lower()
+    if host in METADATA_HOSTNAMES:
+        return host
     try:
         ip = ipaddress.ip_address(host)
     except ValueError:
-        return ""
+        try:
+            resolved = {
+                ipaddress.ip_address(item[4][0])
+                for item in socket.getaddrinfo(host, None, type=socket.SOCK_STREAM)
+            }
+        except (OSError, ValueError):
+            return ""
+        blocked = resolved.intersection(METADATA_IPS)
+        return str(next(iter(blocked))) if blocked else ""
     return str(ip) if ip in METADATA_IPS else ""
 
 
 def _matches_allowlist(target: str, allowlist: list[str]) -> bool:
     parsed = urlparse(target if "://" in target else f"//{target}")
-    host = parsed.hostname or target
+    host = (parsed.hostname or "").lower().rstrip(".")
+    target_path = _as_path(target)
 
     for item in allowlist:
         candidate = item.strip()
@@ -110,7 +155,18 @@ def _matches_allowlist(target: str, allowlist: list[str]) -> bool:
             continue
         if candidate == "*":
             return True
-        if target.startswith(candidate) or host == candidate or host.endswith(f".{candidate}"):
+
+        candidate_path = _as_path(candidate)
+        if target_path is not None and candidate_path is not None:
+            try:
+                target_path.relative_to(candidate_path)
+                return True
+            except ValueError:
+                continue
+
+        candidate_parsed = urlparse(candidate if "://" in candidate else f"//{candidate}")
+        candidate_host = (candidate_parsed.hostname or candidate).lower().rstrip(".")
+        if host and (host == candidate_host or host.endswith(f".{candidate_host}")):
             return True
         try:
             network = ipaddress.ip_network(candidate, strict=False)
@@ -119,3 +175,17 @@ def _matches_allowlist(target: str, allowlist: list[str]) -> bool:
         except ValueError:
             pass
     return False
+
+
+def _as_path(value: str) -> Path | None:
+    parsed = urlparse(value)
+    if parsed.scheme in {"http", "https"}:
+        return None
+    if parsed.scheme and not (len(parsed.scheme) == 1 and os.name == "nt"):
+        return None
+    if not (
+        value.startswith(("/", "\\", ".", "~"))
+        or (len(value) >= 2 and value[1] == ":")
+    ):
+        return None
+    return Path(value).expanduser().resolve(strict=False)

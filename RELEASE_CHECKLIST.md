@@ -57,14 +57,13 @@ git push origin v0.X.0
 ### Build Verification
 
 ```bash
-# Build all Docker images
+# Build the production core image
 docker build -t shikari:latest -f docker/Dockerfile .
 docker build -t shikari:core -f docker/Dockerfile.core .
-docker build -t shikari:web -f docker/Dockerfile.web .
-docker build -t shikari:full -f docker/Dockerfile.full .
 
 # Run verification
-docker run --rm shikari:core shikari tools verify --profile core --json
+docker run --rm --entrypoint shikari shikari:core \
+  tools verify --profile core --json
 ```
 
 ### Test Installation

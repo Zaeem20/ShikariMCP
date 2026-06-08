@@ -9,6 +9,7 @@ from pathlib import Path
 
 from fastmcp import FastMCP
 
+from shikari.config import get_config
 from shikari.tools._base import (
     ToolMetadata,
     ToolQuality,
@@ -79,6 +80,9 @@ def register_tools_with_mcp(mcp: FastMCP) -> int:
     registered = 0
 
     for name, metadata in registry.items():
+        if metadata.module.startswith("shikari.tools.") and not get_config().enable_legacy_tools:
+            logger.debug("Skipping legacy wrapper '%s'; manifest runner is the production surface", name)
+            continue
         if not metadata.is_available():
             logger.debug("Skipping '%s' - %s", name, metadata.availability_reason())
             continue
@@ -114,7 +118,7 @@ def get_tool_summary() -> dict[str, int]:
     return summary
 
 
-def get_tool_health() -> dict[str, object]:
+def get_tool_health(include_dependencies: bool = False) -> dict[str, object]:
     """Return production-oriented health for registered tools."""
     total = 0
     available = 0
@@ -140,18 +144,21 @@ def get_tool_health() -> dict[str, object]:
         else:
             reason = metadata.availability_reason()
             unavailable_reasons[reason] = unavailable_reasons.get(reason, 0) + 1
-        if metadata.is_usable():
-            usable += 1
-        if metadata.missing_binaries():
-            missing_deps += 1
+        if include_dependencies:
+            missing = metadata.missing_binaries()
+            if metadata.is_available() and not missing:
+                usable += 1
+            if missing:
+                missing_deps += 1
 
     return {
         "total_registered": total,
         "available_by_policy": available,
-        "usable_with_installed_dependencies": usable,
+        "dependency_scan_performed": include_dependencies,
+        "usable_with_installed_dependencies": usable if include_dependencies else None,
         "generated_wrappers": generated,
         "experimental_wrappers": experimental,
-        "tools_with_missing_dependencies": missing_deps,
+        "tools_with_missing_dependencies": missing_deps if include_dependencies else None,
         "categories": by_category,
         "quality": by_quality,
         "duplicates": get_duplicate_tools(),

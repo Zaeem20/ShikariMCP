@@ -1,12 +1,20 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-16",
+  "generated_at": "2026-06-09",
   "profile": "core",
   "go_version": "1.25.0",
   "notes": [
     "This lock file records the install refs used by the local-first core profile.",
     "ProjectDiscovery tools move quickly; refresh pins only after installer and parser smoke tests pass."
   ],
+  "source_tools": {
+    "nikto": {"ref": "2.6.0", "source": "https://github.com/sullo/nikto"},
+    "sqlmap": {"ref": "1.9", "source": "https://github.com/sqlmapproject/sqlmap"},
+    "whatweb": {"ref": "v0.6.4", "source": "https://github.com/urbanadventurer/WhatWeb"},
+    "testssl.sh": {"ref": "v3.2.3", "source": "https://github.com/testssl/testssl.sh"},
+    "seclists": {"ref": "2024.4", "source": "https://github.com/danielmiessler/SecLists"},
+    "trivy": {"ref": "v0.71.0", "source": "https://github.com/aquasecurity/trivy"}
+  },
   "go_tools": {
     "subfinder": {
       "module": "github.com/projectdiscovery/subfinder/v2/cmd/subfinder",
@@ -15,7 +23,7 @@
     },
     "httpx": {
       "module": "github.com/projectdiscovery/httpx/cmd/httpx",
-      "ref": "latest",
+      "ref": "v1.9.0",
       "source": "https://github.com/projectdiscovery/httpx"
     },
     "nuclei": {
@@ -25,22 +33,22 @@
     },
     "naabu": {
       "module": "github.com/projectdiscovery/naabu/v2/cmd/naabu",
-      "ref": "latest",
+      "ref": "v2.5.0",
       "source": "https://github.com/projectdiscovery/naabu"
     },
     "katana": {
       "module": "github.com/projectdiscovery/katana/cmd/katana",
-      "ref": "latest",
+      "ref": "v1.6.1",
       "source": "https://github.com/projectdiscovery/katana"
     },
     "ffuf": {
       "module": "github.com/ffuf/ffuf/v2",
-      "ref": "latest",
+      "ref": "v2.1.0",
       "source": "https://github.com/ffuf/ffuf"
     },
     "gobuster": {
       "module": "github.com/OJ/gobuster/v3",
-      "ref": "latest",
+      "ref": "v3.8.2",
       "source": "https://github.com/OJ/gobuster"
     },
     "dnsx": {
@@ -65,8 +73,13 @@
     },
     "dalfox": {
       "module": "github.com/hahwul/dalfox/v2",
-      "ref": "latest",
+      "ref": "v2.12.0",
       "source": "https://github.com/hahwul/dalfox"
+    },
+    "gitleaks": {
+      "module": "github.com/gitleaks/gitleaks/v8",
+      "ref": "v8.30.1",
+      "source": "https://github.com/gitleaks/gitleaks"
     }
   },
   "future_arsenal_candidates": {
@@ -87,7 +100,7 @@
     },
     "uncover": {
       "module": "github.com/projectdiscovery/uncover/cmd/uncover",
-      "ref": "latest",
+      "ref": "v1.2.1",
       "reason": "Search-engine-backed exposed-host discovery"
     }
   }

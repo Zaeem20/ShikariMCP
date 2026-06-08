@@ -2,15 +2,15 @@
 
 ## Tool Catalog Model
 
-ShikariMCP maintains three tiers of tool exposure:
+ShikariMCP maintains three tiers of tool integration:
 
 | Tier | Default | Description |
 |------|---------|-------------|
-| Verified wrappers | Exposed | Manually written wrappers with tested execution logic |
-| Manifest-backed tools | Exposed | Declarative profiles with command templates and parsers |
-| Generated wrappers | Hidden | Auto-generated compatibility wrappers; opt-in only |
+| Manifest-backed tools | Default | Reviewed command templates, policy, artifacts, and parsers |
+| Workflow agents | Default | Four implemented evidence-driven workflows |
+| Legacy/generated wrappers | Hidden | Compatibility catalog; opt-in and not the production path |
 
-Use `shikari_status` for exact runtime tool counts. Availability depends on transport mode, safety flags, and installed binaries.
+The default MCP schema contains 16 focused tools. External binaries are invoked through `shikari_run_verified_tool` or `shikari_submit_verified_tool`; they are not each exposed as a separate MCP schema.
 
 ## Supported Profiles
 
@@ -38,12 +38,12 @@ These tools are listed in `src/shikari/manifests/tools/core.json` and are the pr
 | **Katana** | `katana_crawl` | Web application | Crawling and endpoint discovery | JSONL | Go install |
 | **ffuf** | `ffuf_fuzz` | Web application | Directory/content fuzzing | JSON/JSONL | Go install |
 | **Gobuster** | `gobuster_dir` | Web application | Directory brute forcing | Text | Go install |
-| **Nikto** | `nikto_scan` | Web application | Web server misconfiguration checks | JSON | `apt: nikto` |
-| **SQLMap** | `sqlmap_scan` | Web application | Conservative SQL injection testing | Text | `apt: sqlmap` |
+| **Nikto** | `nikto_scan` | Web application | Web server misconfiguration checks | JSON | Official GitHub release |
+| **SQLMap** | `sqlmap_scan` | Web application | Conservative SQL injection testing | Text | Official GitHub release |
 | **Trivy** | `trivy_scan` | Container/code security | Filesystem, image, dependency scanning | JSON | Official installer |
 | **Whois** | `whois_lookup` | Reconnaissance | Domain/IP registration context | Text | `apt: whois` |
 
-The broader registry also includes manual wrappers for `masscan`, `hashcat`, `john`, `hydra`, `sslscan`, `sslyze`, `binwalk`, `exiftool`, `aircrack-ng`, `tshark`, `tcpdump`, and others.
+The compatibility registry also contains direct wrappers, but it is hidden unless `SHIKARI_ENABLE_LEGACY_TOOLS=true`.
 
 ## Install and Verify
 
@@ -72,25 +72,4 @@ shikari tools dry-run nmap_scan --input target=scanme.nmap.org
 
 The installer is profile-based and intentionally conservative. It installs only the tools declared in the selected profile manifest, not every experimental wrapper in the repository.
 
-## Tool Categories (Full Registry)
-
-| # | Category | Registered | Description |
-|---|----------|-----------:|-------------|
-| 1 | Reconnaissance | 65 | Passive/active recon, subdomain enum, DNS, port scanning |
-| 2 | Enumeration | 30 | Network, web, SMB, AD, SNMP, service enumeration |
-| 3 | Vulnerability Scanning | 193 | Network, web, CMS, SSL/TLS scanners |
-| 4 | Web Application | 259 | SQLi, XSS, fuzzing, API testing, auth bypass, CMS checks |
-| 5 | Exploitation | 158 | Exploit frameworks and validation tools |
-| 6 | Post-Exploitation | 155 | Privilege escalation, lateral movement, persistence, C2 |
-| 7 | Password Attacks | 108 | Hashcat, John, brute force, wordlist tools |
-| 8 | Network Attacks | 64 | Sniffing, MITM, spoofing, DoS catalog entries |
-| 9 | OSINT | 63 | People search, domain intel, social media, breach detection |
-| 10 | Mobile | 52 | Android, iOS, mobile analysis and forensics |
-| 11 | Cloud Security | 5 | AWS, Azure, GCP, multi-cloud security |
-| 12 | Forensics | 4 | Memory, disk, network forensics, steganography |
-| 13 | Wireless | 3 | WiFi, Bluetooth, RF tools |
-| 14 | Reverse Engineering | 3 | Disassemblers, debuggers, binary analysis |
-| 15 | Evasion & Payloads | 4 | AV evasion, WAF bypass, payload generation |
-| 16 | Database | 2 | SQL/NoSQL injection checks |
-
-Generated compatibility wrappers are present in the repository but disabled by default. They should not be treated as production integrations until promoted into a manifest profile.
+Generated compatibility wrappers are present for migration and experimentation. They should not be treated as supported integrations until promoted into a reviewed manifest profile.

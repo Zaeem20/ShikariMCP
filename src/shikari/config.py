@@ -43,6 +43,12 @@ class ShikariConfig:
     transport: TransportMode = TransportMode.STDIO
     host: str = "127.0.0.1"
     port: int = 8080
+    http_json_response: bool = False
+    http_stateless: bool = False
+    http_allowed_hosts: list[str] = field(default_factory=list)
+    http_allowed_origins: list[str] = field(default_factory=list)
+    http_event_ttl: int = 3600
+    http_retry_interval_ms: int = 2000
 
     # Scope & Auth
     local_mode: bool = False
@@ -53,9 +59,16 @@ class ShikariConfig:
     default_timeout: int = 300  # 5 minutes
     max_concurrent_tools: int = 10
     max_output_chars: int = 50000
+    max_parser_bytes: int = 10_000_000
+    max_background_runs: int = 100
+    max_input_chars: int = 1_000_000
+    max_targets_per_run: int = 5000
     tool_profile: str = "core"
+    artifact_dir: str = ".shikari/artifacts"
+    default_wordlist: str = "/opt/wordlists/SecLists/Discovery/Web-Content/common.txt"
 
     # Safety policy
+    enable_legacy_tools: bool = False
     enable_generated_tools: bool = False
     enable_experimental_tools: bool = False
     require_tool_dependencies: bool = False
@@ -77,13 +90,29 @@ class ShikariConfig:
             transport=TransportMode(os.getenv("SHIKARI_TRANSPORT", "stdio")),
             host=os.getenv("SHIKARI_HOST", "127.0.0.1"),
             port=_env_int("SHIKARI_PORT", 8080),
+            http_json_response=_env_bool("SHIKARI_HTTP_JSON_RESPONSE", False),
+            http_stateless=_env_bool("SHIKARI_HTTP_STATELESS", False),
+            http_allowed_hosts=_env_list("SHIKARI_HTTP_ALLOWED_HOSTS"),
+            http_allowed_origins=_env_list("SHIKARI_HTTP_ALLOWED_ORIGINS"),
+            http_event_ttl=_env_int("SHIKARI_HTTP_EVENT_TTL", 3600),
+            http_retry_interval_ms=_env_int("SHIKARI_HTTP_RETRY_INTERVAL_MS", 2000),
             local_mode=_env_bool("SHIKARI_LOCAL_MODE", False),
             api_key=os.getenv("SHIKARI_API_KEY"),
             allow_unauthenticated_http=_env_bool("SHIKARI_ALLOW_UNAUTHENTICATED_HTTP", False),
             default_timeout=_env_int("SHIKARI_TIMEOUT", 300),
             max_concurrent_tools=_env_int("SHIKARI_MAX_CONCURRENT", 10),
             max_output_chars=_env_int("SHIKARI_MAX_OUTPUT_CHARS", 50000),
+            max_parser_bytes=_env_int("SHIKARI_MAX_PARSER_BYTES", 10_000_000),
+            max_background_runs=_env_int("SHIKARI_MAX_BACKGROUND_RUNS", 100),
+            max_input_chars=_env_int("SHIKARI_MAX_INPUT_CHARS", 1_000_000),
+            max_targets_per_run=_env_int("SHIKARI_MAX_TARGETS_PER_RUN", 5000),
             tool_profile=os.getenv("SHIKARI_TOOL_PROFILE", "core"),
+            artifact_dir=os.getenv("SHIKARI_ARTIFACT_DIR", ".shikari/artifacts"),
+            default_wordlist=os.getenv(
+                "SHIKARI_DEFAULT_WORDLIST",
+                "/opt/wordlists/SecLists/Discovery/Web-Content/common.txt",
+            ),
+            enable_legacy_tools=_env_bool("SHIKARI_ENABLE_LEGACY_TOOLS", False),
             enable_generated_tools=_env_bool("SHIKARI_ENABLE_GENERATED_TOOLS", False),
             enable_experimental_tools=_env_bool("SHIKARI_ENABLE_EXPERIMENTAL_TOOLS", False),
             require_tool_dependencies=_env_bool("SHIKARI_REQUIRE_TOOL_DEPENDENCIES", False),
@@ -118,6 +147,26 @@ class ShikariConfig:
 
     def validate_runtime(self) -> None:
         """Fail fast on unsafe production defaults."""
+        if self.port < 1 or self.port > 65535:
+            raise ValueError("SHIKARI_PORT must be between 1 and 65535.")
+        if self.default_timeout < 1:
+            raise ValueError("SHIKARI_TIMEOUT must be at least 1 second.")
+        if self.max_concurrent_tools < 1:
+            raise ValueError("SHIKARI_MAX_CONCURRENT must be at least 1.")
+        if self.max_output_chars < 1024:
+            raise ValueError("SHIKARI_MAX_OUTPUT_CHARS must be at least 1024.")
+        if self.max_parser_bytes < 1024:
+            raise ValueError("SHIKARI_MAX_PARSER_BYTES must be at least 1024.")
+        if self.max_background_runs < 1:
+            raise ValueError("SHIKARI_MAX_BACKGROUND_RUNS must be at least 1.")
+        if self.max_input_chars < 1024:
+            raise ValueError("SHIKARI_MAX_INPUT_CHARS must be at least 1024.")
+        if self.max_targets_per_run < 1:
+            raise ValueError("SHIKARI_MAX_TARGETS_PER_RUN must be at least 1.")
+        if self.http_event_ttl < 1:
+            raise ValueError("SHIKARI_HTTP_EVENT_TTL must be at least 1 second.")
+        if self.http_retry_interval_ms < 100:
+            raise ValueError("SHIKARI_HTTP_RETRY_INTERVAL_MS must be at least 100.")
         if self.is_http and self.requires_auth and not self.api_key:
             raise ValueError(
                 "HTTP transport requires SHIKARI_API_KEY or --api-key. "

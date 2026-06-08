@@ -5,18 +5,20 @@ PROFILE="core"
 DRY_RUN=false
 SKIP_GO=false
 SKIP_TRIVY=false
+SKIP_WORDLISTS=false
 GO_VERSION="${GO_VERSION:-1.25.0}"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 LOCK_FILE="${LOCK_FILE:-$ROOT_DIR/tools.lock.json}"
 OS_NAME="$(uname -s)"
 IS_MACOS=false
+SUDO=()
 if [[ "$OS_NAME" == "Darwin" ]]; then
   IS_MACOS=true
 fi
 
 usage() {
   cat <<'USAGE'
-Usage: scripts/install-tools.sh [--profile core] [--dry-run] [--skip-go] [--skip-trivy]
+Usage: scripts/install-tools.sh [--profile core] [--dry-run] [--skip-go] [--skip-trivy] [--skip-wordlists]
 
 Installs Shikari's local-first verified security tool profile on Debian/Ubuntu,
 Kali, and best-effort macOS Homebrew systems. The script is intentionally
@@ -40,6 +42,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --skip-trivy)
       SKIP_TRIVY=true
+      shift
+      ;;
+    --skip-wordlists)
+      SKIP_WORDLISTS=true
       shift
       ;;
     -h|--help)
@@ -86,7 +92,9 @@ if [[ "$IS_MACOS" == "true" ]]; then
     fi
   fi
 else
-  if ! command -v sudo >/dev/null 2>&1; then
+  if [[ "$EUID" -ne 0 ]] && command -v sudo >/dev/null 2>&1; then
+    SUDO=(sudo)
+  elif [[ "$EUID" -ne 0 ]]; then
     if [[ "$DRY_RUN" == "true" ]]; then
       echo "Dry-run: sudo is not installed; package install commands will still be shown."
     else
@@ -116,27 +124,25 @@ BASE_APT_PACKAGES=(
   build-essential
   python3-pip
   pipx
+)
+
+CORE_APT_PACKAGES=(
   nmap
   whois
   dnsutils
   netcat-openbsd
-  nikto
-  dirb
-  sqlmap
-  sslscan
-  tshark
-  tcpdump
-  john
-  hashcat
-  binwalk
-  libimage-exiftool-perl
-  yara
   libpcap0.8
   libpcap-dev
+  perl
+  libnet-ssleay-perl
+  libjson-perl
+  libio-socket-ssl-perl
+  libxml-writer-perl
+  libxml-libxml-perl
 )
 
 RECON_APT_PACKAGES=(masscan)
-WEB_APT_PACKAGES=(whatweb wafw00f testssl.sh sslscan)
+WEB_APT_PACKAGES=(openssl ruby sslscan)
 CLOUD_APT_PACKAGES=()
 FORENSICS_APT_PACKAGES=(yara radare2)
 OFFENSIVE_APT_PACKAGES=(john hashcat hydra)
@@ -149,21 +155,15 @@ BASE_BREW_PACKAGES=(
   jq
   go
   pipx
+)
+
+CORE_BREW_PACKAGES=(
   nmap
   whois
   bind
   netcat
   nikto
-  dirb
   sqlmap
-  sslscan
-  wireshark
-  tcpdump
-  john
-  hashcat
-  binwalk
-  exiftool
-  yara
 )
 
 RECON_BREW_PACKAGES=(masscan)
@@ -175,6 +175,10 @@ OFFENSIVE_BREW_PACKAGES=(john hashcat hydra)
 APT_PACKAGES=("${BASE_APT_PACKAGES[@]}")
 BREW_PACKAGES=("${BASE_BREW_PACKAGES[@]}")
 case "$PROFILE" in
+  core)
+    APT_PACKAGES+=("${CORE_APT_PACKAGES[@]}")
+    BREW_PACKAGES+=("${CORE_BREW_PACKAGES[@]}")
+    ;;
   recon)
     APT_PACKAGES+=("${RECON_APT_PACKAGES[@]}")
     BREW_PACKAGES+=("${RECON_BREW_PACKAGES[@]}")
@@ -197,6 +201,7 @@ case "$PROFILE" in
     ;;
   full)
     APT_PACKAGES+=(
+      "${CORE_APT_PACKAGES[@]}"
       "${RECON_APT_PACKAGES[@]}"
       "${WEB_APT_PACKAGES[@]}"
       "${CLOUD_APT_PACKAGES[@]}"
@@ -204,6 +209,7 @@ case "$PROFILE" in
       "${OFFENSIVE_APT_PACKAGES[@]}"
     )
     BREW_PACKAGES+=(
+      "${CORE_BREW_PACKAGES[@]}"
       "${RECON_BREW_PACKAGES[@]}"
       "${WEB_BREW_PACKAGES[@]}"
       "${CLOUD_BREW_PACKAGES[@]}"
@@ -224,8 +230,38 @@ if [[ "$IS_MACOS" == "true" ]]; then
     fi
   done
 else
-  run sudo apt-get update
-  run sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "${APT_PACKAGES[@]}"
+  run "${SUDO[@]}" apt-get update
+  run "${SUDO[@]}" env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "${APT_PACKAGES[@]}"
+fi
+
+install_git_tool() {
+  local name="$1"
+  local repository="$2"
+  local ref="$3"
+  local executable="$4"
+  local destination="/opt/shikari/tools/$name"
+  echo "+ install $name@$ref from $repository"
+  if [[ "$DRY_RUN" == "true" ]]; then
+    return
+  fi
+  local tmp_dir
+  tmp_dir="$(mktemp -d)"
+  git clone --depth 1 --branch "$ref" "$repository" "$tmp_dir/source"
+  "${SUDO[@]}" mkdir -p /opt/shikari/tools
+  "${SUDO[@]}" rm -rf "$destination"
+  "${SUDO[@]}" mv "$tmp_dir/source" "$destination"
+  "${SUDO[@]}" ln -sfn "$destination/$executable" "/usr/local/bin/$name"
+  rm -rf "$tmp_dir"
+}
+
+if [[ "$IS_MACOS" != "true" && ( "$PROFILE" == "core" || "$PROFILE" == "full" ) ]]; then
+  install_git_tool nikto https://github.com/sullo/nikto.git 2.6.0 program/nikto.pl
+  install_git_tool sqlmap https://github.com/sqlmapproject/sqlmap.git 1.9 sqlmap.py
+fi
+
+if [[ "$IS_MACOS" != "true" && ( "$PROFILE" == "web" || "$PROFILE" == "full" ) ]]; then
+  install_git_tool whatweb https://github.com/urbanadventurer/WhatWeb.git v0.6.4 whatweb
+  install_git_tool testssl.sh https://github.com/testssl/testssl.sh.git v3.2.3 testssl.sh
 fi
 
 go_version_ok() {
@@ -264,10 +300,10 @@ install_go() {
 
   run curl -fsSL "$url" -o "$archive"
   run tar -C "$tmp_dir" -xzf "$archive"
-  run sudo mkdir -p /opt/shikari
-  run sudo rm -rf "/opt/shikari/go-${GO_VERSION}"
-  run sudo mv "$tmp_dir/go" "/opt/shikari/go-${GO_VERSION}"
-  run sudo ln -sfn "/opt/shikari/go-${GO_VERSION}" /opt/shikari/go
+  run "${SUDO[@]}" mkdir -p /opt/shikari
+  run "${SUDO[@]}" rm -rf "/opt/shikari/go-${GO_VERSION}"
+  run "${SUDO[@]}" mv "$tmp_dir/go" "/opt/shikari/go-${GO_VERSION}"
+  run "${SUDO[@]}" ln -sfn "/opt/shikari/go-${GO_VERSION}" /opt/shikari/go
   run rm -rf "$tmp_dir"
 }
 
@@ -289,8 +325,9 @@ if [[ "$SKIP_GO" != "true" ]]; then
   case "$PROFILE" in
     recon) GO_KEYS=(dnsx mapcidr uncover) ;;
     web) GO_KEYS=(tlsx dalfox ffuf gobuster) ;;
-    cloud|forensics|offensive) GO_KEYS=() ;;
-    full) GO_KEYS=(subfinder httpx nuclei naabu katana ffuf gobuster dnsx tlsx mapcidr uncover dalfox) ;;
+    cloud) GO_KEYS=(gitleaks) ;;
+    forensics|offensive) GO_KEYS=() ;;
+    full) GO_KEYS=(subfinder httpx nuclei naabu katana ffuf gobuster dnsx tlsx mapcidr uncover dalfox gitleaks) ;;
   esac
   if [[ "$DRY_RUN" == "true" ]] && ! command -v jq >/dev/null 2>&1; then
     for key in "${GO_KEYS[@]}"; do
@@ -316,12 +353,12 @@ if [[ "$SKIP_GO" != "true" ]]; then
     LINK_BIN_DIR="$HOME/.local/bin"
     run mkdir -p "$LINK_BIN_DIR"
   fi
-  for binary in subfinder httpx nuclei naabu katana ffuf gobuster dnsx tlsx mapcidr uncover dalfox; do
+  for binary in subfinder httpx nuclei naabu katana ffuf gobuster dnsx tlsx mapcidr uncover dalfox gitleaks; do
     if [[ -x "$GOPATH_VALUE/bin/$binary" || "$DRY_RUN" == "true" ]]; then
       if [[ "$IS_MACOS" == "true" ]]; then
         run ln -sf "$GOPATH_VALUE/bin/$binary" "$LINK_BIN_DIR/$binary"
       else
-        run sudo ln -sf "$GOPATH_VALUE/bin/$binary" "/usr/local/bin/$binary"
+        run "${SUDO[@]}" ln -sf "$GOPATH_VALUE/bin/$binary" "/usr/local/bin/$binary"
       fi
     fi
   done
@@ -333,28 +370,40 @@ if [[ "$SKIP_TRIVY" != "true" ]]; then
       run brew install trivy
     else
       tmp_dir="$(mktemp -d)"
-      run curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh -o "$tmp_dir/install-trivy.sh"
-      run sudo sh "$tmp_dir/install-trivy.sh" -b /usr/local/bin
+      run curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/9b49920/contrib/install.sh -o "$tmp_dir/install-trivy.sh"
+      run "${SUDO[@]}" sh "$tmp_dir/install-trivy.sh" -b /usr/local/bin v0.71.0
       run rm -rf "$tmp_dir"
     fi
   fi
 fi
 
 if [[ "$PROFILE" == "cloud" || "$PROFILE" == "full" ]]; then
-  run pipx install semgrep
-  run pipx install checkov
+  run pipx install --force semgrep
+  run pipx install --force checkov
 fi
 
 if [[ "$PROFILE" == "web" || "$PROFILE" == "full" ]]; then
-  run pipx install arjun
+  run pipx install --force arjun
+  run pipx install --force wafw00f
 fi
 
 if [[ "$PROFILE" == "forensics" || "$PROFILE" == "full" ]]; then
-  run pipx install volatility3
+  run pipx install --force volatility3
+fi
+
+if [[ "$SKIP_WORDLISTS" != "true" && ( "$PROFILE" == "core" || "$PROFILE" == "web" || "$PROFILE" == "full" ) ]]; then
+  if [[ "$DRY_RUN" == "true" ]]; then
+    echo "+ scripts/install-wordlists.sh"
+  else
+    SUDO_COMMAND="${SUDO[*]:-}" bash "$(dirname "${BASH_SOURCE[0]}")/install-wordlists.sh"
+  fi
 fi
 
 if command -v nuclei >/dev/null 2>&1; then
-  run nuclei -update-templates -duc
+  echo "+ nuclei -update-templates -duc"
+  if [[ "$DRY_RUN" != "true" ]] && ! nuclei -update-templates -duc; then
+    echo "Warning: nuclei templates could not be updated; the binary remains installed." >&2
+  fi
 fi
 
 echo

@@ -28,7 +28,7 @@ ShikariMCP/
 │   │   ├── dispatch.py        # Parser routing by tool ID
 │   │   └── ...                # Individual parsers (nmap, subfinder, httpx, nuclei, etc.)
 │   │
-│   ├── agents/                # 50 AI subagents
+│   ├── agents/                # 4 production workflows plus compatibility catalog
 │   │   ├── _base_agent.py     # Base agent class (plan → execute → analyze → report)
 │   │   ├── workflow/          # End-to-end workflow agents
 │   │   ├── intelligence/      # Analysis & intelligence agents

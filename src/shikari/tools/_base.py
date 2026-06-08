@@ -105,6 +105,13 @@ class ToolMetadata:
             return False
         return bool(self.capabilities.intersection(DANGEROUS_CAPABILITIES))
 
+    @property
+    def requires_active_opt_in(self) -> bool:
+        return bool(
+            self.capabilities.intersection({"active_network", "vulnerability_scan"})
+            or (self.category == "reconnaissance" and self.scope == ToolScope.LOCAL)
+        )
+
     def missing_binaries(self) -> list[str]:
         """Return required binaries that are not currently on PATH."""
         return [binary for binary in self.requires_binaries if not check_binary_sync(binary)]
@@ -117,6 +124,17 @@ class ToolMetadata:
             return False
 
         if self.is_experimental and not config.enable_experimental_tools:
+            return False
+
+        if self.requires_active_opt_in and not config.enable_active_tools:
+            return False
+
+        if self.capabilities.intersection(
+            {"exploitation", "post_exploitation", "payload_generation", "mitm", "wireless"}
+        ) and not config.enable_offensive_tools:
+            return False
+
+        if "credential_attack" in self.capabilities and not config.enable_credential_tools:
             return False
 
         if self.scope == ToolScope.LOCAL and config.is_remote:
@@ -144,6 +162,14 @@ class ToolMetadata:
             return "generated wrapper disabled; set SHIKARI_ENABLE_GENERATED_TOOLS=true to expose"
         if self.is_experimental and not config.enable_experimental_tools:
             return "experimental wrapper disabled; set SHIKARI_ENABLE_EXPERIMENTAL_TOOLS=true to expose"
+        if self.requires_active_opt_in and not config.enable_active_tools:
+            return "active wrapper disabled; set SHIKARI_ENABLE_ACTIVE_TOOLS=true to expose"
+        if self.capabilities.intersection(
+            {"exploitation", "post_exploitation", "payload_generation", "mitm", "wireless"}
+        ) and not config.enable_offensive_tools:
+            return "offensive wrapper disabled; set SHIKARI_ENABLE_OFFENSIVE_TOOLS=true to expose"
+        if "credential_attack" in self.capabilities and not config.enable_credential_tools:
+            return "credential wrapper disabled; set SHIKARI_ENABLE_CREDENTIAL_TOOLS=true to expose"
         if self.scope == ToolScope.LOCAL and config.is_remote:
             return "local-only tool blocked in remote HTTP mode"
         if (
@@ -249,7 +275,7 @@ def shikari_tool(
                 return metadata.get_blocked_message()
 
             missing = metadata.missing_binaries()
-            if missing:
+            if missing and get_config().require_tool_dependencies:
                 audit_event("tool_blocked", tool=metadata.name, reason="missing_binaries", missing=missing)
                 return (
                     f"Tool '{metadata.name}' cannot run because required binaries are missing: "
@@ -293,6 +319,15 @@ def _infer_quality(category: str, module: str, quality: ToolQuality | str) -> To
         "agent_offensive",
     }
     if category in catalog_agent_categories:
+        return ToolQuality.EXPERIMENTAL
+
+    production_workflows = {
+        "shikari.agents.workflow.recon_agent",
+        "shikari.agents.workflow.pentest_agent",
+        "shikari.agents.workflow.bugbounty_agent",
+        "shikari.agents.workflow.webapp_agent",
+    }
+    if module.startswith("shikari.agents.workflow.") and module not in production_workflows:
         return ToolQuality.EXPERIMENTAL
 
     return explicit_quality
