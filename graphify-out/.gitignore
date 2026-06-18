@@ -1,0 +1,6 @@
+# Generated cache and intermediate files (regenerable)
+cache/
+.graphify_*.json
+.graphify_uncached.txt
+.graphify_python
+.graphify_root

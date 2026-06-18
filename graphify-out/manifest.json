@@ -1,0 +1,1232 @@
+{
+  "D:\\Projects\\ShikariMCP\\tools.lock.json": {
+    "mtime": 1780960651.1088,
+    "ast_hash": "027d7cd3425d23d3f54b3690ec31f368",
+    "semantic_hash": "027d7cd3425d23d3f54b3690ec31f368"
+  },
+  "D:\\Projects\\ShikariMCP\\.opencode\\opencode.json": {
+    "mtime": 1779013200.819229,
+    "ast_hash": "1efe24ecf938911d4f23e4b1c6ec91f7",
+    "semantic_hash": "1efe24ecf938911d4f23e4b1c6ec91f7"
+  },
+  "D:\\Projects\\ShikariMCP\\.opencode\\package.json": {
+    "mtime": 1779013217.2918746,
+    "ast_hash": "36da8f59257d063f5ef74f59e181690e",
+    "semantic_hash": "36da8f59257d063f5ef74f59e181690e"
+  },
+  "D:\\Projects\\ShikariMCP\\.opencode\\plugins\\graphify.js": {
+    "mtime": 1779013155.666504,
+    "ast_hash": "32b67963417a30cb80544e0b2a56a98d",
+    "semantic_hash": "32b67963417a30cb80544e0b2a56a98d"
+  },
+  "D:\\Projects\\ShikariMCP\\docker\\__init__.py": {
+    "mtime": 1773810404.3116062,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\docs\\samples\\pentest_report.json": {
+    "mtime": 1778965262.194734,
+    "ast_hash": "3992a4c1f0b626bdb2b614188c09036a",
+    "semantic_hash": "3992a4c1f0b626bdb2b614188c09036a"
+  },
+  "D:\\Projects\\ShikariMCP\\docs\\samples\\recon_report.json": {
+    "mtime": 1778965232.4756296,
+    "ast_hash": "3c87b1e4b856a31c9dba4bf28b036396",
+    "semantic_hash": "3c87b1e4b856a31c9dba4bf28b036396"
+  },
+  "D:\\Projects\\ShikariMCP\\docs\\samples\\tool_run_result.json": {
+    "mtime": 1778965279.636235,
+    "ast_hash": "1d39c6ad97706114cff2164aabfc0190",
+    "semantic_hash": "1d39c6ad97706114cff2164aabfc0190"
+  },
+  "D:\\Projects\\ShikariMCP\\scripts\\install-go-tools.sh": {
+    "mtime": 1778952382.876565,
+    "ast_hash": "122e6f2bdc99d325d8116bcbeb59341d",
+    "semantic_hash": "122e6f2bdc99d325d8116bcbeb59341d"
+  },
+  "D:\\Projects\\ShikariMCP\\scripts\\install-tools.sh": {
+    "mtime": 1780960270.2735472,
+    "ast_hash": "77de58c712070ff133a2db8025661c6b",
+    "semantic_hash": "77de58c712070ff133a2db8025661c6b"
+  },
+  "D:\\Projects\\ShikariMCP\\scripts\\install-wordlists.sh": {
+    "mtime": 1780960257.964163,
+    "ast_hash": "5dc82e66edc73f123bb62f72cf8d7c5a",
+    "semantic_hash": "5dc82e66edc73f123bb62f72cf8d7c5a"
+  },
+  "D:\\Projects\\ShikariMCP\\scripts\\verify-tools.sh": {
+    "mtime": 1777417760.995935,
+    "ast_hash": "5a290ba247d03bb413923509830dca4c",
+    "semantic_hash": "5a290ba247d03bb413923509830dca4c"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\config.py": {
+    "mtime": 1780959682.2060874,
+    "ast_hash": "ddbbe4c843be3797d9ee1285fcff0ae8",
+    "semantic_hash": "ddbbe4c843be3797d9ee1285fcff0ae8"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\server.py": {
+    "mtime": 1780960858.9873629,
+    "ast_hash": "d622b53662c8f21d34c6dd39089bcf1b",
+    "semantic_hash": "d622b53662c8f21d34c6dd39089bcf1b"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\__init__.py": {
+    "mtime": 1780960404.3814304,
+    "ast_hash": "8088e0be29674dac1b454719c3e985e6",
+    "semantic_hash": "8088e0be29674dac1b454719c3e985e6"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\_base_agent.py": {
+    "mtime": 1780959304.3608043,
+    "ast_hash": "b97d73a727973e83325515a7d808b4da",
+    "semantic_hash": "b97d73a727973e83325515a7d808b4da"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\_catalog.py": {
+    "mtime": 1777071358.0541897,
+    "ast_hash": "72b48616b532c88d4f4c1132967d6e4b",
+    "semantic_hash": "72b48616b532c88d4f4c1132967d6e4b"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\__init__.py": {
+    "mtime": 1777071358.0573933,
+    "ast_hash": "1dbe889faf9329246d44a8fd6c1a973f",
+    "semantic_hash": "1dbe889faf9329246d44a8fd6c1a973f"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\defensive\\anomalydetect_agent.py": {
+    "mtime": 1777071358.060344,
+    "ast_hash": "9577b278f2037fc4e75efc2c6f371932",
+    "semantic_hash": "9577b278f2037fc4e75efc2c6f371932"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\defensive\\containment_agent.py": {
+    "mtime": 1777071358.062899,
+    "ast_hash": "a52b937d7ef4f5f2b7277867c1a419bc",
+    "semantic_hash": "a52b937d7ef4f5f2b7277867c1a419bc"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\defensive\\forensics_agent.py": {
+    "mtime": 1777071358.0669672,
+    "ast_hash": "3cf4bff55f28b601a919397b57c8330e",
+    "semantic_hash": "3cf4bff55f28b601a919397b57c8330e"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\defensive\\hardening_agent.py": {
+    "mtime": 1777071358.0720887,
+    "ast_hash": "562370bb9bc6c56c23e8827e05376c2b",
+    "semantic_hash": "562370bb9bc6c56c23e8827e05376c2b"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\defensive\\malwaretriage_agent.py": {
+    "mtime": 1777071358.0761144,
+    "ast_hash": "030a6b8bc9deeb01a75b12d46ccc3d82",
+    "semantic_hash": "030a6b8bc9deeb01a75b12d46ccc3d82"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\defensive\\__init__.py": {
+    "mtime": 1777071358.0806673,
+    "ast_hash": "82a22b90f1c3a07a16c4ab92aaf46461",
+    "semantic_hash": "82a22b90f1c3a07a16c4ab92aaf46461"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\domain\\ad_agent.py": {
+    "mtime": 1777071358.0831935,
+    "ast_hash": "26c56187b90b2c0a11a86ce5cea80ac7",
+    "semantic_hash": "26c56187b90b2c0a11a86ce5cea80ac7"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\domain\\cloud_agent.py": {
+    "mtime": 1777071358.0872371,
+    "ast_hash": "d9730b30a68fd116d2c7812210727207",
+    "semantic_hash": "d9730b30a68fd116d2c7812210727207"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\domain\\database_agent.py": {
+    "mtime": 1777071358.0905173,
+    "ast_hash": "65156fd45d855aeb2aa7e6438827c1ac",
+    "semantic_hash": "65156fd45d855aeb2aa7e6438827c1ac"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\domain\\iotscada_agent.py": {
+    "mtime": 1777071358.0935645,
+    "ast_hash": "b021753c4f00c6026313276704796eca",
+    "semantic_hash": "b021753c4f00c6026313276704796eca"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\domain\\malware_agent.py": {
+    "mtime": 1777071358.0976124,
+    "ast_hash": "7e963c18332a9840ac4d1f2f5431d5a5",
+    "semantic_hash": "7e963c18332a9840ac4d1f2f5431d5a5"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\domain\\mobile_agent.py": {
+    "mtime": 1777071358.1006546,
+    "ast_hash": "31e09172361dcfc621f1c7c0009bcfe4",
+    "semantic_hash": "31e09172361dcfc621f1c7c0009bcfe4"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\domain\\network_agent.py": {
+    "mtime": 1777071358.1067102,
+    "ast_hash": "f5021dd6b55dcd82378adbf0d18ac8bd",
+    "semantic_hash": "f5021dd6b55dcd82378adbf0d18ac8bd"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\domain\\osint_agent.py": {
+    "mtime": 1777071358.1092198,
+    "ast_hash": "99c8c65289ca64086b05f3e4c3c8a55b",
+    "semantic_hash": "99c8c65289ca64086b05f3e4c3c8a55b"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\domain\\webapp_agent.py": {
+    "mtime": 1777071358.112236,
+    "ast_hash": "c197349e0fddae1b90486c63f4b857e9",
+    "semantic_hash": "c197349e0fddae1b90486c63f4b857e9"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\domain\\wireless_agent.py": {
+    "mtime": 1777071358.116144,
+    "ast_hash": "62629abfb518e19447a105b3633138f3",
+    "semantic_hash": "62629abfb518e19447a105b3633138f3"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\domain\\__init__.py": {
+    "mtime": 1777071358.1181548,
+    "ast_hash": "82a22b90f1c3a07a16c4ab92aaf46461",
+    "semantic_hash": "82a22b90f1c3a07a16c4ab92aaf46461"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\infrastructure\\configmanager_agent.py": {
+    "mtime": 1777071358.1242154,
+    "ast_hash": "fc011b300e47ddadd2a42d76b1fd83e0",
+    "semantic_hash": "fc011b300e47ddadd2a42d76b1fd83e0"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\infrastructure\\decisionengine_agent.py": {
+    "mtime": 1777071358.1285868,
+    "ast_hash": "9fdba71a74ce64cc9431ce80b6beb4f6",
+    "semantic_hash": "9fdba71a74ce64cc9431ce80b6beb4f6"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\infrastructure\\failurerecovery_agent.py": {
+    "mtime": 1777071358.1305995,
+    "ast_hash": "2e5644bf7bdfdb969153ea2ae6b41e65",
+    "semantic_hash": "2e5644bf7bdfdb969153ea2ae6b41e65"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\infrastructure\\healthcheck_agent.py": {
+    "mtime": 1777071358.141516,
+    "ast_hash": "73f9b202e5de639ea76a10209ccb045d",
+    "semantic_hash": "73f9b202e5de639ea76a10209ccb045d"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\infrastructure\\paramoptimizer_agent.py": {
+    "mtime": 1777071358.1455424,
+    "ast_hash": "2ebf64b75fe8e1a62f8b6dcf1fba6cfb",
+    "semantic_hash": "2ebf64b75fe8e1a62f8b6dcf1fba6cfb"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\infrastructure\\performancemonitor_agent.py": {
+    "mtime": 1777071358.1650712,
+    "ast_hash": "2c0b868433d1326f7c09a8e4a5eae0af",
+    "semantic_hash": "2c0b868433d1326f7c09a8e4a5eae0af"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\infrastructure\\ratelimiter_agent.py": {
+    "mtime": 1777071358.169769,
+    "ast_hash": "dc62f0b3979f70b37be8855047107f9c",
+    "semantic_hash": "dc62f0b3979f70b37be8855047107f9c"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\infrastructure\\resourcescheduler_agent.py": {
+    "mtime": 1777071358.1717894,
+    "ast_hash": "890375662f3e64917e41cf5b7ee6803c",
+    "semantic_hash": "890375662f3e64917e41cf5b7ee6803c"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\infrastructure\\__init__.py": {
+    "mtime": 1777071358.175816,
+    "ast_hash": "82a22b90f1c3a07a16c4ab92aaf46461",
+    "semantic_hash": "82a22b90f1c3a07a16c4ab92aaf46461"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\intelligence\\attacksurface_agent.py": {
+    "mtime": 1777071358.1778274,
+    "ast_hash": "a9df768e752ac1de6bf94f5aecdd7147",
+    "semantic_hash": "a9df768e752ac1de6bf94f5aecdd7147"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\intelligence\\cveintel_agent.py": {
+    "mtime": 1777071358.1808498,
+    "ast_hash": "9e11544cde86fc83717b61a7a4344224",
+    "semantic_hash": "9e11544cde86fc83717b61a7a4344224"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\intelligence\\exploitgen_agent.py": {
+    "mtime": 1777071358.184487,
+    "ast_hash": "ba6047c98480768a6021d48b7317afff",
+    "semantic_hash": "ba6047c98480768a6021d48b7317afff"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\intelligence\\iocextractor_agent.py": {
+    "mtime": 1777071358.1888447,
+    "ast_hash": "7e77422a41f085d0a53c2fd36f41eb62",
+    "semantic_hash": "7e77422a41f085d0a53c2fd36f41eb62"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\intelligence\\report_agent.py": {
+    "mtime": 1777071358.1944256,
+    "ast_hash": "3bee28b8f409c49eddd81975c7164797",
+    "semantic_hash": "3bee28b8f409c49eddd81975c7164797"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\intelligence\\riskscoring_agent.py": {
+    "mtime": 1777071358.1980727,
+    "ast_hash": "dcd6a5c1dc113e8b296143e2c75e9f51",
+    "semantic_hash": "dcd6a5c1dc113e8b296143e2c75e9f51"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\intelligence\\threatintel_agent.py": {
+    "mtime": 1777071358.2036462,
+    "ast_hash": "257ecfd9059822c842034ac41eed48bd",
+    "semantic_hash": "257ecfd9059822c842034ac41eed48bd"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\intelligence\\threatmodeling_agent.py": {
+    "mtime": 1777071358.2067385,
+    "ast_hash": "59438bd44798d17bb6adb30325f09998",
+    "semantic_hash": "59438bd44798d17bb6adb30325f09998"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\intelligence\\vulncorrelator_agent.py": {
+    "mtime": 1777071358.212733,
+    "ast_hash": "90085ba029ff2a3be52559af5749adbc",
+    "semantic_hash": "90085ba029ff2a3be52559af5749adbc"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\intelligence\\zerodayresearch_agent.py": {
+    "mtime": 1777071358.2146888,
+    "ast_hash": "0950bc2661429fd07289427cd0eb9e01",
+    "semantic_hash": "0950bc2661429fd07289427cd0eb9e01"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\intelligence\\__init__.py": {
+    "mtime": 1777071358.2182674,
+    "ast_hash": "82a22b90f1c3a07a16c4ab92aaf46461",
+    "semantic_hash": "82a22b90f1c3a07a16c4ab92aaf46461"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\offensive\\credharvest_agent.py": {
+    "mtime": 1777071358.2223125,
+    "ast_hash": "56df36ba5588f0b60cd55961197d3ca2",
+    "semantic_hash": "56df36ba5588f0b60cd55961197d3ca2"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\offensive\\evasion_agent.py": {
+    "mtime": 1777071358.2258666,
+    "ast_hash": "55c2b865f6e56a066b90424b87bd550a",
+    "semantic_hash": "55c2b865f6e56a066b90424b87bd550a"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\offensive\\lateralmovement_agent.py": {
+    "mtime": 1777071358.2299366,
+    "ast_hash": "858f1e47443868c417c4aca1f4607450",
+    "semantic_hash": "858f1e47443868c417c4aca1f4607450"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\offensive\\payloadcraft_agent.py": {
+    "mtime": 1777071358.2408025,
+    "ast_hash": "6c08fbb771622eb58a432c2dd37bfeaa",
+    "semantic_hash": "6c08fbb771622eb58a432c2dd37bfeaa"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\offensive\\privesc_agent.py": {
+    "mtime": 1777071358.244537,
+    "ast_hash": "17fa2c61c6c87a96904bbc3755b85f00",
+    "semantic_hash": "17fa2c61c6c87a96904bbc3755b85f00"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\offensive\\__init__.py": {
+    "mtime": 1777071358.2471912,
+    "ast_hash": "82a22b90f1c3a07a16c4ab92aaf46461",
+    "semantic_hash": "82a22b90f1c3a07a16c4ab92aaf46461"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\blueteam_agent.py": {
+    "mtime": 1777071358.2512903,
+    "ast_hash": "2cc63f4c2319d6749fbe96a14052ca9d",
+    "semantic_hash": "2cc63f4c2319d6749fbe96a14052ca9d"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\bugbounty_agent.py": {
+    "mtime": 1778952463.803106,
+    "ast_hash": "08349a2d15ce2d1af0c65859804b424a",
+    "semantic_hash": "08349a2d15ce2d1af0c65859804b424a"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\codereview_agent.py": {
+    "mtime": 1777071358.257298,
+    "ast_hash": "311062732fa09223ab6193a55ac5a5a0",
+    "semantic_hash": "311062732fa09223ab6193a55ac5a5a0"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\compliance_agent.py": {
+    "mtime": 1777071358.2610388,
+    "ast_hash": "e2669f3eb8250ed4e5e4c7161cb088be",
+    "semantic_hash": "e2669f3eb8250ed4e5e4c7161cb088be"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\ctf_agent.py": {
+    "mtime": 1777071446.1039052,
+    "ast_hash": "f2f471eaa99250cb81f3f1cba2e79d21",
+    "semantic_hash": "f2f471eaa99250cb81f3f1cba2e79d21"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\ir_agent.py": {
+    "mtime": 1777071358.2677326,
+    "ast_hash": "eebbb37754fadfe668a0d848c500d427",
+    "semantic_hash": "eebbb37754fadfe668a0d848c500d427"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\pentest_agent.py": {
+    "mtime": 1778952463.7977827,
+    "ast_hash": "5152e60e91b80a5fa639b470d8889f91",
+    "semantic_hash": "5152e60e91b80a5fa639b470d8889f91"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\purpleteam_agent.py": {
+    "mtime": 1777071358.2753296,
+    "ast_hash": "8891144dae9f7047103d336266ebad25",
+    "semantic_hash": "8891144dae9f7047103d336266ebad25"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\recon_agent.py": {
+    "mtime": 1778952463.7860196,
+    "ast_hash": "4d246952b8afd0f4febcb1efc913715e",
+    "semantic_hash": "4d246952b8afd0f4febcb1efc913715e"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\redteam_agent.py": {
+    "mtime": 1777071435.9002228,
+    "ast_hash": "73e5a12369c2435dcfdd6ef906826799",
+    "semantic_hash": "73e5a12369c2435dcfdd6ef906826799"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\threathunt_agent.py": {
+    "mtime": 1777071358.287915,
+    "ast_hash": "51bb7b52ab9dcab77b502dc72d946829",
+    "semantic_hash": "51bb7b52ab9dcab77b502dc72d946829"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\vulnmanagement_agent.py": {
+    "mtime": 1777071358.2916803,
+    "ast_hash": "af94edee3cd033c0d5b3e4061f2b981c",
+    "semantic_hash": "af94edee3cd033c0d5b3e4061f2b981c"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\webapp_agent.py": {
+    "mtime": 1780959339.7554376,
+    "ast_hash": "314826279db5c8b65c59129935e5299f",
+    "semantic_hash": "314826279db5c8b65c59129935e5299f"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\agents\\workflow\\__init__.py": {
+    "mtime": 1777071358.2936902,
+    "ast_hash": "82a22b90f1c3a07a16c4ab92aaf46461",
+    "semantic_hash": "82a22b90f1c3a07a16c4ab92aaf46461"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\artifacts.py": {
+    "mtime": 1780960651.094088,
+    "ast_hash": "07778ed2791c375162940e3980c974f9",
+    "semantic_hash": "07778ed2791c375162940e3980c974f9"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\audit.py": {
+    "mtime": 1780960744.6318996,
+    "ast_hash": "61085feb14a6819e7e8e06fbed6cfa52",
+    "semantic_hash": "61085feb14a6819e7e8e06fbed6cfa52"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\auth.py": {
+    "mtime": 1777071262.1075764,
+    "ast_hash": "edef11131d740bbc2a02b240aa5b89d2",
+    "semantic_hash": "edef11131d740bbc2a02b240aa5b89d2"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\executor.py": {
+    "mtime": 1780960651.0900455,
+    "ast_hash": "11051fb56993d5a6866265750c6aa265",
+    "semantic_hash": "11051fb56993d5a6866265750c6aa265"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\http_security.py": {
+    "mtime": 1780960651.1048284,
+    "ast_hash": "af317946c4a40706803dfffe69069a3a",
+    "semantic_hash": "af317946c4a40706803dfffe69069a3a"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\policy.py": {
+    "mtime": 1780960651.08417,
+    "ast_hash": "44644b1af269d08a8bc121af0fcbb381",
+    "semantic_hash": "44644b1af269d08a8bc121af0fcbb381"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\registry.py": {
+    "mtime": 1780959015.9627674,
+    "ast_hash": "a5f0b8c862aa8f3e35bf899491e05cde",
+    "semantic_hash": "a5f0b8c862aa8f3e35bf899491e05cde"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\result_parser.py": {
+    "mtime": 1777071376.946826,
+    "ast_hash": "bec9caded364613777cdcccfd59c1712",
+    "semantic_hash": "bec9caded364613777cdcccfd59c1712"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\run_manager.py": {
+    "mtime": 1780960651.0961108,
+    "ast_hash": "4d61ea0a7221d1b452fcd2e3d449a7b4",
+    "semantic_hash": "4d61ea0a7221d1b452fcd2e3d449a7b4"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\tool_manifest.py": {
+    "mtime": 1778952346.6644218,
+    "ast_hash": "4c0266c61e39ad985bb7782ba15d308e",
+    "semantic_hash": "4c0266c61e39ad985bb7782ba15d308e"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\tool_runner.py": {
+    "mtime": 1780960651.0862138,
+    "ast_hash": "f0b2dafc9b0ca5c8712998dee852d806",
+    "semantic_hash": "f0b2dafc9b0ca5c8712998dee852d806"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\validator.py": {
+    "mtime": 1773809826.609298,
+    "ast_hash": "b9218fd5e1764901c5407f5daf69476d",
+    "semantic_hash": "b9218fd5e1764901c5407f5daf69476d"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\core\\__init__.py": {
+    "mtime": 1773809830.6783745,
+    "ast_hash": "fb17e1593c2eab4635173ab95e08fb7b",
+    "semantic_hash": "fb17e1593c2eab4635173ab95e08fb7b"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\manifests\\__init__.py": {
+    "mtime": 1777417712.4615028,
+    "ast_hash": "d14b2787ca541d437c1c13092ebe3005",
+    "semantic_hash": "d14b2787ca541d437c1c13092ebe3005"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\manifests\\tools\\cloud.json": {
+    "mtime": 1780960671.539846,
+    "ast_hash": "172b252f8b0c613ff5901382ffa2f20f",
+    "semantic_hash": "172b252f8b0c613ff5901382ffa2f20f"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\manifests\\tools\\core.json": {
+    "mtime": 1780960671.530069,
+    "ast_hash": "07f66cd4859c8812ac488a29ca39597f",
+    "semantic_hash": "07f66cd4859c8812ac488a29ca39597f"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\manifests\\tools\\forensics.json": {
+    "mtime": 1778952335.7730646,
+    "ast_hash": "5e4b3f30fb2b2d206eac65ded4f7e522",
+    "semantic_hash": "5e4b3f30fb2b2d206eac65ded4f7e522"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\manifests\\tools\\offensive.json": {
+    "mtime": 1778952335.7792842,
+    "ast_hash": "5432177f016e8eec37a51b222b9afb7a",
+    "semantic_hash": "5432177f016e8eec37a51b222b9afb7a"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\manifests\\tools\\recon.json": {
+    "mtime": 1780960671.530069,
+    "ast_hash": "f1439d29b7be15ccdd5c46f602f7cfdf",
+    "semantic_hash": "f1439d29b7be15ccdd5c46f602f7cfdf"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\manifests\\tools\\web.json": {
+    "mtime": 1780960671.5385444,
+    "ast_hash": "8064d930bc61f22d1886dff5adb33458",
+    "semantic_hash": "8064d930bc61f22d1886dff5adb33458"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\manifests\\tools\\__init__.py": {
+    "mtime": 1777417718.1659236,
+    "ast_hash": "02fff038af6f6795bb1fbaf811538df1",
+    "semantic_hash": "02fff038af6f6795bb1fbaf811538df1"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\common.py": {
+    "mtime": 1778952145.5372066,
+    "ast_hash": "886cb1258f7f9a4ac03ed28e7e339485",
+    "semantic_hash": "886cb1258f7f9a4ac03ed28e7e339485"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\dispatch.py": {
+    "mtime": 1778952145.541311,
+    "ast_hash": "de331f4b5a1d252f2cd683043a76326e",
+    "semantic_hash": "de331f4b5a1d252f2cd683043a76326e"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\ffuf.py": {
+    "mtime": 1778952145.6415813,
+    "ast_hash": "40d1a5f94b9cd74295697f3d6fbd369c",
+    "semantic_hash": "40d1a5f94b9cd74295697f3d6fbd369c"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\gobuster.py": {
+    "mtime": 1778952145.6497793,
+    "ast_hash": "e0fec476eda2dee7fae203ffe19cffbd",
+    "semantic_hash": "e0fec476eda2dee7fae203ffe19cffbd"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\httpx.py": {
+    "mtime": 1778952145.6007307,
+    "ast_hash": "c0061ada16db245e673cc6b85484ef3b",
+    "semantic_hash": "c0061ada16db245e673cc6b85484ef3b"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\katana.py": {
+    "mtime": 1778952145.6334898,
+    "ast_hash": "5462e8f40641dbae7c42f02056df0ac6",
+    "semantic_hash": "5462e8f40641dbae7c42f02056df0ac6"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\models.py": {
+    "mtime": 1778952145.5320115,
+    "ast_hash": "17d67d75ee4ab2ab7dd5d294d5acd540",
+    "semantic_hash": "17d67d75ee4ab2ab7dd5d294d5acd540"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\naabu.py": {
+    "mtime": 1778952176.5427752,
+    "ast_hash": "61f7c878a29bff29145f1b620bcc7f4b",
+    "semantic_hash": "61f7c878a29bff29145f1b620bcc7f4b"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\nikto.py": {
+    "mtime": 1778952145.6753645,
+    "ast_hash": "63f07ac0e7cb03bc08f4bd7cba4b4391",
+    "semantic_hash": "63f07ac0e7cb03bc08f4bd7cba4b4391"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\nmap.py": {
+    "mtime": 1778952145.5533442,
+    "ast_hash": "5026757e2d106f7d92bcf93dc25d5e16",
+    "semantic_hash": "5026757e2d106f7d92bcf93dc25d5e16"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\nuclei.py": {
+    "mtime": 1778952145.6120336,
+    "ast_hash": "26cfc3b4ec5d4164910cacdf22295d64",
+    "semantic_hash": "26cfc3b4ec5d4164910cacdf22295d64"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\sqlmap.py": {
+    "mtime": 1778952145.6847386,
+    "ast_hash": "c216c033fb0d37220a0b03eb3b712605",
+    "semantic_hash": "c216c033fb0d37220a0b03eb3b712605"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\subfinder.py": {
+    "mtime": 1778952145.5795724,
+    "ast_hash": "cee2494fc2113ea60e60636e460581f3",
+    "semantic_hash": "cee2494fc2113ea60e60636e460581f3"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\trivy.py": {
+    "mtime": 1778952145.6868303,
+    "ast_hash": "63d9760e52ffa2dd3d69f659aec81c0a",
+    "semantic_hash": "63d9760e52ffa2dd3d69f659aec81c0a"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\whois.py": {
+    "mtime": 1778952145.6898527,
+    "ast_hash": "090fe355e3ccf6ab1c36dd8dbcabb5c8",
+    "semantic_hash": "090fe355e3ccf6ab1c36dd8dbcabb5c8"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\parsers\\__init__.py": {
+    "mtime": 1778952145.5239365,
+    "ast_hash": "20e93d4d08526b0499d5fb6684dab8fe",
+    "semantic_hash": "20e93d4d08526b0499d5fb6684dab8fe"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\_base.py": {
+    "mtime": 1780959414.0944812,
+    "ast_hash": "40be921bc8df12ba6f804fc900bee137",
+    "semantic_hash": "40be921bc8df12ba6f804fc900bee137"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\__init__.py": {
+    "mtime": 1773809864.304866,
+    "ast_hash": "987faa117019e0c971cb4713cd60e625",
+    "semantic_hash": "987faa117019e0c971cb4713cd60e625"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\active_directory\\__init__.py": {
+    "mtime": 1773810404.2628489,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\ai_ml_security\\__init__.py": {
+    "mtime": 1773810404.2754984,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\api_security\\__init__.py": {
+    "mtime": 1773810404.2666733,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\blockchain\\__init__.py": {
+    "mtime": 1773810404.2692368,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\cloud_security\\aws_tools.py": {
+    "mtime": 1773977859.4038787,
+    "ast_hash": "889b5edd1fcaadc9747f1c7df1d8fd50",
+    "semantic_hash": "889b5edd1fcaadc9747f1c7df1d8fd50"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\cloud_security\\cloud_tools.py": {
+    "mtime": 1773820794.5396547,
+    "ast_hash": "b53e5286ba1d69ed74cc02012cef514a",
+    "semantic_hash": "b53e5286ba1d69ed74cc02012cef514a"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\cloud_security\\__init__.py": {
+    "mtime": 1773820798.4202652,
+    "ast_hash": "efef6ed15b529396e8f7c2dc13364a76",
+    "semantic_hash": "efef6ed15b529396e8f7c2dc13364a76"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\code_analysis\\__init__.py": {
+    "mtime": 1773810404.2810278,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\container_security\\__init__.py": {
+    "mtime": 1773810404.2254155,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\cryptography\\__init__.py": {
+    "mtime": 1773810404.242597,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\database_injection\\database_scanners.py": {
+    "mtime": 1773820835.1752324,
+    "ast_hash": "faf8f74c0a8cb1960298d04bb09f470b",
+    "semantic_hash": "faf8f74c0a8cb1960298d04bb09f470b"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\database_injection\\__init__.py": {
+    "mtime": 1773820839.2938168,
+    "ast_hash": "d6b094d806e045f4c90e7d9521eb2f46",
+    "semantic_hash": "d6b094d806e045f4c90e7d9521eb2f46"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\enumeration\\network_enum.py": {
+    "mtime": 1773813918.6955194,
+    "ast_hash": "a314e46379255e6de7c1a496ec841fff",
+    "semantic_hash": "a314e46379255e6de7c1a496ec841fff"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\enumeration\\web_enum.py": {
+    "mtime": 1773813918.6992247,
+    "ast_hash": "373a8e808569695b8dd76b02e113f303",
+    "semantic_hash": "373a8e808569695b8dd76b02e113f303"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\enumeration\\__init__.py": {
+    "mtime": 1773810404.179101,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\evasion\\__init__.py": {
+    "mtime": 1773810404.245252,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\evasion_payloads\\payload_gen.py": {
+    "mtime": 1773820852.773853,
+    "ast_hash": "3bba1447108f42fe66d40e53403f8471",
+    "semantic_hash": "3bba1447108f42fe66d40e53403f8471"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\evasion_payloads\\__init__.py": {
+    "mtime": 1773820856.651864,
+    "ast_hash": "0e7e4a88ceb8fbc205e605e6a6a21d54",
+    "semantic_hash": "0e7e4a88ceb8fbc205e605e6a6a21d54"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\exploitation\\auto_generated_exploitation.py": {
+    "mtime": 1773981062.8268423,
+    "ast_hash": "6d51ea82853bca8bfc3de2aa539af84e",
+    "semantic_hash": "6d51ea82853bca8bfc3de2aa539af84e"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\exploitation\\browser_exploitation.py": {
+    "mtime": 1773819361.491275,
+    "ast_hash": "1ff44011ce11307986dc1c83571313e5",
+    "semantic_hash": "1ff44011ce11307986dc1c83571313e5"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\exploitation\\exploit_tools.py": {
+    "mtime": 1773977119.0411925,
+    "ast_hash": "8bdcf3a0e330d86604bf7e5a19576707",
+    "semantic_hash": "8bdcf3a0e330d86604bf7e5a19576707"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\exploitation\\frameworks.py": {
+    "mtime": 1773819356.6718802,
+    "ast_hash": "26903855bc8de208182b0ba35a95c770",
+    "semantic_hash": "26903855bc8de208182b0ba35a95c770"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\exploitation\\social_engineering.py": {
+    "mtime": 1773819363.503433,
+    "ast_hash": "fb0a3df25b5c1fded01d1fe34ef3bb9f",
+    "semantic_hash": "fb0a3df25b5c1fded01d1fe34ef3bb9f"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\exploitation\\__init__.py": {
+    "mtime": 1773817118.335119,
+    "ast_hash": "5f163f26ab516e926d97713e6b621286",
+    "semantic_hash": "5f163f26ab516e926d97713e6b621286"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\forensics\\forensics_tools.py": {
+    "mtime": 1773820786.965658,
+    "ast_hash": "14dc140ec0ee09b5c2fe02da03261201",
+    "semantic_hash": "14dc140ec0ee09b5c2fe02da03261201"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\forensics\\__init__.py": {
+    "mtime": 1773820792.4678402,
+    "ast_hash": "c15dc4a3e00940ff115b3d63916840a1",
+    "semantic_hash": "c15dc4a3e00940ff115b3d63916840a1"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\iot_security\\__init__.py": {
+    "mtime": 1773810404.2385333,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\mobile\\auto_generated_mobile.py": {
+    "mtime": 1773981062.859313,
+    "ast_hash": "0f452a0b6394184a1a2ed3443889a5fe",
+    "semantic_hash": "0f452a0b6394184a1a2ed3443889a5fe"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\mobile\\__init__.py": {
+    "mtime": 1773981062.8563151,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\mobile_security\\mobile_tools.py": {
+    "mtime": 1773820846.6950006,
+    "ast_hash": "1e6d28d761bcfb659445b71b9f4481d8",
+    "semantic_hash": "1e6d28d761bcfb659445b71b9f4481d8"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\mobile_security\\__init__.py": {
+    "mtime": 1773820850.7257793,
+    "ast_hash": "acb5ee5c80a2f10ee3fb905b118468e8",
+    "semantic_hash": "acb5ee5c80a2f10ee3fb905b118468e8"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\network_attacks\\auto_generated_network_attacks.py": {
+    "mtime": 1773981062.8543124,
+    "ast_hash": "06ac432a5a230bcfc2f379e434cedc9c",
+    "semantic_hash": "06ac432a5a230bcfc2f379e434cedc9c"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\network_attacks\\mitm_tools.py": {
+    "mtime": 1773820841.3452604,
+    "ast_hash": "20004f3684ccf7e4d3a5d0d69184d789",
+    "semantic_hash": "20004f3684ccf7e4d3a5d0d69184d789"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\network_attacks\\sniffing.py": {
+    "mtime": 1773977845.2673743,
+    "ast_hash": "27ddca1b882cbf1e445a625c98d294d5",
+    "semantic_hash": "27ddca1b882cbf1e445a625c98d294d5"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\network_attacks\\__init__.py": {
+    "mtime": 1773820844.646828,
+    "ast_hash": "19529632f54c510f611dd852cdb7b4c9",
+    "semantic_hash": "19529632f54c510f611dd852cdb7b4c9"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\osint\\auto_generated_osint.py": {
+    "mtime": 1773981062.8447773,
+    "ast_hash": "9f2a49742eed18bd65e665a3fb999331",
+    "semantic_hash": "9f2a49742eed18bd65e665a3fb999331"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\osint\\domain_intel.py": {
+    "mtime": 1773977440.9371364,
+    "ast_hash": "c4706ce048a846b740668c51c7261026",
+    "semantic_hash": "c4706ce048a846b740668c51c7261026"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\osint\\__init__.py": {
+    "mtime": 1773810404.2284207,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\password_attacks\\auto_generated_password_attacks.py": {
+    "mtime": 1773981062.839094,
+    "ast_hash": "8e7629abe31c1d6f9b48c993ee8e4487",
+    "semantic_hash": "8e7629abe31c1d6f9b48c993ee8e4487"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\password_attacks\\offline_cracking.py": {
+    "mtime": 1773977425.7155645,
+    "ast_hash": "04bfa4e45584f8601330d22a18b649f1",
+    "semantic_hash": "04bfa4e45584f8601330d22a18b649f1"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\password_attacks\\online_brute.py": {
+    "mtime": 1773819486.8866935,
+    "ast_hash": "835de1f5c24f1a3f053c9db803743991",
+    "semantic_hash": "835de1f5c24f1a3f053c9db803743991"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\password_attacks\\wordlists.py": {
+    "mtime": 1773819488.9740276,
+    "ast_hash": "d2ee561f464066e429662f51545f23bf",
+    "semantic_hash": "d2ee561f464066e429662f51545f23bf"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\password_attacks\\__init__.py": {
+    "mtime": 1773819491.00042,
+    "ast_hash": "19115ed9f8a72b94cb48edd96aeaf379",
+    "semantic_hash": "19115ed9f8a72b94cb48edd96aeaf379"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\payload_generation\\payload_crafting.py": {
+    "mtime": 1773977206.1053405,
+    "ast_hash": "c35737ba56ec233b0af5c412a481e49b",
+    "semantic_hash": "c35737ba56ec233b0af5c412a481e49b"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\payload_generation\\__init__.py": {
+    "mtime": 1773810404.248779,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\post_exploitation\\auto_generated_post_exploitation.py": {
+    "mtime": 1773981062.8343744,
+    "ast_hash": "e2410fbb77a372b008297a384a2b297f",
+    "semantic_hash": "e2410fbb77a372b008297a384a2b297f"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\post_exploitation\\c2_frameworks.py": {
+    "mtime": 1773819393.3237553,
+    "ast_hash": "2b3cb7fa7fe890906b4839729a5d5781",
+    "semantic_hash": "2b3cb7fa7fe890906b4839729a5d5781"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\post_exploitation\\data_exfiltration.py": {
+    "mtime": 1773819389.8918574,
+    "ast_hash": "bfc7a5e3bb4a8c3193f344ea46a25b41",
+    "semantic_hash": "bfc7a5e3bb4a8c3193f344ea46a25b41"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\post_exploitation\\lateral_movement.py": {
+    "mtime": 1773819384.6434605,
+    "ast_hash": "e47e991988aa312329bdf4497b0f0bac",
+    "semantic_hash": "e47e991988aa312329bdf4497b0f0bac"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\post_exploitation\\persistence.py": {
+    "mtime": 1773819387.3903947,
+    "ast_hash": "27bbeec350faed32bc1beadc6f1e637d",
+    "semantic_hash": "27bbeec350faed32bc1beadc6f1e637d"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\post_exploitation\\privesc.py": {
+    "mtime": 1773819381.5729513,
+    "ast_hash": "e54bb8509f7e1750c169361dc69b2e95",
+    "semantic_hash": "e54bb8509f7e1750c169361dc69b2e95"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\post_exploitation\\__init__.py": {
+    "mtime": 1773817150.6357832,
+    "ast_hash": "ed5ddd40ddf2da02bb9156120a195b36",
+    "semantic_hash": "ed5ddd40ddf2da02bb9156120a195b36"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reconnaissance\\active_recon.py": {
+    "mtime": 1773810443.7043014,
+    "ast_hash": "a46cb08121c88c94757ed4f081098453",
+    "semantic_hash": "a46cb08121c88c94757ed4f081098453"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reconnaissance\\asset_discovery.py": {
+    "mtime": 1773819431.9544868,
+    "ast_hash": "ae5f3fc0f59d7e0a7b2ebe2f027250e7",
+    "semantic_hash": "ae5f3fc0f59d7e0a7b2ebe2f027250e7"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reconnaissance\\cloud_recon.py": {
+    "mtime": 1773813918.690037,
+    "ast_hash": "4d857283f191dd94875b9feedb1e556e",
+    "semantic_hash": "4d857283f191dd94875b9feedb1e556e"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reconnaissance\\dns_enum.py": {
+    "mtime": 1773819423.0700588,
+    "ast_hash": "2494249d08fa75f2d549ed69f25d9817",
+    "semantic_hash": "2494249d08fa75f2d549ed69f25d9817"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reconnaissance\\dns_recon_advanced.py": {
+    "mtime": 1773813918.6862867,
+    "ast_hash": "3490d90a7f23537c2e33e2f8df13f04c",
+    "semantic_hash": "3490d90a7f23537c2e33e2f8df13f04c"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reconnaissance\\osint.py": {
+    "mtime": 1773821195.1529229,
+    "ast_hash": "644ff928194d9e2a57e17e0ddc35f196",
+    "semantic_hash": "644ff928194d9e2a57e17e0ddc35f196"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reconnaissance\\osint_gathering.py": {
+    "mtime": 1773813918.690037,
+    "ast_hash": "8623ce8e0f6d30141ed8d931ec5a162b",
+    "semantic_hash": "8623ce8e0f6d30141ed8d931ec5a162b"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reconnaissance\\passive_recon.py": {
+    "mtime": 1773810455.5180273,
+    "ast_hash": "5f41f4ef41722217de86e8da0347d19e",
+    "semantic_hash": "5f41f4ef41722217de86e8da0347d19e"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reconnaissance\\subdomain_enum.py": {
+    "mtime": 1773810457.5414307,
+    "ast_hash": "0a1e20554b2ee4339d191ba18f54a3fa",
+    "semantic_hash": "0a1e20554b2ee4339d191ba18f54a3fa"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reconnaissance\\tech_detection.py": {
+    "mtime": 1773819685.6603124,
+    "ast_hash": "7400723128e3c6458fb6e45ad5941861",
+    "semantic_hash": "7400723128e3c6458fb6e45ad5941861"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reconnaissance\\__init__.py": {
+    "mtime": 1773821136.043856,
+    "ast_hash": "4a885f2fced0af2a487ebdfb0cc44df8",
+    "semantic_hash": "4a885f2fced0af2a487ebdfb0cc44df8"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reporting\\__init__.py": {
+    "mtime": 1773810404.2591286,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reverse_engineering\\binary_analysis.py": {
+    "mtime": 1773820800.5180285,
+    "ast_hash": "41ba094cc9c2f46428dac99fcd5cde4b",
+    "semantic_hash": "41ba094cc9c2f46428dac99fcd5cde4b"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reverse_engineering\\malware_analysis.py": {
+    "mtime": 1773819687.7123299,
+    "ast_hash": "944956582069f3c9e22583f6a3fbe8ae",
+    "semantic_hash": "944956582069f3c9e22583f6a3fbe8ae"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\reverse_engineering\\__init__.py": {
+    "mtime": 1773820802.5742595,
+    "ast_hash": "d917de792c404c28046a92628716dbe0",
+    "semantic_hash": "d917de792c404c28046a92628716dbe0"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\vulnerability_scanning\\auto_generated_vulnerability_scanning.py": {
+    "mtime": 1773981062.8107917,
+    "ast_hash": "ed49534e6b7bf964cb3692d36346c547",
+    "semantic_hash": "ed49534e6b7bf964cb3692d36346c547"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\vulnerability_scanning\\cms_scanners.py": {
+    "mtime": 1773819290.2723494,
+    "ast_hash": "6eb2fd9415b5c932c17eb06b93aaece7",
+    "semantic_hash": "6eb2fd9415b5c932c17eb06b93aaece7"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\vulnerability_scanning\\network_scanners.py": {
+    "mtime": 1773819280.1678169,
+    "ast_hash": "fe8991d673161c4e14dbeef6a1150cfa",
+    "semantic_hash": "fe8991d673161c4e14dbeef6a1150cfa"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\vulnerability_scanning\\ssl_tls_scanners.py": {
+    "mtime": 1773819292.2899213,
+    "ast_hash": "0ddedafb754ef5797ff5b89cd7317827",
+    "semantic_hash": "0ddedafb754ef5797ff5b89cd7317827"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\vulnerability_scanning\\web_scanners.py": {
+    "mtime": 1773819285.9753656,
+    "ast_hash": "fd4e880591471348adcf55d65cb2acca",
+    "semantic_hash": "fd4e880591471348adcf55d65cb2acca"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\vulnerability_scanning\\__init__.py": {
+    "mtime": 1773817031.439463,
+    "ast_hash": "f1670d12847cea07091d102fad784ae8",
+    "semantic_hash": "f1670d12847cea07091d102fad784ae8"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\web_application\\api_testing.py": {
+    "mtime": 1773819322.040612,
+    "ast_hash": "1a4df92dce91f62fdfe7780a8763ba66",
+    "semantic_hash": "1a4df92dce91f62fdfe7780a8763ba66"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\web_application\\auth_testing.py": {
+    "mtime": 1773819324.7834325,
+    "ast_hash": "8f496bc321f0067d10de117ccb35ba75",
+    "semantic_hash": "8f496bc321f0067d10de117ccb35ba75"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\web_application\\auto_generated_web_application.py": {
+    "mtime": 1773981062.820236,
+    "ast_hash": "15231a820c48d1191cfa2c3d759b7c46",
+    "semantic_hash": "15231a820c48d1191cfa2c3d759b7c46"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\web_application\\cms_exploitation.py": {
+    "mtime": 1773817087.9707632,
+    "ast_hash": "0979a854b5212181c5adc284ec960f31",
+    "semantic_hash": "0979a854b5212181c5adc284ec960f31"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\web_application\\fuzzing.py": {
+    "mtime": 1773819319.459954,
+    "ast_hash": "d558a58d047b5b35e9da5618bbf9c290",
+    "semantic_hash": "d558a58d047b5b35e9da5618bbf9c290"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\web_application\\injection.py": {
+    "mtime": 1773819315.355586,
+    "ast_hash": "703e6b961aff8fea9e936a6e4a03ac12",
+    "semantic_hash": "703e6b961aff8fea9e936a6e4a03ac12"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\web_application\\proxy_tools.py": {
+    "mtime": 1773819326.8070526,
+    "ast_hash": "732a52e78f713ec103b2bf9183ac32c3",
+    "semantic_hash": "732a52e78f713ec103b2bf9183ac32c3"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\web_application\\__init__.py": {
+    "mtime": 1773817090.2172928,
+    "ast_hash": "f65867ffa7a1f939f29d6372d8529873",
+    "semantic_hash": "f65867ffa7a1f939f29d6372d8529873"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\wireless\\wireless_tools.py": {
+    "mtime": 1773820776.6546297,
+    "ast_hash": "af59c816946d12bb0633252385a79286",
+    "semantic_hash": "af59c816946d12bb0633252385a79286"
+  },
+  "D:\\Projects\\ShikariMCP\\src\\shikari\\tools\\wireless\\__init__.py": {
+    "mtime": 1773820784.944947,
+    "ast_hash": "b681f2ee11cbaa779655fbc9194074e7",
+    "semantic_hash": "b681f2ee11cbaa779655fbc9194074e7"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\conftest.py": {
+    "mtime": 1775513017.0919468,
+    "ast_hash": "d4322ec0e964b868e84f356d581b4041",
+    "semantic_hash": "d4322ec0e964b868e84f356d581b4041"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_artifacts.py": {
+    "mtime": 1780960686.6580882,
+    "ast_hash": "5c4792d5fcfe09a63ad3f70f9a0da770",
+    "semantic_hash": "5c4792d5fcfe09a63ad3f70f9a0da770"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_executor.py": {
+    "mtime": 1780959808.9706254,
+    "ast_hash": "6063400a178368df96483313516fc805",
+    "semantic_hash": "6063400a178368df96483313516fc805"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_http_security.py": {
+    "mtime": 1780959759.945027,
+    "ast_hash": "b5b0d63279a64b0ead6f6a5033d95c14",
+    "semantic_hash": "b5b0d63279a64b0ead6f6a5033d95c14"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_install_scripts.py": {
+    "mtime": 1778952916.1567638,
+    "ast_hash": "c1334248b4cec38d6f6092398e64cb23",
+    "semantic_hash": "c1334248b4cec38d6f6092398e64cb23"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_integration.py": {
+    "mtime": 1778964652.1478486,
+    "ast_hash": "5506c5b9afb5e08f1075864a48aca6d4",
+    "semantic_hash": "5506c5b9afb5e08f1075864a48aca6d4"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_parsers.py": {
+    "mtime": 1778952239.7132344,
+    "ast_hash": "f721f9f3e36ac2c59ea9f500e5d62f2b",
+    "semantic_hash": "f721f9f3e36ac2c59ea9f500e5d62f2b"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_policy.py": {
+    "mtime": 1780960686.6493764,
+    "ast_hash": "c3f255e55ebd020d4c2e2495b9499836",
+    "semantic_hash": "c3f255e55ebd020d4c2e2495b9499836"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_registry.py": {
+    "mtime": 1780959808.9806616,
+    "ast_hash": "6b1fb13adf444609290181973667a465",
+    "semantic_hash": "6b1fb13adf444609290181973667a465"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_run_manager.py": {
+    "mtime": 1780959759.9710414,
+    "ast_hash": "eec7cc21bb9579bbe577dbe97a69956b",
+    "semantic_hash": "eec7cc21bb9579bbe577dbe97a69956b"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_server.py": {
+    "mtime": 1780959759.9192,
+    "ast_hash": "a2c526c80167fd4004751878f34ba57c",
+    "semantic_hash": "a2c526c80167fd4004751878f34ba57c"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_smoke.py": {
+    "mtime": 1780959759.9390066,
+    "ast_hash": "b7dcdfe86af18532ce336a37e1f8b744",
+    "semantic_hash": "b7dcdfe86af18532ce336a37e1f8b744"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_tool_manifest.py": {
+    "mtime": 1778951040.629183,
+    "ast_hash": "95d126cd0af1ecc07104cfbb7c2330cd",
+    "semantic_hash": "95d126cd0af1ecc07104cfbb7c2330cd"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_tool_runner.py": {
+    "mtime": 1780960686.6529744,
+    "ast_hash": "66a0909204a6adc5f2c610eb7750bdff",
+    "semantic_hash": "66a0909204a6adc5f2c610eb7750bdff"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_tools\\test_reconnaissance.py": {
+    "mtime": 1775513041.3226497,
+    "ast_hash": "19e97d46c06efd5ff2b60144a67375fc",
+    "semantic_hash": "19e97d46c06efd5ff2b60144a67375fc"
+  },
+  "D:\\Projects\\ShikariMCP\\tests\\test_tools\\__init__.py": {
+    "mtime": 1773810404.3071554,
+    "ast_hash": "a7e0482bfeddba80035940312501ed15",
+    "semantic_hash": "a7e0482bfeddba80035940312501ed15"
+  },
+  "D:\\Projects\\ShikariMCP\\AGENTS.md": {
+    "mtime": 1778968365.1997452,
+    "ast_hash": "d2a3742fbd1b791ccd787f6f27fcda87",
+    "semantic_hash": "d2a3742fbd1b791ccd787f6f27fcda87"
+  },
+  "D:\\Projects\\ShikariMCP\\compose.yaml": {
+    "mtime": 1780960477.3899927,
+    "ast_hash": "22d49c3d966aff90369718740f770d28",
+    "semantic_hash": "22d49c3d966aff90369718740f770d28"
+  },
+  "D:\\Projects\\ShikariMCP\\CONTRIBUTING.md": {
+    "mtime": 1775514086.518854,
+    "ast_hash": "ba48daf76ccf1c3da90745b500d21398",
+    "semantic_hash": "ba48daf76ccf1c3da90745b500d21398"
+  },
+  "D:\\Projects\\ShikariMCP\\README.md": {
+    "mtime": 1780960799.8330803,
+    "ast_hash": "c82bff3374c157885fefb6ef823b7137",
+    "semantic_hash": "c82bff3374c157885fefb6ef823b7137"
+  },
+  "D:\\Projects\\ShikariMCP\\RELEASE_CHECKLIST.md": {
+    "mtime": 1780960211.5098934,
+    "ast_hash": "4ffd825e5236db3adfb2ee06eecfdef9",
+    "semantic_hash": "4ffd825e5236db3adfb2ee06eecfdef9"
+  },
+  "D:\\Projects\\ShikariMCP\\SHIKARI_MCP_SECURITY_TOOLING_REVIEW.md": {
+    "mtime": 1777414248.1883264,
+    "ast_hash": "a9fa8d8435e71373c241da63ebe50e10",
+    "semantic_hash": "a9fa8d8435e71373c241da63ebe50e10"
+  },
+  "D:\\Projects\\ShikariMCP\\SHIKARI_PRODUCTION_READINESS_PLAN.md": {
+    "mtime": 1777416868.801702,
+    "ast_hash": "f7cc46f216f52f15ed704d93d37d5055",
+    "semantic_hash": "f7cc46f216f52f15ed704d93d37d5055"
+  },
+  "D:\\Projects\\ShikariMCP\\SHIKARI_PRODUCTION_READINESS_REPORT.md": {
+    "mtime": 1780960791.4884279,
+    "ast_hash": "2f7493025ec2b560b51ef026dc32a8df",
+    "semantic_hash": "2f7493025ec2b560b51ef026dc32a8df"
+  },
+  "D:\\Projects\\ShikariMCP\\SHIKARI_TODO.md": {
+    "mtime": 1780960404.4032738,
+    "ast_hash": "bccf982a4b1f9a5c9a8332de5adaa415",
+    "semantic_hash": "bccf982a4b1f9a5c9a8332de5adaa415"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\plans\\implementation_plan.md": {
+    "mtime": 1773805708.0151918,
+    "ast_hash": "30b29f079529ef1fb632a480bd80d29b",
+    "semantic_hash": "30b29f079529ef1fb632a480bd80d29b"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\rules\\prompts.md": {
+    "mtime": 1773809337.343292,
+    "ast_hash": "93f255ae7367ad25eb20c3019e7b8f27",
+    "semantic_hash": "93f255ae7367ad25eb20c3019e7b8f27"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\skills\\python-mcp-server\\SKILL.md": {
+    "mtime": 1773807734.38609,
+    "ast_hash": "d414dbd58784b73e6ecc21eb9c5aedea",
+    "semantic_hash": "d414dbd58784b73e6ecc21eb9c5aedea"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\skills\\python-mcp-server\\references\\advanced-patterns.md": {
+    "mtime": 1773807734.4237654,
+    "ast_hash": "eaff3dc8f48694203e48a3fbf6561aff",
+    "semantic_hash": "eaff3dc8f48694203e48a3fbf6561aff"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\skills\\python-mcp-server\\references\\project-templates.md": {
+    "mtime": 1773807734.411554,
+    "ast_hash": "80ed77765fbb026f96247c68adc9af3c",
+    "semantic_hash": "80ed77765fbb026f96247c68adc9af3c"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\workflows\\brainstorm.md": {
+    "mtime": 1773843295.0,
+    "ast_hash": "ce9589d14459df802c593c6a7446ae71",
+    "semantic_hash": "ce9589d14459df802c593c6a7446ae71"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\workflows\\create.md": {
+    "mtime": 1773843295.0,
+    "ast_hash": "60e377f670f52959230b1d541bd82857",
+    "semantic_hash": "60e377f670f52959230b1d541bd82857"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\workflows\\debug.md": {
+    "mtime": 1773843295.0,
+    "ast_hash": "84d1c4aea95de19c6630ebcdc5ba732c",
+    "semantic_hash": "84d1c4aea95de19c6630ebcdc5ba732c"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\workflows\\deploy.md": {
+    "mtime": 1773843295.0,
+    "ast_hash": "30d6453330a25943cfe40ba005efcbf5",
+    "semantic_hash": "30d6453330a25943cfe40ba005efcbf5"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\workflows\\enhance.md": {
+    "mtime": 1773843295.0,
+    "ast_hash": "3a2f44522545338834b1b4f3e024ab0f",
+    "semantic_hash": "3a2f44522545338834b1b4f3e024ab0f"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\workflows\\orchestrate.md": {
+    "mtime": 1773843295.0,
+    "ast_hash": "019205468f2e40b69aacf95ca32470c9",
+    "semantic_hash": "019205468f2e40b69aacf95ca32470c9"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\workflows\\plan.md": {
+    "mtime": 1773843295.0,
+    "ast_hash": "a8a6dafdadf8b11121ec16fc7774651b",
+    "semantic_hash": "a8a6dafdadf8b11121ec16fc7774651b"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\workflows\\preview.md": {
+    "mtime": 1773843295.0,
+    "ast_hash": "3ca3e51c493c7520e3d331ce48792701",
+    "semantic_hash": "3ca3e51c493c7520e3d331ce48792701"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\workflows\\status.md": {
+    "mtime": 1773843295.0,
+    "ast_hash": "78d98f326a1ce19e6d9a534fb2aef05f",
+    "semantic_hash": "78d98f326a1ce19e6d9a534fb2aef05f"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\workflows\\test.md": {
+    "mtime": 1773843295.0,
+    "ast_hash": "eb474f8b5a7a0298ecdb412e46ac7a97",
+    "semantic_hash": "eb474f8b5a7a0298ecdb412e46ac7a97"
+  },
+  "D:\\Projects\\ShikariMCP\\.agent\\workflows\\ui-ux-pro-max.md": {
+    "mtime": 1773843295.0,
+    "ast_hash": "2163e1fcdde9ba0d427a333df02d8f8b",
+    "semantic_hash": "2163e1fcdde9ba0d427a333df02d8f8b"
+  },
+  "D:\\Projects\\ShikariMCP\\.github\\workflows\\ci.yml": {
+    "mtime": 1780959999.221604,
+    "ast_hash": "028245fe3334b7dbc126b676ff654044",
+    "semantic_hash": "028245fe3334b7dbc126b676ff654044"
+  },
+  "D:\\Projects\\ShikariMCP\\docs\\AGENTS.md": {
+    "mtime": 1780960404.3992267,
+    "ast_hash": "35a7b2165eaad583696bffbde35ed678",
+    "semantic_hash": "35a7b2165eaad583696bffbde35ed678"
+  },
+  "D:\\Projects\\ShikariMCP\\docs\\ARCHITECTURE.md": {
+    "mtime": 1780960404.395811,
+    "ast_hash": "a3a3d27a87e63b04cc99842c39d3e589",
+    "semantic_hash": "a3a3d27a87e63b04cc99842c39d3e589"
+  },
+  "D:\\Projects\\ShikariMCP\\docs\\CONFIGURATION.md": {
+    "mtime": 1780960177.2016532,
+    "ast_hash": "3cb2f91c63238b18f3bf245b1344eb9e",
+    "semantic_hash": "3cb2f91c63238b18f3bf245b1344eb9e"
+  },
+  "D:\\Projects\\ShikariMCP\\docs\\DEVELOPMENT.md": {
+    "mtime": 1778966018.7328231,
+    "ast_hash": "7e91a156684beb98223d7f08ce8d4469",
+    "semantic_hash": "7e91a156684beb98223d7f08ce8d4469"
+  },
+  "D:\\Projects\\ShikariMCP\\docs\\DOCKER.md": {
+    "mtime": 1780960477.3978078,
+    "ast_hash": "8b79cda0a7408018bb1d738c537d3dbe",
+    "semantic_hash": "8b79cda0a7408018bb1d738c537d3dbe"
+  },
+  "D:\\Projects\\ShikariMCP\\docs\\MCP_CLIENTS.md": {
+    "mtime": 1780960211.505921,
+    "ast_hash": "bdc008e82b535b6cfdd6df40b88a1c3d",
+    "semantic_hash": "bdc008e82b535b6cfdd6df40b88a1c3d"
+  },
+  "D:\\Projects\\ShikariMCP\\docs\\TOOLS.md": {
+    "mtime": 1780960211.4992683,
+    "ast_hash": "3378be56fa9b0d9d0c5c876198e8ccd4",
+    "semantic_hash": "3378be56fa9b0d9d0c5c876198e8ccd4"
+  }
+}

@@ -23,6 +23,3 @@ artifacts/
 .agents/
 .agent/
 .env
-
-graphify-out/
-.opencode/
