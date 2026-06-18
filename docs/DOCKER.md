@@ -30,8 +30,8 @@ Compose applies:
 ## Build And Verify
 
 ```bash
-docker build -t shikari:local -f docker/Dockerfile .
-docker run --rm --entrypoint shikari shikari:local \
+docker build -t shikari-mcp:local -f docker/Dockerfile .
+docker run --rm --entrypoint shikari-mcp shikari-mcp:local \
   tools verify --profile core --json
 ```
 
@@ -44,6 +44,16 @@ Set both the active flag and a narrow target allowlist in `.env`:
 ```dotenv
 SHIKARI_ENABLE_ACTIVE_TOOLS=true
 SHIKARI_TARGET_ALLOWLIST=example.com,10.10.0.0/16
+```
+
+## Rate Limiting
+
+The container enables rate limiting by default (60 req/s per IP, 100 burst). To adjust or disable:
+
+```dotenv
+SHIKARI_RATE_LIMIT_RPS=120    # Increase for trusted networks
+SHIKARI_RATE_LIMIT_BURST=200  # Higher burst for CI/automation
+# SHIKARI_RATE_LIMIT_RPS=0    # Uncomment to disable entirely
 ```
 
 Remote active tools remain disabled in the container. The default Compose deployment uses local mode and binds only to `127.0.0.1`.

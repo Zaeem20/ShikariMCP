@@ -58,11 +58,11 @@ git push origin v0.X.0
 
 ```bash
 # Build the production core image
-docker build -t shikari:latest -f docker/Dockerfile .
-docker build -t shikari:core -f docker/Dockerfile.core .
+docker build -t shikari-mcp:latest -f docker/Dockerfile .
+docker build -t shikari-mcp:core -f docker/Dockerfile.core .
 
 # Run verification
-docker run --rm --entrypoint shikari shikari:core \
+docker run --rm --entrypoint shikari-mcp shikari-mcp:core \
   tools verify --profile core --json
 ```
 
@@ -71,11 +71,11 @@ docker run --rm --entrypoint shikari shikari:core \
 ```bash
 # Fresh install test
 pip install .
-shikari --transport stdio
+shikari-mcp --transport stdio
 
 # Or with uv
 uv sync
-uv run shikari --transport stdio
+uv run shikari-mcp --transport stdio
 ```
 
 ### GitHub Release

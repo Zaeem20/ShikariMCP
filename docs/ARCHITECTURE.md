@@ -13,11 +13,14 @@ ShikariMCP/
 │   │   ├── executor.py        # Safe subprocess execution with timeout
 │   │   ├── auth.py            # API key authentication middleware
 │   │   ├── validator.py       # Input sanitization
+│   │   ├── input_validation.py # Pydantic models for MCP boundary validation
+│   │   ├── rate_limiter.py    # Token-bucket rate limiter (HTTP only)
 │   │   ├── tool_manifest.py   # Manifest loading and tool entry models
 │   │   ├── tool_runner.py     # Manifest-driven command builder & executor
 │   │   ├── policy.py          # Local safety controls & target allowlisting
 │   │   ├── artifacts.py       # Local output storage
 │   │   ├── result_parser.py   # Output parsing utilities
+│   │   ├── http_security.py   # Host/Origin validation middleware
 │   │   └── audit.py           # JSONL audit logging
 │   │
 │   ├── manifests/
@@ -97,8 +100,18 @@ Agents are exposed as MCP tools through the `@shikari_tool` decorator.
 
 ### Safety Controls
 
+- **MCP boundary validation** — Pydantic models validate every tool input at the MCP boundary before it reaches internal code. Rejects invalid tool IDs, unknown profiles, oversized inputs, path traversal, and injection attempts.
 - **Target allowlist** — Blocks execution against unauthorized hosts, domains, or CIDRs
 - **Cloud metadata blocking** — Prevents accidental access to cloud instance metadata
 - **Risk-class gating** — Active, offensive, and credential tools require explicit flags
 - **Dry-run previews** — Shows exact argv, timeout, and stdin usage before execution
 - **Output truncation** — Caps output at configurable character limit
+- **Rate limiting** — Per-IP token-bucket rate limiter for HTTP transport (60 req/s default, 100 burst). Returns 429 with `Retry-After` header when exceeded. Disabled when `SHIKARI_RATE_LIMIT_RPS=0`.
+
+### HTTP Security Stack
+
+HTTP requests pass through three middleware layers in order:
+
+1. **RateLimitMiddleware** — Token-bucket per-IP rate limiting
+2. **HostOriginSecurityMiddleware** — Host/Origin header validation (DNS rebinding protection)
+3. **FastMCP auth** — API key bearer token verification

@@ -98,7 +98,7 @@ jobs:
           file: docker/Dockerfile
           push: false
           load: true
-          tags: shikari:latest
+          tags: shikari-mcp:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -109,8 +109,8 @@ jobs:
           file: docker/Dockerfile.core
           push: false
           load: true
-          tags: shikari-core:ci-test
+          tags: shikari-mcp-core:ci-test
           build-args: |
-            BASE_IMAGE=shikari:latest
+            BASE_IMAGE=shikari-mcp:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max

@@ -21,8 +21,8 @@ This is the active implementation checklist for the local-first ShikariMCP goal:
 - [x] Add `.gitignore` / `.dockerignore` hygiene.
 - [x] Harden Docker Compose so it requires a real `SHIKARI_API_KEY`.
 - [x] Add `core` manifest profile.
-- [x] Add `shikari tools list`.
-- [x] Add `shikari tools verify --profile core --json`.
+- [x] Add `shikari-mcp tools list`.
+- [x] Add `shikari-mcp tools verify --profile core --json`.
 - [x] Add MCP tools for manifest catalog and profile verification.
 - [x] Add `scripts/install-tools.sh --profile core`.
 - [x] Add `scripts/verify-tools.sh --profile core --json`.
@@ -33,7 +33,7 @@ This is the active implementation checklist for the local-first ShikariMCP goal:
 - [x] Add `.env.docker.example` with safe Docker Compose defaults.
 - [x] Update `.env.example` to include manifest/profile settings.
 - [x] Add `SHIKARI_TOOL_PROFILE=core` config value.
-- [x] Add `shikari tools explain <tool_id>` CLI.
+- [x] Add `shikari-mcp tools explain <tool_id>` CLI.
 - [x] Add MCP tool `shikari_explain_tool`.
 - [x] Add a `tools.lock` file for pinned installer/Docker versions.
 - [x] Make installer consume `tools.lock.json` for Go tool install refs.
@@ -46,8 +46,8 @@ This is the active implementation checklist for the local-first ShikariMCP goal:
 - [x] Add `src/shikari/core/tool_runner.py`.
 - [x] Build commands from manifest templates instead of each wrapper inventing its own command.
 - [x] Add `shikari_run_verified_tool` MCP tool.
-- [x] Add `shikari tools run <tool_id>` CLI for local debugging.
-- [x] Add `shikari tools dry-run <tool_id>` CLI for local debugging.
+- [x] Add `shikari-mcp tools run <tool_id>` CLI for local debugging.
+- [x] Add `shikari-mcp tools dry-run <tool_id>` CLI for local debugging.
 - [x] Add dry-run mode that shows exact argv, timeout, stdin usage, and risk class.
 - [x] Add structured run result model:
   - `run_id`

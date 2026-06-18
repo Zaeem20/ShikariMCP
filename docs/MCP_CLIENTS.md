@@ -25,8 +25,8 @@ This guide covers configuring ShikariMCP with popular MCP-compatible AI clients.
 ```json
 {
   "mcpServers": {
-    "shikari": {
-      "command": "shikari",
+    "shikari-mcp": {
+      "command": "shikari-mcp",
       "args": ["--transport", "stdio"]
     }
   }
@@ -38,8 +38,8 @@ This guide covers configuring ShikariMCP with popular MCP-compatible AI clients.
 ```json
 {
   "mcpServers": {
-    "shikari": {
-      "command": "shikari",
+    "shikari-mcp": {
+      "command": "shikari-mcp",
       "args": [
         "--transport", "stdio",
         "--enable-legacy-tools",
@@ -56,8 +56,8 @@ This guide covers configuring ShikariMCP with popular MCP-compatible AI clients.
 ```json
 {
   "mcpServers": {
-    "shikari": {
-      "command": "shikari",
+    "shikari-mcp": {
+      "command": "shikari-mcp",
       "args": [
         "--transport", "stdio",
         "--enable-active-tools",
@@ -80,8 +80,8 @@ This guide covers configuring ShikariMCP with popular MCP-compatible AI clients.
 ```json
 {
   "mcpServers": {
-    "shikari": {
-      "command": "shikari",
+    "shikari-mcp": {
+      "command": "shikari-mcp",
       "args": ["--transport", "stdio"]
     }
   }
@@ -97,9 +97,9 @@ If you installed ShikariMCP with `uv`:
 ```json
 {
   "mcpServers": {
-    "shikari": {
+    "shikari-mcp": {
       "command": "uv",
-      "args": ["run", "shikari", "--transport", "stdio"],
+      "args": ["run", "shikari-mcp", "--transport", "stdio"],
       "cwd": "/path/to/ShikariMCP"
     }
   }
@@ -119,8 +119,8 @@ If you installed ShikariMCP with `uv`:
 ```json
 {
   "github.copilot.chat.mcp.servers": {
-    "shikari": {
-      "command": "shikari",
+    "shikari-mcp": {
+      "command": "shikari-mcp",
       "args": ["--transport", "stdio"]
     }
   }
@@ -134,8 +134,8 @@ Create `.vscode/mcp.json` in your workspace:
 ```json
 {
   "servers": {
-    "shikari": {
-      "command": "shikari",
+    "shikari-mcp": {
+      "command": "shikari-mcp",
       "args": ["--transport", "stdio"]
     }
   }
@@ -153,9 +153,9 @@ Add to your Codex MCP configuration:
 ```json
 {
   "mcp_servers": {
-    "shikari": {
+    "shikari-mcp": {
       "transport": "stdio",
-      "command": "shikari",
+      "command": "shikari-mcp",
       "args": []
     }
   }
@@ -167,7 +167,7 @@ Add to your Codex MCP configuration:
 ```json
 {
   "mcp_servers": {
-    "shikari": {
+    "shikari-mcp": {
       "transport": "streamable-http",
       "url": "http://localhost:8080/mcp",
       "headers": {
@@ -191,8 +191,8 @@ Add to your Codex MCP configuration:
 ```json
 {
   "mcpServers": {
-    "shikari": {
-      "command": "shikari",
+    "shikari-mcp": {
+      "command": "shikari-mcp",
       "args": ["--transport", "stdio"]
     }
   }
@@ -211,8 +211,8 @@ Add to your Codex MCP configuration:
 
 ```json
 {
-  "shikari": {
-    "command": "shikari",
+  "shikari-mcp": {
+    "command": "shikari-mcp",
     "args": ["--transport", "stdio"]
   }
 }
@@ -229,7 +229,7 @@ For any MCP client that supports HTTP transport:
 ```json
 {
   "mcpServers": {
-    "shikari": {
+    "shikari-mcp": {
       "url": "http://your-server:8080/mcp",
       "headers": {
         "Authorization": "Bearer your-api-key"
@@ -244,7 +244,7 @@ For any MCP client that supports HTTP transport:
 ```json
 {
   "mcpServers": {
-    "shikari": {
+    "shikari-mcp": {
       "url": "https://your-server:8443/mcp",
       "headers": {
         "Authorization": "Bearer your-api-key"
@@ -261,13 +261,13 @@ For any MCP client that supports HTTP transport:
 
 ```bash
 # Basic HTTP server
-shikari --transport http --port 8080 --api-key your-secret-key
+shikari-mcp --transport http --port 8080 --api-key your-secret-key
 
 # Local HTTP (unlocks LOCAL-scoped tools)
-shikari --transport http --port 8080 --api-key your-key --local
+shikari-mcp --transport http --port 8080 --api-key your-key --local
 
 # With active tools enabled
-shikari --transport http --port 8080 --api-key your-key \
+shikari-mcp --transport http --port 8080 --api-key your-key \
   --local --enable-active-tools \
   --target-allowlist "example.com,10.0.0.0/8"
 ```
@@ -303,26 +303,26 @@ When properly configured, you should see these core tools available:
 
 ## Troubleshooting
 
-### "Command not found: shikari"
+### "Command not found: shikari-mcp"
 
 Ensure ShikariMCP is installed and in your PATH:
 
 ```bash
 # Check installation
-which shikari
+which shikari-mcp
 
 # Or use full path
-shikari --transport stdio
+shikari-mcp --transport stdio
 
 # Or use uv
-uv run shikari --transport stdio
+uv run shikari-mcp --transport stdio
 ```
 
 ### No tools showing up
 
-1. Check if external binaries are installed: `shikari tools verify --profile core --json`
+1. Check if external binaries are installed: `shikari-mcp tools verify --profile core --json`
 2. Enable generated wrappers: `--enable-generated-tools`
-3. Check logs: `SHIKARI_LOG_LEVEL=DEBUG shikari --transport stdio`
+3. Check logs: `SHIKARI_LOG_LEVEL=DEBUG shikari-mcp --transport stdio`
 
 ### HTTP connection refused
 
@@ -330,8 +330,17 @@ uv run shikari --transport stdio
 2. Check API key matches between server and client
 3. Ensure `--local` flag if running locally with HTTP transport
 
+### 429 Rate Limit Exceeded
+
+HTTP transport enforces per-IP rate limiting by default (60 req/s, burst 100).
+
+1. Reduce request frequency or wait for the `Retry-After` period
+2. Increase limits: `--rate-limit-rps 120 --rate-limit-burst 200`
+3. Disable for trusted networks: `--rate-limit-rps 0`
+4. Set via env: `SHIKARI_RATE_LIMIT_RPS=120`
+
 ### Permission denied on tool execution
 
 1. Ensure `--enable-active-tools` for scanning tools
 2. Add targets to `--target-allowlist`
-3. Check policy: `shikari policy explain`
+3. Check policy: `shikari-mcp policy explain`

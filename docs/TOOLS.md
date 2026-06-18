@@ -57,17 +57,17 @@ The compatibility registry also contains direct wrappers, but it is hidden unles
 ./scripts/verify-tools.sh --profile core --json
 
 # Or use the Python CLI directly
-shikari tools verify --profile core --json
+shikari-mcp tools verify --profile core --json
 ```
 
 ### Preview Commands
 
 ```bash
 # Explain a tool's purpose and command structure
-shikari tools explain nmap_scan
+shikari-mcp tools explain nmap_scan
 
 # Preview the exact command without executing
-shikari tools dry-run nmap_scan --input target=scanme.nmap.org
+shikari-mcp tools dry-run nmap_scan --input target=scanme.nmap.org
 ```
 
 The installer is profile-based and intentionally conservative. It installs only the tools declared in the selected profile manifest, not every experimental wrapper in the repository.

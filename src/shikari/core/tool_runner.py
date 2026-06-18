@@ -110,7 +110,7 @@ async def run_verified_tool(
             target=target,
             command=preview,
             errors=[policy["reason"]],
-            next_suggestions=["Run shikari policy explain to inspect local safety settings."],
+            next_suggestions=["Run shikari-mcp policy explain to inspect local safety settings."],
         ).model_dump()
 
     preflight_error = await asyncio.to_thread(
@@ -127,7 +127,7 @@ async def run_verified_tool(
             target=target,
             command=preview,
             errors=[preflight_error],
-            next_suggestions=[f"Run shikari tools verify --profile {profile}."],
+            next_suggestions=[f"Run shikari-mcp tools verify --profile {profile}."],
         ).model_dump()
 
     stdout_path = artifact_path(run_id, f"{tool.id}_stdout", _artifact_kind(preview.output_format))
@@ -386,7 +386,7 @@ def _runner_notes(tool: ToolManifestEntry) -> list[str]:
 def _next_suggestions(tool: ToolManifestEntry, status: str) -> list[str]:
     if status in {"success", "degraded"}:
         return ["Review normalized findings and artifact references before the next tool call."]
-    return ["Run shikari tools verify to confirm the binary is installed and accessible."]
+    return ["Run shikari-mcp tools verify to confirm the binary is installed and accessible."]
 
 
 def _artifact_kind(output_format: str) -> str:

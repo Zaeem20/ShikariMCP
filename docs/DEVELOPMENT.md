@@ -17,6 +17,12 @@ uv run pytest tests/ -v
 # Specific test file
 uv run pytest tests/test_server.py -v
 
+# Input validation tests
+uv run pytest tests/test_input_validation.py -v
+
+# Rate limiter tests
+uv run pytest tests/test_rate_limiter.py -v
+
 # With coverage
 uv run pytest tests/ -v --cov=shikari
 

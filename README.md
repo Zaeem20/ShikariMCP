@@ -6,6 +6,8 @@ Local-first Model Context Protocol server for authorized security testing. Shika
 
 - `stdio` and stateful Streamable HTTP transports
 - API-key authentication for HTTP
+- per-IP token-bucket rate limiting (configurable)
+- MCP boundary input validation (Pydantic models)
 - resumable HTTP event storage and Host/Origin validation
 - background submit, poll, cancel, and artifact-read APIs
 - process-tree termination on timeout or MCP cancellation
@@ -62,7 +64,7 @@ Preview installer actions without changing the machine:
 ## Run With Stdio
 
 ```bash
-uv run shikari --transport stdio
+uv run shikari-mcp --transport stdio
 ```
 
 Example MCP client configuration:
@@ -70,9 +72,9 @@ Example MCP client configuration:
 ```json
 {
   "mcpServers": {
-    "shikari": {
+    "shikari-mcp": {
       "command": "uv",
-      "args": ["run", "shikari", "--transport", "stdio"],
+      "args": ["run", "shikari-mcp", "--transport", "stdio"],
       "cwd": "/absolute/path/to/ShikariMCP"
     }
   }
@@ -84,7 +86,7 @@ Example MCP client configuration:
 HTTP requires authentication unless the development-only opt-out is explicitly used.
 
 ```bash
-uv run shikari \
+uv run shikari-mcp \
   --transport http \
   --host 127.0.0.1 \
   --port 8080 \
@@ -97,6 +99,8 @@ Connect to `http://127.0.0.1:8080/mcp` with:
 ```text
 Authorization: Bearer replace-with-a-long-random-secret
 ```
+
+HTTP includes per-IP rate limiting (60 req/s, burst 100) by default. Adjust with `--rate-limit-rps` and `--rate-limit-burst`, or disable with `--rate-limit-rps 0`.
 
 The default HTTP mode is stateful SSE with replayable events during the server process lifetime. JSON-only and stateless modes exist for simple integrations, but interactive AI clients should use the default.
 
@@ -126,14 +130,14 @@ The MCP endpoint is `http://127.0.0.1:8080/mcp`.
 Direct image usage:
 
 ```bash
-docker build -t shikari:local -f docker/Dockerfile .
+docker build -t shikari-mcp:local -f docker/Dockerfile .
 docker run --rm -p 127.0.0.1:8080:8080 \
   --cap-drop ALL --cap-add NET_RAW \
   --security-opt no-new-privileges \
   -e SHIKARI_API_KEY="replace-with-a-long-random-secret" \
   -v shikari-data:/app/.shikari \
   -v shikari-home:/home/shikari \
-  shikari:local
+  shikari-mcp:local
 ```
 
 See [Docker](docs/DOCKER.md) for capabilities, persistence, and verification.
@@ -143,7 +147,7 @@ See [Docker](docs/DOCKER.md) for capabilities, persistence, and verification.
 Active scans are disabled until enabled:
 
 ```bash
-uv run shikari \
+uv run shikari-mcp \
   --transport stdio \
   --enable-active-tools \
   --target-allowlist "example.com,10.10.0.0/16,/absolute/lab/path"
@@ -158,7 +162,7 @@ Legacy direct wrappers are disabled by default. Compatibility testing requires `
 ```bash
 uv run pytest tests -q
 uv run ruff check src tests
-uv run shikari tools verify --profile core --json
+uv run shikari-mcp tools verify --profile core --json
 ```
 
 ## Documentation

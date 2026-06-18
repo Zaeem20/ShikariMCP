@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.scripts]
-shikari = "shikari.server:main"
+shikari-mcp = "shikari.server:main"
 
 [build-system]
 requires = ["hatchling"]

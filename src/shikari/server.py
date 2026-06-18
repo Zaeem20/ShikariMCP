@@ -25,6 +25,16 @@ from shikari.core.tool_manifest import (
 )
 from shikari.core.tool_runner import dry_run_verified_tool, run_verified_tool
 
+from shikari.core.input_validation import (
+    ArtifactReadInputs,
+    ListRunsInputs,
+    PolicyExplainInputs,
+    RunQueryInputs,
+    ToolExplainInputs,
+    ToolListInputs,
+    ToolRunInputs,
+)
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
@@ -87,16 +97,18 @@ def create_server(config: ShikariConfig) -> FastMCP:
         """
         List the manifest-backed verified tools for a profile.
         """
-        return manifest_public_catalog(profile or get_config().tool_profile)
+        v = ToolListInputs(profile=profile)
+        return manifest_public_catalog(v.profile or get_config().tool_profile)
 
     @mcp.tool()
     async def shikari_verify_tool_profile(profile: str | None = None) -> dict:
         """
         Check which manifest-backed tool binaries are installed on this machine.
         """
+        v = ToolListInputs(profile=profile)
         return await asyncio.to_thread(
             verify_tool_profile,
-            profile or get_config().tool_profile,
+            v.profile or get_config().tool_profile,
         )
 
     @mcp.tool()
@@ -111,7 +123,8 @@ def create_server(config: ShikariConfig) -> FastMCP:
         """
         Explain a manifest-backed tool, including command templates and safety notes.
         """
-        return explain_tool(tool_id, profile or get_config().tool_profile)
+        v = ToolExplainInputs(tool_id=tool_id, profile=profile)
+        return explain_tool(v.tool_id, v.profile or get_config().tool_profile)
 
     @mcp.tool()
     async def shikari_run_verified_tool(
@@ -124,12 +137,16 @@ def create_server(config: ShikariConfig) -> FastMCP:
         """
         Build or run a manifest-backed tool. Defaults to dry-run for safety.
         """
+        v = ToolRunInputs(
+            tool_id=tool_id, inputs=inputs, profile=profile,
+            template=template, dry_run=dry_run,
+        )
         return await run_verified_tool(
-            tool_id=tool_id,
-            inputs=inputs,
-            profile=profile or get_config().tool_profile,
-            template=template,
-            dry_run=dry_run,
+            tool_id=v.tool_id,
+            inputs=v.inputs,
+            profile=v.profile or get_config().tool_profile,
+            template=v.template,
+            dry_run=v.dry_run,
         )
 
     @mcp.tool()
@@ -145,27 +162,34 @@ def create_server(config: ShikariConfig) -> FastMCP:
         Prefer this for scans expected to take more than a few seconds. Poll with
         shikari_get_run and cancel with shikari_cancel_run.
         """
+        v = ToolRunInputs(
+            tool_id=tool_id, inputs=inputs, profile=profile,
+            template=template, dry_run=False,
+        )
         return await get_run_manager().submit(
-            tool_id=tool_id,
-            inputs=inputs,
-            profile=profile or get_config().tool_profile,
-            template=template,
+            tool_id=v.tool_id,
+            inputs=v.inputs,
+            profile=v.profile or get_config().tool_profile,
+            template=v.template,
         )
 
     @mcp.tool()
     async def shikari_get_run(run_id: str) -> dict:
         """Get status and structured results for a background run."""
-        return await get_run_manager().get(run_id)
+        v = RunQueryInputs(run_id=run_id)
+        return await get_run_manager().get(v.run_id)
 
     @mcp.tool()
     async def shikari_list_runs(limit: int = 20) -> dict:
         """List recent background runs without embedding their full results."""
-        return await get_run_manager().list(limit)
+        v = ListRunsInputs(limit=limit)
+        return await get_run_manager().list(v.limit)
 
     @mcp.tool()
     async def shikari_cancel_run(run_id: str) -> dict:
         """Cancel a queued or running background tool and terminate its process tree."""
-        return await get_run_manager().cancel(run_id)
+        v = RunQueryInputs(run_id=run_id)
+        return await get_run_manager().cancel(v.run_id)
 
     @mcp.tool()
     async def shikari_read_artifact(
@@ -174,14 +198,16 @@ def create_server(config: ShikariConfig) -> FastMCP:
         max_chars: int = 20000,
     ) -> dict:
         """Read a bounded segment from a Shikari artifact."""
-        return await asyncio.to_thread(read_artifact, path, offset, max_chars)
+        v = ArtifactReadInputs(path=path, offset=offset, max_chars=max_chars)
+        return await asyncio.to_thread(read_artifact, v.path, v.offset, v.max_chars)
 
     @mcp.tool()
     async def shikari_policy_explain(inputs: dict | None = None) -> dict:
         """
         Explain local safety gates and target allowlist settings.
         """
-        return explain_policy(inputs)
+        v = PolicyExplainInputs(inputs=inputs)
+        return explain_policy(v.inputs)
 
     logger.info("Discovering tools...")
     if config.enable_legacy_tools or config.enable_experimental_tools:
@@ -197,7 +223,7 @@ def create_server(config: ShikariConfig) -> FastMCP:
 def parse_args() -> ShikariConfig:
     """Parse CLI arguments into ShikariConfig."""
     parser = argparse.ArgumentParser(
-        prog="shikari",
+        prog="shikari-mcp",
         description="ShikariMCP - production-oriented security MCP server",
     )
     parser.add_argument(
@@ -299,6 +325,16 @@ def parse_args() -> ShikariConfig:
         "--http-allowed-origins",
         help="Comma-separated allowed browser Origin headers.",
     )
+    parser.add_argument(
+        "--rate-limit-rps",
+        type=float,
+        help="Per-IP requests per second limit (default: 60). Set to 0 to disable.",
+    )
+    parser.add_argument(
+        "--rate-limit-burst",
+        type=float,
+        help="Per-IP burst capacity (default: 100).",
+    )
 
     args = parser.parse_args()
     config = ShikariConfig.from_env()
@@ -353,6 +389,10 @@ def parse_args() -> ShikariConfig:
         config.http_allowed_origins = [
             item.strip() for item in args.http_allowed_origins.split(",") if item.strip()
         ]
+    if args.rate_limit_rps is not None:
+        config.rate_limit_rps = args.rate_limit_rps
+    if args.rate_limit_burst is not None:
+        config.rate_limit_burst = args.rate_limit_burst
 
     return config
 
@@ -360,7 +400,7 @@ def parse_args() -> ShikariConfig:
 def run_tools_cli(argv: list[str]) -> int:
     """Run local tool-management commands."""
     parser = argparse.ArgumentParser(
-        prog="shikari tools",
+        prog="shikari-mcp tools",
         description="Inspect and verify Shikari tool profiles.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -551,12 +591,13 @@ def main() -> None:
 
 
 def _run_http_server(mcp: FastMCP, config: ShikariConfig) -> None:
-    """Run stateful Streamable HTTP with resumable events and header validation."""
+    """Run stateful Streamable HTTP with resumable events, header validation, and rate limiting."""
     import uvicorn
     from fastmcp.server.event_store import EventStore
     from starlette.middleware import Middleware
 
     from shikari.core.http_security import HostOriginSecurityMiddleware
+    from shikari.core.rate_limiter import create_rate_limiter
 
     allowed_hosts = config.http_allowed_hosts or [
         "localhost:*",
@@ -577,6 +618,16 @@ def _run_http_server(mcp: FastMCP, config: ShikariConfig) -> None:
             allowed_origins=allowed_origins,
         )
     ]
+
+    # Rate limiting middleware (disabled if rps <= 0)
+    RateLimiterClass = create_rate_limiter(config)
+    if RateLimiterClass is not None:
+        middleware.append(Middleware(RateLimiterClass))
+        logger.info(
+            "Rate limiting enabled: %.0f req/s, burst %.0f",
+            config.rate_limit_rps,
+            config.rate_limit_burst,
+        )
     event_store = None
     if not config.http_stateless and not config.http_json_response:
         event_store = EventStore(ttl=config.http_event_ttl)

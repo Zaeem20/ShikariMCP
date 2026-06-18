@@ -30,6 +30,13 @@ def _env_int(name: str, default: int) -> int:
     return int(value)
 
 
+def _env_float(name: str, default: float) -> float:
+    value = os.getenv(name)
+    if value is None or not value.strip():
+        return default
+    return float(value)
+
+
 def _env_list(name: str) -> list[str]:
     value = os.getenv(name, "")
     return [item.strip() for item in value.split(",") if item.strip()]
@@ -80,6 +87,10 @@ class ShikariConfig:
     audit_enabled: bool = True
     audit_log_path: str = ".shikari/audit.jsonl"
 
+    # Rate limiting (HTTP only)
+    rate_limit_rps: float = 60.0  # requests per second per client IP
+    rate_limit_burst: float = 100.0  # burst capacity per client IP
+
     # Logging
     log_level: str = "INFO"
 
@@ -123,6 +134,8 @@ class ShikariConfig:
             target_allowlist=_env_list("SHIKARI_TARGET_ALLOWLIST"),
             audit_enabled=_env_bool("SHIKARI_AUDIT_ENABLED", True),
             audit_log_path=os.getenv("SHIKARI_AUDIT_LOG_PATH", ".shikari/audit.jsonl"),
+            rate_limit_rps=_env_float("SHIKARI_RATE_LIMIT_RPS", 60.0),
+            rate_limit_burst=_env_float("SHIKARI_RATE_LIMIT_BURST", 100.0),
             log_level=os.getenv("SHIKARI_LOG_LEVEL", "INFO"),
         )
 

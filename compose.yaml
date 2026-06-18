@@ -1,11 +1,11 @@
-name: shikari
+name: shikari-mcp
 
 services:
-  shikari:
+  shikari-mcp:
     build:
       context: .
       dockerfile: docker/Dockerfile
-    image: shikari:local
+    image: shikari-mcp:local
     init: true
     restart: unless-stopped
     read_only: true

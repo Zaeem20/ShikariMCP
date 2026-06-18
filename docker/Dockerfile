@@ -97,11 +97,11 @@ RUN ln -s /opt/nikto/nikto.pl /usr/local/bin/nikto \
 WORKDIR /app
 USER shikari
 
-RUN shikari tools verify --profile core --json
+RUN shikari-mcp tools verify --profile core --json
 
 EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
     CMD python -c "import socket; s=socket.create_connection(('127.0.0.1', 8080), 3); s.close()"
 
-ENTRYPOINT ["shikari"]
+ENTRYPOINT ["shikari-mcp"]
 CMD ["--transport", "http", "--host", "0.0.0.0", "--port", "8080"]

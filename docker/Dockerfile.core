@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=shikari:latest
+ARG BASE_IMAGE=shikari-mcp:latest
 FROM ${BASE_IMAGE}
 ENV SHIKARI_TOOL_PROFILE=core
-RUN shikari tools verify --profile core --json
+RUN shikari-mcp tools verify --profile core --json
