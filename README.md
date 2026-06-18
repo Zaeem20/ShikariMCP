@@ -168,12 +168,10 @@ uv run shikari-mcp tools verify --profile core --json
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
-- [Production Readiness Report](SHIKARI_PRODUCTION_READINESS_REPORT.md)
 - [Tools and Profiles](docs/TOOLS.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [MCP Clients](docs/MCP_CLIENTS.md)
 - [Docker](docs/DOCKER.md)
-- [Development](docs/DEVELOPMENT.md)
 
 ## License
 
