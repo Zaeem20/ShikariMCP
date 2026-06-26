@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/shikari-mcp-logo.png" alt="ShikariMCP Logo" width="150" style="border-radius: 50%;">
+
 # ShikariMCP
 
 **Production-grade security operations MCP server**
