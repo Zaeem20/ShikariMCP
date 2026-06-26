@@ -131,17 +131,26 @@ class RunManager:
     async def _execute(self, managed: ManagedRun) -> None:
         managed.status = "running"
         managed.started_at = _now()
+        # Cap background runs at the global default timeout (or 300s) to prevent
+        # runaway execution even when the manifest specifies a longer timeout.
+        timeout = get_config().default_timeout or 300
         try:
-            result = await run_verified_tool(
-                tool_id=managed.tool_id,
-                inputs=managed.inputs,
-                profile=managed.profile,
-                template=managed.template,
-                dry_run=False,
-                run_id=managed.run_id,
+            result = await asyncio.wait_for(
+                run_verified_tool(
+                    tool_id=managed.tool_id,
+                    inputs=managed.inputs,
+                    profile=managed.profile,
+                    template=managed.template,
+                    dry_run=False,
+                    run_id=managed.run_id,
+                ),
+                timeout=timeout,
             )
             managed.result = result
             managed.status = str(result.get("status", "failed"))
+        except asyncio.TimeoutError:
+            managed.status = "timeout"
+            managed.error = f"Background run exceeded {timeout}s timeout."
         except asyncio.CancelledError:
             managed.status = "cancelled"
             managed.error = "Run cancelled by client."

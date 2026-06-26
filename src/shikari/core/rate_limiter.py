@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-import asyncio
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any
 
 from starlette.responses import PlainTextResponse
 from starlette.types import ASGIApp, Receive, Scope, Send
+
+from shikari.config import get_config
 
 
 @dataclass
@@ -59,10 +60,11 @@ class RateLimitMiddleware:
             key.decode("latin-1").lower(): value.decode("latin-1")
             for key, value in scope.get("headers", [])
         }
-        # X-Forwarded-For: first entry is the original client
-        xff = headers.get("x-forwarded-for", "")
-        if xff:
-            return xff.split(",")[0].strip()
+        # X-Forwarded-For: first entry is the original client (only if configured)
+        if get_config().trust_x_forwarded_for:
+            xff = headers.get("x-forwarded-for", "")
+            if xff:
+                return xff.split(",")[0].strip()
         # Use scope's client tuple if available
         client = scope.get("client")
         if client:

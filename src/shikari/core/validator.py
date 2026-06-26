@@ -6,8 +6,10 @@ import logging
 
 logger = logging.getLogger("shikari.validator")
 
-# Dangerous characters for command injection
-DANGEROUS_CHARS = set(";|&$`\\!><\n\r")
+# Dangerous characters for command injection.
+# Backslash omitted: manifest tools use list-based exec (no shell), so \ has no
+# injection semantics.
+DANGEROUS_CHARS = set(";|&$`!><\n\r")
 
 # Common valid patterns
 DOMAIN_REGEX = re.compile(

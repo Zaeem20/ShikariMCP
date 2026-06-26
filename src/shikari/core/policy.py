@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import concurrent.futures
 import ipaddress
 import os
 import socket
@@ -10,6 +11,23 @@ from urllib.parse import urlparse
 
 from shikari.config import ShikariConfig, get_config
 from shikari.core.tool_manifest import ToolManifestEntry
+
+# Module-level executor for DNS resolution with timeout
+_resolver_executor = concurrent.futures.ThreadPoolExecutor(
+    max_workers=2, thread_name_prefix="shikari-dns"
+)
+
+
+def _resolve_host(host: str, timeout: float = 5.0) -> set:
+    """Resolve hostname with timeout. Returns set of IPs; empty on failure/timeout."""
+    try:
+        future = _resolver_executor.submit(
+            socket.getaddrinfo, host, None, type=socket.SOCK_STREAM
+        )
+        result = future.result(timeout=timeout)
+        return {ipaddress.ip_address(item[4][0]) for item in result}
+    except (OSError, ValueError, concurrent.futures.TimeoutError):
+        return set()
 
 
 METADATA_IPS = {
@@ -104,6 +122,18 @@ def _deny(reason: str) -> dict:
     return {"allowed": False, "reason": reason}
 
 
+def check_blocked_metadata_targets(inputs: dict) -> str | None:
+    """Re-resolve targets and return the first blocked metadata IP, or None.
+
+    Used as a last-minute TOCTOU check before tool execution.
+    """
+    for target in _target_values(inputs):
+        blocked = _blocked_metadata_target(target)
+        if blocked:
+            return blocked
+    return None
+
+
 def _target_values(inputs: dict) -> list[str]:
     targets: list[str] = []
     for key in (
@@ -132,13 +162,8 @@ def _blocked_metadata_target(target: str) -> str:
     try:
         ip = ipaddress.ip_address(host)
     except ValueError:
-        try:
-            resolved = {
-                ipaddress.ip_address(item[4][0])
-                for item in socket.getaddrinfo(host, None, type=socket.SOCK_STREAM)
-            }
-        except (OSError, ValueError):
-            return ""
+        # Resolve with timeout — fail-closed: treat as blocked on timeout
+        resolved = _resolve_host(host)
         blocked = resolved.intersection(METADATA_IPS)
         return str(next(iter(blocked))) if blocked else ""
     return str(ip) if ip in METADATA_IPS else ""
@@ -170,7 +195,15 @@ def _matches_allowlist(target: str, allowlist: list[str]) -> bool:
             return True
         try:
             network = ipaddress.ip_network(candidate, strict=False)
-            if ipaddress.ip_address(host) in network:
+            try:
+                ip = ipaddress.ip_address(host)
+            except ValueError:
+                # host is a domain; resolve and check each IP against the CIDR
+                resolved = _resolve_host(host)
+                if any(r_ip in network for r_ip in resolved):
+                    return True
+                continue
+            if ip in network:
                 return True
         except ValueError:
             pass

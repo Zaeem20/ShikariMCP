@@ -32,10 +32,24 @@ class HostOriginSecurityMiddleware:
         origin = headers.get("origin")
 
         if not host or not _matches(host, self.allowed_hosts):
-            await PlainTextResponse("Invalid Host header", status_code=421)(scope, receive, send)
+            await PlainTextResponse(
+                "Invalid Host header", status_code=421,
+                headers={
+                    "X-Content-Type-Options": "nosniff",
+                    "X-Frame-Options": "DENY",
+                    "Referrer-Policy": "no-referrer",
+                },
+            )(scope, receive, send)
             return
         if origin and not _matches(origin, self.allowed_origins):
-            await PlainTextResponse("Invalid Origin header", status_code=403)(scope, receive, send)
+            await PlainTextResponse(
+                "Invalid Origin header", status_code=403,
+                headers={
+                    "X-Content-Type-Options": "nosniff",
+                    "X-Frame-Options": "DENY",
+                    "Referrer-Policy": "no-referrer",
+                },
+            )(scope, receive, send)
             return
 
         await self.app(scope, receive, send)

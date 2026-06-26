@@ -137,7 +137,8 @@ async def execute_command(
                 try:
                     await asyncio.wait_for(process.wait(), timeout=effective_timeout)
                 except asyncio.TimeoutError:
-                    await _terminate_process_tree(process)
+                    # Fire-and-forget: don't block the timeout response on process tree termination
+                    asyncio.create_task(_terminate_process_tree(process))
                     await asyncio.gather(stdout_task, stderr_task, stdin_task, return_exceptions=True)
                     logger.warning("Command timed out after %ss: %s", effective_timeout, binary)
                     audit_event(
@@ -242,6 +243,7 @@ class _StreamCapture:
     text: str
     total_bytes: int
     truncated: bool
+    write_error: bool = False  # True if artifact file write failed
 
 
 async def _read_bounded_stream(
@@ -261,6 +263,7 @@ async def _read_bounded_stream(
     head = bytearray()
     tail = bytearray()
     total = 0
+    write_error = False
 
     while True:
         chunk = await stream.read(65536)
@@ -268,7 +271,10 @@ async def _read_bounded_stream(
             break
         total += len(chunk)
         if output_file is not None:
-            output_file.write(chunk)
+            try:
+                output_file.write(chunk)
+            except OSError:
+                write_error = True
 
         if len(head) < head_limit:
             take = min(head_limit - len(head), len(chunk))
@@ -288,10 +294,14 @@ async def _read_bounded_stream(
     else:
         combined = bytes(head) + bytes(tail)
 
+    text = combined.decode("utf-8", errors="replace").strip()
+    if write_error:
+        text += "\n[shikari: artifact write failed — output may be incomplete]\n"
     return _StreamCapture(
-        text=combined.decode("utf-8", errors="replace").strip(),
+        text=text,
         total_bytes=total,
         truncated=truncated,
+        write_error=write_error,
     )
 
 

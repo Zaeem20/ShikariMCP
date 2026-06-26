@@ -90,6 +90,7 @@ class ShikariConfig:
     # Rate limiting (HTTP only)
     rate_limit_rps: float = 60.0  # requests per second per client IP
     rate_limit_burst: float = 100.0  # burst capacity per client IP
+    trust_x_forwarded_for: bool = False  # honor X-Forwarded-For header for client IP
 
     # Logging
     log_level: str = "INFO"
@@ -136,6 +137,7 @@ class ShikariConfig:
             audit_log_path=os.getenv("SHIKARI_AUDIT_LOG_PATH", ".shikari/audit.jsonl"),
             rate_limit_rps=_env_float("SHIKARI_RATE_LIMIT_RPS", 60.0),
             rate_limit_burst=_env_float("SHIKARI_RATE_LIMIT_BURST", 100.0),
+            trust_x_forwarded_for=_env_bool("SHIKARI_TRUST_X_FORWARDED_FOR", False),
             log_level=os.getenv("SHIKARI_LOG_LEVEL", "INFO"),
         )
 

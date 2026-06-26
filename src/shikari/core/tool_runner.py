@@ -18,7 +18,7 @@ from shikari.core.artifacts import (
 )
 from shikari.core.audit import audit_event
 from shikari.core.executor import check_binary_sync, execute_command
-from shikari.core.policy import evaluate_tool_policy
+from shikari.core.policy import check_blocked_metadata_targets, evaluate_tool_policy
 from shikari.core.tool_manifest import CommandTemplate, ToolManifestEntry, load_tool_manifest
 from shikari.parsers import parse_tool_output
 
@@ -128,6 +128,20 @@ async def run_verified_tool(
             command=preview,
             errors=[preflight_error],
             next_suggestions=[f"Run shikari-mcp tools verify --profile {profile}."],
+        ).model_dump()
+
+    # Last-minute TOCTOU re-check: resolve targets again and block if any now
+    # points to a metadata endpoint (DNS could have been tampered with since
+    # the initial policy check).
+    rechecked = check_blocked_metadata_targets(normalized_inputs)
+    if rechecked:
+        return ToolRunResult(
+            run_id=run_id,
+            tool=tool.id,
+            status="blocked",
+            target=target,
+            command=preview,
+            errors=[f"Target resolves to blocked cloud metadata endpoint (TOCTOU check): {rechecked}"],
         ).model_dump()
 
     stdout_path = artifact_path(run_id, f"{tool.id}_stdout", _artifact_kind(preview.output_format))

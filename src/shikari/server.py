@@ -335,6 +335,11 @@ def parse_args() -> ShikariConfig:
         type=float,
         help="Per-IP burst capacity (default: 100).",
     )
+    parser.add_argument(
+        "--trust-x-forwarded-for",
+        action="store_true",
+        help="Honor X-Forwarded-For header for client IP (behind trusted reverse proxy).",
+    )
 
     args = parser.parse_args()
     config = ShikariConfig.from_env()
@@ -393,6 +398,8 @@ def parse_args() -> ShikariConfig:
         config.rate_limit_rps = args.rate_limit_rps
     if args.rate_limit_burst is not None:
         config.rate_limit_burst = args.rate_limit_burst
+    if args.trust_x_forwarded_for:
+        config.trust_x_forwarded_for = True
 
     return config
 
