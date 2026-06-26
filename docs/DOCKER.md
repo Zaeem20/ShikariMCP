@@ -4,7 +4,20 @@
 
 `docker/Dockerfile` is the production image. It installs and verifies the 12-tool `core` profile with pinned Go releases, Nikto, SQLMap, Trivy, and the core SecLists wordlist.
 
-Broader workstation profiles should be installed on the host with `scripts/install-tools.sh`. They are not bundled into the production container because credential and forensic suites significantly expand privileges, size, and attack surface.
+Broader workstation profiles should be installed on the host with `scripts/install-tools.sh`. They are not bundled into the production container because credential and forensic suites significantly expand privileges, size, and attack surface. The `osint` profile is also not bundled — install its tools on the host if needed.
+
+```mermaid
+flowchart TB
+    subgraph Host["Docker Host"]
+        subgraph C["Container (non-root, read-only FS)"]
+            APP[ShikariMCP<br/>port 8080]
+        end
+        V1[shikari-data<br/>/app/.shikari<br/>audit + artifacts]
+        V2[shikari-home<br/>/home/shikari<br/>tool config]
+    end
+    C --> V1
+    C --> V2
+```
 
 ## Compose
 

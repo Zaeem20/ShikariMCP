@@ -3,7 +3,6 @@ import concurrent.futures
 import httpx
 import json
 import sys
-import time
 
 BASE = "http://127.0.0.1:9090/mcp"
 HEADERS = {

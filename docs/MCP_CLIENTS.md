@@ -2,6 +2,8 @@
 
 This guide covers configuring ShikariMCP with popular MCP-compatible AI clients.
 
+> ShikariMCP supports both stdio (local) and Streamable HTTP (remote) transports. Most tools work in both modes — only `scope: local` tools (like exiftool) require the `--local` flag over HTTP.
+
 ## Table of Contents
 
 - [Claude Desktop](#claude-desktop)
@@ -298,6 +300,10 @@ When properly configured, you should see these core tools available:
 | `subfinder_enum` | Subdomain enumeration |
 | `httpx_probe` | HTTP probing |
 | `nuclei_scan` | Vulnerability scanning |
+| `sherlock_username` | Social media username search |
+| `shodan_host` | Shodan host lookup |
+| `greynoise_ip` | GreyNoise IP intelligence |
+| `exiftool_metadata` | Image/file metadata extraction |
 
 ---
 

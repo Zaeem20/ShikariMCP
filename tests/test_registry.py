@@ -1,7 +1,6 @@
 """Tests for the tool registry — auto-discovery, scope filtering, and registration."""
 
 import pytest
-from unittest.mock import patch
 
 from shikari.config import ShikariConfig, TransportMode, set_config
 from shikari.tools._base import (

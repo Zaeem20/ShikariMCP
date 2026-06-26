@@ -69,7 +69,9 @@ class TestWebAppToolsExist:
     def test_web_tools_count(self):
         registry = get_tool_registry()
         web_tools = [m for m in registry.values() if m.category == "web_application"]
-        assert len(web_tools) >= 10, f"Expected 10+ web tools, got {len(web_tools)}"
+        # Real wrappers only (fake auto_generated placeholders removed). Wave 2
+        # expands this category with additional real web tools.
+        assert len(web_tools) >= 9, f"Expected 9+ real web tools, got {len(web_tools)}"
 
 
 class TestAgentToolsExist:

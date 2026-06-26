@@ -1,10 +1,9 @@
 """Tests for ShikariMCP server creation, transport config, and tool registration."""
 
 import pytest
-import pytest_asyncio
 from unittest.mock import patch
 
-from shikari.config import ShikariConfig, TransportMode, set_config, get_config
+from shikari.config import ShikariConfig, TransportMode, set_config
 from shikari.server import create_server
 
 

@@ -1,7 +1,5 @@
 """Tests for HTTP rate limiter middleware."""
 
-import asyncio
-import time
 
 import pytest
 
