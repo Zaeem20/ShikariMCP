@@ -61,7 +61,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 case "$PROFILE" in
-  core|recon|web|cloud|forensics|offensive|full) ;;
+  core|recon|web|cloud|forensics|offensive|osint|full) ;;
   *)
     echo "Unsupported profile: $PROFILE" >&2
     exit 2
@@ -147,6 +147,8 @@ CLOUD_APT_PACKAGES=()
 FORENSICS_APT_PACKAGES=(yara radare2)
 OFFENSIVE_APT_PACKAGES=(john hashcat hydra)
 
+OSINT_APT_PACKAGES=(libimage-exiftool-perl)
+
 BASE_BREW_PACKAGES=(
   ca-certificates
   curl
@@ -171,6 +173,8 @@ WEB_BREW_PACKAGES=(whatweb wafw00f testssl sslscan)
 CLOUD_BREW_PACKAGES=()
 FORENSICS_BREW_PACKAGES=(yara radare2)
 OFFENSIVE_BREW_PACKAGES=(john hashcat hydra)
+
+OSINT_BREW_PACKAGES=(exiftool)
 
 APT_PACKAGES=("${BASE_APT_PACKAGES[@]}")
 BREW_PACKAGES=("${BASE_BREW_PACKAGES[@]}")
@@ -199,6 +203,10 @@ case "$PROFILE" in
     APT_PACKAGES+=("${OFFENSIVE_APT_PACKAGES[@]}")
     BREW_PACKAGES+=("${OFFENSIVE_BREW_PACKAGES[@]}")
     ;;
+  osint)
+    APT_PACKAGES+=("${OSINT_APT_PACKAGES[@]}")
+    BREW_PACKAGES+=("${OSINT_BREW_PACKAGES[@]}")
+    ;;
   full)
     APT_PACKAGES+=(
       "${CORE_APT_PACKAGES[@]}"
@@ -207,6 +215,7 @@ case "$PROFILE" in
       "${CLOUD_APT_PACKAGES[@]}"
       "${FORENSICS_APT_PACKAGES[@]}"
       "${OFFENSIVE_APT_PACKAGES[@]}"
+      "${OSINT_APT_PACKAGES[@]}"
     )
     BREW_PACKAGES+=(
       "${CORE_BREW_PACKAGES[@]}"
@@ -215,6 +224,7 @@ case "$PROFILE" in
       "${CLOUD_BREW_PACKAGES[@]}"
       "${FORENSICS_BREW_PACKAGES[@]}"
       "${OFFENSIVE_BREW_PACKAGES[@]}"
+      "${OSINT_BREW_PACKAGES[@]}"
     )
     ;;
 esac
@@ -262,6 +272,10 @@ fi
 if [[ "$IS_MACOS" != "true" && ( "$PROFILE" == "web" || "$PROFILE" == "full" ) ]]; then
   install_git_tool whatweb https://github.com/urbanadventurer/WhatWeb.git v0.6.4 whatweb
   install_git_tool testssl.sh https://github.com/testssl/testssl.sh.git v3.2.3 testssl.sh
+fi
+
+if [[ "$IS_MACOS" != "true" && ( "$PROFILE" == "osint" || "$PROFILE" == "full" ) ]]; then
+  install_git_tool theHarvester https://github.com/laramies/theHarvester.git 4.6.0 theHarvester.py
 fi
 
 go_version_ok() {
@@ -390,6 +404,20 @@ fi
 if [[ "$PROFILE" == "forensics" || "$PROFILE" == "full" ]]; then
   run pipx install --force volatility3
 fi
+
+if [[ "$PROFILE" == "osint" || "$PROFILE" == "full" ]]; then
+  run pipx install --force sherlock-project
+  run pipx install --force maigret
+  run pipx install --force holehe
+  run pipx install --force socialscan
+  run pipx install --force shodan
+  run pipx install --force censys
+  run pipx install --force greynoise
+  run pipx install --force h8mail
+fi
+
+# Note: vt (VirusTotal CLI) is a Go binary from GitHub releases, not pipx/apt.
+# Install manually: https://github.com/VirusTotal/vt-cli/releases
 
 if [[ "$SKIP_WORDLISTS" != "true" && ( "$PROFILE" == "core" || "$PROFILE" == "web" || "$PROFILE" == "full" ) ]]; then
   if [[ "$DRY_RUN" == "true" ]]; then

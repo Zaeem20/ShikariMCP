@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_at": "2026-06-09",
-  "profile": "core",
+  "profile": "full",
   "go_version": "1.25.0",
   "notes": [
     "This lock file records the install refs used by the local-first core profile.",
@@ -81,6 +81,21 @@
       "ref": "v8.30.1",
       "source": "https://github.com/gitleaks/gitleaks"
     }
+  },
+  "pip_tools": {
+    "sherlock": {"package": "sherlock-project", "source": "https://github.com/sherlock-project/sherlock"},
+    "maigret": {"package": "maigret", "source": "https://github.com/soxoj/maigret"},
+    "holehe": {"package": "holehe", "source": "https://github.com/megadose/holehe"},
+    "socialscan": {"package": "socialscan", "source": "https://github.com/iojw/socialscan"},
+    "shodan": {"package": "shodan", "source": "https://github.com/achillean/shodan-python"},
+    "censys": {"package": "censys", "source": "https://github.com/censys/censys-python"},
+    "greynoise": {"package": "greynoise", "source": "https://github.com/GreyNoise-Intelligence/pygreynoise"},
+    "h8mail": {"package": "h8mail", "source": "https://github.com/khast3x/h8mail"},
+    "semgrep": {"package": "semgrep", "source": "https://github.com/returntocorp/semgrep"},
+    "checkov": {"package": "checkov", "source": "https://github.com/bridgecrewio/checkov"},
+    "arjun": {"package": "arjun", "source": "https://github.com/s0md3v/Arjun"},
+    "wafw00f": {"package": "wafw00f", "source": "https://github.com/EnableSecurity/wafw00f"},
+    "volatility3": {"package": "volatility3", "source": "https://github.com/volatilityfoundation/volatility3"}
   },
   "future_arsenal_candidates": {
     "dnsx": {
