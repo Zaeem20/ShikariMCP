@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/shikari-mcp-logo.png" alt="ShikariMCP Logo" width="250" style="border-radius: 10%;">
+<img src="assets/shikari-mcp-logo.png" alt="ShikariMCP Logo" width="500"/>
 
 # ShikariMCP
 
