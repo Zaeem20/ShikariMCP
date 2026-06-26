@@ -10,10 +10,10 @@ Broader workstation profiles should be installed on the host with `scripts/insta
 flowchart TB
     subgraph Host["Docker Host"]
         subgraph C["Container (non-root, read-only FS)"]
-            APP[ShikariMCP<br/>port 8080]
+            APP["ShikariMCP<br/>port 8080"]
         end
-        V1[shikari-data<br/>/app/.shikari<br/>audit + artifacts]
-        V2[shikari-home<br/>/home/shikari<br/>tool config]
+        V1["shikari-data<br/>/app/.shikari<br/>audit and artifacts"]
+        V2["shikari-home<br/>/home/shikari<br/>tool config"]
     end
     C --> V1
     C --> V2

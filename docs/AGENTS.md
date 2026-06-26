@@ -22,20 +22,20 @@ All agents follow the same lifecycle: **Plan → Execute → Analyze → Report*
 flowchart TD
     subgraph Agent["Agent Lifecycle"]
         direction LR
-        P[Plan] --> E[Execute] --> A[Analyze] --> R[Report]
+        P["Plan"] --> E["Execute"] --> A["Analyze"] --> R["Report"]
     end
 
     subgraph Production["Production (4)"]
-        EP[execute_verified_plan]
-        M[Manifest-Backed Tool Runner]
-        PP[Policy Enforcement:<br/>target allowlist,<br/>blocking checks]
+        EP["execute_verified_plan"]
+        M["Manifest-Backed Tool Runner"]
+        PP["Policy Enforcement<br/>target allowlist<br/>blocking checks"]
         EP --> M --> PP
     end
 
     subgraph Catalog["Catalog (47)"]
-        EC[execute_command]
-        CP[build_default_plan<br/>from _catalog.py]
-        CLI[Raw CLI Binaries:<br/>nmap, nuclei, subfinder,<br/>curl, trivy, semgrep ...]
+        EC["execute_command"]
+        CP["build_default_plan<br/>from _catalog.py"]
+        CLI["Raw CLI Binaries<br/>nmap, nuclei, subfinder<br/>curl, trivy, semgrep"]
         EC --> CP --> CLI
     end
 
@@ -67,13 +67,13 @@ flowchart LR
     end
 
     subgraph Agents["Agent Categories"]
-        PROD[Production Workflows<br/>4 agents]
-        EXP[Experimental Workflows<br/>9 agents]
-        INT[Intelligence<br/>10 agents]
-        INF[Infrastructure<br/>8 agents]
-        DOM[Domain<br/>10 agents]
-        OFF[Offensive<br/>5 agents]
-        DEF[Defensive<br/>5 agents]
+        PROD["Production Workflows<br/>4 agents"]
+        EXP["Experimental Workflows<br/>9 agents"]
+        INT["Intelligence<br/>10 agents"]
+        INF["Infrastructure<br/>8 agents"]
+        DOM["Domain<br/>10 agents"]
+        OFF["Offensive<br/>5 agents"]
+        DEF["Defensive<br/>5 agents"]
     end
 
     PROD -->|default| Flags

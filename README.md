@@ -41,62 +41,9 @@ ShikariMCP is a [Model Context Protocol](https://modelcontextprotocol.io/) serve
 
 ## Architecture at a Glance
 
-```mermaid
-flowchart TB
-    subgraph Client["AI Client"]
-        A[Claude / Cursor / VS Code / Custom]
-    end
+![ShikariMCP Architecture](assets/shikari-mcp-architecture.png)
 
-    subgraph Server["ShikariMCP Server"]
-        direction TB
-        T{Transport}
-        T -->|stdio| S1[Stdio Handler]
-        T -->|HTTP| S2[HTTP Middleware Stack]
-
-        subgraph MW["HTTP Middleware"]
-            MW1[Rate Limiter]
-            MW2[Host/Origin Validation]
-            MW3[API Key Auth]
-        end
-        S2 --> MW
-
-        MW --> R[MCP Tool Router]
-        S1 --> R
-
-        R --> M1[shikari_run_verified_tool]
-        R --> M2[shikari_submit_verified_tool]
-        R --> M3[shikari_get_run / cancel / list]
-        R --> M4[shikari_read_artifact]
-        R --> M5[shikari_status / policy / explain]
-
-        M1 --> TR[Tool Runner]
-        M2 --> TR
-
-        subgraph TRS["Tool Runner"]
-            direction TB
-            P[Policy Check<br/>allowlist + metadata block]
-            P --> EX[Executor<br/>subprocess + timeout]
-            EX --> PA[Parser<br/>structured output]
-            PA --> AR[Artifact Storage]
-        end
-        TR --> TRS
-
-        M2 --> RM[Run Manager<br/>background jobs]
-        RM --> TR
-    end
-
-    subgraph Tools["External Security Binaries"]
-        T1[nmap / nuclei / subfinder]
-        T2[sqlmap / ffuf / nikto]
-        T3[shodan / sherlock / exiftool]
-        T4[semgrep / trivy / bandit]
-        T5[+ 290 more tools]
-    end
-
-    EX --> Tools
-
-    A -->|MCP Protocol| T
-```
+The diagram shows the full request flow: AI clients connect via stdio or Streamable HTTP, pass through the middleware stack, reach the MCP Tool Router (12 tools), flow through input validation and the policy engine, then to the Tool Runner which executes external security binaries. Background jobs are managed by the Run Manager. See [Architecture](docs/ARCHITECTURE.md) for detailed component diagrams.
 
 ## Tool Coverage
 
@@ -219,19 +166,19 @@ sequenceDiagram
 
 ```mermaid
 flowchart LR
-    REQ[Tool Request] --> G1{Legacy tools<br/>enabled?}
-    G1 -->|No| BLOCK[Blocked]
-    G1 -->|Yes| G2{Active tools<br/>enabled?}
+    REQ["Tool Request"] --> G1{"Legacy tools<br/>enabled?"}
+    G1 -->|No| BLOCK["Blocked"]
+    G1 -->|Yes| G2{"Active tools<br/>enabled?"}
     G2 -->|No| BLOCK
-    G2 -->|Yes| G3{Offensive tools<br/>enabled?}
+    G2 -->|Yes| G3{"Offensive tools<br/>enabled?"}
     G3 -->|No| BLOCK
-    G3 -->|Yes| G4{Credential tools<br/>enabled?}
+    G3 -->|Yes| G4{"Credential tools<br/>enabled?"}
     G4 -->|No| BLOCK
-    G4 -->|Yes| G5{Target in<br/>allowlist?}
+    G4 -->|Yes| G5{"Target in<br/>allowlist?"}
     G5 -->|No| BLOCK
-    G5 -->|Yes| G6{Metadata<br/>endpoint?}
+    G5 -->|Yes| G6{"Metadata<br/>endpoint?"}
     G6 -->|Yes| BLOCK
-    G6 -->|No| EXEC[Execute]
+    G6 -->|No| EXEC["Execute"]
 ```
 
 Active scans are disabled until you opt in:

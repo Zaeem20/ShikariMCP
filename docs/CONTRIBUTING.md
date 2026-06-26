@@ -6,26 +6,26 @@ This guide explains how to extend ShikariMCP with new security tools, parsers, w
 
 ```mermaid
 flowchart TB
-    Q{What do you want<br/>to add?} -->|A reviewed, production tool| M[Manifest Tool<br/>+ Parser]
-    Q -->|A direct CLI wrapper| W[Wrapper Tool<br/>@shikari_tool]
-    Q -->|A multi-step workflow| A[Agent<br/>+ Plan]
-    Q -->|A new tool profile| P[Manifest Profile<br/>.json file]
+    Q{"What do you want<br/>to add?"} -->|A reviewed production tool| M["Manifest Tool<br/>and Parser"]
+    Q -->|A direct CLI wrapper| W["Wrapper Tool<br/>@shikari_tool"]
+    Q -->|A multi-step workflow| A["Agent<br/>and Plan"]
+    Q -->|A new tool profile| P["Manifest Profile<br/>.json file"]
 
-    M --> M1[1. Add manifest entry]
-    M1 --> M2[2. Write parser]
-    M2 --> M3[3. Add install spec]
-    M3 --> M4[4. Test]
+    M --> M1["1. Add manifest entry"]
+    M1 --> M2["2. Write parser"]
+    M2 --> M3["3. Add install spec"]
+    M3 --> M4["4. Test"]
 
-    W --> W1[1. Create wrapper file]
-    W1 --> W2[2. Decorate with @shikari_tool]
-    W2 --> W3[3. Test]
+    W --> W1["1. Create wrapper file"]
+    W1 --> W2["2. Decorate with @shikari_tool"]
+    W2 --> W3["3. Test"]
 
-    A --> A1[1. Create agent class]
-    A1 --> A2[2. Add plan to _catalog.py]
-    A2 --> A3[3. Register as MCP tool]
+    A --> A1["1. Create agent class"]
+    A1 --> A2["2. Add plan to _catalog.py"]
+    A2 --> A3["3. Register as MCP tool"]
 
-    P --> P1[1. Create profile .json]
-    P1 --> P2[2. Add to full profile list]
+    P --> P1["1. Create profile .json"]
+    P1 --> P2["2. Add to full profile list"]
 ```
 
 | Tier | Trust Level | Default Exposed | Best For |

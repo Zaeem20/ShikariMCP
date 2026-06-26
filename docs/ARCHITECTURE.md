@@ -13,71 +13,71 @@ The diagram above shows the full request flow: AI clients connect via stdio or S
 ```mermaid
 flowchart LR
     subgraph src["src/shikari/"]
-        S[server.py<br/>Entry point + CLI]
-        C[config.py<br/>Configuration]
+        S["server.py<br/>Entry point + CLI"]
+        C["config.py<br/>Configuration"]
 
         subgraph core["core/"]
-            C1[registry.py]
-            C2[executor.py]
-            C3[auth.py]
-            C4[policy.py]
-            C5[tool_runner.py]
-            C6[tool_manifest.py]
-            C7[run_manager.py]
-            C8[rate_limiter.py]
-            C9[http_security.py]
-            C10[artifacts.py]
-            C11[audit.py]
-            C12[input_validation.py]
-            C13[validator.py]
+            C1["registry.py"]
+            C2["executor.py"]
+            C3["auth.py"]
+            C4["policy.py"]
+            C5["tool_runner.py"]
+            C6["tool_manifest.py"]
+            C7["run_manager.py"]
+            C8["rate_limiter.py"]
+            C9["http_security.py"]
+            C10["artifacts.py"]
+            C11["audit.py"]
+            C12["input_validation.py"]
+            C13["validator.py"]
         end
 
         subgraph manifests["manifests/tools/"]
-            M1[core.json]
-            M2[recon.json]
-            M3[web.json]
-            M4[cloud.json]
-            M5[forensics.json]
-            M6[offensive.json]
-            M7[osint.json]
+            M1["core.json"]
+            M2["recon.json"]
+            M3["web.json"]
+            M4["cloud.json"]
+            M5["forensics.json"]
+            M6["offensive.json"]
+            M7["osint.json"]
         end
 
         subgraph parsers["parsers/"]
-            P1[models.py<br/>ParsedOutput]
-            P2[dispatch.py]
-            P3[nmap / subfinder / httpx<br/>nuclei / ffuf / gobuster<br/>nikto / sqlmap / trivy<br/>+ sherlock / exiftool<br/>+ greynoise / virustotal<br/>+ theharvester]
+            P1["models.py<br/>ParsedOutput"]
+            P2["dispatch.py"]
+            P3["nmap, subfinder, httpx<br/>nuclei, ffuf, gobuster<br/>nikto, sqlmap, trivy<br/>sherlock, exiftool<br/>greynoise, virustotal<br/>theharvester"]
         end
 
         subgraph agents["agents/"]
-            A1[_base_agent.py]
-            A2[workflow/ - 13]
-            A3[intelligence/ - 10]
-            A4[infrastructure/ - 8]
-            A5[domain/ - 10]
-            A6[offensive/ - 5]
-            A7[defensive/ - 5]
+            A1["_base_agent.py"]
+            A2["workflow/ - 13"]
+            A3["intelligence/ - 10"]
+            A4["infrastructure/ - 8"]
+            A5["domain/ - 10"]
+            A6["offensive/ - 5"]
+            A7["defensive/ - 5"]
         end
 
         subgraph tools["tools/ - 35 categories"]
-            T1[_base.py<br/>@shikari_tool decorator]
-            T2[reconnaissance - 65]
-            T3[enumeration - 30]
-            T4[osint - 23]
-            T5[+ 32 more categories]
+            T1["_base.py<br/>@shikari_tool decorator"]
+            T2["reconnaissance - 65"]
+            T3["enumeration - 30"]
+            T4["osint - 23"]
+            T5["+ 32 more categories"]
         end
     end
 
     subgraph tests["tests/"]
-        TS[152 unit tests]
+        TS["152 unit tests"]
     end
 
     subgraph scripts["scripts/"]
-        SC1[install-tools.sh]
-        SC2[verify-tools.sh]
+        SC1["install-tools.sh"]
+        SC2["verify-tools.sh"]
     end
 
     subgraph docker["docker/"]
-        DK[Dockerfile + compose]
+        DK["Dockerfile + compose"]
     end
 ```
 
@@ -161,14 +161,14 @@ Each parser converts tool-specific output into a common `ParsedOutput` model:
 
 ```mermaid
 flowchart LR
-    RAW[Raw Tool Output] --> P[Parser]
-    P --> PO[ParsedOutput]
+    RAW["Raw Tool Output"] --> P["Parser"]
+    P --> PO["ParsedOutput"]
 
     subgraph PO["ParsedOutput"]
-        A[Assets<br/>hosts, domains, IPs,<br/>social profiles, geolocations]
-        S[Services<br/>port, protocol, product, version]
-        E[Endpoints<br/>URL, status, technologies]
-        F[Findings<br/>title, severity, evidence]
+        A["Assets<br/>hosts, domains, IPs<br/>social profiles, geolocations"]
+        S["Services<br/>port, protocol, product, version"]
+        E["Endpoints<br/>URL, status, technologies"]
+        F["Findings<br/>title, severity, evidence"]
     end
 ```
 
@@ -193,9 +193,9 @@ All agents extend `BaseAgent` and follow a four-phase workflow:
 
 ```mermaid
 flowchart LR
-    P[1. Plan<br/>Determine tools + order] --> E[2. Execute<br/>Run tools, pass results]
-    E --> A[3. Analyze<br/>Parse outputs, correlate findings]
-    A --> R[4. Report<br/>Structured results + evidence]
+    P["1. Plan<br/>Determine tools and order"] --> E["2. Execute<br/>Run tools, pass results"]
+    E --> A["3. Analyze<br/>Parse outputs, correlate findings"]
+    A --> R["4. Report<br/>Structured results and evidence"]
 ```
 
 | Agent Tier | Count | Execution | Exposed by default |
@@ -212,20 +212,20 @@ See [Agents](AGENTS.md) for the full catalog.
 ```mermaid
 flowchart TB
     subgraph Submit["shikari_submit_verified_tool"]
-        S1[Create run_id] --> S2[Queue in Run Manager] --> S3[Return run_id immediately]
+        S1["Create run_id"] --> S2["Queue in Run Manager"] --> S3["Return run_id immediately"]
     end
 
     subgraph Execute["Background Execution"]
-        E1[Pick up from queue] --> E2[Run via Tool Runner]
-        E2 --> E3[Store result + artifacts]
+        E1["Pick up from queue"] --> E2["Run via Tool Runner"]
+        E2 --> E3["Store result and artifacts"]
     end
 
     subgraph Poll["shikari_get_run"]
-        P1[Look up run_id] --> P2[Return status + findings]
+        P1["Look up run_id"] --> P2["Return status and findings"]
     end
 
     subgraph Cancel["shikari_cancel_run"]
-        C1[Set status = cancelling] --> C2[task.cancel] --> C3[Kill process tree]
+        C1["Set status = cancelling"] --> C2["task.cancel"] --> C3["Kill process tree"]
     end
 
     Submit --> Execute
@@ -239,26 +239,26 @@ The Run Manager maintains a bounded history of background runs (default 100). Ea
 
 ```mermaid
 flowchart TB
-    REQ[Incoming Tool Request] --> V1{MCP Boundary Validation<br/>Pydantic models}
-    V1 -->|reject| ERR[Error: invalid input]
-    V1 -->|accept| V2{Input Validation<br/>NUL bytes, option prefix, size limits}
+    REQ["Incoming Tool Request"] --> V1{"MCP Boundary Validation<br/>Pydantic models"}
+    V1 -->|reject| ERR["Error: invalid input"]
+    V1 -->|accept| V2{"Input Validation<br/>NUL bytes, option prefix, size limits"}
     V2 -->|reject| ERR
-    V2 -->|accept| P1{Policy Engine}
+    V2 -->|accept| P1{"Policy Engine"}
 
     subgraph PE["Policy Checks"]
-        P1 --> P2{Risk-class gate<br/>active/offensive/credential}
-        P2 -->|blocked| BLK[Blocked: requires opt-in]
-        P2 -->|allowed| P3{Target allowlist<br/>domain/CIDR/path}
+        P1 --> P2{"Risk-class gate<br/>active, offensive, credential"}
+        P2 -->|blocked| BLK["Blocked: requires opt-in"]
+        P2 -->|allowed| P3{"Target allowlist<br/>domain, CIDR, path"}
         P3 -->|not in list| BLK
-        P3 -->|in list| P4{Cloud metadata block<br/>169.254.169.254 etc.}
+        P3 -->|in list| P4{"Cloud metadata block<br/>169.254.169.254 etc"}
         P4 -->|metadata IP| BLK
-        P4 -->|safe| P5{Scope check<br/>local vs remote}
+        P4 -->|safe| P5{"Scope check<br/>local vs remote"}
         P5 -->|local-only, remote HTTP| BLK
-        P5 -->|ok| ALLOW[Execute]
+        P5 -->|ok| ALLOW["Execute"]
     end
 
-    BLK --> RESP[Return blocked + reason]
-    ALLOW --> EXEC[Run subprocess]
+    BLK --> RESP["Return blocked and reason"]
+    ALLOW --> EXEC["Run subprocess"]
 ```
 
 | Control | What It Prevents |
@@ -279,14 +279,14 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    REQ[HTTP Request] --> MW1[1. Rate Limiter<br/>per-IP token bucket<br/>60 req/s, 100 burst]
-    MW1 -->|429| R429[Too Many Requests<br/>+ Retry-After]
-    MW1 -->|ok| MW2[2. Host/Origin Validation<br/>DNS rebinding protection<br/>security headers]
-    MW2 -->|400| R400[Invalid Host/Origin]
-    MW2 -->|ok| MW3[3. API Key Auth<br/>constant-time compare<br/>Bearer token]
-    MW3 -->|401| R401[Unauthorized]
-    MW3 -->|ok| MCP[FastMCP Handler]
-    MCP --> TOOLS[Tool Router]
+    REQ["HTTP Request"] --> MW1["1. Rate Limiter<br/>per-IP token bucket<br/>60 req/s, 100 burst"]
+    MW1 -->|429| R429["Too Many Requests<br/>Retry-After"]
+    MW1 -->|ok| MW2["2. Host/Origin Validation<br/>DNS rebinding protection<br/>security headers"]
+    MW2 -->|400| R400["Invalid Host or Origin"]
+    MW2 -->|ok| MW3["3. API Key Auth<br/>constant-time compare<br/>Bearer token"]
+    MW3 -->|401| R401["Unauthorized"]
+    MW3 -->|ok| MCP["FastMCP Handler"]
+    MCP --> TOOLS["Tool Router"]
 ```
 
 | Layer | Default | Configurable |
