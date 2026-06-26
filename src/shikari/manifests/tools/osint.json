@@ -1,0 +1,313 @@
+{
+  "schema_version": 1,
+  "profile": "osint",
+  "description": "OSINT, SOCINT (social media intelligence), geosint, threat intelligence, and data-breach lookup tools. All tools query external APIs or public sources — no traffic reaches the target's own network — so they are passive and work in both stdio and remote HTTP modes unless marked local-only.",
+  "tools": [
+    {
+      "id": "sherlock_username",
+      "display_name": "Sherlock Username Search",
+      "binary": "sherlock",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["username"],
+      "version_command": ["sherlock", "--help"],
+      "install": {"pipx": "sherlock-project"},
+      "command_templates": {
+        "safe": {"argv": ["sherlock", "{username}", "--csv", "--timeout", "30", "--no-color", "--print-found"], "timeout": 300, "output_format": "text"}
+      },
+      "parser": "shikari.parsers.sherlock.parse_csv"
+    },
+    {
+      "id": "maigret_username",
+      "display_name": "Maigret Username Search",
+      "binary": "maigret",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["username"],
+      "version_command": ["maigret", "--help"],
+      "install": {"pipx": "maigret"},
+      "command_templates": {
+        "safe": {"argv": ["maigret", "{username}", "--timeout", "30", "--no-color", "--no-progressbar", "--top-sites", "500"], "timeout": 600, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "holehe_email",
+      "display_name": "Holehe Email Service Check",
+      "binary": "holehe",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["email"],
+      "version_command": ["holehe", "--help"],
+      "install": {"pipx": "holehe"},
+      "command_templates": {
+        "safe": {"argv": ["holehe", "{email}", "--only-used", "--no-color", "-T", "30"], "timeout": 300, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "socialscan_check",
+      "display_name": "Socialscan Existence Check",
+      "binary": "socialscan",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["email", "username"],
+      "version_command": ["socialscan", "--help"],
+      "install": {"pipx": "socialscan"},
+      "command_templates": {
+        "safe": {"argv": ["socialscan", "{query}", "--show-urls", "--verbose"], "timeout": 300, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "exiftool_metadata",
+      "display_name": "Exiftool Full Metadata Extraction",
+      "binary": "exiftool",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["local_analysis"],
+      "approval": "none",
+      "target_types": ["file"],
+      "version_command": ["exiftool", "-ver"],
+      "install": {"apt": ["libimage-exiftool-perl"]},
+      "command_templates": {
+        "safe": {"argv": ["exiftool", "-j", "-G1", "-a", "-s", "-n", "{file}"], "timeout": 60, "output_format": "json"}
+      },
+      "parser": "shikari.parsers.exiftool.parse_json"
+    },
+    {
+      "id": "exiftool_gps",
+      "display_name": "Exiftool GPS Extraction",
+      "binary": "exiftool",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "local",
+      "capabilities": ["local_analysis"],
+      "approval": "none",
+      "target_types": ["file"],
+      "version_command": ["exiftool", "-ver"],
+      "install": {"apt": ["libimage-exiftool-perl"]},
+      "command_templates": {
+        "safe": {"argv": ["exiftool", "-j", "-n", "-G1", "-GPS:GPSLatitude", "-GPS:GPSLongitude", "-GPS:GPSAltitude", "-GPS:GPSPosition", "{file}"], "timeout": 60, "output_format": "json"}
+      },
+      "parser": "shikari.parsers.exiftool.parse_gps"
+    },
+    {
+      "id": "shodan_host",
+      "display_name": "Shodan Host Lookup",
+      "binary": "shodan",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["ip"],
+      "version_command": ["shodan", "--help"],
+      "install": {"pipx": "shodan"},
+      "command_templates": {
+        "safe": {"argv": ["shodan", "host", "{ip}"], "timeout": 60, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "shodan_search",
+      "display_name": "Shodan Search",
+      "binary": "shodan",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["query"],
+      "version_command": ["shodan", "--help"],
+      "install": {"pipx": "shodan"},
+      "command_templates": {
+        "safe": {"argv": ["shodan", "search", "{query}", "--limit", "100", "--no-color"], "timeout": 120, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "censys_host",
+      "display_name": "Censys Host View",
+      "binary": "censys",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["ip"],
+      "version_command": ["censys", "--help"],
+      "install": {"pipx": "censys"},
+      "command_templates": {
+        "safe": {"argv": ["censys", "view", "--id", "{ip}"], "timeout": 60, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "censys_search",
+      "display_name": "Censys Host Search",
+      "binary": "censys",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["query"],
+      "version_command": ["censys", "--help"],
+      "install": {"pipx": "censys"},
+      "command_templates": {
+        "safe": {"argv": ["censys", "search", "{query}", "--index", "hosts", "--pages", "1"], "timeout": 120, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "vt_file_lookup",
+      "display_name": "VirusTotal File Hash Lookup",
+      "binary": "vt",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["hash"],
+      "version_command": ["vt", "version"],
+      "install": {"official": "https://github.com/VirusTotal/vt-cli/releases"},
+      "command_templates": {
+        "safe": {"argv": ["vt", "file", "{hash}", "--format", "json"], "timeout": 60, "output_format": "json"}
+      },
+      "parser": "shikari.parsers.virustotal.parse_json"
+    },
+    {
+      "id": "vt_url_lookup",
+      "display_name": "VirusTotal URL Lookup",
+      "binary": "vt",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["url"],
+      "version_command": ["vt", "version"],
+      "install": {"official": "https://github.com/VirusTotal/vt-cli/releases"},
+      "command_templates": {
+        "safe": {"argv": ["vt", "url", "{url}", "--format", "json"], "timeout": 60, "output_format": "json"}
+      },
+      "parser": "shikari.parsers.virustotal.parse_json"
+    },
+    {
+      "id": "vt_ip_lookup",
+      "display_name": "VirusTotal IP Address Lookup",
+      "binary": "vt",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["ip"],
+      "version_command": ["vt", "version"],
+      "install": {"official": "https://github.com/VirusTotal/vt-cli/releases"},
+      "command_templates": {
+        "safe": {"argv": ["vt", "ip", "{ip}", "--format", "json"], "timeout": 60, "output_format": "json"}
+      },
+      "parser": "shikari.parsers.virustotal.parse_json"
+    },
+    {
+      "id": "vt_domain_lookup",
+      "display_name": "VirusTotal Domain Lookup",
+      "binary": "vt",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["domain"],
+      "version_command": ["vt", "version"],
+      "install": {"official": "https://github.com/VirusTotal/vt-cli/releases"},
+      "command_templates": {
+        "safe": {"argv": ["vt", "domain", "{domain}", "--format", "json"], "timeout": 60, "output_format": "json"}
+      },
+      "parser": "shikari.parsers.virustotal.parse_json"
+    },
+    {
+      "id": "greynoise_ip",
+      "display_name": "GreyNoise IP Intelligence",
+      "binary": "greynoise",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["ip"],
+      "version_command": ["greynoise", "--help"],
+      "install": {"pipx": "greynoise"},
+      "command_templates": {
+        "safe": {"argv": ["greynoise", "ip", "{ip}", "-f", "json"], "timeout": 60, "output_format": "json"}
+      },
+      "parser": "shikari.parsers.greynoise.parse_json"
+    },
+    {
+      "id": "greynoise_quick",
+      "display_name": "GreyNoise Quick IP Check",
+      "binary": "greynoise",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["ip"],
+      "version_command": ["greynoise", "--help"],
+      "install": {"pipx": "greynoise"},
+      "command_templates": {
+        "safe": {"argv": ["greynoise", "quick", "{ip}", "-f", "json"], "timeout": 30, "output_format": "json"}
+      },
+      "parser": "shikari.parsers.greynoise.parse_json"
+    },
+    {
+      "id": "h8mail_breach",
+      "display_name": "H8mail Breach Lookup",
+      "binary": "h8mail",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["email"],
+      "version_command": ["h8mail", "--help"],
+      "install": {"pipx": "h8mail"},
+      "command_templates": {
+        "safe": {"argv": ["h8mail", "-t", "{email}", "--hide"], "timeout": 300, "output_format": "text"}
+      },
+      "parser": null
+    },
+    {
+      "id": "theharvester_domain",
+      "display_name": "TheHarvester Domain Enumeration",
+      "binary": "theHarvester",
+      "category": "osint",
+      "quality": "verified",
+      "scope": "both",
+      "capabilities": ["passive_recon"],
+      "approval": "none",
+      "target_types": ["domain"],
+      "version_command": ["theHarvester", "--help"],
+      "install": {"official": "https://github.com/laramies/theHarvester"},
+      "command_templates": {
+        "safe": {"argv": ["theHarvester", "-d", "{domain}", "-b", "all", "-l", "500"], "timeout": 600, "output_format": "text"}
+      },
+      "parser": "shikari.parsers.theharvester.parse_text"
+    }
+  ]
+}

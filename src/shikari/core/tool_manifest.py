@@ -67,7 +67,7 @@ def load_tool_manifest(profile: str = "core") -> ToolManifest:
     if profile == "full":
         manifests = [
             load_tool_manifest(name)
-            for name in ("core", "recon", "web", "cloud", "forensics", "offensive")
+            for name in ("core", "recon", "web", "cloud", "forensics", "offensive", "osint")
         ]
         tools = []
         seen = set()
