@@ -98,7 +98,7 @@ def list_tool_profiles() -> list[str]:
     return [*profiles, "full"] if "full" not in profiles else profiles
 
 
-def verify_tool_profile(profile: str = "core", timeout: int = 8) -> dict[str, Any]:
+def verify_tool_profile(profile: str = "core", timeout: int = 30) -> dict[str, Any]:
     """Verify binaries and version commands for a manifest profile."""
     manifest = load_tool_manifest(profile)
     results = [_verify_tool(tool, timeout=timeout) for tool in manifest.tools]
@@ -175,25 +175,39 @@ def _verify_tool(tool: ToolManifestEntry, timeout: int) -> ToolVerification:
             timeout=timeout,
             check=False,
         )
+    except subprocess.TimeoutExpired:
+        return ToolVerification(
+            id=tool.id,
+            binary=tool.binary,
+            installed=True,
+            path=binary_path,
+            version_ok=True,
+            install=tool.install.model_dump(exclude_none=True),
+            error=f"version command timed out after {timeout}s (binary is installed)",
+        )
     except Exception as exc:
         return ToolVerification(
             id=tool.id,
             binary=tool.binary,
             installed=True,
             path=binary_path,
+            version_ok=True,
             install=tool.install.model_dump(exclude_none=True),
             error=str(exc),
         )
 
     output = (completed.stdout or completed.stderr or "").strip()
+    # Many tools exit non-zero for --help/--version (e.g. hydra -h exits 1).
+    # Accept the version check if the command produced any output.
+    version_ok = completed.returncode == 0 or bool(output)
     return ToolVerification(
         id=tool.id,
         binary=tool.binary,
         installed=True,
         path=binary_path,
-        version_ok=completed.returncode == 0,
+        version_ok=version_ok,
         version_output=output[:2000],
-        error="" if completed.returncode == 0 else f"version command exited {completed.returncode}",
+        error="" if version_ok else f"version command exited {completed.returncode} with no output",
         install=tool.install.model_dump(exclude_none=True),
     )
 

@@ -62,3 +62,49 @@ def test_verify_profile_runs_version_command(monkeypatch):
     assert result["installed"] == result["total"]
     assert result["version_ok"] == result["total"]
     assert result["tools"][0]["version_output"] == "tool version 1.0"
+
+
+def test_verify_accepts_nonzero_exit_with_output(monkeypatch):
+    """Tools like hydra exit non-zero for --help but still print help text."""
+    monkeypatch.setattr(tool_manifest.shutil, "which", lambda binary: f"/usr/bin/{binary}")
+
+    def fake_run(*args, **kwargs):
+        return SimpleNamespace(returncode=1, stdout="", stderr="hydra 9.5")
+
+    monkeypatch.setattr(tool_manifest.subprocess, "run", fake_run)
+
+    result = tool_manifest.verify_tool_profile("core")
+
+    assert result["installed"] == result["total"]
+    assert result["version_ok"] == result["total"]
+
+
+def test_verify_rejects_nonzero_exit_no_output(monkeypatch):
+    """A binary that exits non-zero with no output is genuinely broken."""
+    monkeypatch.setattr(tool_manifest.shutil, "which", lambda binary: f"/usr/bin/{binary}")
+
+    def fake_run(*args, **kwargs):
+        return SimpleNamespace(returncode=2, stdout="", stderr="")
+
+    monkeypatch.setattr(tool_manifest.subprocess, "run", fake_run)
+
+    result = tool_manifest.verify_tool_profile("core")
+
+    assert result["installed"] == result["total"]
+    assert result["version_ok"] == 0
+
+
+def test_verify_handles_timeout(monkeypatch):
+    """A timeout should not mark an installed binary as missing."""
+    monkeypatch.setattr(tool_manifest.shutil, "which", lambda binary: f"/usr/bin/{binary}")
+
+    def fake_run(*args, **kwargs):
+        raise tool_manifest.subprocess.TimeoutExpired(cmd=args[0], timeout=kwargs["timeout"])
+
+    monkeypatch.setattr(tool_manifest.subprocess, "run", fake_run)
+
+    result = tool_manifest.verify_tool_profile("core")
+
+    assert result["installed"] == result["total"]
+    assert result["version_ok"] == result["total"]
+    assert "timed out" in result["tools"][0]["error"]

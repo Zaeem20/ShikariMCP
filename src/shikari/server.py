@@ -466,7 +466,12 @@ def run_tools_cli(argv: list[str]) -> int:
             print(f"Profile: {result['profile']}")
             print(f"Installed: {result['installed']}/{result['total']}")
             for tool in result["tools"]:
-                status = "ok" if tool["installed"] and tool["version_ok"] else "missing"
+                if not tool["installed"]:
+                    status = "missing"
+                elif not tool["version_ok"]:
+                    status = "version_error"
+                else:
+                    status = "ok"
                 print(f"- {tool['id']}: {status} ({tool['binary']})")
         return 0 if result["missing"] == 0 else 1
 

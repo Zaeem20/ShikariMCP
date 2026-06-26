@@ -167,7 +167,7 @@
       "capabilities": ["active_network"],
       "approval": "active_tools",
       "target_types": ["url"],
-      "version_command": ["gobuster", "version"],
+      "version_command": ["gobuster", "--version"],
       "install": {"go": "github.com/OJ/gobuster/v3@v3.8.2"},
       "command_templates": {
         "safe": {
