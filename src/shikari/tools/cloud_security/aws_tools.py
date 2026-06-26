@@ -2,7 +2,6 @@
 
 import shlex
 from shikari.tools._base import shikari_tool, ToolScope
-from shikari.core.validator import validate_target
 from shikari.core.executor import execute_command
 
 @shikari_tool(
