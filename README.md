@@ -248,3 +248,9 @@ uv run shikari-mcp tools verify --profile core --json
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Credits
+
+> Built with ❤️ by **[Zaeem20](https://github.com/Zaeem20)**
+>
+> *If this project helped you, consider giving it a ⭐*
