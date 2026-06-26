@@ -1,10 +1,9 @@
-﻿import asyncio
-import os
+﻿import os
 import sys
 from typing import Any
 from fastmcp import Context
 
-from shikari.agents._base_agent import BaseAgent, AgentResult
+from shikari.agents._base_agent import BaseAgent
 from shikari.core.executor import execute_command
 from shikari.tools._base import shikari_tool, ToolScope
 

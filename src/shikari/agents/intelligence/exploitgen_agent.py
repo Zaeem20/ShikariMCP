@@ -1,5 +1,4 @@
-﻿import asyncio
-from typing import Any
+﻿from typing import Any
 from fastmcp import Context
 from shikari.agents._base_agent import BaseAgent
 from shikari.agents._catalog import build_default_plan

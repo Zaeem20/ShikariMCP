@@ -42,7 +42,7 @@ class AgentResult:
             "",
             f"**Status:** {self.status.title()}",
             "",
-            f"## Summary",
+            "## Summary",
             self.summary,
             "",
         ]
