@@ -319,7 +319,7 @@ go install github.com/OJ/gobuster/v3@latest
 go install github.com/hahwul/dalfox/v2@latest
 
 # Secrets and code analysis
-go install github.com/gitleaks/gitleaks/v8@latest
+go install github.com/zricethezav/gitleaks/v8@latest
 ```
 
 ---

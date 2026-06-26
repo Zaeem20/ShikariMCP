@@ -31,7 +31,7 @@
       "approval": "none",
       "target_types": ["filesystem", "repository"],
       "version_command": ["gitleaks", "version"],
-      "install": {"go": "github.com/gitleaks/gitleaks/v8@v8.30.1"},
+      "install": {"go": "github.com/zricethezav/gitleaks/v8@v8.30.1"},
       "command_templates": {
         "safe": {"argv": ["gitleaks", "detect", "--source", "{path}", "--report-format", "json", "--no-banner"], "timeout": 900, "output_format": "json"}
       },
