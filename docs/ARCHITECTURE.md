@@ -10,75 +10,115 @@ The diagram above shows the full request flow: AI clients connect via stdio or S
 
 ## Project Structure
 
-```mermaid
-flowchart LR
-    subgraph src["src/shikari/"]
-        S["server.py<br/>Entry point + CLI"]
-        C["config.py<br/>Configuration"]
-
-        subgraph core["core/"]
-            C1["registry.py"]
-            C2["executor.py"]
-            C3["auth.py"]
-            C4["policy.py"]
-            C5["tool_runner.py"]
-            C6["tool_manifest.py"]
-            C7["run_manager.py"]
-            C8["rate_limiter.py"]
-            C9["http_security.py"]
-            C10["artifacts.py"]
-            C11["audit.py"]
-            C12["input_validation.py"]
-            C13["validator.py"]
-        end
-
-        subgraph manifests["manifests/tools/"]
-            M1["core.json"]
-            M2["recon.json"]
-            M3["web.json"]
-            M4["cloud.json"]
-            M5["forensics.json"]
-            M6["offensive.json"]
-            M7["osint.json"]
-        end
-
-        subgraph parsers["parsers/"]
-            P1["models.py<br/>ParsedOutput"]
-            P2["dispatch.py"]
-            P3["nmap, subfinder, httpx<br/>nuclei, ffuf, gobuster<br/>nikto, sqlmap, trivy<br/>sherlock, exiftool<br/>greynoise, virustotal<br/>theharvester"]
-        end
-
-        subgraph agents["agents/"]
-            A1["_base_agent.py"]
-            A2["workflow/ - 13"]
-            A3["intelligence/ - 10"]
-            A4["infrastructure/ - 8"]
-            A5["domain/ - 10"]
-            A6["offensive/ - 5"]
-            A7["defensive/ - 5"]
-        end
-
-        subgraph tools["tools/ - 35 categories"]
-            T1["_base.py<br/>@shikari_tool decorator"]
-            T2["reconnaissance - 65"]
-            T3["enumeration - 30"]
-            T4["osint - 23"]
-            T5["+ 32 more categories"]
-        end
-    end
-
-    subgraph tests["tests/"]
-        TS["152 unit tests"]
-    end
-
-    subgraph scripts["scripts/"]
-        SC1["install-tools.sh"]
-        SC2["verify-tools.sh"]
-    end
-
-    subgraph docker["docker/"]
-        DK["Dockerfile + compose"]
-    end
+```
+ShikariMCP/
+├── src/shikari/
+│   ├── server.py                  # Entry point, CLI, MCP tool registration
+│   ├── config.py                  # Configuration (env vars + CLI flags)
+│   │
+│   ├── core/                      # Engine
+│   │   ├── registry.py            #   Tool auto-discovery & scope filtering
+│   │   ├── executor.py            #   Async subprocess execution + timeout + tree kill
+│   │   ├── auth.py                #   API key auth (constant-time compare)
+│   │   ├── policy.py              #   Safety controls, target allowlist, metadata block
+│   │   ├── tool_runner.py         #   Manifest-driven command builder & executor
+│   │   ├── tool_manifest.py       #   Manifest loading and tool entry models
+│   │   ├── run_manager.py         #   Background job lifecycle (submit/poll/cancel)
+│   │   ├── rate_limiter.py        #   Per-IP token-bucket rate limiter (HTTP)
+│   │   ├── http_security.py       #   Host/Origin validation middleware
+│   │   ├── artifacts.py           #   Bounded output storage
+│   │   ├── audit.py               #   JSONL audit logging
+│   │   ├── input_validation.py    #   Pydantic models for MCP boundary validation
+│   │   └── validator.py           #   Input sanitization (legacy wrappers)
+│   │
+│   ├── manifests/tools/           # Profile manifests (7 profiles, 50 tools)
+│   │   ├── core.json              #   12 tools: nmap, subfinder, httpx, nuclei...
+│   │   ├── recon.json             #   4 tools: masscan, dnsx, mapcidr, uncover
+│   │   ├── web.json               #   7 tools: whatweb, wafw00f, dalfox, arjun...
+│   │   ├── cloud.json             #   3 tools: semgrep, gitleaks, checkov
+│   │   ├── forensics.json         #   3 tools: yara, volatility3, radare2
+│   │   ├── offensive.json         #   3 tools: john, hashcat, hydra
+│   │   └── osint.json             #   18 tools: sherlock, shodan, exiftool, greynoise...
+│   │
+│   ├── parsers/                   # Normalized output parsers (14 parsers)
+│   │   ├── models.py              #   Asset, Service, Endpoint, Finding, ParsedOutput
+│   │   ├── dispatch.py            #   Parser routing by dotted reference
+│   │   ├── nmap.py                #   XML → services, ports, OS
+│   │   ├── subfinder.py           #   JSONL → subdomain assets
+│   │   ├── httpx.py               #   JSONL → live endpoints, tech detection
+│   │   ├── nuclei.py              #   JSONL → vulnerability findings
+│   │   ├── ffuf.py                #   JSON → discovered paths
+│   │   ├── gobuster.py            #   Text → directories
+│   │   ├── nikto.py               #   JSON → web server findings
+│   │   ├── sqlmap.py              #   Text → injection findings
+│   │   ├── trivy.py               #   JSON → vuln + secret findings
+│   │   ├── whois.py               #   Text → registration data
+│   │   ├── naabu.py               #   JSONL → port results
+│   │   ├── katana.py              #   JSONL → crawled endpoints
+│   │   ├── sherlock.py            #   CSV → social media profiles
+│   │   ├── exiftool.py            #   JSON → metadata + GPS geolocation
+│   │   ├── greynoise.py           #   JSON → IP classification (benign/malicious)
+│   │   ├── virustotal.py          #   JSON → scan stats (malicious/suspicious)
+│   │   └── theharvester.py        #   Text → emails, hosts, URLs
+│   │
+│   ├── agents/                    # Workflow agents (51 total)
+│   │   ├── _base_agent.py         #   Base class: plan → execute → analyze → report
+│   │   ├── _catalog.py            #   Real multi-step CLI plans for all 47 catalog agents
+│   │   ├── workflow/              #   13 workflow agents (4 production + 9 experimental)
+│   │   ├── intelligence/          #   10 intelligence agents
+│   │   ├── infrastructure/        #   8 infrastructure agents
+│   │   ├── domain/                #   10 domain-specific agents
+│   │   ├── offensive/             #   5 offensive agents (gated)
+│   │   └── defensive/             #   5 defensive agents
+│   │
+│   └── tools/                     # Direct wrappers (305 across 35 categories)
+│       ├── _base.py               #   @shikari_tool decorator, ToolMetadata, ToolScope
+│       ├── reconnaissance/        #   65 wrappers: amass, subfinder, httpx, shodan...
+│       ├── enumeration/           #   30 wrappers: nmap, dirb, gobuster, masscan...
+│       ├── osint/                 #   23 wrappers: whois, sherlock, shodan, exiftool...
+│       ├── web_application/       #   16 wrappers: whatweb, ffuf, dalfox, sqlmap...
+│       ├── exploitation/          #   11 wrappers: searchsploit, nmap NSE...
+│       ├── vulnerability_scanning/#   11 wrappers: nmap, masscan, nuclei, nikto...
+│       ├── password_attacks/      #   11 wrappers: hashcat, john, hydra, medusa...
+│       ├── post_exploitation/     #   8 wrappers: sliver, linpeas, chisel...
+│       ├── active_directory/      #   8 wrappers: nxc, bloodhound, certipy, impacket...
+│       ├── container_security/    #   7 wrappers: grype, dive, kube-bench, syft...
+│       ├── network_attacks/       #   6 wrappers: bettercap, responder, arpspoof...
+│       ├── cryptography/          #   6 wrappers: hashid, openssl, ssdeep, hashcat...
+│       ├── cloud_security/        #   5 wrappers: trivy, scoutsuite, kube-hunter...
+│       ├── code_analysis/         #   5 wrappers: semgrep, bandit, gosec, gitleaks...
+│       ├── iot_security/          #   5 wrappers: binwalk, mosquitto, nmap...
+│       ├── forensics/             #   4 wrappers: volatility, exiftool, binwalk...
+│       ├── reporting/             #   4 wrappers: pandoc, weasyprint, xsltproc...
+│       ├── api_security/          #   4 wrappers: arjun, kr, nuclei, ffuf
+│       ├── evasion/               #   3 wrappers: msfvenom, unicorn
+│       ├── evasion_payloads/      #   2 wrappers: msfvenom, veil
+│       ├── mobile/                #   3 wrappers: apktool, jadx, mobsf
+│       ├── mobile_security/       #   2 wrappers: objection, apkid
+│       ├── payload_generation/    #   2 wrappers: msfvenom
+│       ├── database_injection/    #   2 wrappers: bsqlbf, odat
+│       ├── ai_ml_security/        #   2 wrappers: garak, modelscan
+│       ├── blockchain/            #   3 wrappers: slither, mythril
+│       ├── reverse_engineering/   #   3 wrappers: radare2, checksec, qu1cksc0pe
+│       ├── wireless/              #   3 wrappers: aircrack-ng, wifite, reaver
+│       └── ...                    #   + remaining categories
+│
+├── tests/                         # 152 pytest unit tests
+├── scripts/                       # Installer, verifier, deploy, smoke-test
+│   ├── install-tools.sh           #   Profile-based binary installer
+│   ├── verify-tools.sh            #   Binary verification
+│   ├── install-go-tools.sh        #   Go tool installer
+│   ├── install-wordlists.sh       #   SecLists wordlist installer
+│   ├── deploy-remote.sh           #   One-command Linux server deployment
+│   └── smoke-test.sh              #   26 checks (no binaries needed)
+├── docker/                        # Production container
+│   ├── Dockerfile                 #   Core profile, non-root, read-only FS
+│   └── Dockerfile.core            #   Core-only variant
+├── assets/                        # Architecture diagram image
+├── docs/                          # Documentation (7 files)
+├── compose.yaml                   # Docker Compose config
+├── pyproject.toml                 # Python project + dependencies
+└── tools.lock.json                # Pinned tool versions (Go + pip)
 ```
 
 ## Core Components
