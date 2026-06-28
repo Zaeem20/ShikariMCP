@@ -2,99 +2,56 @@
 
 This guide covers configuring ShikariMCP with popular MCP-compatible AI clients.
 
-> ShikariMCP supports both stdio (local) and Streamable HTTP (remote) transports. Most tools work in both modes — only `scope: local` tools (like exiftool) require the `--local` flag over HTTP.
+> ShikariMCP supports **stdio** (local) and **Streamable HTTP** (remote) transports. The server speaks Streamable HTTP on `/mcp`. Clients that do not yet support Streamable HTTP natively can use an `mcp-remote` stdio bridge.
 
-## Table of Contents
+## Quick Compatibility Matrix
 
-- [Claude Desktop](#claude-desktop)
-- [Cursor](#cursor)
-- [VS Code (GitHub Copilot)](#vs-code-github-copilot)
-- [Codex (OpenAI)](#codex-openai)
-- [Windsurf (Codeium)](#windsurf-codeium)
-- [Cline](#cline)
-- [Remote HTTP Configuration](#remote-http-configuration)
+| Client | Config file | Transport key | Streamable HTTP support |
+|--------|-------------|---------------|------------------------|
+| Claude Desktop | `claude_desktop_config.json` | `command`/`args` | No native `url` in config; use `mcp-remote` bridge or Custom Connector |
+| Cursor | `.cursor/mcp.json` or `~/.cursor/mcp.json` | `mcpServers` | Yes — use `url` |
+| VS Code / Copilot | `.vscode/mcp.json` | `servers` | Yes — use `type: "http"` + `url` |
+| Codex CLI | `~/.codex/config.toml` | `[mcp_servers.name]` | Yes — use `url` |
+| Windsurf | `~/.codeium/windsurf/mcp_config.json` | `mcpServers` | Yes — use `serverUrl` (not `url`) |
+| Cline | `cline_mcp_settings.json` | `mcpServers` | Yes — use `type: "streamableHttp"` + `url` |
+
+---
+
+## Common Configuration Snippets
+
+### stdio (local)
+
+```json
+{
+  "command": "uv",
+  "args": ["run", "shikari-mcp", "--transport", "stdio"],
+  "cwd": "/path/to/ShikariMCP"
+}
+```
+
+### Streamable HTTP (remote)
+
+```json
+{
+  "type": "http",
+  "url": "http://your-server:8080/mcp",
+  "headers": {
+    "Authorization": "Bearer your-api-key"
+  }
+}
+```
+
+Use `127.0.0.1` and add `--local` when the client and server run on the same machine so local-scope tools (e.g., exiftool) are available.
 
 ---
 
 ## Claude Desktop
 
-### Local (stdio)
+Claude Desktop's `claude_desktop_config.json` only validates **stdio** servers. Do not put a raw `url` field in this file — it may strip the entry on startup.
 
-1. Open Claude Desktop settings
-2. Click "Developer" → "Edit Config"
-3. Add the following to `claude_desktop_config.json`:
+### Local stdio
 
-```json
-{
-  "mcpServers": {
-    "shikari-mcp": {
-      "command": "shikari-mcp",
-      "args": ["--transport", "stdio"]
-    }
-  }
-}
-```
-
-### Hide Compatibility Wrappers (Shared/Remote Mode)
-
-```json
-{
-  "mcpServers": {
-    "shikari-mcp": {
-      "command": "shikari-mcp",
-      "args": [
-        "--transport", "stdio",
-        "--disable-legacy-tools",
-        "--require-tool-dependencies"
-      ]
-    }
-  }
-}
-```
-
-### Lock Down Active/Offensive Tools
-
-```json
-{
-  "mcpServers": {
-    "shikari-mcp": {
-      "command": "shikari-mcp",
-      "args": [
-        "--transport", "stdio",
-        "--disable-legacy-tools",
-        "--enable-active-tools=false",
-        "--enable-offensive-tools=false",
-        "--target-allowlist", "example.com,10.0.0.0/8"
-      ]
-    }
-  }
-}
-```
-
----
-
-## Cursor
-
-### Local (stdio)
-
-1. Create or edit `.cursor/mcp.json` in your project root:
-
-```json
-{
-  "mcpServers": {
-    "shikari-mcp": {
-      "command": "shikari-mcp",
-      "args": ["--transport", "stdio"]
-    }
-  }
-}
-```
-
-2. Restart Cursor or reload the window
-
-### Using uv (recommended)
-
-If you installed ShikariMCP with `uv`:
+`~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or the equivalent on Windows/Linux:
 
 ```json
 {
@@ -102,131 +59,58 @@ If you installed ShikariMCP with `uv`:
     "shikari-mcp": {
       "command": "uv",
       "args": ["run", "shikari-mcp", "--transport", "stdio"],
-      "cwd": "/path/to/ShikariMCP"
+      "cwd": "/absolute/path/to/ShikariMCP"
     }
   }
 }
 ```
 
----
+### Remote HTTP via mcp-remote bridge
 
-## VS Code (GitHub Copilot)
-
-### Using Copilot MCP Configuration
-
-1. Open VS Code settings (`Ctrl+,` or `Cmd+,`)
-2. Search for "Copilot MCP"
-3. Add server configuration:
-
-```json
-{
-  "github.copilot.chat.mcp.servers": {
-    "shikari-mcp": {
-      "command": "shikari-mcp",
-      "args": ["--transport", "stdio"]
-    }
-  }
-}
-```
-
-### Using Workspace Configuration
-
-Create `.vscode/mcp.json` in your workspace:
-
-```json
-{
-  "servers": {
-    "shikari-mcp": {
-      "command": "shikari-mcp",
-      "args": ["--transport", "stdio"]
-    }
-  }
-}
-```
-
----
-
-## Codex (OpenAI)
-
-### Configuration
-
-Add to your Codex MCP configuration:
-
-```json
-{
-  "mcp_servers": {
-    "shikari-mcp": {
-      "transport": "stdio",
-      "command": "shikari-mcp",
-      "args": []
-    }
-  }
-}
-```
-
-### Using Docker
-
-```json
-{
-  "mcp_servers": {
-    "shikari-mcp": {
-      "transport": "streamable-http",
-      "url": "http://localhost:8080/mcp",
-      "headers": {
-        "Authorization": "Bearer your-api-key"
-      }
-    }
-  }
-}
-```
-
----
-
-## Windsurf (Codeium)
-
-### Configuration
-
-1. Open Windsurf settings
-2. Navigate to MCP configuration
-3. Add:
+Use the [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) stdio-to-HTTP bridge:
 
 ```json
 {
   "mcpServers": {
     "shikari-mcp": {
-      "command": "shikari-mcp",
-      "args": ["--transport", "stdio"]
+      "command": "npx",
+      "args": [
+        "-y", "mcp-remote",
+        "http://your-server:8080/mcp",
+        "--headers", "Authorization: Bearer your-api-key"
+      ]
     }
   }
 }
 ```
 
+### HTTPS with self-signed certificate
+
+Forward the cert to `mcp-remote` or terminate TLS behind a trusted reverse proxy. For internal labs, the simplest path is a reverse proxy with a real or locally-trusted cert.
+
 ---
 
-## Cline
+## Cursor
 
-### Configuration
+Cursor reads MCP servers from `.cursor/mcp.json` (project-level) or `~/.cursor/mcp.json` (global).
 
-1. Open Cline settings
-2. Go to "MCP Servers"
-3. Add new server:
+### Local stdio
+
+`.cursor/mcp.json`:
 
 ```json
 {
-  "shikari-mcp": {
-    "command": "shikari-mcp",
-    "args": ["--transport", "stdio"]
+  "mcpServers": {
+    "shikari-mcp": {
+      "command": "uv",
+      "args": ["run", "shikari-mcp", "--transport", "stdio"],
+      "cwd": "${workspaceFolder}"
+    }
   }
 }
 ```
 
----
-
-## Remote HTTP Configuration
-
-For any MCP client that supports HTTP transport:
-
-### Basic HTTP
+### Streamable HTTP remote
 
 ```json
 {
@@ -241,69 +125,241 @@ For any MCP client that supports HTTP transport:
 }
 ```
 
-### HTTPS with Self-Signed Certificate
+Cursor supports variable interpolation: `${env:VAR}`, `${workspaceFolder}`, `${userHome}`.
+
+---
+
+## VS Code (GitHub Copilot)
+
+VS Code uses `.vscode/mcp.json` (workspace) or the user-profile `mcp.json`. The top-level key is **`servers`**, not `mcpServers`, and you must specify `type`.
+
+### Local stdio
+
+`.vscode/mcp.json`:
 
 ```json
 {
-  "mcpServers": {
+  "servers": {
     "shikari-mcp": {
-      "url": "https://your-server:8443/mcp",
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "shikari-mcp", "--transport", "stdio"],
+      "cwd": "${workspaceFolder}"
+    }
+  }
+}
+```
+
+### Streamable HTTP remote
+
+```json
+{
+  "servers": {
+    "shikari-mcp": {
+      "type": "http",
+      "url": "http://your-server:8080/mcp",
       "headers": {
         "Authorization": "Bearer your-api-key"
-      },
-      "tls": {
-        "rejectUnauthorized": false
       }
     }
   }
 }
 ```
 
-### Starting the HTTP Server
+For secrets, use `inputs` instead of hardcoding the key:
+
+```json
+{
+  "inputs": [
+    {
+      "id": "shikari-api-key",
+      "type": "promptString",
+      "description": "ShikariMCP API key",
+      "password": true
+    }
+  ],
+  "servers": {
+    "shikari-mcp": {
+      "type": "http",
+      "url": "http://your-server:8080/mcp",
+      "headers": {
+        "Authorization": "Bearer ${input:shikari-api-key}"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Codex (OpenAI)
+
+Codex stores MCP configuration in TOML at `~/.codex/config.toml` (global) or `.codex/config.toml` (project-scoped for trusted projects). The section name is **`[mcp_servers.name]`** (snake_case).
+
+### Local stdio
+
+```toml
+[mcp_servers.shikari-mcp]
+command = "uv"
+args = ["run", "shikari-mcp", "--transport", "stdio"]
+cwd = "/absolute/path/to/ShikariMCP"
+enabled = true
+```
+
+### Streamable HTTP remote
+
+```toml
+[mcp_servers.shikari-mcp]
+url = "http://your-server:8080/mcp"
+bearer_token_env_var = "SHIKARI_API_KEY"
+enabled = true
+tool_timeout_sec = 120
+```
+
+Set the token in your environment:
 
 ```bash
-# Basic HTTP server
-shikari-mcp --transport http --port 8080 --api-key your-secret-key
+export SHIKARI_API_KEY="your-api-key"
+```
 
-# Local HTTP (unlocks LOCAL-scoped tools)
-shikari-mcp --transport http --port 8080 --api-key your-key --local
+Or use `http_headers` for static headers:
 
-# With active tools enabled
-shikari-mcp --transport http --port 8080 --api-key your-key \
-  --local --enable-active-tools \
+```toml
+[mcp_servers.shikari-mcp]
+url = "http://your-server:8080/mcp"
+http_headers = { Authorization = "Bearer your-api-key" }
+```
+
+---
+
+## Windsurf (Codeium)
+
+Windsurf reads from `~/.codeium/windsurf/mcp_config.json` (global only; no project-level config). The format is `mcpServers`, but for remote servers use **`serverUrl`** instead of `url`. Windsurf also has a hard 100-tool limit across all connected servers.
+
+### Local stdio
+
+```json
+{
+  "mcpServers": {
+    "shikari-mcp": {
+      "command": "uv",
+      "args": ["run", "shikari-mcp", "--transport", "stdio"],
+      "cwd": "/absolute/path/to/ShikariMCP"
+    }
+  }
+}
+```
+
+### Streamable HTTP remote
+
+```json
+{
+  "mcpServers": {
+    "shikari-mcp": {
+      "serverUrl": "http://your-server:8080/mcp",
+      "headers": {
+        "Authorization": "Bearer your-api-key"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Cline
+
+Cline stores settings in `cline_mcp_settings.json`. For Streamable HTTP you must set `type: "streamableHttp"` (camelCase); omitting it defaults to legacy SSE.
+
+### Local stdio
+
+```json
+{
+  "mcpServers": {
+    "shikari-mcp": {
+      "command": "uv",
+      "args": ["run", "shikari-mcp", "--transport", "stdio"],
+      "cwd": "/absolute/path/to/ShikariMCP",
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
+```
+
+### Streamable HTTP remote
+
+```json
+{
+  "mcpServers": {
+    "shikari-mcp": {
+      "type": "streamableHttp",
+      "url": "http://your-server:8080/mcp",
+      "headers": {
+        "Authorization": "Bearer your-api-key"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
+```
+
+---
+
+## Remote HTTP Configuration
+
+Start the server with Streamable HTTP transport:
+
+```bash
+# Basic HTTP
+shikari-mcp --transport http --host 127.0.0.1 --port 8080 --api-key "your-secret-key"
+
+# Local HTTP that unlocks LOCAL-scoped tools
+shikari-mcp --transport http --host 127.0.0.1 --port 8080 \
+  --api-key "your-secret-key" --local
+
+# With active tools and a target allowlist
+shikari-mcp --transport http --host 127.0.0.1 --port 8080 \
+  --api-key "your-secret-key" --local \
   --target-allowlist "example.com,10.0.0.0/8"
 ```
+
+### HTTPS / TLS
+
+ShikariMCP does not terminate TLS itself. Put it behind a reverse proxy (nginx, Caddy, Traefik) or tunnel via SSH/WireGuard. For local testing with a self-signed cert, most clients let you disable cert verification — but do not do this in production.
+
+### Reverse proxy example (Caddy)
+
+```Caddyfile
+shikari.example.com {
+    reverse_proxy 127.0.0.1:8080
+}
+```
+
+Then point clients at `https://shikari.example.com/mcp`.
 
 ---
 
 ## Verification
 
-After configuration, verify the connection by asking your AI client:
+After configuration:
 
-1. "What MCP servers are connected?"
-2. "List available ShikariMCP tools"
-3. "Run shikari_status to check tool availability"
+1. Ask the client: "What MCP servers are connected?"
+2. Ask: "List available ShikariMCP tools"
+3. Run: `shikari_status`
 
-### Expected Tools
+Expected core tools include:
 
-When properly configured, you should see these core tools available:
-
-| Tool | Description |
-|------|-------------|
+| Tool | Purpose |
+|------|---------|
 | `shikari_status` | Server status and tool counts |
-| `shikari_tools_list` | List available tools |
-| `shikari_tools_verify` | Verify installed tool binaries |
-| `shikari_explain_tool` | Explain a manifest-backed tool |
 | `shikari_run_tool` | Execute a manifest-backed tool |
-| `shikari_policy_explain` | Explain current safety policies |
-| `nmap_scan` | Network scanner (if binary installed) |
-| `subfinder_enum` | Subdomain enumeration |
-| `httpx_probe` | HTTP probing |
-| `nuclei_scan` | Vulnerability scanning |
-| `sherlock_username` | Social media username search |
-| `shodan_host` | Shodan host lookup |
-| `greynoise_ip` | GreyNoise IP intelligence |
-| `exiftool_metadata` | Image/file metadata extraction |
+| `shikari_submit_tool` | Submit a background job |
+| `shikari_get_run` | Poll a background job |
+| `shikari_list_tools` | List manifest-backed tools for a profile |
+| `shikari_policy_explain` | Show active safety gates |
+| `nmap_scan`, `subfinder_enum`, `httpx_probe`, `nuclei_scan` | Common wrapper tools |
 
 ---
 
@@ -311,42 +367,34 @@ When properly configured, you should see these core tools available:
 
 ### "Command not found: shikari-mcp"
 
-Ensure ShikariMCP is installed and in your PATH:
+Use the full path or run through `uv`:
 
 ```bash
-# Check installation
-which shikari-mcp
-
-# Or use full path
-shikari-mcp --transport stdio
-
-# Or use uv
 uv run shikari-mcp --transport stdio
 ```
 
-### No tools showing up
+### Tools not appearing
 
-1. Check if external binaries are installed: `shikari-mcp tools verify --profile core --json`
-2. Enable generated wrappers: `--enable-generated-tools`
-3. Check logs: `SHIKARI_LOG_LEVEL=DEBUG shikari-mcp --transport stdio`
+1. Check external binaries: `shikari-mcp tools verify --profile core --json`
+2. Check server logs: `SHIKARI_LOG_LEVEL=DEBUG shikari-mcp --transport stdio`
+3. Confirm the client config file path matches the client's expected location
 
 ### HTTP connection refused
 
-1. Verify the server is running: `curl http://localhost:8080/health`
-2. Check API key matches between server and client
-3. Ensure `--local` flag if running locally with HTTP transport
+1. Verify the server is running: `curl -H "Authorization: Bearer your-key" http://localhost:8080/mcp`
+2. Confirm the API key matches
+3. Add `--local` if running client and server on the same host and using local-scope tools
 
 ### 429 Rate Limit Exceeded
 
-HTTP transport enforces per-IP rate limiting by default (60 req/s, burst 100).
+Default is 60 req/s with burst 100. Increase or disable:
 
-1. Reduce request frequency or wait for the `Retry-After` period
-2. Increase limits: `--rate-limit-rps 120 --rate-limit-burst 200`
-3. Disable for trusted networks: `--rate-limit-rps 0`
-4. Set via env: `SHIKARI_RATE_LIMIT_RPS=120`
+```bash
+shikari-mcp --transport http --rate-limit-rps 120 --rate-limit-burst 200
+# or disable
+shikari-mcp --transport http --rate-limit-rps 0
+```
 
-### Permission denied on tool execution
+### Claude Desktop strips the HTTP config
 
-1. Ensure `--enable-active-tools` for scanning tools
-2. Add targets to `--target-allowlist`
-3. Check policy: `shikari-mcp policy explain`
+Claude Desktop's JSON config is stdio-only. Use the `mcp-remote` bridge or add the server as a Custom Connector in Settings.
