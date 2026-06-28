@@ -39,7 +39,7 @@ def test_explain_tool_by_id_and_binary():
 
 
 def test_verify_profile_reports_missing_binary(monkeypatch):
-    monkeypatch.setattr(tool_manifest.shutil, "which", lambda binary: None)
+    monkeypatch.setattr(tool_manifest, "_resolve_binary", lambda binary: None)
 
     result = tool_manifest.verify_tool_profile("core")
 
