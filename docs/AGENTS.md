@@ -1,6 +1,6 @@
 # Agents
 
-ShikariMCP ships **51 agents** across **6 categories**. Four production workflow agents are exposed by default; the remaining 47 catalog agents are available behind `--enable-experimental-tools`.
+ShikariMCP ships **51 agents** across **6 categories**. All agents are exposed by default in single-user, self-hosted mode: 4 production workflow agents plus 47 catalog agents. Use `--disable-legacy-tools` to hide catalog agents or `--enable-experimental-tools` to ensure the full experimental set is loaded.
 
 ---
 
@@ -10,12 +10,12 @@ ShikariMCP has two agent tiers with different execution mechanisms:
 
 | Tier | Agents | Execution | Gating | Plan Source |
 |------|--------|-----------|--------|-------------|
-| **Production** | `ReconAgent`, `PentestAgent`, `BugBountyAgent`, `WebAppWorkflowAgent` | `execute_verified_plan` (manifest-backed) | None — exposed by default | Inline in agent `plan()` method |
-| **Catalog** | 47 agents: 9 experimental workflow + 10 intelligence + 8 infrastructure + 10 domain + 5 offensive + 5 defensive | `execute_command` (raw subprocess) | `--enable-experimental-tools` | `build_default_plan()` from `_catalog.py` |
+| **Production** | `ReconAgent`, `PentestAgent`, `BugBountyAgent`, `WebAppWorkflowAgent` | `execute_manifest_plan` (manifest-backed) | None — exposed by default | Inline in agent `plan()` method |
+| **Catalog** | 47 agents: 9 experimental workflow + 10 intelligence + 8 infrastructure + 10 domain + 5 offensive + 5 defensive | `execute_command` (raw subprocess) | Exposed by default | `build_default_plan()` from `_catalog.py` |
 
 All agents follow the same lifecycle: **Plan → Execute → Analyze → Report**. The difference lies in how the Execute phase runs:
 
-- **Production agents** call `execute_verified_plan`, which resolves each step through the manifest-backed `run_verified_tool` pipeline. This enforces target allowlists, metadata-blocking policy checks, input dependency resolution (via `inputs_from`), and structured result handling.
+- **Production agents** call `execute_manifest_plan`, which resolves each step through the manifest-backed `run_tool` pipeline. This enforces target allowlists, metadata-blocking policy checks, input dependency resolution (via `inputs_from`), and structured result handling.
 - **Catalog agents** call `execute_command` directly on a raw command list. Plans are built by `build_default_plan()` in `src/shikari/agents/_catalog.py` and use real, widely-available CLI security binaries. Riskier steps are additionally gated by the agent category's capability opt-in flags (`--enable-offensive-tools`, `--enable-credential-tools`).
 
 ```mermaid
@@ -26,7 +26,7 @@ flowchart TD
     end
 
     subgraph Production["Production (4)"]
-        EP["execute_verified_plan"]
+        EP["execute_manifest_plan"]
         M["Manifest-Backed Tool Runner"]
         PP["Policy Enforcement<br/>target allowlist<br/>blocking checks"]
         EP --> M --> PP
@@ -52,10 +52,12 @@ The following flags control which agent categories and capabilities are exposed:
 | Flag | Unlocks |
 |------|---------|
 | _(none — default)_ | Production workflow agents (ReconAgent, PentestAgent, BugBountyAgent, WebAppWorkflowAgent) |
-| `--enable-experimental-tools` | All 47 catalog agents (experimental workflows, intelligence, infrastructure, domain, offensive, defensive) |
+| _(none — default)_ | All 47 catalog agents (experimental workflows, intelligence, infrastructure, domain, offensive, defensive) |
+| `--enable-experimental-tools` | Ensures the full experimental agent set is loaded even if other defaults change |
 | `--enable-active-tools` | Active network and vulnerability scanning tools within catalog agents |
 | `--enable-offensive-tools` | Offensive capabilities (exploitation, payload generation, MITM, wireless) — required by Offensive category agents |
 | `--enable-credential-tools` | Credential attack capabilities — required by credential-bearing steps |
+| `--disable-legacy-tools` | Hide all 47 catalog agents and the 305 `@shikari_tool` wrappers |
 
 ```mermaid
 flowchart LR
@@ -64,6 +66,7 @@ flowchart LR
         F2["--enable-active-tools"]
         F3["--enable-offensive-tools"]
         F4["--enable-credential-tools"]
+        F5["--disable-legacy-tools"]
     end
 
     subgraph Agents["Agent Categories"]
@@ -77,13 +80,19 @@ flowchart LR
     end
 
     PROD -->|default| Flags
-    EXP -->|requires| F1
-    INT -->|requires| F1
-    INF -->|requires| F1
-    DOM -->|requires| F1
-    OFF -->|requires| F1
+    EXP -->|default| Flags
+    INT -->|default| Flags
+    INF -->|default| Flags
+    DOM -->|default| Flags
+    OFF -->|default + requires| Flags
+    DEF -->|default| Flags
     OFF -->|requires| F3
-    DEF -->|requires| F1
+    EXP -.->|hidden by| F5
+    INT -.->|hidden by| F5
+    INF -.->|hidden by| F5
+    DOM -.->|hidden by| F5
+    OFF -.->|hidden by| F5
+    DEF -.->|hidden by| F5
 ```
 
 **Scope note:** All 51 agents are currently annotated as `ToolScope.LOCAL` — they run CLI tools on the local machine and are unavailable in remote HTTP mode.
@@ -108,7 +117,7 @@ flowchart LR
 | 12 | **VulnManagementAgent** | Blue team, GRC | Vuln lifecycle — scan → prioritize → track → verify fix |
 | 13 | **CodeReviewAgent** | DevSecOps | Source code security — SAST → secrets → dependencies → patterns |
 
-> ⭐ = **Production agents** exposed by default. All others are catalog agents gated behind `--enable-experimental-tools`.
+> ⭐ = **Production agents** exposed by default. All 47 catalog agents are also exposed by default in single-user, self-hosted mode; use `--disable-legacy-tools` to hide them.
 
 ---
 
@@ -191,7 +200,7 @@ These agents additionally require `--enable-offensive-tools` to execute their st
 
 Catalog agents currently execute plans via `execute_command` (raw subprocess), which bypasses the manifest-backed policy engine. To promote a catalog agent to a production workflow:
 
-1. **Rewrite the `execute()` method** to call `execute_verified_plan` instead of `execute_command`. This routes each step through `run_verified_tool`, enabling target allowlist enforcement, metadata-blocking checks, and structured result handling.
+1. **Rewrite the `execute()` method** to call `execute_manifest_plan` instead of `execute_command`. This routes each step through `run_tool`, enabling target allowlist enforcement, metadata-blocking checks, and structured result handling.
 2. **Replace raw command lists** with manifest-backed tool references: each plan step should specify a `tool` identifier (e.g., `nmap_scan`) with structured `inputs` and optional `inputs_from` for cross-step data flow, rather than a raw `cmd` string.
 3. **Update the tool registration** — change the `@shikari_tool` category from `agent_*` to `workflow` and remove the `is_experimental` quality so the agent is exposed by default.
 4. **Remove the `--enable-experimental-tools` dependency** — the promoted agent will be available without any flag.

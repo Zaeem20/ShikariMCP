@@ -35,7 +35,7 @@ This guide covers configuring ShikariMCP with popular MCP-compatible AI clients.
 }
 ```
 
-### With Compatibility Wrappers Enabled
+### Hide Compatibility Wrappers (Shared/Remote Mode)
 
 ```json
 {
@@ -44,8 +44,7 @@ This guide covers configuring ShikariMCP with popular MCP-compatible AI clients.
       "command": "shikari-mcp",
       "args": [
         "--transport", "stdio",
-        "--enable-legacy-tools",
-        "--enable-generated-tools",
+        "--disable-legacy-tools",
         "--require-tool-dependencies"
       ]
     }
@@ -53,7 +52,7 @@ This guide covers configuring ShikariMCP with popular MCP-compatible AI clients.
 }
 ```
 
-### With Active Tools Enabled
+### Lock Down Active/Offensive Tools
 
 ```json
 {
@@ -62,8 +61,9 @@ This guide covers configuring ShikariMCP with popular MCP-compatible AI clients.
       "command": "shikari-mcp",
       "args": [
         "--transport", "stdio",
-        "--enable-active-tools",
-        "--enable-offensive-tools",
+        "--disable-legacy-tools",
+        "--enable-active-tools=false",
+        "--enable-offensive-tools=false",
         "--target-allowlist", "example.com,10.0.0.0/8"
       ]
     }
@@ -293,8 +293,8 @@ When properly configured, you should see these core tools available:
 | `shikari_status` | Server status and tool counts |
 | `shikari_tools_list` | List available tools |
 | `shikari_tools_verify` | Verify installed tool binaries |
-| `shikari_explain_tool` | Explain a verified tool |
-| `shikari_run_verified_tool` | Execute a manifest-backed tool |
+| `shikari_explain_tool` | Explain a manifest-backed tool |
+| `shikari_run_tool` | Execute a manifest-backed tool |
 | `shikari_policy_explain` | Explain current safety policies |
 | `nmap_scan` | Network scanner (if binary installed) |
 | `subfinder_enum` | Subdomain enumeration |

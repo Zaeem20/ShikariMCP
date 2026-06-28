@@ -6,7 +6,7 @@ This document explains how ShikariMCP is structured, how requests flow through t
 
 ![ShikariMCP Architecture](../assets/shikari-mcp-architecture.png)
 
-The diagram above shows the full request flow: AI clients connect via stdio or Streamable HTTP, pass through the HTTP middleware stack (rate limiter → Host/Origin validation → API key auth), reach the MCP Tool Router (12 MCP tools), then flow through input validation, the policy engine (risk-class gating, target allowlist, cloud metadata block + DNS TOCTOU re-check), the Tool Runner (manifest → command → execute → parse), and finally to external security binaries. Background jobs are managed by the Run Manager. All events are written to the JSONL audit log. Tool sources span three tiers: 50 manifest-verified tools, 305 `@shikari_tool` wrappers, and 51 agents.
+The diagram above shows the full request flow: AI clients connect via stdio or Streamable HTTP, pass through the HTTP middleware stack (rate limiter → Host/Origin validation → API key auth), reach the MCP Tool Router (12 MCP tools), then flow through input validation, the policy engine (risk-class gating, target allowlist, cloud metadata block + DNS TOCTOU re-check), the Tool Runner (manifest → command → execute → parse), and finally to external security binaries. Background jobs are managed by the Run Manager. All events are written to the JSONL audit log. Tool sources span three tiers: 50 manifest-backed tools, 305 `@shikari_tool` wrappers, and 51 agents.
 
 ## Project Structure
 
@@ -135,11 +135,11 @@ Tools are auto-discovered from `src/shikari/tools/` by scanning for functions de
 | `capabilities` | e.g. `["active_network"]` | Risk-class gating |
 | `quality` | `VERIFIED`, `EXPERIMENTAL`, `GENERATED` | Trust tier |
 
-The registry filters tools based on transport mode and runtime configuration. By default, only `shikari.agents.workflow` is discovered (4 production workflows). Use `--enable-legacy-tools` or `--enable-experimental-tools` to expose the full catalog.
+The registry filters tools based on transport mode and runtime configuration. In single-user, self-hosted mode all tool categories are discovered by default: manifest profiles, all 35 wrapper catalog categories, and the 4 production workflow agents. Use `--disable-legacy-tools` to hide wrappers or `--enable-experimental-tools` to expose the 47 catalog agents.
 
 ### Manifest System
 
-Manifests in `src/shikari/manifests/tools/` define verified tools with:
+Manifests in `src/shikari/manifests/tools/` define manifest-backed tools with:
 
 | Field | Example | Purpose |
 |-------|---------|---------|
@@ -165,7 +165,7 @@ sequenceDiagram
     participant PA as Parser
     participant AR as Artifact Store
 
-    AI->>SRV: shikari_run_verified_tool(tool_id, inputs, dry_run=false)
+    AI->>SRV: shikari_run_tool(tool_id, inputs, dry_run=false)
     SRV->>SRV: Load manifest, build command from template
     SRV->>POL: evaluate_tool_policy(tool, inputs)
     POL->>POL: Check allowlist, metadata block, risk gates
@@ -189,7 +189,7 @@ sequenceDiagram
 
 The five stages of manifest-backed execution:
 
-1. **Dry-run** — `dry_run_verified_tool()` builds the command preview without executing. Defaults to `dry_run=true` for safety.
+1. **Dry-run** — `dry_run_tool()` builds the command preview without executing. Defaults to `dry_run=true` for safety.
 2. **Policy check** — `evaluate_tool_policy()` validates safety gates, target allowlist, and cloud metadata blocking.
 3. **TOCTOU re-check** — Immediately before execution, targets are re-resolved to detect DNS rebinding attacks that could bypass the metadata block.
 4. **Execution** — `execute_command()` runs the subprocess via `asyncio.create_subprocess_exec` (no shell), with timeout and process-tree termination.
@@ -240,10 +240,10 @@ flowchart LR
 
 | Agent Tier | Count | Execution | Exposed by default |
 |------------|:-----:|-----------|:------------------:|
-| Production workflows | 4 | `execute_verified_plan` (manifest-backed) | Yes |
+| Production workflows | 4 | `execute_manifest_plan` (manifest-backed) | Yes |
 | Catalog agents | 47 | `execute_command` (raw subprocess) | No (`--enable-experimental-tools`) |
 
-Production workflows run manifest-backed tools with full policy enforcement. Catalog agents execute real multi-step CLI plans defined in `_catalog.py` but use raw subprocess execution — they should be promoted to `execute_verified_plan` to inherit full policy enforcement.
+Production workflows run manifest-backed tools with full policy enforcement. Catalog agents execute real multi-step CLI plans defined in `_catalog.py` but use raw subprocess execution — they should be promoted to `execute_manifest_plan` to inherit full policy enforcement.
 
 See [Agents](AGENTS.md) for the full catalog.
 
@@ -251,7 +251,7 @@ See [Agents](AGENTS.md) for the full catalog.
 
 ```mermaid
 flowchart TB
-    subgraph Submit["shikari_submit_verified_tool"]
+    subgraph Submit["shikari_submit_tool"]
         S1["Create run_id"] --> S2["Queue in Run Manager"] --> S3["Return run_id immediately"]
     end
 

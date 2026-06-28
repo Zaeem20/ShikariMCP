@@ -1,6 +1,6 @@
 # Tools & Profiles
 
-ShikariMCP is a tool orchestration platform for security operations. It manages 305 tools across 28 categories in its wrapper registry, surfaces 50 verified tools through 7 manifest profiles, and executes them through intelligent workflow agents.
+ShikariMCP is a tool orchestration platform for security operations. It manages 305 tools across 35 categories in its wrapper registry, surfaces 50 manifest-backed tools through 7 manifest profiles, and executes them through intelligent workflow agents.
 
 ---
 
@@ -10,7 +10,7 @@ ShikariMCP organizes tools in three tiers. Manifest profiles are the production-
 
 ```mermaid
 flowchart TD
-    A["Manifest Profiles<br/>7 profiles · 50 verified tools"] --> B["Tool Wrappers<br/>28 categories · 305 tools"]
+    A["Manifest Profiles<br/>7 profiles · 50 tools"] --> B["Tool Wrappers<br/>35 categories · 305 tools"]
     B --> C["Workflow Agents<br/>13 production + 47 experimental"]
     
     A1["core<br/>(12)"] --> A
@@ -41,10 +41,10 @@ flowchart TD
 | Tier | Default | Description |
 |------|---------|-------------|
 | **Manifest profiles** | Enabled by default | 7 curated profiles containing 50 verified, reviewed tools with command templates, output parsers, and safety policies. |
-| **Wrapper catalog** | Hidden (`--enable-legacy-tools`) | 305 wrappers across 28 categories, each backed by a real CLI binary. Useful for migration and experimentation. |
-| **Workflow agents** | 13 default, 47 gated | Multi-step plans that chain tools together. Production agents use manifest tools via `execute_verified_plan`; catalog agents use `execute_command` with policy checks. |
+| **Wrapper catalog** | Enabled by default | 305 wrappers across 35 categories, each backed by a real CLI binary. Useful for direct CLI access and migration. Disable with `--disable-legacy-tools`. |
+| **Workflow agents** | 13 default, 47 gated | Multi-step plans that chain tools together. Production agents use manifest tools via `execute_manifest_plan`; catalog agents use `execute_command` with policy checks. |
 
-Every tool in the system is invoked through `shikari_run_verified_tool` or `shikari_submit_verified_tool` — individual MCP schema entries are not created per tool.
+Every tool in the system is invoked through `shikari_run_tool` or `shikari_submit_tool` — individual MCP schema entries are not created per tool.
 
 ---
 
@@ -207,7 +207,7 @@ The 18 tools in the OSINT profile are organized into five functional groups:
 
 ## Wrapper Catalog
 
-Beyond the manifest-backed verified tools, the wrapper catalog under `src/shikari/tools/` provides direct `@shikari_tool` wrappers across 28 categories. These wrappers are hidden by default and exposed via `--enable-legacy-tools`. Every category contains real wrappers backed by real CLI binaries.
+Beyond the manifest-backed tools, the wrapper catalog under `src/shikari/tools/` provides direct `@shikari_tool` wrappers across 35 categories. These wrappers are exposed by default in single-user, self-hosted deployments and can be disabled with `--disable-legacy-tools`. Every category contains real wrappers backed by real CLI binaries.
 
 Wrappers are gated by capability: active, offensive, credential, MITM, and wireless tools require the corresponding `--enable-*` opt-in. Use `shikari_status` to inspect which gates are open and `shikari_dependency_health` to see which binaries are installed.
 
@@ -242,7 +242,7 @@ Wrappers are gated by capability: active, offensive, credential, MITM, and wirel
 | `web_application` | 16 | whatweb, wafw00f, ffuf, dalfox, testssl.sh, sslscan, tlsx, wpscan, sqlmap |
 | `wireless` | 3 | aircrack-ng, wifite, reaver |
 
-**Total: 305 wrappers across 28 categories.**
+**Total: 305 wrappers across 35 categories.**
 
 > **Note on OSINT category (23 wrappers):** The wrapper catalog's `osint` category is distinct from the OSINT manifest profile. The catalog contains a broader set of community-contributed wrappers including `whois`, `dig`, `nslookup`, and additional variants. The manifest profile (18 tools) is the curated, reviewed subset with production parsers and command templates.
 
@@ -380,10 +380,31 @@ Tools in ShikariMCP operate across four scope configurations, depending on wheth
 
 | Gate Flag | Affected Categories | Default |
 |-----------|-------------------|---------|
-| `--enable-legacy-tools` | All 28 wrapper catalog categories | Off |
+| `--disable-legacy-tools` | All 35 wrapper catalog categories | Off (wrappers enabled) |
 | `--enable-offensive-tools` | Offensive profile, exploitation, evasion, payload generation | Off |
 | `--enable-credential-tools` | Offensive profile, password attacks | Off |
 | `--enable-mitm-tools` | Network attacks (MITM), wireless | Off |
 | `--enable-experimental-tools` | Catalog agents (47 experimental workflows) | Off |
+| `--enable-active-tools` | Active network and vulnerability scanning | Off |
 
 Use `shikari_status` to view which gates are currently open and `shikari_dependency_health` to verify that required binaries are installed for the active profile.
+
+### API Keys and Environment-Specific Tools
+
+Several OSINT and threat-intel tools require API keys or a suitable runtime environment. Copy `.env.example` to `.env` and uncomment the keys you need:
+
+| Tool(s) | Environment Variable |
+|---------|----------------------|
+| `shodan_host`, `shodan_search` | `SHODAN_API_KEY` |
+| `censys_host`, `censys_search` | `CENSYS_API_ID` + `CENSYS_API_SECRET` |
+| `vt_file_lookup`, `vt_url_lookup`, `vt_ip_lookup`, `vt_domain_lookup` | `VT_API_KEY` (after `vt setup`) |
+| `greynoise_ip`, `greynoise_quick` | `GREYNOISE_API_KEY` |
+| `uncover_*` | `UNCOVER_API_KEY` |
+
+| Tool(s) | Runtime Requirement |
+|---------|---------------------|
+| `masscan_scan` | root / `CAP_NET_RAW` |
+| `hashcat_crack` | OpenCL/CUDA capable GPU |
+| `volatility3_scan` | valid memory dump (raw crash/pmem format) |
+
+Tools installed into the same virtual environment as ShikariMCP (e.g., via `pip install` or `pipx` injected into the venv) are discovered automatically, even when the server is launched outside an activated shell.

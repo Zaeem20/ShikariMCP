@@ -29,14 +29,14 @@
 | `SHIKARI_ARTIFACT_DIR` | `.shikari/artifacts` | Confined artifact directory |
 | `SHIKARI_DEFAULT_WORDLIST` | SecLists common | Default ffuf/Gobuster wordlist |
 | `SHIKARI_TOOL_PROFILE` | `core` | Manifest profile |
-| `SHIKARI_ENABLE_LEGACY_TOOLS` | `false` | Expose direct compatibility wrappers |
-| `SHIKARI_ENABLE_GENERATED_TOOLS` | `false` | Expose generated wrappers with legacy mode |
-| `SHIKARI_ENABLE_EXPERIMENTAL_TOOLS` | `false` | Expose experimental agents/wrappers |
+| `SHIKARI_ENABLE_LEGACY_TOOLS` | `true` | Expose direct compatibility wrappers |
+| `SHIKARI_ENABLE_GENERATED_TOOLS` | `true` | Expose generated wrappers with legacy mode |
+| `SHIKARI_ENABLE_EXPERIMENTAL_TOOLS` | `true` | Expose experimental agents/wrappers |
 | `SHIKARI_REQUIRE_TOOL_DEPENDENCIES` | `false` | Hide wrappers with missing binaries |
-| `SHIKARI_ENABLE_ACTIVE_TOOLS` | `false` | Permit active scans |
+| `SHIKARI_ENABLE_ACTIVE_TOOLS` | `true` | Permit active scans |
 | `SHIKARI_ENABLE_REMOTE_ACTIVE_TOOLS` | `false` | Permit active scans over remote HTTP |
-| `SHIKARI_ENABLE_OFFENSIVE_TOOLS` | `false` | Permit offensive profile operations |
-| `SHIKARI_ENABLE_CREDENTIAL_TOOLS` | `false` | Permit credential testing tools |
+| `SHIKARI_ENABLE_OFFENSIVE_TOOLS` | `true` | Permit offensive profile operations |
+| `SHIKARI_ENABLE_CREDENTIAL_TOOLS` | `true` | Permit credential testing tools |
 | `SHIKARI_TARGET_ALLOWLIST` | empty | Authorized domains, CIDRs, or path roots |
 | `SHIKARI_AUDIT_ENABLED` | `true` | Write JSONL audit events |
 | `SHIKARI_AUDIT_LOG_PATH` | `.shikari/audit.jsonl` | Audit log path |
@@ -62,6 +62,20 @@ Key HTTP flags:
 | `--http-allowed-origins O` | `SHIKARI_HTTP_ALLOWED_ORIGINS` | Comma-separated Origin patterns |
 
 HTTP fails closed without an API key. Local-scope tools remain unavailable over remote HTTP even when active tools are enabled.
+
+## Single-User Self-Hosted Defaults
+
+For a standalone Kali workstation, all tool categories are enabled by default so every tool and agent is available immediately. If you run ShikariMCP in a shared or remote environment, set the following variables to restore the safer defaults:
+
+```bash
+SHIKARI_ENABLE_LEGACY_TOOLS=false
+SHIKARI_ENABLE_GENERATED_TOOLS=false
+SHIKARI_ENABLE_EXPERIMENTAL_TOOLS=false
+SHIKARI_ENABLE_ACTIVE_TOOLS=false
+SHIKARI_ENABLE_OFFENSIVE_TOOLS=false
+SHIKARI_ENABLE_CREDENTIAL_TOOLS=false
+SHIKARI_REQUIRE_TOOL_DEPENDENCIES=true
+```
 
 ## Proxy Configuration
 
