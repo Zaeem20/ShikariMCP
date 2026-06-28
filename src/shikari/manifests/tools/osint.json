@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "profile": "osint",
-  "description": "OSINT, SOCINT (social media intelligence), geosint, threat intelligence, and data-breach lookup tools. All tools query external APIs or public sources — no traffic reaches the target's own network — so they are passive and work in both stdio and remote HTTP modes unless marked local-only.",
+  "description": "OSINT, SOCINT (social media intelligence), geosint, threat intelligence, and data-breach lookup tools. All tools query external APIs or public sources \u2014 no traffic reaches the target's own network \u2014 so they are passive and work in both stdio and remote HTTP modes unless marked local-only.",
   "tools": [
     {
       "id": "sherlock_username",
@@ -10,13 +10,34 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["username"],
-      "version_command": ["sherlock", "--help"],
-      "install": {"pipx": "sherlock-project"},
+      "target_types": [
+        "username"
+      ],
+      "version_command": [
+        "sherlock",
+        "--help"
+      ],
+      "install": {
+        "pipx": "sherlock-project"
+      },
       "command_templates": {
-        "safe": {"argv": ["sherlock", "{username}", "--csv", "--timeout", "30", "--no-color", "--print-found"], "timeout": 300, "output_format": "text"}
+        "safe": {
+          "argv": [
+            "sherlock",
+            "{username}",
+            "--csv",
+            "--timeout",
+            "30",
+            "--no-color",
+            "--print-found"
+          ],
+          "timeout": 300,
+          "output_format": "text"
+        }
       },
       "parser": "shikari.parsers.sherlock.parse_csv"
     },
@@ -27,13 +48,35 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["username"],
-      "version_command": ["maigret", "--help"],
-      "install": {"pipx": "maigret"},
+      "target_types": [
+        "username"
+      ],
+      "version_command": [
+        "maigret",
+        "--help"
+      ],
+      "install": {
+        "pipx": "maigret"
+      },
       "command_templates": {
-        "safe": {"argv": ["maigret", "{username}", "--timeout", "30", "--no-color", "--no-progressbar", "--top-sites", "500"], "timeout": 600, "output_format": "text"}
+        "safe": {
+          "argv": [
+            "maigret",
+            "{username}",
+            "--timeout",
+            "30",
+            "--no-color",
+            "--no-progressbar",
+            "--top-sites",
+            "500"
+          ],
+          "timeout": 600,
+          "output_format": "text"
+        }
       },
       "parser": null
     },
@@ -44,13 +87,33 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["email"],
-      "version_command": ["holehe", "--help"],
-      "install": {"pipx": "holehe"},
+      "target_types": [
+        "email"
+      ],
+      "version_command": [
+        "holehe",
+        "--help"
+      ],
+      "install": {
+        "pipx": "holehe"
+      },
       "command_templates": {
-        "safe": {"argv": ["holehe", "{email}", "--only-used", "--no-color", "-T", "30"], "timeout": 300, "output_format": "text"}
+        "safe": {
+          "argv": [
+            "holehe",
+            "{email}",
+            "--only-used",
+            "--no-color",
+            "-T",
+            "30"
+          ],
+          "timeout": 300,
+          "output_format": "text"
+        }
       },
       "parser": null
     },
@@ -61,13 +124,32 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["email", "username"],
-      "version_command": ["socialscan", "--help"],
-      "install": {"pipx": "socialscan"},
+      "target_types": [
+        "email",
+        "username"
+      ],
+      "version_command": [
+        "socialscan",
+        "--help"
+      ],
+      "install": {
+        "pipx": "socialscan"
+      },
       "command_templates": {
-        "safe": {"argv": ["socialscan", "{query}", "--show-urls", "--verbose"], "timeout": 300, "output_format": "text"}
+        "safe": {
+          "argv": [
+            "socialscan",
+            "{query}",
+            "--show-urls",
+            "--verbose"
+          ],
+          "timeout": 300,
+          "output_format": "text"
+        }
       },
       "parser": null
     },
@@ -78,13 +160,36 @@
       "category": "osint",
       "quality": "verified",
       "scope": "local",
-      "capabilities": ["local_analysis"],
+      "capabilities": [
+        "local_analysis"
+      ],
       "approval": "none",
-      "target_types": ["file"],
-      "version_command": ["exiftool", "-ver"],
-      "install": {"apt": ["libimage-exiftool-perl"]},
+      "target_types": [
+        "file"
+      ],
+      "version_command": [
+        "exiftool",
+        "-ver"
+      ],
+      "install": {
+        "apt": [
+          "libimage-exiftool-perl"
+        ]
+      },
       "command_templates": {
-        "safe": {"argv": ["exiftool", "-j", "-G1", "-a", "-s", "-n", "{file}"], "timeout": 60, "output_format": "json"}
+        "safe": {
+          "argv": [
+            "exiftool",
+            "-j",
+            "-G1",
+            "-a",
+            "-s",
+            "-n",
+            "{file}"
+          ],
+          "timeout": 60,
+          "output_format": "json"
+        }
       },
       "parser": "shikari.parsers.exiftool.parse_json"
     },
@@ -95,13 +200,38 @@
       "category": "osint",
       "quality": "verified",
       "scope": "local",
-      "capabilities": ["local_analysis"],
+      "capabilities": [
+        "local_analysis"
+      ],
       "approval": "none",
-      "target_types": ["file"],
-      "version_command": ["exiftool", "-ver"],
-      "install": {"apt": ["libimage-exiftool-perl"]},
+      "target_types": [
+        "file"
+      ],
+      "version_command": [
+        "exiftool",
+        "-ver"
+      ],
+      "install": {
+        "apt": [
+          "libimage-exiftool-perl"
+        ]
+      },
       "command_templates": {
-        "safe": {"argv": ["exiftool", "-j", "-n", "-G1", "-GPS:GPSLatitude", "-GPS:GPSLongitude", "-GPS:GPSAltitude", "-GPS:GPSPosition", "{file}"], "timeout": 60, "output_format": "json"}
+        "safe": {
+          "argv": [
+            "exiftool",
+            "-j",
+            "-n",
+            "-G1",
+            "-GPS:GPSLatitude",
+            "-GPS:GPSLongitude",
+            "-GPS:GPSAltitude",
+            "-GPS:GPSPosition",
+            "{file}"
+          ],
+          "timeout": 60,
+          "output_format": "json"
+        }
       },
       "parser": "shikari.parsers.exiftool.parse_gps"
     },
@@ -112,15 +242,32 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["ip"],
-      "version_command": ["shodan", "--help"],
-      "install": {"pipx": "shodan"},
-      "command_templates": {
-        "safe": {"argv": ["shodan", "host", "{ip}"], "timeout": 60, "output_format": "text"}
+      "target_types": [
+        "ip"
+      ],
+      "version_command": [
+        "shodan",
+        "--help"
+      ],
+      "install": {
+        "pipx": "shodan"
       },
-      "parser": null
+      "command_templates": {
+        "safe": {
+          "argv": [
+            "shodan",
+            "host",
+            "{ip}"
+          ],
+          "timeout": 60,
+          "output_format": "text"
+        }
+      },
+      "parser": "shikari.parsers.shodan.parse_json"
     },
     {
       "id": "shodan_search",
@@ -129,15 +276,35 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["query"],
-      "version_command": ["shodan", "--help"],
-      "install": {"pipx": "shodan"},
-      "command_templates": {
-        "safe": {"argv": ["shodan", "search", "{query}", "--limit", "100", "--no-color"], "timeout": 120, "output_format": "text"}
+      "target_types": [
+        "query"
+      ],
+      "version_command": [
+        "shodan",
+        "--help"
+      ],
+      "install": {
+        "pipx": "shodan"
       },
-      "parser": null
+      "command_templates": {
+        "safe": {
+          "argv": [
+            "shodan",
+            "search",
+            "{query}",
+            "--limit",
+            "100",
+            "--no-color"
+          ],
+          "timeout": 120,
+          "output_format": "text"
+        }
+      },
+      "parser": "shikari.parsers.shodan.parse_json"
     },
     {
       "id": "censys_host",
@@ -146,15 +313,32 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["ip"],
-      "version_command": ["censys", "--help"],
-      "install": {"pipx": "censys"},
-      "command_templates": {
-        "safe": {"argv": ["censys", "view", "--id", "{ip}"], "timeout": 60, "output_format": "text"}
+      "target_types": [
+        "ip"
+      ],
+      "version_command": [
+        "censys",
+        "--help"
+      ],
+      "install": {
+        "pipx": "censys"
       },
-      "parser": null
+      "command_templates": {
+        "safe": {
+          "argv": [
+            "censys",
+            "view",
+            "{ip}"
+          ],
+          "timeout": 60,
+          "output_format": "text"
+        }
+      },
+      "parser": "shikari.parsers.censys.parse_json"
     },
     {
       "id": "censys_search",
@@ -163,15 +347,36 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["query"],
-      "version_command": ["censys", "--help"],
-      "install": {"pipx": "censys"},
-      "command_templates": {
-        "safe": {"argv": ["censys", "search", "{query}", "--index", "hosts", "--pages", "1"], "timeout": 120, "output_format": "text"}
+      "target_types": [
+        "query"
+      ],
+      "version_command": [
+        "censys",
+        "--help"
+      ],
+      "install": {
+        "pipx": "censys"
       },
-      "parser": null
+      "command_templates": {
+        "safe": {
+          "argv": [
+            "censys",
+            "search",
+            "{query}",
+            "--index",
+            "hosts",
+            "--pages",
+            "1"
+          ],
+          "timeout": 120,
+          "output_format": "text"
+        }
+      },
+      "parser": "shikari.parsers.censys.parse_json"
     },
     {
       "id": "vt_file_lookup",
@@ -180,13 +385,32 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["hash"],
-      "version_command": ["vt", "version"],
-      "install": {"official": "https://github.com/VirusTotal/vt-cli/releases"},
+      "target_types": [
+        "hash"
+      ],
+      "version_command": [
+        "vt",
+        "version"
+      ],
+      "install": {
+        "official": "https://github.com/VirusTotal/vt-cli/releases"
+      },
       "command_templates": {
-        "safe": {"argv": ["vt", "file", "{hash}", "--format", "json"], "timeout": 60, "output_format": "json"}
+        "safe": {
+          "argv": [
+            "vt",
+            "file",
+            "{hash}",
+            "--format",
+            "json"
+          ],
+          "timeout": 60,
+          "output_format": "json"
+        }
       },
       "parser": "shikari.parsers.virustotal.parse_json"
     },
@@ -197,13 +421,32 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["url"],
-      "version_command": ["vt", "version"],
-      "install": {"official": "https://github.com/VirusTotal/vt-cli/releases"},
+      "target_types": [
+        "url"
+      ],
+      "version_command": [
+        "vt",
+        "version"
+      ],
+      "install": {
+        "official": "https://github.com/VirusTotal/vt-cli/releases"
+      },
       "command_templates": {
-        "safe": {"argv": ["vt", "url", "{url}", "--format", "json"], "timeout": 60, "output_format": "json"}
+        "safe": {
+          "argv": [
+            "vt",
+            "url",
+            "{url}",
+            "--format",
+            "json"
+          ],
+          "timeout": 60,
+          "output_format": "json"
+        }
       },
       "parser": "shikari.parsers.virustotal.parse_json"
     },
@@ -214,13 +457,32 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["ip"],
-      "version_command": ["vt", "version"],
-      "install": {"official": "https://github.com/VirusTotal/vt-cli/releases"},
+      "target_types": [
+        "ip"
+      ],
+      "version_command": [
+        "vt",
+        "version"
+      ],
+      "install": {
+        "official": "https://github.com/VirusTotal/vt-cli/releases"
+      },
       "command_templates": {
-        "safe": {"argv": ["vt", "ip", "{ip}", "--format", "json"], "timeout": 60, "output_format": "json"}
+        "safe": {
+          "argv": [
+            "vt",
+            "ip",
+            "{ip}",
+            "--format",
+            "json"
+          ],
+          "timeout": 60,
+          "output_format": "json"
+        }
       },
       "parser": "shikari.parsers.virustotal.parse_json"
     },
@@ -231,13 +493,32 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["domain"],
-      "version_command": ["vt", "version"],
-      "install": {"official": "https://github.com/VirusTotal/vt-cli/releases"},
+      "target_types": [
+        "domain"
+      ],
+      "version_command": [
+        "vt",
+        "version"
+      ],
+      "install": {
+        "official": "https://github.com/VirusTotal/vt-cli/releases"
+      },
       "command_templates": {
-        "safe": {"argv": ["vt", "domain", "{domain}", "--format", "json"], "timeout": 60, "output_format": "json"}
+        "safe": {
+          "argv": [
+            "vt",
+            "domain",
+            "{domain}",
+            "--format",
+            "json"
+          ],
+          "timeout": 60,
+          "output_format": "json"
+        }
       },
       "parser": "shikari.parsers.virustotal.parse_json"
     },
@@ -248,13 +529,32 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["ip"],
-      "version_command": ["greynoise", "--help"],
-      "install": {"pipx": "greynoise"},
+      "target_types": [
+        "ip"
+      ],
+      "version_command": [
+        "greynoise",
+        "--help"
+      ],
+      "install": {
+        "pipx": "greynoise"
+      },
       "command_templates": {
-        "safe": {"argv": ["greynoise", "ip", "{ip}", "-f", "json"], "timeout": 60, "output_format": "json"}
+        "safe": {
+          "argv": [
+            "greynoise",
+            "ip",
+            "{ip}",
+            "-f",
+            "json"
+          ],
+          "timeout": 60,
+          "output_format": "json"
+        }
       },
       "parser": "shikari.parsers.greynoise.parse_json"
     },
@@ -265,13 +565,32 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["ip"],
-      "version_command": ["greynoise", "--help"],
-      "install": {"pipx": "greynoise"},
+      "target_types": [
+        "ip"
+      ],
+      "version_command": [
+        "greynoise",
+        "--help"
+      ],
+      "install": {
+        "pipx": "greynoise"
+      },
       "command_templates": {
-        "safe": {"argv": ["greynoise", "quick", "{ip}", "-f", "json"], "timeout": 30, "output_format": "json"}
+        "safe": {
+          "argv": [
+            "greynoise",
+            "quick",
+            "{ip}",
+            "-f",
+            "json"
+          ],
+          "timeout": 30,
+          "output_format": "json"
+        }
       },
       "parser": "shikari.parsers.greynoise.parse_json"
     },
@@ -282,13 +601,31 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["email"],
-      "version_command": ["h8mail", "--help"],
-      "install": {"pipx": "h8mail"},
+      "target_types": [
+        "email"
+      ],
+      "version_command": [
+        "h8mail",
+        "--help"
+      ],
+      "install": {
+        "pipx": "h8mail"
+      },
       "command_templates": {
-        "safe": {"argv": ["h8mail", "-t", "{email}", "--hide"], "timeout": 300, "output_format": "text"}
+        "safe": {
+          "argv": [
+            "h8mail",
+            "-t",
+            "{email}",
+            "--hide"
+          ],
+          "timeout": 300,
+          "output_format": "text"
+        }
       },
       "parser": null
     },
@@ -299,13 +636,34 @@
       "category": "osint",
       "quality": "verified",
       "scope": "both",
-      "capabilities": ["passive_recon"],
+      "capabilities": [
+        "passive_recon"
+      ],
       "approval": "none",
-      "target_types": ["domain"],
-      "version_command": ["theHarvester", "--help"],
-      "install": {"official": "https://github.com/laramies/theHarvester"},
+      "target_types": [
+        "domain"
+      ],
+      "version_command": [
+        "theHarvester",
+        "--help"
+      ],
+      "install": {
+        "official": "https://github.com/laramies/theHarvester"
+      },
       "command_templates": {
-        "safe": {"argv": ["theHarvester", "-d", "{domain}", "-b", "all", "-l", "500"], "timeout": 600, "output_format": "text"}
+        "safe": {
+          "argv": [
+            "theHarvester",
+            "-d",
+            "{domain}",
+            "-b",
+            "all",
+            "-l",
+            "500"
+          ],
+          "timeout": 600,
+          "output_format": "text"
+        }
       },
       "parser": "shikari.parsers.theharvester.parse_text"
     }

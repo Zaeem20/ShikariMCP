@@ -10,15 +10,35 @@
       "category": "forensics",
       "quality": "verified",
       "scope": "local",
-      "capabilities": ["local_forensics"],
+      "capabilities": [
+        "local_forensics"
+      ],
       "approval": "none",
-      "target_types": ["filesystem"],
-      "version_command": ["yara", "--version"],
-      "install": {"apt": ["yara"]},
-      "command_templates": {
-        "safe": {"argv": ["yara", "-r", "{rules}", "{path}"], "timeout": 900, "output_format": "text"}
+      "target_types": [
+        "filesystem"
+      ],
+      "version_command": [
+        "yara",
+        "--version"
+      ],
+      "install": {
+        "apt": [
+          "yara"
+        ]
       },
-      "parser": null
+      "command_templates": {
+        "safe": {
+          "argv": [
+            "yara",
+            "-r",
+            "{rules}",
+            "{path}"
+          ],
+          "timeout": 900,
+          "output_format": "text"
+        }
+      },
+      "parser": "shikari.parsers.yara.parse_text"
     },
     {
       "id": "volatility3_scan",
@@ -27,13 +47,31 @@
       "category": "forensics",
       "quality": "verified",
       "scope": "local",
-      "capabilities": ["local_forensics"],
+      "capabilities": [
+        "local_forensics"
+      ],
       "approval": "none",
-      "target_types": ["file"],
-      "version_command": ["vol", "--version"],
-      "install": {"pipx": "volatility3"},
+      "target_types": [
+        "file"
+      ],
+      "version_command": [
+        "vol",
+        "--version"
+      ],
+      "install": {
+        "pipx": "volatility3"
+      },
       "command_templates": {
-        "safe": {"argv": ["vol", "-f", "{file}", "{plugin}"], "timeout": 1200, "output_format": "text"}
+        "safe": {
+          "argv": [
+            "vol",
+            "-f",
+            "{file}",
+            "{plugin}"
+          ],
+          "timeout": 1200,
+          "output_format": "text"
+        }
       },
       "parser": null
     },
@@ -44,13 +82,32 @@
       "category": "reverse_engineering",
       "quality": "verified",
       "scope": "local",
-      "capabilities": ["local_analysis"],
+      "capabilities": [
+        "local_analysis"
+      ],
       "approval": "none",
-      "target_types": ["file"],
-      "version_command": ["rabin2", "-v"],
-      "install": {"apt": ["radare2"]},
+      "target_types": [
+        "file"
+      ],
+      "version_command": [
+        "rabin2",
+        "-v"
+      ],
+      "install": {
+        "apt": [
+          "radare2"
+        ]
+      },
       "command_templates": {
-        "safe": {"argv": ["rabin2", "-Ij", "{file}"], "timeout": 300, "output_format": "json"}
+        "safe": {
+          "argv": [
+            "rabin2",
+            "-Ij",
+            "{file}"
+          ],
+          "timeout": 300,
+          "output_format": "json"
+        }
       },
       "parser": null
     }

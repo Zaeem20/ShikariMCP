@@ -10,15 +10,34 @@
       "category": "password_attacks",
       "quality": "verified",
       "scope": "local",
-      "capabilities": ["credential_attack"],
+      "capabilities": [
+        "credential_attack"
+      ],
       "approval": "credential_tools",
-      "target_types": ["file"],
-      "version_command": ["john", "--list=build-info"],
-      "install": {"apt": ["john"]},
-      "command_templates": {
-        "safe": {"argv": ["john", "{hash_file}"], "timeout": 3600, "output_format": "text"}
+      "target_types": [
+        "file"
+      ],
+      "version_command": [
+        "john",
+        "--list=build-info"
+      ],
+      "install": {
+        "apt": [
+          "john"
+        ]
       },
-      "parser": null
+      "command_templates": {
+        "safe": {
+          "argv": [
+            "john",
+            "--format=Raw-MD5",
+            "{hash_file}"
+          ],
+          "timeout": 3600,
+          "output_format": "text"
+        }
+      },
+      "parser": "shikari.parsers.john.parse_text"
     },
     {
       "id": "hashcat_crack",
@@ -27,15 +46,39 @@
       "category": "password_attacks",
       "quality": "verified",
       "scope": "local",
-      "capabilities": ["credential_attack"],
+      "capabilities": [
+        "credential_attack"
+      ],
       "approval": "credential_tools",
-      "target_types": ["file"],
-      "version_command": ["hashcat", "--version"],
-      "install": {"apt": ["hashcat"]},
-      "command_templates": {
-        "safe": {"argv": ["hashcat", "-m", "{mode}", "{hash_file}", "{wordlist}", "--status", "--status-timer", "60"], "timeout": 3600, "output_format": "text"}
+      "target_types": [
+        "file"
+      ],
+      "version_command": [
+        "hashcat",
+        "--version"
+      ],
+      "install": {
+        "apt": [
+          "hashcat"
+        ]
       },
-      "parser": null
+      "command_templates": {
+        "safe": {
+          "argv": [
+            "hashcat",
+            "-m",
+            "{mode}",
+            "{hash_file}",
+            "{wordlist}",
+            "--status",
+            "--status-timer",
+            "60"
+          ],
+          "timeout": 3600,
+          "output_format": "text"
+        }
+      },
+      "parser": "shikari.parsers.hashcat.parse_text"
     },
     {
       "id": "hydra_login_check",
@@ -44,15 +87,41 @@
       "category": "password_attacks",
       "quality": "experimental",
       "scope": "local",
-      "capabilities": ["credential_attack", "active_network"],
+      "capabilities": [
+        "credential_attack",
+        "active_network"
+      ],
       "approval": "credential_tools",
-      "target_types": ["host"],
-      "version_command": ["hydra", "-h"],
-      "install": {"apt": ["hydra"]},
-      "command_templates": {
-        "safe": {"argv": ["hydra", "-L", "{users}", "-P", "{passwords}", "-t", "4", "{target}", "{service}"], "timeout": 1800, "output_format": "text"}
+      "target_types": [
+        "host"
+      ],
+      "version_command": [
+        "hydra",
+        "-h"
+      ],
+      "install": {
+        "apt": [
+          "hydra"
+        ]
       },
-      "parser": null
+      "command_templates": {
+        "safe": {
+          "argv": [
+            "hydra",
+            "-l",
+            "{users}",
+            "-P",
+            "{passwords}",
+            "-t",
+            "4",
+            "{target}",
+            "{service}"
+          ],
+          "timeout": 1800,
+          "output_format": "text"
+        }
+      },
+      "parser": "shikari.parsers.hydra.parse_text"
     }
   ]
 }

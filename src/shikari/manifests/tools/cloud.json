@@ -10,15 +10,34 @@
       "category": "code_analysis",
       "quality": "verified",
       "scope": "local",
-      "capabilities": ["local_analysis"],
+      "capabilities": [
+        "local_analysis"
+      ],
       "approval": "none",
-      "target_types": ["filesystem", "repository"],
-      "version_command": ["semgrep", "--version"],
-      "install": {"pipx": "semgrep"},
-      "command_templates": {
-        "safe": {"argv": ["semgrep", "scan", "--json", "{path}"], "timeout": 900, "output_format": "json"}
+      "target_types": [
+        "filesystem",
+        "repository"
+      ],
+      "version_command": [
+        "semgrep",
+        "--version"
+      ],
+      "install": {
+        "pipx": "semgrep"
       },
-      "parser": null
+      "command_templates": {
+        "safe": {
+          "argv": [
+            "semgrep",
+            "scan",
+            "--json",
+            "{path}"
+          ],
+          "timeout": 900,
+          "output_format": "json"
+        }
+      },
+      "parser": "shikari.parsers.semgrep.parse_json"
     },
     {
       "id": "gitleaks_scan",
@@ -27,15 +46,37 @@
       "category": "code_analysis",
       "quality": "verified",
       "scope": "local",
-      "capabilities": ["local_analysis"],
+      "capabilities": [
+        "local_analysis"
+      ],
       "approval": "none",
-      "target_types": ["filesystem", "repository"],
-      "version_command": ["gitleaks", "version"],
-      "install": {"go": "github.com/zricethezav/gitleaks/v8@v8.30.1"},
-      "command_templates": {
-        "safe": {"argv": ["gitleaks", "detect", "--source", "{path}", "--report-format", "json", "--no-banner"], "timeout": 900, "output_format": "json"}
+      "target_types": [
+        "filesystem",
+        "repository"
+      ],
+      "version_command": [
+        "gitleaks",
+        "version"
+      ],
+      "install": {
+        "go": "github.com/zricethezav/gitleaks/v8@v8.30.1"
       },
-      "parser": null
+      "command_templates": {
+        "safe": {
+          "argv": [
+            "gitleaks",
+            "detect",
+            "--source",
+            "{path}",
+            "--report-format",
+            "json",
+            "--no-banner"
+          ],
+          "timeout": 900,
+          "output_format": "json"
+        }
+      },
+      "parser": "shikari.parsers.gitleaks.parse_json"
     },
     {
       "id": "checkov_scan",
@@ -44,15 +85,36 @@
       "category": "cloud_security",
       "quality": "verified",
       "scope": "local",
-      "capabilities": ["local_analysis", "cloud_audit"],
+      "capabilities": [
+        "local_analysis",
+        "cloud_audit"
+      ],
       "approval": "none",
-      "target_types": ["filesystem", "repository"],
-      "version_command": ["checkov", "--version"],
-      "install": {"pipx": "checkov"},
-      "command_templates": {
-        "safe": {"argv": ["checkov", "-d", "{path}", "-o", "json"], "timeout": 900, "output_format": "json"}
+      "target_types": [
+        "filesystem",
+        "repository"
+      ],
+      "version_command": [
+        "checkov",
+        "--version"
+      ],
+      "install": {
+        "pipx": "checkov"
       },
-      "parser": null
+      "command_templates": {
+        "safe": {
+          "argv": [
+            "checkov",
+            "-d",
+            "{path}",
+            "-o",
+            "json"
+          ],
+          "timeout": 900,
+          "output_format": "json"
+        }
+      },
+      "parser": "shikari.parsers.checkov.parse_json"
     }
   ]
 }
