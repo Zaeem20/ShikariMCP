@@ -13,18 +13,22 @@ class BugBountyAgent(BaseAgent):
     description = "Automated bug bounty recon pipeline."
     audience = ["bugbounty", "researcher"]
 
-    async def plan(self, domain: str, **kwargs: Any) -> list[dict[str, Any]]:
+    async def plan(self, domain: str, dry_run: bool = False, **kwargs: Any) -> list[dict[str, Any]]:
         return [
-            {"name": "subdomains", "tool": "subfinder_enum", "inputs": {"target": domain}},
+            {"name": "subdomains", "tool": "subfinder_enum", "inputs": {"target": domain}, "dry_run": dry_run},
             {
                 "name": "live_hosts",
                 "tool": "httpx_probe",
-                "inputs_from": {"targets": "subdomains"},
+                "inputs": {"targets": domain} if dry_run else {},
+                "inputs_from": {} if dry_run else {"targets": "subdomains"},
+                "dry_run": dry_run,
             },
             {
                 "name": "vulnerability_templates",
                 "tool": "nuclei_scan",
-                "inputs_from": {"targets": "live_hosts"},
+                "inputs": {"targets": domain} if dry_run else {},
+                "inputs_from": {} if dry_run else {"targets": "live_hosts"},
+                "dry_run": dry_run,
             },
         ]
 
@@ -34,7 +38,7 @@ class BugBountyAgent(BaseAgent):
         ctx: Context | None = None,
         **kwargs: Any,
     ) -> dict[str, Any]:
-        return await self.execute_verified_plan(plan, ctx=ctx, **kwargs)
+        return await self.execute_manifest_plan(plan, ctx=ctx, **kwargs)
 
     async def analyze(self, results: dict[str, Any]) -> list[dict[str, Any]]:
         findings: list[dict[str, Any]] = []
@@ -47,7 +51,8 @@ class BugBountyAgent(BaseAgent):
                     "title": finding.get("title", source),
                     "detail": finding.get("description") or str(finding.get("evidence", ""))[:500],
                 })
-            if result.get("status") in {"blocked", "failed"}:
+            findings.extend(self._findings_from_result(source, result))
+            if result.get("status") in {"blocked", "failed", "skipped"}:
                 findings.append({
                     "severity": "INFO",
                     "title": f"{source} {result.get('status')}",

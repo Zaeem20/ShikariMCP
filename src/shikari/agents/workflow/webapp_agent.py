@@ -43,14 +43,16 @@ class WebAppWorkflowAgent(BaseAgent):
                 "name": "crawl",
                 "tool": "katana_crawl",
                 "profile": "core",
-                "inputs_from": {"targets": "live_target"},
+                "inputs": {"targets": url} if dry_run else {},
+                "inputs_from": {} if dry_run else {"targets": "live_target"},
                 "dry_run": dry_run,
             },
             {
                 "name": "template_scan",
                 "tool": "nuclei_scan",
                 "profile": "core",
-                "inputs_from": {"targets": "live_target"},
+                "inputs": {"targets": url} if dry_run else {},
+                "inputs_from": {} if dry_run else {"targets": "live_target"},
                 "dry_run": dry_run,
             },
             {
@@ -79,17 +81,15 @@ class WebAppWorkflowAgent(BaseAgent):
         ctx: Context | None = None,
         **kwargs: Any,
     ) -> dict[str, Any]:
-        return await self.execute_verified_plan(plan, ctx=ctx, **kwargs)
+        return await self.execute_manifest_plan(plan, ctx=ctx, **kwargs)
 
     async def analyze(self, results: dict[str, Any]) -> list[dict[str, Any]]:
         findings: list[dict[str, Any]] = []
-        endpoint_count = 0
 
         for source, result in results.items():
             if not isinstance(result, dict):
                 continue
 
-            endpoint_count += sum(1 for item in result.get("assets", []) if item.get("url"))
             for finding in result.get("findings", []):
                 findings.append(
                     {
@@ -100,6 +100,8 @@ class WebAppWorkflowAgent(BaseAgent):
                     }
                 )
 
+            findings.extend(self._findings_from_result(source, result))
+
             if result.get("status") in {"blocked", "failed", "skipped"}:
                 findings.append(
                     {
@@ -109,14 +111,6 @@ class WebAppWorkflowAgent(BaseAgent):
                     }
                 )
 
-        if endpoint_count:
-            findings.append(
-                {
-                    "severity": "INFO",
-                    "title": "Web endpoints discovered",
-                    "detail": f"Structured parsers normalized {endpoint_count} endpoint(s).",
-                }
-            )
         return findings
 
 

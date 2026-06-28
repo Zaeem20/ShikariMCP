@@ -10,7 +10,7 @@ from typing import Any
 from fastmcp import Context
 
 from shikari.core.executor import execute_command
-from shikari.core.tool_runner import run_verified_tool
+from shikari.core.tool_runner import run_tool
 
 logger = logging.getLogger("shikari.agents")
 
@@ -168,6 +168,49 @@ class BaseAgent(ABC):
         """
         return []
 
+    def _findings_from_result(
+        self, source: str, result: dict[str, Any]
+    ) -> list[dict[str, Any]]:
+        """Create summary findings for assets, services, and endpoints."""
+        findings: list[dict[str, Any]] = []
+        if not isinstance(result, dict):
+            return findings
+
+        assets = result.get("assets", [])
+        if assets:
+            findings.append({
+                "severity": "INFO",
+                "title": f"{source}: {len(assets)} asset(s) discovered",
+                "detail": ", ".join(
+                    str(a.get("value") or a.get("host") or a.get("url") or "?")
+                    for a in assets[:10]
+                ),
+            })
+
+        services = result.get("services", [])
+        if services:
+            findings.append({
+                "severity": "INFO",
+                "title": f"{source}: {len(services)} service(s) discovered",
+                "detail": ", ".join(
+                    f"{s.get('host', '?')}:{s.get('port', '?')} ({s.get('name', '')})"
+                    for s in services[:10]
+                ),
+            })
+
+        endpoints = result.get("endpoints", [])
+        if endpoints:
+            findings.append({
+                "severity": "INFO",
+                "title": f"{source}: {len(endpoints)} endpoint(s) discovered",
+                "detail": ", ".join(
+                    f"{e.get('url', '?')} [{e.get('status_code', '')}]"
+                    for e in endpoints[:10]
+                ),
+            })
+
+        return findings
+
     async def execute_plan(
         self,
         plan: list[dict[str, Any]],
@@ -195,7 +238,7 @@ class BaseAgent(ABC):
 
         return results
 
-    async def execute_verified_plan(
+    async def execute_manifest_plan(
         self,
         plan: list[dict[str, Any]],
         ctx: Context | None = None,
@@ -238,7 +281,7 @@ class BaseAgent(ABC):
                         "status": "skipped",
                         "errors": ["Required input from previous step was empty."],
                     }
-                return name, await run_verified_tool(
+                return name, await run_tool(
                     tool_id=tool_id,
                     inputs=inputs,
                     profile=step.get("profile", "core"),
@@ -256,7 +299,14 @@ class BaseAgent(ABC):
         return results
 
     def _extract_targets(self, result: Any) -> str:
-        """Extract newline-separated targets from a structured run result."""
+        """Extract newline-separated targets from a structured run result.
+
+        Caps output to SHIKARI_MAX_TARGETS_PER_RUN so downstream tools do not
+        fail validation when a recon step finds a very large asset set.
+        """
+        from shikari.config import get_config
+
+        max_targets = get_config().max_targets_per_run
         if not isinstance(result, dict):
             return str(result or "")
         values: list[str] = []
@@ -264,15 +314,21 @@ class BaseAgent(ABC):
             value = asset.get("value") or asset.get("host") or asset.get("url")
             if value:
                 values.append(str(value))
+            if len(values) >= max_targets:
+                break
         for endpoint in result.get("endpoints", []):
             value = endpoint.get("url")
             if value:
                 values.append(str(value))
+            if len(values) >= max_targets:
+                break
         for service in result.get("services", []):
             value = service.get("host")
             if value:
                 values.append(str(value))
-        return "\n".join(dict.fromkeys(values))
+            if len(values) >= max_targets:
+                break
+        return "\n".join(list(dict.fromkeys(values))[:max_targets])
 
     async def report(
         self,
