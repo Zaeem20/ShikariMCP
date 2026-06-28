@@ -1,6 +1,7 @@
 # ShikariMCP — Database Scanners
 
 import shlex
+import shutil
 from shikari.tools._base import shikari_tool, ToolScope
 from shikari.core.validator import validate_url
 from shikari.core.executor import execute_command
@@ -21,7 +22,8 @@ async def bsqlbf_run(url: str, extra_args: str = "") -> str:
         extra_args: Additional flags
     """
     url = validate_url(url)
-    cmd = ["bsqlbf", "-url", url]
+    bsqlbf_path = shutil.which("bsqlbf") or "bsqlbf"
+    cmd = ["perl", bsqlbf_path, "-url", url]
     if extra_args:
         cmd.extend(shlex.split(extra_args))
     result = await execute_command(cmd, timeout=300)

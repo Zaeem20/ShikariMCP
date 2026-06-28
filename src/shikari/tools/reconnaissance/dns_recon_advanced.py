@@ -96,11 +96,20 @@ async def sublist3r(target: str, extra_args: str = "") -> dict:
 async def altdns(target: str, extra_args: str = "") -> dict:
     """Discovers subdomains with permutations"""
     validate_target(target)
-    # Target replacement
-    cmd = "altdns -i {target} -o data_output -w words.txt -r -s results_output.txt".replace("{target}", target)
-    if extra_args:
-        cmd += " " + extra_args
-    return await execute_command(cmd, timeout=300)
+    import tempfile
+    from pathlib import Path
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".txt", delete=False) as f:
+        f.write(target + "\n")
+        input_file = f.name
+    output_file = Path(tempfile.gettempdir()) / f"altdns_output_{target}.txt"
+    results_file = Path(tempfile.gettempdir()) / f"altdns_results_{target}.txt"
+    try:
+        cmd = f"altdns -i {input_file} -o {output_file} -w /tmp/shikari_test/wordlist.txt -r -s {results_file}"
+        if extra_args:
+            cmd += " " + extra_args
+        return await execute_command(cmd, timeout=300)
+    finally:
+        Path(input_file).unlink(missing_ok=True)
 
 @shikari_tool(
     name="amass_intel",

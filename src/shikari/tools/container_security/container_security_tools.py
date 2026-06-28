@@ -57,7 +57,7 @@ async def dive_image(image: str) -> str:
     Args:
         image: Container image name (e.g., 'nginx:latest')
     """
-    cmd = ["dive", image, "--json"]
+    cmd = ["dive", image, "--ci"]
     result = await execute_command(cmd, timeout=120)
     return result.output if result.success else f"dive error: {result.stderr}"
 
