@@ -1,16 +1,16 @@
-# Graph Report - ShikariMCP  (2026-06-26)
+# Graph Report - ShikariMCP  (2026-06-28)
 
 ## Corpus Check
-- 262 files · ~139,359 words
+- 263 files · ~175,906 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 5435 nodes · 7951 edges · 1071 communities (282 shown, 789 thin omitted)
-- Extraction: 71% EXTRACTED · 29% INFERRED · 0% AMBIGUOUS · INFERRED: 2300 edges (avg confidence: 0.78)
+- 3346 nodes · 5626 edges · 339 communities (266 shown, 73 thin omitted)
+- Extraction: 76% EXTRACTED · 24% INFERRED · 0% AMBIGUOUS · INFERRED: 1332 edges (avg confidence: 0.77)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `004d6302`
+- Built from commit: `ece24983`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -101,25 +101,17 @@
 - [[_COMMUNITY_Community 83|Community 83]]
 - [[_COMMUNITY_Community 84|Community 84]]
 - [[_COMMUNITY_Community 85|Community 85]]
-- [[_COMMUNITY_Community 86|Community 86]]
 - [[_COMMUNITY_Community 87|Community 87]]
-- [[_COMMUNITY_Community 88|Community 88]]
-- [[_COMMUNITY_Community 89|Community 89]]
 - [[_COMMUNITY_Community 90|Community 90]]
 - [[_COMMUNITY_Community 91|Community 91]]
-- [[_COMMUNITY_Community 92|Community 92]]
 - [[_COMMUNITY_Community 93|Community 93]]
 - [[_COMMUNITY_Community 94|Community 94]]
 - [[_COMMUNITY_Community 95|Community 95]]
 - [[_COMMUNITY_Community 96|Community 96]]
-- [[_COMMUNITY_Community 97|Community 97]]
 - [[_COMMUNITY_Community 98|Community 98]]
-- [[_COMMUNITY_Community 99|Community 99]]
 - [[_COMMUNITY_Community 100|Community 100]]
 - [[_COMMUNITY_Community 101|Community 101]]
 - [[_COMMUNITY_Community 102|Community 102]]
-- [[_COMMUNITY_Community 103|Community 103]]
-- [[_COMMUNITY_Community 104|Community 104]]
 - [[_COMMUNITY_Community 105|Community 105]]
 - [[_COMMUNITY_Community 106|Community 106]]
 - [[_COMMUNITY_Community 107|Community 107]]
@@ -150,7 +142,6 @@
 - [[_COMMUNITY_Community 132|Community 132]]
 - [[_COMMUNITY_Community 133|Community 133]]
 - [[_COMMUNITY_Community 134|Community 134]]
-- [[_COMMUNITY_Community 135|Community 135]]
 - [[_COMMUNITY_Community 136|Community 136]]
 - [[_COMMUNITY_Community 137|Community 137]]
 - [[_COMMUNITY_Community 138|Community 138]]
@@ -158,7 +149,6 @@
 - [[_COMMUNITY_Community 140|Community 140]]
 - [[_COMMUNITY_Community 141|Community 141]]
 - [[_COMMUNITY_Community 142|Community 142]]
-- [[_COMMUNITY_Community 143|Community 143]]
 - [[_COMMUNITY_Community 144|Community 144]]
 - [[_COMMUNITY_Community 145|Community 145]]
 - [[_COMMUNITY_Community 146|Community 146]]
@@ -170,7 +160,6 @@
 - [[_COMMUNITY_Community 152|Community 152]]
 - [[_COMMUNITY_Community 153|Community 153]]
 - [[_COMMUNITY_Community 154|Community 154]]
-- [[_COMMUNITY_Community 155|Community 155]]
 - [[_COMMUNITY_Community 156|Community 156]]
 - [[_COMMUNITY_Community 157|Community 157]]
 - [[_COMMUNITY_Community 158|Community 158]]
@@ -181,8 +170,6 @@
 - [[_COMMUNITY_Community 163|Community 163]]
 - [[_COMMUNITY_Community 164|Community 164]]
 - [[_COMMUNITY_Community 165|Community 165]]
-- [[_COMMUNITY_Community 166|Community 166]]
-- [[_COMMUNITY_Community 167|Community 167]]
 - [[_COMMUNITY_Community 168|Community 168]]
 - [[_COMMUNITY_Community 170|Community 170]]
 - [[_COMMUNITY_Community 171|Community 171]]
@@ -193,518 +180,36 @@
 - [[_COMMUNITY_Community 176|Community 176]]
 - [[_COMMUNITY_Community 177|Community 177]]
 - [[_COMMUNITY_Community 178|Community 178]]
-- [[_COMMUNITY_Community 179|Community 179]]
 - [[_COMMUNITY_Community 180|Community 180]]
 - [[_COMMUNITY_Community 181|Community 181]]
 - [[_COMMUNITY_Community 182|Community 182]]
 - [[_COMMUNITY_Community 183|Community 183]]
 - [[_COMMUNITY_Community 184|Community 184]]
-- [[_COMMUNITY_Community 185|Community 185]]
-- [[_COMMUNITY_Community 186|Community 186]]
-- [[_COMMUNITY_Community 187|Community 187]]
-- [[_COMMUNITY_Community 188|Community 188]]
-- [[_COMMUNITY_Community 189|Community 189]]
-- [[_COMMUNITY_Community 190|Community 190]]
-- [[_COMMUNITY_Community 191|Community 191]]
-- [[_COMMUNITY_Community 192|Community 192]]
-- [[_COMMUNITY_Community 193|Community 193]]
-- [[_COMMUNITY_Community 194|Community 194]]
-- [[_COMMUNITY_Community 195|Community 195]]
-- [[_COMMUNITY_Community 196|Community 196]]
-- [[_COMMUNITY_Community 197|Community 197]]
-- [[_COMMUNITY_Community 198|Community 198]]
-- [[_COMMUNITY_Community 199|Community 199]]
-- [[_COMMUNITY_Community 200|Community 200]]
-- [[_COMMUNITY_Community 201|Community 201]]
-- [[_COMMUNITY_Community 202|Community 202]]
-- [[_COMMUNITY_Community 203|Community 203]]
-- [[_COMMUNITY_Community 204|Community 204]]
-- [[_COMMUNITY_Community 205|Community 205]]
-- [[_COMMUNITY_Community 206|Community 206]]
-- [[_COMMUNITY_Community 207|Community 207]]
-- [[_COMMUNITY_Community 208|Community 208]]
-- [[_COMMUNITY_Community 209|Community 209]]
-- [[_COMMUNITY_Community 210|Community 210]]
-- [[_COMMUNITY_Community 211|Community 211]]
-- [[_COMMUNITY_Community 212|Community 212]]
-- [[_COMMUNITY_Community 213|Community 213]]
-- [[_COMMUNITY_Community 214|Community 214]]
-- [[_COMMUNITY_Community 215|Community 215]]
-- [[_COMMUNITY_Community 216|Community 216]]
-- [[_COMMUNITY_Community 217|Community 217]]
-- [[_COMMUNITY_Community 218|Community 218]]
-- [[_COMMUNITY_Community 219|Community 219]]
-- [[_COMMUNITY_Community 220|Community 220]]
-- [[_COMMUNITY_Community 221|Community 221]]
-- [[_COMMUNITY_Community 222|Community 222]]
-- [[_COMMUNITY_Community 223|Community 223]]
-- [[_COMMUNITY_Community 224|Community 224]]
-- [[_COMMUNITY_Community 225|Community 225]]
-- [[_COMMUNITY_Community 226|Community 226]]
-- [[_COMMUNITY_Community 227|Community 227]]
-- [[_COMMUNITY_Community 228|Community 228]]
-- [[_COMMUNITY_Community 229|Community 229]]
-- [[_COMMUNITY_Community 230|Community 230]]
-- [[_COMMUNITY_Community 231|Community 231]]
-- [[_COMMUNITY_Community 232|Community 232]]
-- [[_COMMUNITY_Community 233|Community 233]]
-- [[_COMMUNITY_Community 234|Community 234]]
-- [[_COMMUNITY_Community 235|Community 235]]
-- [[_COMMUNITY_Community 236|Community 236]]
-- [[_COMMUNITY_Community 237|Community 237]]
-- [[_COMMUNITY_Community 238|Community 238]]
-- [[_COMMUNITY_Community 239|Community 239]]
-- [[_COMMUNITY_Community 240|Community 240]]
-- [[_COMMUNITY_Community 241|Community 241]]
-- [[_COMMUNITY_Community 242|Community 242]]
-- [[_COMMUNITY_Community 243|Community 243]]
-- [[_COMMUNITY_Community 244|Community 244]]
-- [[_COMMUNITY_Community 245|Community 245]]
-- [[_COMMUNITY_Community 246|Community 246]]
-- [[_COMMUNITY_Community 247|Community 247]]
-- [[_COMMUNITY_Community 248|Community 248]]
-- [[_COMMUNITY_Community 249|Community 249]]
-- [[_COMMUNITY_Community 250|Community 250]]
-- [[_COMMUNITY_Community 251|Community 251]]
-- [[_COMMUNITY_Community 252|Community 252]]
-- [[_COMMUNITY_Community 253|Community 253]]
-- [[_COMMUNITY_Community 254|Community 254]]
-- [[_COMMUNITY_Community 255|Community 255]]
-- [[_COMMUNITY_Community 256|Community 256]]
-- [[_COMMUNITY_Community 257|Community 257]]
-- [[_COMMUNITY_Community 258|Community 258]]
-- [[_COMMUNITY_Community 259|Community 259]]
-- [[_COMMUNITY_Community 260|Community 260]]
-- [[_COMMUNITY_Community 261|Community 261]]
-- [[_COMMUNITY_Community 262|Community 262]]
-- [[_COMMUNITY_Community 263|Community 263]]
-- [[_COMMUNITY_Community 264|Community 264]]
-- [[_COMMUNITY_Community 265|Community 265]]
-- [[_COMMUNITY_Community 266|Community 266]]
-- [[_COMMUNITY_Community 267|Community 267]]
-- [[_COMMUNITY_Community 268|Community 268]]
-- [[_COMMUNITY_Community 269|Community 269]]
-- [[_COMMUNITY_Community 270|Community 270]]
-- [[_COMMUNITY_Community 271|Community 271]]
-- [[_COMMUNITY_Community 272|Community 272]]
-- [[_COMMUNITY_Community 273|Community 273]]
-- [[_COMMUNITY_Community 274|Community 274]]
-- [[_COMMUNITY_Community 275|Community 275]]
-- [[_COMMUNITY_Community 276|Community 276]]
-- [[_COMMUNITY_Community 277|Community 277]]
-- [[_COMMUNITY_Community 278|Community 278]]
-- [[_COMMUNITY_Community 279|Community 279]]
-- [[_COMMUNITY_Community 280|Community 280]]
-- [[_COMMUNITY_Community 281|Community 281]]
-- [[_COMMUNITY_Community 282|Community 282]]
-- [[_COMMUNITY_Community 283|Community 283]]
-- [[_COMMUNITY_Community 284|Community 284]]
-- [[_COMMUNITY_Community 285|Community 285]]
-- [[_COMMUNITY_Community 286|Community 286]]
-- [[_COMMUNITY_Community 287|Community 287]]
-- [[_COMMUNITY_Community 288|Community 288]]
-- [[_COMMUNITY_Community 289|Community 289]]
-- [[_COMMUNITY_Community 290|Community 290]]
-- [[_COMMUNITY_Community 291|Community 291]]
-- [[_COMMUNITY_Community 292|Community 292]]
-- [[_COMMUNITY_Community 293|Community 293]]
-- [[_COMMUNITY_Community 294|Community 294]]
-- [[_COMMUNITY_Community 295|Community 295]]
-- [[_COMMUNITY_Community 296|Community 296]]
-- [[_COMMUNITY_Community 297|Community 297]]
-- [[_COMMUNITY_Community 298|Community 298]]
-- [[_COMMUNITY_Community 299|Community 299]]
-- [[_COMMUNITY_Community 300|Community 300]]
-- [[_COMMUNITY_Community 301|Community 301]]
-- [[_COMMUNITY_Community 302|Community 302]]
-- [[_COMMUNITY_Community 303|Community 303]]
-- [[_COMMUNITY_Community 304|Community 304]]
-- [[_COMMUNITY_Community 305|Community 305]]
-- [[_COMMUNITY_Community 306|Community 306]]
-- [[_COMMUNITY_Community 307|Community 307]]
-- [[_COMMUNITY_Community 308|Community 308]]
-- [[_COMMUNITY_Community 309|Community 309]]
-- [[_COMMUNITY_Community 310|Community 310]]
-- [[_COMMUNITY_Community 311|Community 311]]
-- [[_COMMUNITY_Community 312|Community 312]]
-- [[_COMMUNITY_Community 313|Community 313]]
-- [[_COMMUNITY_Community 314|Community 314]]
-- [[_COMMUNITY_Community 315|Community 315]]
-- [[_COMMUNITY_Community 316|Community 316]]
-- [[_COMMUNITY_Community 317|Community 317]]
 - [[_COMMUNITY_Community 318|Community 318]]
 - [[_COMMUNITY_Community 319|Community 319]]
-- [[_COMMUNITY_Community 320|Community 320]]
-- [[_COMMUNITY_Community 321|Community 321]]
 - [[_COMMUNITY_Community 322|Community 322]]
 - [[_COMMUNITY_Community 323|Community 323]]
 - [[_COMMUNITY_Community 324|Community 324]]
 - [[_COMMUNITY_Community 325|Community 325]]
-- [[_COMMUNITY_Community 326|Community 326]]
-- [[_COMMUNITY_Community 327|Community 327]]
-- [[_COMMUNITY_Community 328|Community 328]]
 - [[_COMMUNITY_Community 329|Community 329]]
-- [[_COMMUNITY_Community 330|Community 330]]
-- [[_COMMUNITY_Community 331|Community 331]]
-- [[_COMMUNITY_Community 332|Community 332]]
-- [[_COMMUNITY_Community 333|Community 333]]
 - [[_COMMUNITY_Community 334|Community 334]]
-- [[_COMMUNITY_Community 335|Community 335]]
-- [[_COMMUNITY_Community 336|Community 336]]
 - [[_COMMUNITY_Community 337|Community 337]]
-- [[_COMMUNITY_Community 338|Community 338]]
-- [[_COMMUNITY_Community 339|Community 339]]
-- [[_COMMUNITY_Community 340|Community 340]]
 - [[_COMMUNITY_Community 341|Community 341]]
 - [[_COMMUNITY_Community 342|Community 342]]
 - [[_COMMUNITY_Community 343|Community 343]]
 - [[_COMMUNITY_Community 344|Community 344]]
-- [[_COMMUNITY_Community 345|Community 345]]
-- [[_COMMUNITY_Community 346|Community 346]]
-- [[_COMMUNITY_Community 347|Community 347]]
-- [[_COMMUNITY_Community 348|Community 348]]
-- [[_COMMUNITY_Community 349|Community 349]]
-- [[_COMMUNITY_Community 350|Community 350]]
-- [[_COMMUNITY_Community 351|Community 351]]
-- [[_COMMUNITY_Community 352|Community 352]]
-- [[_COMMUNITY_Community 353|Community 353]]
-- [[_COMMUNITY_Community 354|Community 354]]
-- [[_COMMUNITY_Community 355|Community 355]]
-- [[_COMMUNITY_Community 356|Community 356]]
-- [[_COMMUNITY_Community 357|Community 357]]
-- [[_COMMUNITY_Community 358|Community 358]]
-- [[_COMMUNITY_Community 359|Community 359]]
-- [[_COMMUNITY_Community 360|Community 360]]
-- [[_COMMUNITY_Community 361|Community 361]]
-- [[_COMMUNITY_Community 362|Community 362]]
-- [[_COMMUNITY_Community 363|Community 363]]
-- [[_COMMUNITY_Community 364|Community 364]]
-- [[_COMMUNITY_Community 365|Community 365]]
-- [[_COMMUNITY_Community 366|Community 366]]
-- [[_COMMUNITY_Community 367|Community 367]]
-- [[_COMMUNITY_Community 368|Community 368]]
-- [[_COMMUNITY_Community 369|Community 369]]
-- [[_COMMUNITY_Community 370|Community 370]]
-- [[_COMMUNITY_Community 371|Community 371]]
-- [[_COMMUNITY_Community 372|Community 372]]
-- [[_COMMUNITY_Community 373|Community 373]]
-- [[_COMMUNITY_Community 374|Community 374]]
-- [[_COMMUNITY_Community 375|Community 375]]
-- [[_COMMUNITY_Community 376|Community 376]]
-- [[_COMMUNITY_Community 377|Community 377]]
-- [[_COMMUNITY_Community 378|Community 378]]
-- [[_COMMUNITY_Community 379|Community 379]]
-- [[_COMMUNITY_Community 380|Community 380]]
-- [[_COMMUNITY_Community 381|Community 381]]
-- [[_COMMUNITY_Community 382|Community 382]]
-- [[_COMMUNITY_Community 383|Community 383]]
-- [[_COMMUNITY_Community 384|Community 384]]
-- [[_COMMUNITY_Community 385|Community 385]]
-- [[_COMMUNITY_Community 386|Community 386]]
-- [[_COMMUNITY_Community 387|Community 387]]
-- [[_COMMUNITY_Community 388|Community 388]]
-- [[_COMMUNITY_Community 389|Community 389]]
-- [[_COMMUNITY_Community 390|Community 390]]
-- [[_COMMUNITY_Community 391|Community 391]]
-- [[_COMMUNITY_Community 392|Community 392]]
-- [[_COMMUNITY_Community 393|Community 393]]
-- [[_COMMUNITY_Community 394|Community 394]]
-- [[_COMMUNITY_Community 395|Community 395]]
-- [[_COMMUNITY_Community 396|Community 396]]
-- [[_COMMUNITY_Community 397|Community 397]]
-- [[_COMMUNITY_Community 398|Community 398]]
-- [[_COMMUNITY_Community 399|Community 399]]
-- [[_COMMUNITY_Community 400|Community 400]]
-- [[_COMMUNITY_Community 401|Community 401]]
-- [[_COMMUNITY_Community 402|Community 402]]
-- [[_COMMUNITY_Community 403|Community 403]]
-- [[_COMMUNITY_Community 404|Community 404]]
-- [[_COMMUNITY_Community 405|Community 405]]
-- [[_COMMUNITY_Community 406|Community 406]]
-- [[_COMMUNITY_Community 407|Community 407]]
-- [[_COMMUNITY_Community 408|Community 408]]
-- [[_COMMUNITY_Community 409|Community 409]]
-- [[_COMMUNITY_Community 410|Community 410]]
-- [[_COMMUNITY_Community 411|Community 411]]
-- [[_COMMUNITY_Community 412|Community 412]]
-- [[_COMMUNITY_Community 413|Community 413]]
-- [[_COMMUNITY_Community 414|Community 414]]
-- [[_COMMUNITY_Community 416|Community 416]]
-- [[_COMMUNITY_Community 417|Community 417]]
-- [[_COMMUNITY_Community 418|Community 418]]
-- [[_COMMUNITY_Community 419|Community 419]]
-- [[_COMMUNITY_Community 420|Community 420]]
-- [[_COMMUNITY_Community 421|Community 421]]
-- [[_COMMUNITY_Community 422|Community 422]]
-- [[_COMMUNITY_Community 423|Community 423]]
-- [[_COMMUNITY_Community 424|Community 424]]
-- [[_COMMUNITY_Community 425|Community 425]]
-- [[_COMMUNITY_Community 426|Community 426]]
-- [[_COMMUNITY_Community 427|Community 427]]
-- [[_COMMUNITY_Community 428|Community 428]]
-- [[_COMMUNITY_Community 429|Community 429]]
-- [[_COMMUNITY_Community 430|Community 430]]
-- [[_COMMUNITY_Community 431|Community 431]]
-- [[_COMMUNITY_Community 432|Community 432]]
-- [[_COMMUNITY_Community 433|Community 433]]
-- [[_COMMUNITY_Community 434|Community 434]]
-- [[_COMMUNITY_Community 435|Community 435]]
-- [[_COMMUNITY_Community 436|Community 436]]
-- [[_COMMUNITY_Community 437|Community 437]]
-- [[_COMMUNITY_Community 438|Community 438]]
-- [[_COMMUNITY_Community 439|Community 439]]
-- [[_COMMUNITY_Community 440|Community 440]]
-- [[_COMMUNITY_Community 441|Community 441]]
-- [[_COMMUNITY_Community 442|Community 442]]
-- [[_COMMUNITY_Community 443|Community 443]]
-- [[_COMMUNITY_Community 444|Community 444]]
-- [[_COMMUNITY_Community 445|Community 445]]
-- [[_COMMUNITY_Community 446|Community 446]]
-- [[_COMMUNITY_Community 447|Community 447]]
-- [[_COMMUNITY_Community 448|Community 448]]
-- [[_COMMUNITY_Community 449|Community 449]]
-- [[_COMMUNITY_Community 450|Community 450]]
-- [[_COMMUNITY_Community 451|Community 451]]
-- [[_COMMUNITY_Community 452|Community 452]]
-- [[_COMMUNITY_Community 453|Community 453]]
-- [[_COMMUNITY_Community 454|Community 454]]
-- [[_COMMUNITY_Community 455|Community 455]]
-- [[_COMMUNITY_Community 456|Community 456]]
-- [[_COMMUNITY_Community 457|Community 457]]
-- [[_COMMUNITY_Community 458|Community 458]]
-- [[_COMMUNITY_Community 459|Community 459]]
-- [[_COMMUNITY_Community 460|Community 460]]
-- [[_COMMUNITY_Community 461|Community 461]]
-- [[_COMMUNITY_Community 462|Community 462]]
-- [[_COMMUNITY_Community 463|Community 463]]
-- [[_COMMUNITY_Community 464|Community 464]]
-- [[_COMMUNITY_Community 465|Community 465]]
-- [[_COMMUNITY_Community 466|Community 466]]
-- [[_COMMUNITY_Community 467|Community 467]]
-- [[_COMMUNITY_Community 468|Community 468]]
-- [[_COMMUNITY_Community 469|Community 469]]
-- [[_COMMUNITY_Community 470|Community 470]]
-- [[_COMMUNITY_Community 471|Community 471]]
-- [[_COMMUNITY_Community 472|Community 472]]
-- [[_COMMUNITY_Community 473|Community 473]]
 - [[_COMMUNITY_Community 474|Community 474]]
-- [[_COMMUNITY_Community 475|Community 475]]
-- [[_COMMUNITY_Community 476|Community 476]]
-- [[_COMMUNITY_Community 477|Community 477]]
-- [[_COMMUNITY_Community 478|Community 478]]
-- [[_COMMUNITY_Community 479|Community 479]]
 - [[_COMMUNITY_Community 480|Community 480]]
-- [[_COMMUNITY_Community 481|Community 481]]
-- [[_COMMUNITY_Community 482|Community 482]]
 - [[_COMMUNITY_Community 483|Community 483]]
-- [[_COMMUNITY_Community 484|Community 484]]
-- [[_COMMUNITY_Community 485|Community 485]]
-- [[_COMMUNITY_Community 486|Community 486]]
-- [[_COMMUNITY_Community 487|Community 487]]
-- [[_COMMUNITY_Community 488|Community 488]]
-- [[_COMMUNITY_Community 489|Community 489]]
-- [[_COMMUNITY_Community 490|Community 490]]
-- [[_COMMUNITY_Community 491|Community 491]]
-- [[_COMMUNITY_Community 492|Community 492]]
 - [[_COMMUNITY_Community 493|Community 493]]
-- [[_COMMUNITY_Community 494|Community 494]]
-- [[_COMMUNITY_Community 495|Community 495]]
-- [[_COMMUNITY_Community 496|Community 496]]
-- [[_COMMUNITY_Community 497|Community 497]]
-- [[_COMMUNITY_Community 498|Community 498]]
-- [[_COMMUNITY_Community 499|Community 499]]
-- [[_COMMUNITY_Community 500|Community 500]]
-- [[_COMMUNITY_Community 501|Community 501]]
-- [[_COMMUNITY_Community 502|Community 502]]
-- [[_COMMUNITY_Community 503|Community 503]]
-- [[_COMMUNITY_Community 504|Community 504]]
-- [[_COMMUNITY_Community 505|Community 505]]
-- [[_COMMUNITY_Community 506|Community 506]]
-- [[_COMMUNITY_Community 507|Community 507]]
-- [[_COMMUNITY_Community 508|Community 508]]
 - [[_COMMUNITY_Community 509|Community 509]]
-- [[_COMMUNITY_Community 510|Community 510]]
 - [[_COMMUNITY_Community 511|Community 511]]
-- [[_COMMUNITY_Community 512|Community 512]]
-- [[_COMMUNITY_Community 513|Community 513]]
-- [[_COMMUNITY_Community 514|Community 514]]
-- [[_COMMUNITY_Community 515|Community 515]]
-- [[_COMMUNITY_Community 516|Community 516]]
-- [[_COMMUNITY_Community 517|Community 517]]
-- [[_COMMUNITY_Community 518|Community 518]]
-- [[_COMMUNITY_Community 519|Community 519]]
-- [[_COMMUNITY_Community 520|Community 520]]
-- [[_COMMUNITY_Community 521|Community 521]]
 - [[_COMMUNITY_Community 522|Community 522]]
-- [[_COMMUNITY_Community 523|Community 523]]
-- [[_COMMUNITY_Community 524|Community 524]]
-- [[_COMMUNITY_Community 525|Community 525]]
-- [[_COMMUNITY_Community 526|Community 526]]
-- [[_COMMUNITY_Community 527|Community 527]]
-- [[_COMMUNITY_Community 528|Community 528]]
 - [[_COMMUNITY_Community 529|Community 529]]
-- [[_COMMUNITY_Community 530|Community 530]]
-- [[_COMMUNITY_Community 531|Community 531]]
-- [[_COMMUNITY_Community 532|Community 532]]
-- [[_COMMUNITY_Community 533|Community 533]]
 - [[_COMMUNITY_Community 534|Community 534]]
 - [[_COMMUNITY_Community 535|Community 535]]
-- [[_COMMUNITY_Community 536|Community 536]]
 - [[_COMMUNITY_Community 537|Community 537]]
-- [[_COMMUNITY_Community 538|Community 538]]
-- [[_COMMUNITY_Community 539|Community 539]]
-- [[_COMMUNITY_Community 540|Community 540]]
-- [[_COMMUNITY_Community 541|Community 541]]
-- [[_COMMUNITY_Community 542|Community 542]]
-- [[_COMMUNITY_Community 543|Community 543]]
-- [[_COMMUNITY_Community 544|Community 544]]
-- [[_COMMUNITY_Community 545|Community 545]]
-- [[_COMMUNITY_Community 546|Community 546]]
-- [[_COMMUNITY_Community 547|Community 547]]
-- [[_COMMUNITY_Community 548|Community 548]]
-- [[_COMMUNITY_Community 549|Community 549]]
-- [[_COMMUNITY_Community 550|Community 550]]
-- [[_COMMUNITY_Community 551|Community 551]]
-- [[_COMMUNITY_Community 552|Community 552]]
-- [[_COMMUNITY_Community 553|Community 553]]
-- [[_COMMUNITY_Community 554|Community 554]]
-- [[_COMMUNITY_Community 555|Community 555]]
-- [[_COMMUNITY_Community 556|Community 556]]
-- [[_COMMUNITY_Community 557|Community 557]]
 - [[_COMMUNITY_Community 558|Community 558]]
-- [[_COMMUNITY_Community 559|Community 559]]
-- [[_COMMUNITY_Community 560|Community 560]]
-- [[_COMMUNITY_Community 561|Community 561]]
-- [[_COMMUNITY_Community 562|Community 562]]
-- [[_COMMUNITY_Community 563|Community 563]]
-- [[_COMMUNITY_Community 564|Community 564]]
-- [[_COMMUNITY_Community 565|Community 565]]
-- [[_COMMUNITY_Community 566|Community 566]]
-- [[_COMMUNITY_Community 567|Community 567]]
-- [[_COMMUNITY_Community 568|Community 568]]
-- [[_COMMUNITY_Community 569|Community 569]]
-- [[_COMMUNITY_Community 570|Community 570]]
-- [[_COMMUNITY_Community 571|Community 571]]
-- [[_COMMUNITY_Community 572|Community 572]]
-- [[_COMMUNITY_Community 573|Community 573]]
-- [[_COMMUNITY_Community 574|Community 574]]
-- [[_COMMUNITY_Community 575|Community 575]]
-- [[_COMMUNITY_Community 576|Community 576]]
-- [[_COMMUNITY_Community 577|Community 577]]
-- [[_COMMUNITY_Community 578|Community 578]]
-- [[_COMMUNITY_Community 579|Community 579]]
-- [[_COMMUNITY_Community 580|Community 580]]
-- [[_COMMUNITY_Community 581|Community 581]]
-- [[_COMMUNITY_Community 582|Community 582]]
-- [[_COMMUNITY_Community 583|Community 583]]
-- [[_COMMUNITY_Community 584|Community 584]]
-- [[_COMMUNITY_Community 585|Community 585]]
-- [[_COMMUNITY_Community 586|Community 586]]
-- [[_COMMUNITY_Community 587|Community 587]]
-- [[_COMMUNITY_Community 588|Community 588]]
-- [[_COMMUNITY_Community 589|Community 589]]
-- [[_COMMUNITY_Community 590|Community 590]]
-- [[_COMMUNITY_Community 591|Community 591]]
-- [[_COMMUNITY_Community 592|Community 592]]
-- [[_COMMUNITY_Community 593|Community 593]]
-- [[_COMMUNITY_Community 594|Community 594]]
-- [[_COMMUNITY_Community 595|Community 595]]
-- [[_COMMUNITY_Community 596|Community 596]]
-- [[_COMMUNITY_Community 597|Community 597]]
-- [[_COMMUNITY_Community 598|Community 598]]
-- [[_COMMUNITY_Community 599|Community 599]]
-- [[_COMMUNITY_Community 600|Community 600]]
-- [[_COMMUNITY_Community 601|Community 601]]
-- [[_COMMUNITY_Community 602|Community 602]]
-- [[_COMMUNITY_Community 603|Community 603]]
-- [[_COMMUNITY_Community 604|Community 604]]
-- [[_COMMUNITY_Community 605|Community 605]]
-- [[_COMMUNITY_Community 606|Community 606]]
-- [[_COMMUNITY_Community 607|Community 607]]
-- [[_COMMUNITY_Community 608|Community 608]]
-- [[_COMMUNITY_Community 609|Community 609]]
-- [[_COMMUNITY_Community 610|Community 610]]
-- [[_COMMUNITY_Community 611|Community 611]]
-- [[_COMMUNITY_Community 612|Community 612]]
-- [[_COMMUNITY_Community 613|Community 613]]
-- [[_COMMUNITY_Community 614|Community 614]]
-- [[_COMMUNITY_Community 615|Community 615]]
-- [[_COMMUNITY_Community 616|Community 616]]
-- [[_COMMUNITY_Community 617|Community 617]]
-- [[_COMMUNITY_Community 618|Community 618]]
-- [[_COMMUNITY_Community 619|Community 619]]
-- [[_COMMUNITY_Community 620|Community 620]]
-- [[_COMMUNITY_Community 621|Community 621]]
-- [[_COMMUNITY_Community 622|Community 622]]
-- [[_COMMUNITY_Community 623|Community 623]]
-- [[_COMMUNITY_Community 624|Community 624]]
-- [[_COMMUNITY_Community 625|Community 625]]
-- [[_COMMUNITY_Community 626|Community 626]]
-- [[_COMMUNITY_Community 627|Community 627]]
-- [[_COMMUNITY_Community 628|Community 628]]
-- [[_COMMUNITY_Community 629|Community 629]]
-- [[_COMMUNITY_Community 630|Community 630]]
-- [[_COMMUNITY_Community 631|Community 631]]
-- [[_COMMUNITY_Community 632|Community 632]]
-- [[_COMMUNITY_Community 633|Community 633]]
-- [[_COMMUNITY_Community 634|Community 634]]
-- [[_COMMUNITY_Community 635|Community 635]]
-- [[_COMMUNITY_Community 636|Community 636]]
-- [[_COMMUNITY_Community 637|Community 637]]
-- [[_COMMUNITY_Community 638|Community 638]]
-- [[_COMMUNITY_Community 639|Community 639]]
-- [[_COMMUNITY_Community 640|Community 640]]
-- [[_COMMUNITY_Community 641|Community 641]]
-- [[_COMMUNITY_Community 642|Community 642]]
-- [[_COMMUNITY_Community 643|Community 643]]
-- [[_COMMUNITY_Community 644|Community 644]]
-- [[_COMMUNITY_Community 645|Community 645]]
-- [[_COMMUNITY_Community 646|Community 646]]
-- [[_COMMUNITY_Community 647|Community 647]]
-- [[_COMMUNITY_Community 648|Community 648]]
-- [[_COMMUNITY_Community 649|Community 649]]
-- [[_COMMUNITY_Community 650|Community 650]]
-- [[_COMMUNITY_Community 651|Community 651]]
-- [[_COMMUNITY_Community 652|Community 652]]
-- [[_COMMUNITY_Community 653|Community 653]]
-- [[_COMMUNITY_Community 654|Community 654]]
-- [[_COMMUNITY_Community 655|Community 655]]
-- [[_COMMUNITY_Community 656|Community 656]]
-- [[_COMMUNITY_Community 657|Community 657]]
-- [[_COMMUNITY_Community 658|Community 658]]
-- [[_COMMUNITY_Community 659|Community 659]]
-- [[_COMMUNITY_Community 660|Community 660]]
-- [[_COMMUNITY_Community 661|Community 661]]
-- [[_COMMUNITY_Community 662|Community 662]]
-- [[_COMMUNITY_Community 663|Community 663]]
-- [[_COMMUNITY_Community 664|Community 664]]
-- [[_COMMUNITY_Community 665|Community 665]]
-- [[_COMMUNITY_Community 666|Community 666]]
-- [[_COMMUNITY_Community 667|Community 667]]
-- [[_COMMUNITY_Community 668|Community 668]]
-- [[_COMMUNITY_Community 669|Community 669]]
-- [[_COMMUNITY_Community 670|Community 670]]
-- [[_COMMUNITY_Community 671|Community 671]]
-- [[_COMMUNITY_Community 672|Community 672]]
-- [[_COMMUNITY_Community 673|Community 673]]
-- [[_COMMUNITY_Community 674|Community 674]]
-- [[_COMMUNITY_Community 675|Community 675]]
-- [[_COMMUNITY_Community 676|Community 676]]
-- [[_COMMUNITY_Community 677|Community 677]]
-- [[_COMMUNITY_Community 678|Community 678]]
-- [[_COMMUNITY_Community 679|Community 679]]
-- [[_COMMUNITY_Community 680|Community 680]]
-- [[_COMMUNITY_Community 681|Community 681]]
-- [[_COMMUNITY_Community 682|Community 682]]
-- [[_COMMUNITY_Community 683|Community 683]]
-- [[_COMMUNITY_Community 684|Community 684]]
-- [[_COMMUNITY_Community 685|Community 685]]
-- [[_COMMUNITY_Community 686|Community 686]]
-- [[_COMMUNITY_Community 687|Community 687]]
-- [[_COMMUNITY_Community 688|Community 688]]
-- [[_COMMUNITY_Community 689|Community 689]]
-- [[_COMMUNITY_Community 690|Community 690]]
-- [[_COMMUNITY_Community 691|Community 691]]
 - [[_COMMUNITY_Community 692|Community 692]]
 - [[_COMMUNITY_Community 693|Community 693]]
 - [[_COMMUNITY_Community 694|Community 694]]
@@ -715,14 +220,10 @@
 - [[_COMMUNITY_Community 699|Community 699]]
 - [[_COMMUNITY_Community 700|Community 700]]
 - [[_COMMUNITY_Community 701|Community 701]]
-- [[_COMMUNITY_Community 702|Community 702]]
 - [[_COMMUNITY_Community 703|Community 703]]
 - [[_COMMUNITY_Community 704|Community 704]]
 - [[_COMMUNITY_Community 705|Community 705]]
 - [[_COMMUNITY_Community 706|Community 706]]
-- [[_COMMUNITY_Community 707|Community 707]]
-- [[_COMMUNITY_Community 708|Community 708]]
-- [[_COMMUNITY_Community 709|Community 709]]
 - [[_COMMUNITY_Community 710|Community 710]]
 - [[_COMMUNITY_Community 711|Community 711]]
 - [[_COMMUNITY_Community 712|Community 712]]
@@ -730,273 +231,34 @@
 - [[_COMMUNITY_Community 714|Community 714]]
 - [[_COMMUNITY_Community 715|Community 715]]
 - [[_COMMUNITY_Community 716|Community 716]]
-- [[_COMMUNITY_Community 717|Community 717]]
-- [[_COMMUNITY_Community 718|Community 718]]
 - [[_COMMUNITY_Community 719|Community 719]]
-- [[_COMMUNITY_Community 720|Community 720]]
-- [[_COMMUNITY_Community 721|Community 721]]
 - [[_COMMUNITY_Community 722|Community 722]]
-- [[_COMMUNITY_Community 723|Community 723]]
 - [[_COMMUNITY_Community 724|Community 724]]
 - [[_COMMUNITY_Community 725|Community 725]]
 - [[_COMMUNITY_Community 726|Community 726]]
-- [[_COMMUNITY_Community 727|Community 727]]
 - [[_COMMUNITY_Community 728|Community 728]]
 - [[_COMMUNITY_Community 729|Community 729]]
 - [[_COMMUNITY_Community 730|Community 730]]
 - [[_COMMUNITY_Community 731|Community 731]]
 - [[_COMMUNITY_Community 732|Community 732]]
-- [[_COMMUNITY_Community 733|Community 733]]
 - [[_COMMUNITY_Community 734|Community 734]]
 - [[_COMMUNITY_Community 735|Community 735]]
-- [[_COMMUNITY_Community 736|Community 736]]
 - [[_COMMUNITY_Community 737|Community 737]]
 - [[_COMMUNITY_Community 738|Community 738]]
-- [[_COMMUNITY_Community 739|Community 739]]
-- [[_COMMUNITY_Community 740|Community 740]]
 - [[_COMMUNITY_Community 741|Community 741]]
 - [[_COMMUNITY_Community 742|Community 742]]
-- [[_COMMUNITY_Community 743|Community 743]]
-- [[_COMMUNITY_Community 744|Community 744]]
-- [[_COMMUNITY_Community 745|Community 745]]
-- [[_COMMUNITY_Community 746|Community 746]]
-- [[_COMMUNITY_Community 747|Community 747]]
-- [[_COMMUNITY_Community 748|Community 748]]
-- [[_COMMUNITY_Community 749|Community 749]]
-- [[_COMMUNITY_Community 750|Community 750]]
-- [[_COMMUNITY_Community 751|Community 751]]
-- [[_COMMUNITY_Community 752|Community 752]]
-- [[_COMMUNITY_Community 753|Community 753]]
-- [[_COMMUNITY_Community 754|Community 754]]
-- [[_COMMUNITY_Community 755|Community 755]]
-- [[_COMMUNITY_Community 756|Community 756]]
-- [[_COMMUNITY_Community 757|Community 757]]
-- [[_COMMUNITY_Community 758|Community 758]]
-- [[_COMMUNITY_Community 759|Community 759]]
-- [[_COMMUNITY_Community 760|Community 760]]
-- [[_COMMUNITY_Community 761|Community 761]]
-- [[_COMMUNITY_Community 762|Community 762]]
-- [[_COMMUNITY_Community 763|Community 763]]
-- [[_COMMUNITY_Community 764|Community 764]]
-- [[_COMMUNITY_Community 765|Community 765]]
-- [[_COMMUNITY_Community 766|Community 766]]
-- [[_COMMUNITY_Community 767|Community 767]]
-- [[_COMMUNITY_Community 768|Community 768]]
-- [[_COMMUNITY_Community 769|Community 769]]
-- [[_COMMUNITY_Community 770|Community 770]]
-- [[_COMMUNITY_Community 771|Community 771]]
-- [[_COMMUNITY_Community 772|Community 772]]
-- [[_COMMUNITY_Community 773|Community 773]]
-- [[_COMMUNITY_Community 774|Community 774]]
-- [[_COMMUNITY_Community 775|Community 775]]
-- [[_COMMUNITY_Community 776|Community 776]]
-- [[_COMMUNITY_Community 777|Community 777]]
-- [[_COMMUNITY_Community 778|Community 778]]
-- [[_COMMUNITY_Community 779|Community 779]]
-- [[_COMMUNITY_Community 780|Community 780]]
-- [[_COMMUNITY_Community 781|Community 781]]
-- [[_COMMUNITY_Community 782|Community 782]]
-- [[_COMMUNITY_Community 783|Community 783]]
-- [[_COMMUNITY_Community 784|Community 784]]
-- [[_COMMUNITY_Community 785|Community 785]]
-- [[_COMMUNITY_Community 786|Community 786]]
-- [[_COMMUNITY_Community 787|Community 787]]
-- [[_COMMUNITY_Community 788|Community 788]]
-- [[_COMMUNITY_Community 789|Community 789]]
-- [[_COMMUNITY_Community 790|Community 790]]
-- [[_COMMUNITY_Community 791|Community 791]]
-- [[_COMMUNITY_Community 792|Community 792]]
-- [[_COMMUNITY_Community 793|Community 793]]
-- [[_COMMUNITY_Community 794|Community 794]]
-- [[_COMMUNITY_Community 795|Community 795]]
-- [[_COMMUNITY_Community 796|Community 796]]
-- [[_COMMUNITY_Community 797|Community 797]]
 - [[_COMMUNITY_Community 798|Community 798]]
 - [[_COMMUNITY_Community 799|Community 799]]
 - [[_COMMUNITY_Community 800|Community 800]]
-- [[_COMMUNITY_Community 801|Community 801]]
-- [[_COMMUNITY_Community 802|Community 802]]
-- [[_COMMUNITY_Community 803|Community 803]]
 - [[_COMMUNITY_Community 804|Community 804]]
-- [[_COMMUNITY_Community 805|Community 805]]
-- [[_COMMUNITY_Community 806|Community 806]]
-- [[_COMMUNITY_Community 807|Community 807]]
-- [[_COMMUNITY_Community 808|Community 808]]
-- [[_COMMUNITY_Community 809|Community 809]]
-- [[_COMMUNITY_Community 810|Community 810]]
-- [[_COMMUNITY_Community 811|Community 811]]
-- [[_COMMUNITY_Community 812|Community 812]]
-- [[_COMMUNITY_Community 813|Community 813]]
-- [[_COMMUNITY_Community 814|Community 814]]
-- [[_COMMUNITY_Community 815|Community 815]]
 - [[_COMMUNITY_Community 816|Community 816]]
 - [[_COMMUNITY_Community 817|Community 817]]
-- [[_COMMUNITY_Community 818|Community 818]]
-- [[_COMMUNITY_Community 819|Community 819]]
-- [[_COMMUNITY_Community 820|Community 820]]
-- [[_COMMUNITY_Community 821|Community 821]]
-- [[_COMMUNITY_Community 822|Community 822]]
-- [[_COMMUNITY_Community 823|Community 823]]
-- [[_COMMUNITY_Community 824|Community 824]]
-- [[_COMMUNITY_Community 825|Community 825]]
-- [[_COMMUNITY_Community 826|Community 826]]
-- [[_COMMUNITY_Community 827|Community 827]]
-- [[_COMMUNITY_Community 828|Community 828]]
-- [[_COMMUNITY_Community 829|Community 829]]
-- [[_COMMUNITY_Community 830|Community 830]]
-- [[_COMMUNITY_Community 831|Community 831]]
-- [[_COMMUNITY_Community 832|Community 832]]
-- [[_COMMUNITY_Community 833|Community 833]]
-- [[_COMMUNITY_Community 834|Community 834]]
-- [[_COMMUNITY_Community 835|Community 835]]
-- [[_COMMUNITY_Community 836|Community 836]]
-- [[_COMMUNITY_Community 837|Community 837]]
-- [[_COMMUNITY_Community 838|Community 838]]
-- [[_COMMUNITY_Community 839|Community 839]]
-- [[_COMMUNITY_Community 840|Community 840]]
-- [[_COMMUNITY_Community 841|Community 841]]
-- [[_COMMUNITY_Community 842|Community 842]]
-- [[_COMMUNITY_Community 843|Community 843]]
-- [[_COMMUNITY_Community 844|Community 844]]
-- [[_COMMUNITY_Community 845|Community 845]]
-- [[_COMMUNITY_Community 846|Community 846]]
-- [[_COMMUNITY_Community 847|Community 847]]
-- [[_COMMUNITY_Community 848|Community 848]]
-- [[_COMMUNITY_Community 849|Community 849]]
-- [[_COMMUNITY_Community 850|Community 850]]
-- [[_COMMUNITY_Community 851|Community 851]]
-- [[_COMMUNITY_Community 852|Community 852]]
-- [[_COMMUNITY_Community 853|Community 853]]
-- [[_COMMUNITY_Community 854|Community 854]]
-- [[_COMMUNITY_Community 855|Community 855]]
-- [[_COMMUNITY_Community 856|Community 856]]
-- [[_COMMUNITY_Community 857|Community 857]]
-- [[_COMMUNITY_Community 858|Community 858]]
-- [[_COMMUNITY_Community 859|Community 859]]
-- [[_COMMUNITY_Community 860|Community 860]]
-- [[_COMMUNITY_Community 861|Community 861]]
-- [[_COMMUNITY_Community 862|Community 862]]
-- [[_COMMUNITY_Community 863|Community 863]]
-- [[_COMMUNITY_Community 864|Community 864]]
-- [[_COMMUNITY_Community 865|Community 865]]
-- [[_COMMUNITY_Community 866|Community 866]]
-- [[_COMMUNITY_Community 867|Community 867]]
-- [[_COMMUNITY_Community 868|Community 868]]
-- [[_COMMUNITY_Community 869|Community 869]]
-- [[_COMMUNITY_Community 870|Community 870]]
-- [[_COMMUNITY_Community 871|Community 871]]
-- [[_COMMUNITY_Community 872|Community 872]]
-- [[_COMMUNITY_Community 873|Community 873]]
-- [[_COMMUNITY_Community 874|Community 874]]
-- [[_COMMUNITY_Community 875|Community 875]]
-- [[_COMMUNITY_Community 876|Community 876]]
-- [[_COMMUNITY_Community 877|Community 877]]
-- [[_COMMUNITY_Community 878|Community 878]]
-- [[_COMMUNITY_Community 879|Community 879]]
-- [[_COMMUNITY_Community 880|Community 880]]
-- [[_COMMUNITY_Community 881|Community 881]]
-- [[_COMMUNITY_Community 882|Community 882]]
-- [[_COMMUNITY_Community 883|Community 883]]
-- [[_COMMUNITY_Community 884|Community 884]]
-- [[_COMMUNITY_Community 885|Community 885]]
-- [[_COMMUNITY_Community 886|Community 886]]
-- [[_COMMUNITY_Community 887|Community 887]]
-- [[_COMMUNITY_Community 888|Community 888]]
-- [[_COMMUNITY_Community 889|Community 889]]
-- [[_COMMUNITY_Community 890|Community 890]]
-- [[_COMMUNITY_Community 891|Community 891]]
-- [[_COMMUNITY_Community 892|Community 892]]
-- [[_COMMUNITY_Community 893|Community 893]]
-- [[_COMMUNITY_Community 894|Community 894]]
-- [[_COMMUNITY_Community 895|Community 895]]
-- [[_COMMUNITY_Community 896|Community 896]]
-- [[_COMMUNITY_Community 897|Community 897]]
-- [[_COMMUNITY_Community 898|Community 898]]
-- [[_COMMUNITY_Community 899|Community 899]]
-- [[_COMMUNITY_Community 900|Community 900]]
-- [[_COMMUNITY_Community 901|Community 901]]
-- [[_COMMUNITY_Community 902|Community 902]]
-- [[_COMMUNITY_Community 903|Community 903]]
-- [[_COMMUNITY_Community 904|Community 904]]
-- [[_COMMUNITY_Community 905|Community 905]]
-- [[_COMMUNITY_Community 906|Community 906]]
-- [[_COMMUNITY_Community 907|Community 907]]
-- [[_COMMUNITY_Community 908|Community 908]]
-- [[_COMMUNITY_Community 909|Community 909]]
-- [[_COMMUNITY_Community 910|Community 910]]
-- [[_COMMUNITY_Community 911|Community 911]]
-- [[_COMMUNITY_Community 912|Community 912]]
-- [[_COMMUNITY_Community 913|Community 913]]
-- [[_COMMUNITY_Community 914|Community 914]]
-- [[_COMMUNITY_Community 915|Community 915]]
-- [[_COMMUNITY_Community 916|Community 916]]
-- [[_COMMUNITY_Community 917|Community 917]]
-- [[_COMMUNITY_Community 918|Community 918]]
-- [[_COMMUNITY_Community 919|Community 919]]
-- [[_COMMUNITY_Community 920|Community 920]]
-- [[_COMMUNITY_Community 921|Community 921]]
-- [[_COMMUNITY_Community 922|Community 922]]
-- [[_COMMUNITY_Community 923|Community 923]]
-- [[_COMMUNITY_Community 924|Community 924]]
-- [[_COMMUNITY_Community 925|Community 925]]
-- [[_COMMUNITY_Community 926|Community 926]]
-- [[_COMMUNITY_Community 927|Community 927]]
-- [[_COMMUNITY_Community 928|Community 928]]
-- [[_COMMUNITY_Community 929|Community 929]]
-- [[_COMMUNITY_Community 930|Community 930]]
-- [[_COMMUNITY_Community 931|Community 931]]
 - [[_COMMUNITY_Community 932|Community 932]]
 - [[_COMMUNITY_Community 933|Community 933]]
-- [[_COMMUNITY_Community 934|Community 934]]
-- [[_COMMUNITY_Community 935|Community 935]]
-- [[_COMMUNITY_Community 936|Community 936]]
 - [[_COMMUNITY_Community 937|Community 937]]
-- [[_COMMUNITY_Community 938|Community 938]]
-- [[_COMMUNITY_Community 939|Community 939]]
-- [[_COMMUNITY_Community 940|Community 940]]
-- [[_COMMUNITY_Community 941|Community 941]]
-- [[_COMMUNITY_Community 942|Community 942]]
-- [[_COMMUNITY_Community 943|Community 943]]
-- [[_COMMUNITY_Community 944|Community 944]]
-- [[_COMMUNITY_Community 945|Community 945]]
-- [[_COMMUNITY_Community 946|Community 946]]
-- [[_COMMUNITY_Community 947|Community 947]]
-- [[_COMMUNITY_Community 948|Community 948]]
-- [[_COMMUNITY_Community 949|Community 949]]
-- [[_COMMUNITY_Community 950|Community 950]]
-- [[_COMMUNITY_Community 951|Community 951]]
-- [[_COMMUNITY_Community 952|Community 952]]
-- [[_COMMUNITY_Community 953|Community 953]]
-- [[_COMMUNITY_Community 954|Community 954]]
-- [[_COMMUNITY_Community 955|Community 955]]
-- [[_COMMUNITY_Community 956|Community 956]]
-- [[_COMMUNITY_Community 957|Community 957]]
-- [[_COMMUNITY_Community 958|Community 958]]
-- [[_COMMUNITY_Community 959|Community 959]]
-- [[_COMMUNITY_Community 960|Community 960]]
-- [[_COMMUNITY_Community 961|Community 961]]
-- [[_COMMUNITY_Community 962|Community 962]]
-- [[_COMMUNITY_Community 963|Community 963]]
-- [[_COMMUNITY_Community 964|Community 964]]
-- [[_COMMUNITY_Community 965|Community 965]]
-- [[_COMMUNITY_Community 966|Community 966]]
-- [[_COMMUNITY_Community 967|Community 967]]
-- [[_COMMUNITY_Community 1055|Community 1055]]
 - [[_COMMUNITY_Community 1056|Community 1056]]
-- [[_COMMUNITY_Community 1057|Community 1057]]
-- [[_COMMUNITY_Community 1058|Community 1058]]
-- [[_COMMUNITY_Community 1060|Community 1060]]
-- [[_COMMUNITY_Community 1061|Community 1061]]
 - [[_COMMUNITY_Community 1069|Community 1069]]
-- [[_COMMUNITY_Community 1086|Community 1086]]
-- [[_COMMUNITY_Community 1087|Community 1087]]
-- [[_COMMUNITY_Community 1088|Community 1088]]
-- [[_COMMUNITY_Community 1089|Community 1089]]
-- [[_COMMUNITY_Community 1090|Community 1090]]
-- [[_COMMUNITY_Community 1091|Community 1091]]
-- [[_COMMUNITY_Community 1092|Community 1092]]
 - [[_COMMUNITY_Community 1093|Community 1093]]
-- [[_COMMUNITY_Community 1094|Community 1094]]
 - [[_COMMUNITY_Community 1095|Community 1095]]
 - [[_COMMUNITY_Community 1096|Community 1096]]
 - [[_COMMUNITY_Community 1097|Community 1097]]
@@ -1016,13 +278,9 @@
 - [[_COMMUNITY_Community 1112|Community 1112]]
 - [[_COMMUNITY_Community 1113|Community 1113]]
 - [[_COMMUNITY_Community 1114|Community 1114]]
-- [[_COMMUNITY_Community 1115|Community 1115]]
-- [[_COMMUNITY_Community 1116|Community 1116]]
 - [[_COMMUNITY_Community 1117|Community 1117]]
 - [[_COMMUNITY_Community 1118|Community 1118]]
 - [[_COMMUNITY_Community 1119|Community 1119]]
-- [[_COMMUNITY_Community 1120|Community 1120]]
-- [[_COMMUNITY_Community 1121|Community 1121]]
 - [[_COMMUNITY_Community 1122|Community 1122]]
 - [[_COMMUNITY_Community 1123|Community 1123]]
 - [[_COMMUNITY_Community 1124|Community 1124]]
@@ -1033,19 +291,7 @@
 - [[_COMMUNITY_Community 1129|Community 1129]]
 - [[_COMMUNITY_Community 1130|Community 1130]]
 - [[_COMMUNITY_Community 1131|Community 1131]]
-- [[_COMMUNITY_Community 1132|Community 1132]]
-- [[_COMMUNITY_Community 1133|Community 1133]]
-- [[_COMMUNITY_Community 1134|Community 1134]]
-- [[_COMMUNITY_Community 1135|Community 1135]]
-- [[_COMMUNITY_Community 1136|Community 1136]]
-- [[_COMMUNITY_Community 1137|Community 1137]]
-- [[_COMMUNITY_Community 1138|Community 1138]]
 - [[_COMMUNITY_Community 1139|Community 1139]]
-- [[_COMMUNITY_Community 1140|Community 1140]]
-- [[_COMMUNITY_Community 1141|Community 1141]]
-- [[_COMMUNITY_Community 1142|Community 1142]]
-- [[_COMMUNITY_Community 1143|Community 1143]]
-- [[_COMMUNITY_Community 1144|Community 1144]]
 - [[_COMMUNITY_Community 1145|Community 1145]]
 - [[_COMMUNITY_Community 1146|Community 1146]]
 - [[_COMMUNITY_Community 1147|Community 1147]]
@@ -1053,28 +299,35 @@
 - [[_COMMUNITY_Community 1149|Community 1149]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `execute_command()` - 1328 edges
-2. `validate_target()` - 131 edges
-3. `execute_command()` - 64 edges
-4. `BaseAgent` - 62 edges
-5. `ToolScope` - 59 edges
-6. `ShikariConfig` - 58 edges
-7. `_step()` - 52 edges
-8. `build_default_plan()` - 50 edges
-9. `shikari_tool decorator` - 43 edges
-10. `set_config()` - 32 edges
+1. `execute_command()` - 334 edges
+2. `validate_target()` - 130 edges
+3. `ShikariConfig` - 81 edges
+4. `BaseAgent` - 67 edges
+5. `ToolScope` - 61 edges
+6. `_step()` - 53 edges
+7. `build_default_plan()` - 51 edges
+8. `shikari_tool decorator` - 41 edges
+9. `set_config()` - 37 edges
+10. `ParsedOutput` - 36 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `AgentResult` --implements--> `Structured Output Design Principle`  [INFERRED]
+  src/shikari/agents/_base_agent.py → README.md
 - `ShikariConfig` --implements--> `Dual Transport Architecture`  [INFERRED]
   src/shikari/config.py → .agent/plans/implementation_plan.md
-- `Scope filtering tests` --rationale_for--> `Tool Scope Awareness`  [INFERRED]
-  tests/test_registry.py → .agent/plans/implementation_plan.md
-- `Install Go Tools Script` --implements--> `Tool Profiles`  [INFERRED]
-  scripts/install-go-tools.sh → docs/TOOLS.md
-- `shikari_policy_explain MCP Tool` --implements--> `Safety Controls`  [INFERRED]
-  src/shikari/server.py → docs/ARCHITECTURE.md
+- `ShikariConfig` --implements--> `Safety Controls`  [INFERRED]
+  src/shikari/config.py → docs/ARCHITECTURE.md
 - `ShikariConfig` --implements--> `Scope System (LOCAL/REMOTE/BOTH)`  [INFERRED]
   src/shikari/config.py → docs/CONFIGURATION.md
+- `shikari_policy_explain MCP Tool` --implements--> `Safety Controls`  [INFERRED]
+  src/shikari/server.py → docs/ARCHITECTURE.md
+
+## Import Cycles
+- 1-file cycle: `tests/test_smoke.py -> tests/test_smoke.py`
+- 1-file cycle: `src/shikari/tools/exploitation/__init__.py -> src/shikari/tools/exploitation/__init__.py`
+- 1-file cycle: `src/shikari/tools/post_exploitation/__init__.py -> src/shikari/tools/post_exploitation/__init__.py`
+- 1-file cycle: `src/shikari/tools/vulnerability_scanning/__init__.py -> src/shikari/tools/vulnerability_scanning/__init__.py`
+- 1-file cycle: `src/shikari/tools/web_application/__init__.py -> src/shikari/tools/web_application/__init__.py`
 
 ## Hyperedges (group relationships)
 - **ShikariMCP Core Architecture** — concept_shikari_mcp, concept_server_py, concept_registry_py, concept_executor_py, concept_auth_py, concept_base_tool [EXTRACTED 1.00]
@@ -1184,187 +437,187 @@
 - **Go Tool Version Pins** — tools_lock_go_tools, tools_lock_projectdiscovery [EXTRACTED 1.00]
 - **Tool Category Registration Tests** — test_recon_tools_exist, test_password_tools_exist, test_webapp_tools_exist, test_agent_tools_exist, registry_get_tool_registry [EXTRACTED 1.00]
 
-## Communities (1071 total, 789 thin omitted)
+## Communities (339 total, 73 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.09
-Nodes (76): ADAgent, AnomalyDetectAgent, API Testing Tools (api_testing.py), audit_event function, Authentication Testing Tools (auth_testing.py), BaseAgent, shikari_tool decorator, Binary Analysis Tools (binary_analysis.py) (+68 more)
+Cohesion: 0.10
+Nodes (32): API Testing Tools (api_testing.py), Authentication Testing Tools (auth_testing.py), shikari_tool decorator, Binary Analysis Tools (binary_analysis.py), CMS Exploitation Tools (cms_exploitation.py), CMS Scanners (cms_scanners.py), API Enumeration, Authentication / JWT Testing (+24 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.01
-Nodes (218): Wrapper for web_application_tool_43.          Args:         target: Target IP, Wrapper for web_application_tool_44.          Args:         target: Target IP, Wrapper for web_application_tool_45.          Args:         target: Target IP, Wrapper for web_application_tool_48.          Args:         target: Target IP, Wrapper for web_application_tool_51.          Args:         target: Target IP, Wrapper for web_application_tool_52.          Args:         target: Target IP, Wrapper for web_application_tool_54.          Args:         target: Target IP, Wrapper for web_application_tool_55.          Args:         target: Target IP (+210 more)
+Cohesion: 0.16
+Nodes (11): parse_json(), Parse Arjun parameter mining JSON output., _extract_gps(), parse_gps(), parse_json(), Build a short summary from key EXIF tags., _summarize_tags(), parse_json() (+3 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.05
-Nodes (65): arjun_scan(), kiterunner_scan(), checksec_run(), radare2_analyze(), wpscan_exploit(), droopescan_scan(), wpscan_scan(), OSINT (Open Source Intelligence) (+57 more)
+Cohesion: 0.13
+Nodes (14): code:mermaid (flowchart TB), Contributing to ShikariMCP, Integration Tiers at a Glance, Pull Request Checklist, Bug Reports, Code of Conduct, code:block2 (src/shikari/), code:bash (# 1. Create a feature branch) (+6 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.13
-Nodes (24): Validate a target (IP, domain, or CIDR).     Returns the cleaned target string., Validate a target (IP, domain, or CIDR).     Returns the cleaned target string., validate_target(), enum4linux(), ftp_anon(), ike_scan(), ldapsearch(), nbtscan() (+16 more)
+Cohesion: 0.14
+Nodes (14): API Key via Environment Variable (simplest), Authentication & Security, Bearer Token Auth (HTTP transports), code:dockerfile (FROM python:3.11-slim), code:python (if __name__ == "__main__":), code:toml (# fly.toml), code:bash (fly launch), code:python (import os) (+6 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.05
-Nodes (55): AttackSurfaceAgent, agent_intelligence_attacksurface tool entry point, BlueTeamAgent, agent_workflow_blueteam tool entry point, BugBountyAgent, workflow_bugbounty_agent tool entry point, Bug Bounty Pipeline (subfinder->httpx->nuclei), CodeReviewAgent (+47 more)
+Cohesion: 0.06
+Nodes (28): workflow_bugbounty_agent tool entry point, Bug Bounty Pipeline (subfinder->httpx->nuclei), agent_workflow_compliance tool entry point, workflow_ctf_agent tool entry point, CTF Challenge Type Detection, Custom Plan Execution Pattern, Findings Analysis Pattern, workflow_pentest_agent tool entry point (+20 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.09
-Nodes (52): apkid_scan function, auto_generated_exploitation module, auto_generated_mobile module, auto_generated_network_attacks module, beef_start function, binwalk_extract function, browser_exploitation module, bsqlbf_run function (+44 more)
+Cohesion: 0.30
+Nodes (17): dirb function, enum4linux function, execute_command function, ffuf function, gobuster_dir function, ldapsearch function, nbtscan function, network_enum module (+9 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.07
-Nodes (26): cmseek(), dirb(), dirsearch(), droopescan(), feroxbuster(), ffuf(), gau(), gobuster_dir() (+18 more)
+Cohesion: 0.04
+Nodes (73): Validate a target (IP, domain, or CIDR).     Returns the cleaned target string., validate_target(), enum4linux(), ftp_anon(), ike_scan(), ldapsearch(), nbtscan(), onesixtyone() (+65 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.22
-Nodes (12): Validate a file path (basic sanitization)., Validate a file path (basic sanitization)., Raised when input validation fails., Raised when input validation fails., Sanitize a string input by removing dangerous characters.     Raises ValidationE, Sanitize a string input by removing dangerous characters.     Raises ValidationE, Validate a port specification (single port, range, or comma-separated)., Validate a port specification (single port, range, or comma-separated). (+4 more)
+Cohesion: 0.23
+Nodes (8): BaseModel, severity(), Evidence, Finding, parse_json(), parse_jsonl(), parse_text(), parse_json()
 
 ### Community 8 - "Community 8"
-Cohesion: 0.01
-Nodes (252): Wrapper for vulnerability_scanning_tool_42.          Args:         target: Ta, Wrapper for vulnerability_scanning_tool_43.          Args:         target: Ta, Wrapper for vulnerability_scanning_tool_4.          Args:         target: Tar, Wrapper for vulnerability_scanning_tool_46.          Args:         target: Ta, Wrapper for vulnerability_scanning_tool_47.          Args:         target: Ta, Wrapper for vulnerability_scanning_tool_49.          Args:         target: Ta, Wrapper for vulnerability_scanning_tool_50.          Args:         target: Ta, Wrapper for vulnerability_scanning_tool_51.          Args:         target: Ta (+244 more)
+Cohesion: 0.15
+Nodes (8): parse_json(), Parse Checkov JSON output., parse_tool_output(), Load and run a parser by dotted reference., ParsedOutput, parse_json(), Parse Semgrep JSON output., parse_json()
 
 ### Community 9 - "Community 9"
-Cohesion: 0.06
-Nodes (37): Set the global configuration (used by CLI flag overrides)., Set the global configuration (used by CLI flag overrides)., Set the global configuration (used by CLI flag overrides)., set_config(), create_server(), Create and configure the MCP server., Create and configure the MCP server., Create and configure the MCP server. (+29 more)
+Cohesion: 0.04
+Nodes (48): discover_tools(), Auto-discover tool and agent modules.      Importing a module triggers @shikari_, Register discovered tools with the MCP server.      Tools blocked by policy (gen, register_tools_with_mcp(), agent_domain_database(), Run the DatabaseAgent., Run the DatabaseAgent., agent_domain_iotscada() (+40 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.06
-Nodes (34): exploitation_tool_0_run(), exploitation_tool_103_run(), exploitation_tool_121_run(), exploitation_tool_137_run(), exploitation_tool_13_run(), exploitation_tool_147_run(), exploitation_tool_27_run(), exploitation_tool_29_run() (+26 more)
+Cohesion: 0.17
+Nodes (8): parse_json(), Parse Censys host view JSON., parse_json(), Parse masscan JSON output (-oJ)., Service, parse_xml(), parse_json(), Parse Shodan host lookup JSON.
 
 ### Community 11 - "Community 11"
-Cohesion: 0.06
-Nodes (34): post_exploitation_tool_0_run(), post_exploitation_tool_103_run(), post_exploitation_tool_121_run(), post_exploitation_tool_137_run(), post_exploitation_tool_13_run(), post_exploitation_tool_147_run(), post_exploitation_tool_27_run(), post_exploitation_tool_29_run() (+26 more)
+Cohesion: 0.29
+Nodes (6): agent_offensive_privesc(), PrivEscAgent, Run the PrivEscAgent., Run the PrivEscAgent., Automated PrivEsc operations., agent_offensive_privesc tool entry point
 
 ### Community 12 - "Community 12"
-Cohesion: 0.13
-Nodes (9): get_tool_health(), Return production-oriented health for registered tools., Return production-oriented health for registered tools., clear_tool_registry(), get_duplicate_tools(), Return duplicate tool aliases created during registration., Clear the global registry. Primarily useful for tests., Return duplicate tool aliases created during registration. (+1 more)
+Cohesion: 0.17
+Nodes (6): get_tool_health(), Return production-oriented health for registered tools., clear_tool_registry(), get_duplicate_tools(), Return duplicate tool aliases created during registration., Clear the global registry. Primarily useful for tests.
 
 ### Community 13 - "Community 13"
-Cohesion: 0.06
-Nodes (30): check_binary(), _check_binary_cached(), check_binary_sync(), clear_binary_cache(), _execution_semaphore(), ExecutionResult, _open_output_file(), _process_group_options() (+22 more)
+Cohesion: 0.05
+Nodes (36): BinaryIO, check_binary(), _check_binary_cached(), check_binary_sync(), clear_binary_cache(), _execution_semaphore(), ExecutionResult, _open_output_file() (+28 more)
 
 ### Community 14 - "Community 14"
-Cohesion: 0.07
-Nodes (26): emailharvester(), gitleaks(), gitrob(), h8mail(), holehe(), metagoofil(), photon(), Information gathering tool designed for extracting metadata (+18 more)
+Cohesion: 0.05
+Nodes (62): OSINT (Open Source Intelligence), Secret / Credential Detection, OSINT Gathering Auto-Generated (osint_gathering.py), OSINT Search Tools (osint.py), Reconnaissance Module Exports (__init__.py), assetfinder_run(), httpx_probe(), Run Assetfinder.          Args:         domain: Target domain         subs_only: (+54 more)
 
 ### Community 15 - "Community 15"
-Cohesion: 0.07
-Nodes (53): _ad_agent(), _anomalydetect_agent(), _attacksurface_agent(), _blueteam_agent(), _cloud_agent(), _codereview_agent(), _compliance_agent(), _configmanager_agent() (+45 more)
+Cohesion: 0.08
+Nodes (52): _ad_agent(), _anomalydetect_agent(), _attacksurface_agent(), _blueteam_agent(), _cloud_agent(), _codereview_agent(), _compliance_agent(), _configmanager_agent() (+44 more)
 
 ### Community 16 - "Community 16"
-Cohesion: 0.08
-Nodes (24): password_attacks_tool_0_run(), password_attacks_tool_22_run(), password_attacks_tool_33_run(), password_attacks_tool_35_run(), password_attacks_tool_44_run(), password_attacks_tool_46_run(), password_attacks_tool_54_run(), password_attacks_tool_55_run() (+16 more)
+Cohesion: 0.29
+Nodes (4): Execute a manifest-backed plan and return structured step results., Extract newline-separated targets from a structured run result., Execute a manifest-backed plan and return structured step results., Extract newline-separated targets from a structured run result.          Caps ou
 
 ### Community 17 - "Community 17"
-Cohesion: 0.08
-Nodes (24): altdns(), amass_intel(), crtsh(), dnsenum(), dnsrecon(), dnsx(), fierce(), findomain() (+16 more)
+Cohesion: 0.29
+Nodes (7): 4. Creating a New Manifest Profile, code:bash (uv run shikari-mcp --transport stdio --tool-profile myprofil), code:json ({), Step 1: Add a manifest entry, Step 1: Create the profile JSON, Step 2: Add to the `full` profile, Step 3: Use it
 
 ### Community 18 - "Community 18"
-Cohesion: 0.07
-Nodes (27): ABC, AgentPhase, AgentResult, BaseAgent, execute(), plan(), Analyze raw results and extract findings.         Override in subclasses for cus, Analyze raw results and extract findings.         Override in subclasses for cus (+19 more)
+Cohesion: 0.09
+Nodes (19): ABC, AgentResult, execute(), plan(), Create an execution plan â€” a list of steps to perform.          Each step is a, Execute the plan, running tools in order and passing results between steps., Analyze raw results and extract findings.         Override in subclasses for cus, Structured result from an agent execution. (+11 more)
 
 ### Community 19 - "Community 19"
-Cohesion: 0.08
-Nodes (29): iter_json_lines(), Yield JSON objects from JSONL output, skipping malformed lines., severity(), _extract_gps(), parse_gps(), parse_json(), Build a short summary from key EXIF tags., _summarize_tags() (+21 more)
+Cohesion: 0.12
+Nodes (11): iter_json_lines(), Yield JSON objects from JSONL output, skipping malformed lines., parse_jsonl(), parse_text(), parse_jsonl(), parse_jsonl(), Endpoint, parse_jsonl() (+3 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.05
-Nodes (39): 1. Adding a Manifest Tool (Recommended), 2. Adding a Wrapper Tool, 3. Adding an Agent, 4. Creating a New Manifest Profile, Agent categories, Capability gating, Code style, code:mermaid (flowchart TB) (+31 more)
+Cohesion: 0.20
+Nodes (10): 1. Adding a Manifest Tool (Recommended), code:json ("argv": ["nmap", "-oX", "-", "-sV", "{target}"]), code:json ("argv": ["ffuf", "-u", "{url}/FUZZ", "-w", "{wordlist}", "-o), code:python (from __future__ import annotations), code:python (for name in ("core", "recon", "web", "cloud", "forensics", "), code:bash (# Verify the manifest loads), Placeholder syntax, Step 2: Write a parser (optional but recommended) (+2 more)
 
 ### Community 21 - "Community 21"
-Cohesion: 0.16
-Nodes (21): BaseModel, CommandTemplate, dumps_verification(), explain_tool(), load_tool_manifest(), manifest_public_catalog(), Verify binaries and version commands for a manifest profile., Return an AI/client-friendly catalog without running external binaries. (+13 more)
+Cohesion: 0.10
+Nodes (28): explain_policy(), Explain current local policy settings., Explain current local policy settings., dumps_verification(), explain_tool(), list_tool_profiles(), load_tool_manifest(), manifest_public_catalog() (+20 more)
 
 ### Community 22 - "Community 22"
-Cohesion: 0.27
+Cohesion: 0.24
 Nodes (23): iter_json_lines - JSONL line parser helper, severity - severity string normalizer, parse_tool_output - dynamic parser dispatcher, ffuf parse_jsonl - parse ffuf JSON/JSONL output, gobuster parse_text - parse gobuster text output, httpx parse_jsonl - parse httpx JSONL output, katana parse_jsonl - parse katana JSONL output, Asset - Pydantic model for discovered assets (+15 more)
 
 ### Community 23 - "Community 23"
-Cohesion: 0.21
-Nodes (22): Plan-Execute-Analyze-Report Pattern, API Key Authentication, Authentication Middleware, Base Agent Class, Base Tool Infrastructure, CI/CD Pipeline, Docker Deployment Profiles, Dual Transport Architecture (+14 more)
+Cohesion: 0.29
+Nodes (10): API Key Authentication, Authentication Middleware, CI/CD Pipeline, Docker Deployment Profiles, Dual Transport Architecture, Command Executor Module, Tool Registry Module, Main Server Entry Point (+2 more)
 
 ### Community 24 - "Community 24"
-Cohesion: 0.1
-Nodes (14): dry_run_verified_tool(), Build a manifest command without executing it., Build a manifest command without executing it., Integration tests using fake binaries to verify tool runner and manifest executi, TestDryRunWithFakeBinaries, Tests for manifest-driven tool command building., test_common_target_aliases_are_normalized(), test_dry_run_builds_nmap_command() (+6 more)
+Cohesion: 0.15
+Nodes (17): dry_run_tool(), dry_run_verified_tool(), Build a manifest command without executing it., _runner_notes(), TestDryRunWithFakeBinaries, Tests for manifest-driven tool command building., test_common_target_aliases_are_normalized(), test_dry_run_builds_nmap_command() (+9 more)
 
 ### Community 25 - "Community 25"
-Cohesion: 0.1
+Cohesion: 0.10
 Nodes (19): artifacts, assets, command, argv, output_format, redacted, stdin, timeout (+11 more)
 
 ### Community 26 - "Community 26"
-Cohesion: 0.4
-Nodes (4): cewl_spider(), crunch_generate(), Run CeWL to generate a target-specific wordlist.          Args:         url: Tar, Run Crunch.          Args:         min_len: Minimum string length         max_le
+Cohesion: 0.29
+Nodes (7): Before Submitting, code:block10 (feat: add gobuster directory brute-force tool), code:markdown (## What), PR Description Template, PR Title Format, Pull Request Process, Review Process
 
 ### Community 27 - "Community 27"
-Cohesion: 0.19
-Nodes (20): aws_cli_run - arbitrary AWS CLI command executor, pacu_run - Pacu AWS exploitation framework wrapper, cloud_security package init - re-exports cloud tools, Cloud security tools - AWS, container, K8s scanning, kube_hunter_scan - Kubernetes security scanner wrapper, scoutsuite_run - multi-cloud security audit wrapper, trivy_scan - container/artifact security scanner wrapper, Tool registration pattern - decorator-based MCP tool registry (+12 more)
+Cohesion: 0.13
+Nodes (24): aws_cli_run - arbitrary AWS CLI command executor, pacu_run - Pacu AWS exploitation framework wrapper, cloud_security package init - re-exports cloud tools, Cloud security tools - AWS, container, K8s scanning, kube_hunter_scan - Kubernetes security scanner wrapper, scoutsuite_run - multi-cloud security audit wrapper, trivy_scan - container/artifact security scanner wrapper, @shikari_tool should register the function in the global registry. (+16 more)
 
 ### Community 28 - "Community 28"
 Cohesion: 0.13
-Nodes (11): TestToolMetadata, Return required binaries that are not currently on PATH., Check policy/scope availability, optionally including dependencies., Return required binaries that are not currently on PATH., Check policy/scope availability, optionally including dependencies., Check both policy and locally installed dependencies., Check both policy and locally installed dependencies., How much confidence Shikari has in a wrapper. (+3 more)
+Nodes (6): TestToolMetadata, Return required binaries that are not currently on PATH., Check policy/scope availability, optionally including dependencies., Check both policy and locally installed dependencies., Metadata for a registered tool., ToolMetadata
 
 ### Community 29 - "Community 29"
 Cohesion: 0.14
 Nodes (19): Reconnaissance workflow pattern, Web application workflow pattern, Core tool manifest profile, ReconAgent class, workflow_recon_agent function, ffuf Fuzz tool entry, Gobuster Directory Scan tool entry, httpx Probe tool entry (+11 more)
 
 ### Community 30 - "Community 30"
-Cohesion: 0.13
-Nodes (19): _artifact_kind(), _build_preview(), _execution_preflight_error(), _format_value(), _get_template(), _next_suggestions(), _normalize_inputs(), Normalize common AI input aliases and allocate tool output files. (+11 more)
+Cohesion: 0.20
+Nodes (20): CommandTemplate, ToolManifestEntry, _artifact_kind(), _build_preview(), _execution_preflight_error(), _find_tool(), _format_value(), _get_template() (+12 more)
 
 ### Community 31 - "Community 31"
-Cohesion: 0.12
-Nodes (14): assetfinder_run(), httpx_probe(), Run Assetfinder.          Args:         domain: Target domain         subs_only:, Run HTTPX against a single target (for piping, extra_args or bash is needed)., Run waybackurls.          Args:         domain: Target domain         extra_args, waybackurls_get(), amass_enum(), dnsrecon_scan() (+6 more)
+Cohesion: 0.29
+Nodes (7): code:bash (# Full suite), code:python (def test_my_tool_registered(self):), code:python (def test_my_agent_registered(self):), Running Tests, Test Structure, Testing, Writing Tests for Your Contribution
 
 ### Community 32 - "Community 32"
-Cohesion: 0.26
-Nodes (7): Enum, _env_bool(), _env_float(), _env_int(), _env_list(), from_env(), TransportMode
+Cohesion: 0.12
+Nodes (16): AgentPhase, Phases of agent execution workflow., Enum, _env_bool(), _env_float(), _env_int(), _env_list(), from_env() (+8 more)
 
 ### Community 33 - "Community 33"
-Cohesion: 0.13
-Nodes (9): BaseAgent, BugBountyAgent, Bug bounty reconnaissance and low-noise template testing., Run an automated bug bounty pipeline against a domain., workflow_bugbounty_agent(), Red-team planning workflow.      This agent no longer fabricates brute-force or, Prepare an authorized red-team scenario plan., RedTeamAgent (+1 more)
+Cohesion: 0.33
+Nodes (4): Red-team planning workflow.      This agent no longer fabricates brute-force or, Prepare an authorized red-team scenario plan., RedTeamAgent, workflow_redteam_agent()
 
 ### Community 34 - "Community 34"
-Cohesion: 0.17
-Nodes (16): Local-First Design Principle, Manifest-Driven Design Principle, Scope System (LOCAL/REMOTE/BOTH), Tool Catalog Model (Verified/Manifest/Generated tiers), Tool Profiles, Configuration Documentation, Docker Documentation, MCP Client Configuration Guide (+8 more)
+Cohesion: 0.29
+Nodes (4): Local-First Design Principle, Scope System (LOCAL/REMOTE/BOTH), Tool Catalog Model (Verified/Manifest/Generated tiers), Release Checklist
 
 ### Community 35 - "Community 35"
-Cohesion: 0.2
-Nodes (16): Safety Controls, Verified-First Design Principle, create_server, main, parse_args, run_tools_cli, ShikariConfig, shikari_explain_tool MCP Tool (+8 more)
+Cohesion: 0.17
+Nodes (16): Manifest-Driven Design Principle, Verified-First Design Principle, create_server, main, parse_args, run_tools_cli, shikari_explain_tool MCP Tool, shikari_list_verified_tools MCP Tool (+8 more)
 
 ### Community 36 - "Community 36"
-Cohesion: 0.13
-Nodes (14): network_attacks_tool_0_run(), network_attacks_tool_10_run(), network_attacks_tool_27_run(), network_attacks_tool_32_run(), network_attacks_tool_39_run(), network_attacks_tool_50_run(), network_attacks_tool_9_run(), Wrapper for network_attacks_tool_50.          Args:         target: Target IP (+6 more)
+Cohesion: 0.33
+Nodes (6): Threat hunting operational pattern, Vulnerability management operational pattern, ThreatHuntAgent class, agent_workflow_threathunt function, VulnManagementAgent class, agent_workflow_vulnmanagement function
 
 ### Community 37 - "Community 37"
-Cohesion: 0.13
-Nodes (14): osint_tool_0_run(), osint_tool_10_run(), osint_tool_27_run(), osint_tool_32_run(), osint_tool_39_run(), osint_tool_50_run(), osint_tool_9_run(), Wrapper for osint_tool_50.          Args:         target: Target IP, URL, or (+6 more)
+Cohesion: 0.33
+Nodes (6): 3. Adding an Agent, Agent categories, code:python (def _myagent_plan(target: str) -> list[dict[str, Any]]:), code:python (from typing import Any), Step 1: Create an agent class, Step 2: Add a plan to `_catalog.py`
 
 ### Community 38 - "Community 38"
 Cohesion: 0.15
 Nodes (15): write_artifact function, write_json_artifact function, Manifest-driven verified tool execution, Forensics tool manifest profile, Offensive tool manifest profile, Hashcat Offline Crack tool entry, John Offline Crack tool entry, ToolManifest model (+7 more)
 
 ### Community 39 - "Community 39"
-Cohesion: 0.18
-Nodes (20): evaluate_tool_policy(), Return allow/block policy decision for one tool invocation., Return allow/block policy decision for one tool invocation., Return allow/block policy decision for one tool invocation., Central configuration for the ShikariMCP server., Central configuration for the ShikariMCP server., ShikariConfig, Tests for local-first safety policy. (+12 more)
+Cohesion: 0.13
+Nodes (23): evaluate_tool_policy(), Return allow/block policy decision for one tool invocation., Return allow/block policy decision for one tool invocation., True if running HTTP without --local flag (cloud deployment)., Auth is required for HTTP transport., True when an HTTP auth provider should be installed., Central configuration for the ShikariMCP server., ShikariConfig (+15 more)
 
 ### Community 40 - "Community 40"
-Cohesion: 0.21
-Nodes (13): Agent System, Execution Flow, Manifest System, Normalized Output Models (Asset/Service/Endpoint/Finding), Parser System, Policy Engine, Production Readiness Criteria, Architecture Documentation (+5 more)
+Cohesion: 0.19
+Nodes (13): Normalized Output Models (Asset/Service/Endpoint/Finding), Policy Engine, Production Readiness Criteria, Agent System, code:mermaid (flowchart LR), code:mermaid (flowchart LR), Execution Flow, Manifest System (+5 more)
 
 ### Community 41 - "Community 41"
 Cohesion: 0.19
 Nodes (13): Tool Discovery System, discover_tools function, get_tool_functions function, get_tool_registry function, get_tool_summary function, shikari_tool decorator, Agent workflow tool registration tests, Password tool registration tests (+5 more)
 
 ### Community 42 - "Community 42"
-Cohesion: 0.15
-Nodes (12): mobile_tool_0_run(), mobile_tool_27_run(), mobile_tool_38_run(), mobile_tool_44_run(), mobile_tool_46_run(), mobile_tool_8_run(), Wrapper for mobile_tool_44.          Args:         target: Target IP, URL, or, Wrapper for mobile_tool_46.          Args:         target: Target IP, URL, or (+4 more)
+Cohesion: 0.33
+Nodes (6): Code style, code:bash (git clone https://github.com/Zaeem20/ShikariMCP.git), code:bash (uv run pytest tests -q                    # Unit tests (152)), Development Setup, Project structure, Running tests
 
 ### Community 43 - "Community 43"
 Cohesion: 0.15
 Nodes (12): aws_cli_s3(), azure_tenant(), cloud_enum(), pacu(), Multi-cloud OSINT tool, AWS exploitation framework, Multi-Cloud Security Auditing Tool, Scan for open Amazon S3 buckets and dump contents (+4 more)
 
 ### Community 44 - "Community 44"
-Cohesion: 0.04
-Nodes (48): Adding a New Agent, Adding a New Tool, Agent guidelines, Before Submitting, Bug Reports, Code of Conduct, Code Style & Conventions, code:bash (# 1. Fork the repository on GitHub) (+40 more)
+Cohesion: 0.17
+Nodes (13): Adding a New Agent, Adding a New Tool, Agent guidelines, code:python (# src/shikari/tools/reconnaissance/my_tool.py), code:python (# src/shikari/agents/workflow/my_workflow_agent.py), Fixing Bugs, How to Contribute, Improving Documentation (+5 more)
 
 ### Community 45 - "Community 45"
 Cohesion: 0.17
@@ -1375,8 +628,8 @@ Cohesion: 0.17
 Nodes (11): assets, endpoints, findings, metadata, live_hosts, target, tool, tools_executed (+3 more)
 
 ### Community 48 - "Community 48"
-Cohesion: 0.18
-Nodes (10): extract_security_findings(), format_tool_result(), parse_json_output(), parse_table_output(), Attempt to parse JSON from tool output., Parse tabular output (space-separated columns with header)., Format a tool result into a clean, readable string., Truncate output to prevent overwhelming the LLM context. (+2 more)
+Cohesion: 0.40
+Nodes (5): 2. Adding a Wrapper Tool, Capability gating, code:python (from shikari.tools._base import shikari_tool, ToolScope), Create a wrapper file, Wrapper rules
 
 ### Community 49 - "Community 49"
 Cohesion: 0.18
@@ -1395,20 +648,20 @@ Cohesion: 0.18
 Nodes (11): shikari.parsers module, ffuf JSON parser test, httpx JSONL parser test, katana JSONL parser test, naabu JSONL parser test, nmap XML parser test, nuclei JSONL parser test, sqlmap text parser test (+3 more)
 
 ### Community 53 - "Community 53"
-Cohesion: 0.29
-Nodes (4): agent_domain_osint(), OSINTAgent, Automated OSINT operations., Automated OSINT operations.
+Cohesion: 0.40
+Nodes (5): Code Style & Conventions, code:python (# Standard library), General, Imports, Naming Conventions
 
 ### Community 54 - "Community 54"
-Cohesion: 0.2
-Nodes (8): binwalk_extract(), exiftool_read(), Run Volatility plugins against memory dumps.          Args:         image_file:, Run ExifTool to extract metadata.          Args:         file_path: Target file, Run Steghide to extract payloads.          Args:         file_path: Target image, Run Binwalk.          Args:         file_path: Target firmware/binary         ex, steghide_extract(), volatility_analyze()
+Cohesion: 0.18
+Nodes (14): binwalk_extract function, exiftool_read function, Digital Forensics & Steganography, binwalk_extract(), exiftool_read(), Run Volatility plugins against memory dumps.          Args:         image_file:, Run ExifTool to extract metadata.          Args:         file_path: Target file, Run Steghide to extract payloads.          Args:         file_path: Target image (+6 more)
 
 ### Community 55 - "Community 55"
-Cohesion: 0.27
-Nodes (9): ShikariConfig class, TransportMode enum, FastMCP Client class, create_server function, ShikariConfig tests, Server creation tests, Tool registration tests via MCP client, Smoke test for server and tools (+1 more)
+Cohesion: 0.36
+Nodes (8): ShikariConfig class, TransportMode enum, FastMCP Client class, create_server function, ShikariConfig tests, Server creation tests, Tool registration tests via MCP client, Smoke test for server and tools
 
 ### Community 56 - "Community 56"
-Cohesion: 0.11
-Nodes (22): list_tool_profiles(), Return packaged tool profile names., main(), parse_args(), _parse_key_values(), Parse CLI arguments into ShikariConfig., Parse CLI arguments into ShikariConfig., Parse CLI arguments into ShikariConfig. (+14 more)
+Cohesion: 0.40
+Nodes (5): parse_args(), Parse CLI arguments into ShikariConfig., Parse CLI arguments into ShikariConfig., Parse CLI arguments into ShikariConfig., Parse CLI arguments into ShikariConfig.
 
 ### Community 57 - "Community 57"
 Cohesion: 0.24
@@ -1419,20 +672,20 @@ Cohesion: 0.22
 Nodes (9): Manifest-driven tool command building, Run verified tool integration tests, Public catalog test, Core manifest load test, explain_tool test, verify_tool_profile tests, run_verified_tool tests, shikari.core.tool_manifest module (+1 more)
 
 ### Community 59 - "Community 59"
-Cohesion: 0.25
-Nodes (9): Agent Workflow (plan-execute-analyze-report), Structured Output Design Principle, Development Documentation, AgentPhase Enum, AgentResult, BaseAgent, build_default_plan, Agent Plan Catalog (+1 more)
+Cohesion: 0.67
+Nodes (3): smoke-test.sh script, check(), PARSER_FUNCS
 
 ### Community 60 - "Community 60"
-Cohesion: 0.31
-Nodes (9): hashcat_crack - Hashcat hash cracking, hashcat_show - Show Hashcat cracked passwords, john_crack - John the Ripper cracking, john_show - Show John cracked passwords, hydra_brute - Hydra online brute force, medusa_brute - Medusa online brute force, password_attacks module exports, cewl_spider - CeWL custom wordlist generation (+1 more)
+Cohesion: 0.10
+Nodes (24): hashcat_crack - Hashcat hash cracking, hashcat_show - Show Hashcat cracked passwords, john_crack - John the Ripper cracking, john_show - Show John cracked passwords, hydra_brute - Hydra online brute force, medusa_brute - Medusa online brute force, hashcat_crack(), hashcat_show() (+16 more)
 
 ### Community 61 - "Community 61"
-Cohesion: 0.22
-Nodes (6): checksec_run(), radare2_analyze(), Run Radare2 via script/batch mode.          Args:         file_path: Target bina, Run checksec.          Args:         file_path: Target binary         extra_args, qu1cksc0pe_analyze(), Run Qu1cksc0pe against a target file.          Args:         file_path: Path to
+Cohesion: 0.29
+Nodes (7): Reverse Engineering Module Exports (__init__.py), checksec_run(), radare2_analyze(), Run Radare2 via script/batch mode.          Args:         file_path: Target bina, Run checksec.          Args:         file_path: Target binary         extra_args, qu1cksc0pe_analyze(), Run Qu1cksc0pe against a target file.          Args:         file_path: Path to
 
 ### Community 62 - "Community 62"
-Cohesion: 0.1
-Nodes (17): Smoke tests for reconnaissance tool wrappers., Discover tools once for the entire module., Verify that known reconnaissance tools are registered., All recon tools should have non-empty descriptions., All registered recon tools should have callable functions., Verify that password attack tools are registered., Verify web application tools are registered., Verify that agent workflow tools are registered as MCP tools. (+9 more)
+Cohesion: 0.06
+Nodes (26): get_tool_summary(), Get a summary of registered tools by category., Smoke tests for reconnaissance tool wrappers., Discover tools once for the entire module., Verify that known reconnaissance tools are registered., All recon tools should have non-empty descriptions., All registered recon tools should have callable functions., Verify that password attack tools are registered. (+18 more)
 
 ### Community 63 - "Community 63"
 Cohesion: 0.22
@@ -1443,331 +696,259 @@ Cohesion: 0.25
 Nodes (8): amass_enum - Amass DNS/subdomain enumeration, dnsrecon_scan - DNSrecon advanced DNS enumeration, dnstwist_scan - Dnstwist typo squatting detection, subfinder_scan - Subfinder passive subdomain discovery, amass_intel - Amass intel attack surface mapping, dnsenum - DNSenum DNS enumeration, dnsrecon - DNSrecon auto-generated wrapper, fierce - Fierce DNS reconnaissance
 
 ### Community 65 - "Community 65"
-Cohesion: 0.46
-Nodes (8): Defensive Agents, Domain-Specific Agents, Infrastructure Agents, Intelligence Agents, Offensive Agents, AI Subagent Architecture, Workflow Agents, AI Subagents Documentation
+Cohesion: 0.45
+Nodes (11): Plan-Execute-Analyze-Report Pattern, Base Agent Class, Defensive Agents, Domain-Specific Agents, Infrastructure Agents, Intelligence Agents, Offensive Agents, AI Subagent Architecture (+3 more)
 
 ### Community 66 - "Community 66"
-Cohesion: 0.25
+Cohesion: 0.31
 Nodes (6): kube_hunter_scan(), Run Trivy scanner.          Args:         target: Target image name, repo, or fi, Run ScoutSuite for cloud environment assessment.          Args:         provider, Run Kube-Hunter.          Args:         target: IP or CIDR to scan         remot, scoutsuite_run(), trivy_scan()
 
 ### Community 67 - "Community 67"
-Cohesion: 0.25
-Nodes (6): aircrack_ng_run(), Run Aircrack-ng on a capture file.          Args:         file_path: Path to the, Run Wifite.          Args:         extra_args: Additional flags like '--wpa' or, Run Reaver to attack WPS pins.          Args:         interface: Wireless interf, reaver_run(), wifite_run()
+Cohesion: 0.27
+Nodes (8): Wireless / RF Attacks, Wireless Module Exports, aircrack_ng_run(), Run Aircrack-ng on a capture file.          Args:         file_path: Path to the, Run Wifite.          Args:         extra_args: Additional flags like '--wpa' or, Run Reaver to attack WPS pins.          Args:         interface: Wireless interf, reaver_run(), wifite_run()
 
 ### Community 68 - "Community 68"
 Cohesion: 0.25
 Nodes (8): Web tool manifest profile, Arjun Parameter Discovery tool entry, Dalfox XSS Scan tool entry, SSLScan tool entry, testssl.sh Scan tool entry, TLSX Scan tool entry, Wafw00f WAF Detection tool entry, WhatWeb Scan tool entry
 
 ### Community 69 - "Community 69"
-Cohesion: 0.22
-Nodes (6): agent_defensive_anomalydetect(), AnomalyDetectAgent, Automated AnomalyDetect operations., Run the AnomalyDetectAgent., Run the AnomalyDetectAgent., Automated AnomalyDetect operations.
+Cohesion: 0.10
+Nodes (27): BaseAgent, Defensive agent plan-execute-analyze pattern, agent_defensive_anomalydetect(), AnomalyDetectAgent, Run the AnomalyDetectAgent., Run the AnomalyDetectAgent., Automated AnomalyDetect operations., agent_defensive_containment() (+19 more)
 
 ### Community 70 - "Community 70"
-Cohesion: 0.22
-Nodes (6): agent_defensive_containment(), ContainmentAgent, Automated Containment operations., Run the ContainmentAgent., Run the ContainmentAgent., Automated Containment operations.
+Cohesion: 0.50
+Nodes (4): code:bash (# 1. Fork the repository on GitHub), Getting Started, Prerequisites, Setup
 
 ### Community 71 - "Community 71"
-Cohesion: 0.22
-Nodes (6): agent_defensive_forensics(), ForensicsAgent, Automated Forensics operations., Run the ForensicsAgent., Run the ForensicsAgent., Automated Forensics operations.
+Cohesion: 0.50
+Nodes (4): module, ref, source, dalfox
 
 ### Community 72 - "Community 72"
-Cohesion: 0.22
-Nodes (6): agent_defensive_hardening(), HardeningAgent, Automated Hardening operations., Run the HardeningAgent., Run the HardeningAgent., Automated Hardening operations.
+Cohesion: 0.50
+Nodes (4): katana, module, ref, source
 
 ### Community 73 - "Community 73"
-Cohesion: 0.22
-Nodes (6): agent_defensive_malwaretriage(), MalwareTriageAgent, Automated MalwareTriage operations., Run the MalwareTriageAgent., Run the MalwareTriageAgent., Automated MalwareTriage operations.
+Cohesion: 0.50
+Nodes (4): nuclei, module, ref, source
 
 ### Community 74 - "Community 74"
-Cohesion: 0.22
-Nodes (6): agent_domain_database(), DatabaseAgent, Automated Database operations., Run the DatabaseAgent., Run the DatabaseAgent., Automated Database operations.
-
-### Community 75 - "Community 75"
-Cohesion: 0.22
-Nodes (6): agent_domain_iotscada(), IoTSCADAAgent, Automated IoTSCADA operations., Run the IoTSCADAAgent., Run the IoTSCADAAgent., Automated IoTSCADA operations.
-
-### Community 76 - "Community 76"
-Cohesion: 0.22
-Nodes (6): agent_domain_malware(), MalwareAgent, Automated Malware operations., Run the MalwareAgent., Run the MalwareAgent., Automated Malware operations.
-
-### Community 77 - "Community 77"
-Cohesion: 0.22
-Nodes (6): agent_domain_network(), NetworkAgent, Automated Network operations., Run the NetworkAgent., Run the NetworkAgent., Automated Network operations.
+Cohesion: 0.50
+Nodes (3): _default_config(), ShikariMCP test configuration., Ensure tests always start with a clean default config.
 
 ### Community 78 - "Community 78"
-Cohesion: 0.22
-Nodes (6): agent_domain_wireless(), Automated Wireless operations., Run the WirelessAgent., Run the WirelessAgent., Automated Wireless operations., WirelessAgent
+Cohesion: 0.50
+Nodes (3): agent_domain_wireless(), Run the WirelessAgent., Run the WirelessAgent.
 
 ### Community 79 - "Community 79"
-Cohesion: 0.22
-Nodes (6): agent_infrastructure_configmanager(), ConfigManagerAgent, Automated ConfigManager operations., Run the ConfigManagerAgent., Run the ConfigManagerAgent., Automated ConfigManager operations.
-
-### Community 80 - "Community 80"
-Cohesion: 0.22
-Nodes (6): agent_infrastructure_decisionengine(), DecisionEngineAgent, Automated DecisionEngine operations., Run the DecisionEngineAgent., Run the DecisionEngineAgent., Automated DecisionEngine operations.
-
-### Community 81 - "Community 81"
-Cohesion: 0.22
-Nodes (6): agent_infrastructure_failurerecovery(), FailureRecoveryAgent, Automated FailureRecovery operations., Run the FailureRecoveryAgent., Run the FailureRecoveryAgent., Automated FailureRecovery operations.
-
-### Community 82 - "Community 82"
-Cohesion: 0.22
-Nodes (6): agent_infrastructure_healthcheck(), HealthCheckAgent, Automated HealthCheck operations., Run the HealthCheckAgent., Run the HealthCheckAgent., Automated HealthCheck operations.
-
-### Community 83 - "Community 83"
-Cohesion: 0.22
-Nodes (6): agent_infrastructure_paramoptimizer(), ParamOptimizerAgent, Automated ParamOptimizer operations., Run the ParamOptimizerAgent., Run the ParamOptimizerAgent., Automated ParamOptimizer operations.
-
-### Community 84 - "Community 84"
-Cohesion: 0.22
-Nodes (6): agent_infrastructure_performancemonitor(), PerformanceMonitorAgent, Automated PerformanceMonitor operations., Run the PerformanceMonitorAgent., Run the PerformanceMonitorAgent., Automated PerformanceMonitor operations.
-
-### Community 85 - "Community 85"
-Cohesion: 0.22
-Nodes (6): agent_infrastructure_ratelimiter(), RateLimiterAgent, Automated RateLimiter operations., Run the RateLimiterAgent., Run the RateLimiterAgent., Automated RateLimiter operations.
-
-### Community 86 - "Community 86"
-Cohesion: 0.22
-Nodes (6): agent_infrastructure_resourcescheduler(), Automated ResourceScheduler operations., Run the ResourceSchedulerAgent., Run the ResourceSchedulerAgent., Automated ResourceScheduler operations., ResourceSchedulerAgent
+Cohesion: 0.07
+Nodes (41): Infrastructure agent plan-execute-analyze pattern, agent_infrastructure_configmanager(), ConfigManagerAgent, Run the ConfigManagerAgent., Run the ConfigManagerAgent., Automated ConfigManager operations., agent_infrastructure_decisionengine(), DecisionEngineAgent (+33 more)
 
 ### Community 87 - "Community 87"
-Cohesion: 0.22
-Nodes (6): agent_intelligence_attacksurface(), AttackSurfaceAgent, Automated AttackSurface operations., Run the AttackSurfaceAgent., Run the AttackSurfaceAgent., Automated AttackSurface operations.
-
-### Community 88 - "Community 88"
-Cohesion: 0.22
-Nodes (6): agent_intelligence_cveintel(), CVEIntelAgent, Automated CVEIntel operations., Run the CVEIntelAgent., Run the CVEIntelAgent., Automated CVEIntel operations.
-
-### Community 89 - "Community 89"
-Cohesion: 0.22
-Nodes (6): agent_intelligence_exploitgen(), ExploitGenAgent, Automated ExploitGen operations., Run the ExploitGenAgent., Run the ExploitGenAgent., Automated ExploitGen operations.
+Cohesion: 0.05
+Nodes (35): agent_intelligence_attacksurface tool entry point, agent_intelligence_cveintel tool entry point, Default Plan Execution Pattern, agent_intelligence_exploitgen tool entry point, Intelligence Agent Category, agent_intelligence_attacksurface(), AttackSurfaceAgent, Run the AttackSurfaceAgent. (+27 more)
 
 ### Community 90 - "Community 90"
-Cohesion: 0.22
-Nodes (6): agent_intelligence_iocextractor(), IOCExtractorAgent, Automated IOCExtractor operations., Run the IOCExtractorAgent., Run the IOCExtractorAgent., Automated IOCExtractor operations.
+Cohesion: 0.29
+Nodes (6): agent_intelligence_iocextractor(), IOCExtractorAgent, Run the IOCExtractorAgent., Run the IOCExtractorAgent., Automated IOCExtractor operations., agent_intelligence_iocextractor tool entry point
 
 ### Community 91 - "Community 91"
-Cohesion: 0.22
-Nodes (6): agent_intelligence_riskscoring(), Automated RiskScoring operations., Run the RiskScoringAgent., Run the RiskScoringAgent., Automated RiskScoring operations., RiskScoringAgent
-
-### Community 92 - "Community 92"
-Cohesion: 0.22
-Nodes (6): agent_intelligence_threatintel(), Automated ThreatIntel operations., Run the ThreatIntelAgent., Run the ThreatIntelAgent., Automated ThreatIntel operations., ThreatIntelAgent
+Cohesion: 0.25
+Nodes (7): agent_intelligence_riskscoring(), Run the RiskScoringAgent., Extract findings from agent execution results., Run the RiskScoringAgent., Automated RiskScoring operations., RiskScoringAgent, agent_intelligence_riskscoring tool entry point
 
 ### Community 93 - "Community 93"
-Cohesion: 0.22
-Nodes (6): agent_intelligence_threatmodeling(), Automated ThreatModeling operations., Run the ThreatModelingAgent., Run the ThreatModelingAgent., Automated ThreatModeling operations., ThreatModelingAgent
+Cohesion: 0.25
+Nodes (7): agent_intelligence_threatmodeling(), Run the ThreatModelingAgent., Extract findings from agent execution results., Run the ThreatModelingAgent., Automated ThreatModeling operations., ThreatModelingAgent, agent_intelligence_threatmodeling tool entry point
 
 ### Community 94 - "Community 94"
-Cohesion: 0.22
-Nodes (6): agent_intelligence_vulncorrelator(), Automated VulnCorrelator operations., Run the VulnCorrelatorAgent., Run the VulnCorrelatorAgent., Automated VulnCorrelator operations., VulnCorrelatorAgent
+Cohesion: 0.25
+Nodes (7): agent_intelligence_vulncorrelator(), Run the VulnCorrelatorAgent., Extract findings from agent execution results., Run the VulnCorrelatorAgent., Automated VulnCorrelator operations., VulnCorrelatorAgent, agent_intelligence_vulncorrelator tool entry point
 
 ### Community 95 - "Community 95"
-Cohesion: 0.22
-Nodes (6): agent_intelligence_zerodayresearch(), Automated ZeroDayResearch operations., Run the ZeroDayResearchAgent., Run the ZeroDayResearchAgent., Automated ZeroDayResearch operations., ZeroDayResearchAgent
+Cohesion: 0.25
+Nodes (7): agent_intelligence_zerodayresearch(), Run the ZeroDayResearchAgent., Extract findings from agent execution results., Run the ZeroDayResearchAgent., Automated ZeroDayResearch operations., ZeroDayResearchAgent, agent_intelligence_zerodayresearch tool entry point
 
 ### Community 96 - "Community 96"
-Cohesion: 0.22
-Nodes (6): agent_offensive_credharvest(), CredHarvestAgent, Automated CredHarvest operations., Run the CredHarvestAgent., Run the CredHarvestAgent., Automated CredHarvest operations.
-
-### Community 97 - "Community 97"
-Cohesion: 0.22
-Nodes (6): agent_offensive_evasion(), EvasionAgent, Automated Evasion operations., Run the EvasionAgent., Run the EvasionAgent., Automated Evasion operations.
+Cohesion: 0.08
+Nodes (22): agent_offensive_credharvest tool entry point, agent_offensive_evasion tool entry point, Offensive Agent Category, agent_offensive_credharvest(), CredHarvestAgent, Run the CredHarvestAgent., Extract findings from agent execution results., Run the CredHarvestAgent. (+14 more)
 
 ### Community 98 - "Community 98"
-Cohesion: 0.22
-Nodes (6): agent_offensive_lateralmovement(), LateralMovementAgent, Automated LateralMovement operations., Run the LateralMovementAgent., Run the LateralMovementAgent., Automated LateralMovement operations.
-
-### Community 99 - "Community 99"
-Cohesion: 0.22
-Nodes (6): agent_offensive_payloadcraft(), PayloadCraftAgent, Automated PayloadCraft operations., Run the PayloadCraftAgent., Run the PayloadCraftAgent., Automated PayloadCraft operations.
+Cohesion: 0.25
+Nodes (7): agent_offensive_lateralmovement tool entry point, agent_offensive_lateralmovement(), LateralMovementAgent, Run the LateralMovementAgent., Extract findings from agent execution results., Run the LateralMovementAgent., Automated LateralMovement operations.
 
 ### Community 100 - "Community 100"
-Cohesion: 0.1
-Nodes (14): build_default_plan(), _note_step(), Build a concrete, executable plan for every shipped agent.      Each plan is a l, Operator-guidance only step (reserved for genuinely no-op cases)., agent_intelligence_report(), Automated Report operations., Automated Report operations., ReportAgent (+6 more)
+Cohesion: 0.03
+Nodes (32): Create summary findings for assets, services, and endpoints., build_default_plan(), _note_step(), Build a concrete, executable plan for every shipped agent.      Each plan is a l, Operator-guidance only step (reserved for genuinely no-op cases)., _recon_plan(), Any, Extract findings from agent execution results. (+24 more)
 
 ### Community 101 - "Community 101"
-Cohesion: 0.22
-Nodes (6): agent_workflow_blueteam(), BlueTeamAgent, Automated BlueTeam operations., Run the BlueTeamAgent., Run the BlueTeamAgent., Automated BlueTeam operations.
+Cohesion: 0.25
+Nodes (7): agent_workflow_blueteam tool entry point, agent_workflow_blueteam(), BlueTeamAgent, Run the BlueTeamAgent., Extract findings from agent execution results., Run the BlueTeamAgent., Automated BlueTeam operations.
 
 ### Community 102 - "Community 102"
-Cohesion: 0.22
-Nodes (6): agent_workflow_codereview(), CodeReviewAgent, Automated CodeReview operations., Run the CodeReviewAgent., Run the CodeReviewAgent., Automated CodeReview operations.
-
-### Community 103 - "Community 103"
-Cohesion: 0.22
-Nodes (6): agent_workflow_compliance(), ComplianceAgent, Automated Compliance operations., Run the ComplianceAgent., Run the ComplianceAgent., Automated Compliance operations.
-
-### Community 104 - "Community 104"
-Cohesion: 0.22
-Nodes (6): CTFAgent, Run an automated CTF challenge solver against a given file or web challenge., Run an automated CTF challenge solver against a given file or web challenge., CTFAgent attempts to automatically categorize and solve Catch-the-Flag challenge, CTFAgent attempts to automatically categorize and solve Catch-the-Flag challenge, workflow_ctf_agent()
+Cohesion: 0.25
+Nodes (7): agent_workflow_codereview tool entry point, agent_workflow_codereview(), CodeReviewAgent, Run the CodeReviewAgent., Extract findings from agent execution results., Run the CodeReviewAgent., Automated CodeReview operations.
 
 ### Community 105 - "Community 105"
-Cohesion: 0.12
-Nodes (10): Defines where a tool can run., ToolScope, PentestAgent, Conservative end-to-end penetration test workflow., Run an automated penetration testing workflow against a target., workflow_pentest_agent(), Reconnaissance workflow with proper stdin handoff., Run an automated reconnaissance workflow against a target domain. (+2 more)
+Cohesion: 0.29
+Nodes (4): Reconnaissance workflow with proper stdin handoff., Run an automated reconnaissance workflow against a target domain., ReconAgent, workflow_recon_agent()
 
 ### Community 106 - "Community 106"
-Cohesion: 0.22
-Nodes (6): agent_workflow_purpleteam(), PurpleTeamAgent, Automated PurpleTeam operations., Run the PurpleTeamAgent., Run the PurpleTeamAgent., Automated PurpleTeam operations.
+Cohesion: 0.25
+Nodes (7): agent_workflow_purpleteam tool entry point, agent_workflow_purpleteam(), PurpleTeamAgent, Run the PurpleTeamAgent., Extract findings from agent execution results., Run the PurpleTeamAgent., Automated PurpleTeam operations.
 
 ### Community 107 - "Community 107"
-Cohesion: 0.1
+Cohesion: 0.10
 Nodes (20): censys_host_view(), censys_query(), greynoise_ip_lookup(), greynoise_quick_check(), Scan a URL against VirusTotal.      Args:         url: Target URL to scan., Scan an IP address against VirusTotal.      Args:         ip: Target IP address., Scan a domain against VirusTotal.      Args:         domain: Target domain (e.g., Look up an IP address on Shodan for open ports, services, and banners.      Args (+12 more)
 
 ### Community 108 - "Community 108"
-Cohesion: 0.22
-Nodes (6): agent_workflow_threathunt(), Automated ThreatHunt operations., Run the ThreatHuntAgent., Run the ThreatHuntAgent., Automated ThreatHunt operations., ThreatHuntAgent
+Cohesion: 0.25
+Nodes (6): agent_workflow_threathunt(), Run the ThreatHuntAgent., Extract findings from agent execution results., Run the ThreatHuntAgent., Automated ThreatHunt operations., ThreatHuntAgent
 
 ### Community 109 - "Community 109"
-Cohesion: 0.22
-Nodes (6): agent_workflow_vulnmanagement(), Automated VulnManagement operations., Run the VulnManagementAgent., Run the VulnManagementAgent., Automated VulnManagement operations., VulnManagementAgent
+Cohesion: 0.25
+Nodes (6): agent_workflow_vulnmanagement(), Run the VulnManagementAgent., Extract findings from agent execution results., Run the VulnManagementAgent., Automated VulnManagement operations., VulnManagementAgent
 
 ### Community 110 - "Community 110"
-Cohesion: 0.25
+Cohesion: 0.24
 Nodes (5): Structured web application workflow backed by verified manifests., Run the production web application workflow against an authorized URL., Run the production web application workflow against an authorized URL., WebAppWorkflowAgent, workflow_webapp_agent()
 
 ### Community 111 - "Community 111"
-Cohesion: 0.48
-Nodes (7): FastMCP Framework, Lifespan Management, MCP Middleware Patterns, Server Composition Pattern, Advanced MCP Server Patterns, MCP Server Project Templates, Python MCP Server Skill
+Cohesion: 0.46
+Nodes (8): Base Tool Infrastructure, Dynamic Tool Registry, FastMCP Framework, HexStrike AI Comparison, ShikariMCP Project, Security Tool Categories, Tool Scope Awareness, Contributing Guide
 
 ### Community 112 - "Community 112"
-Cohesion: 0.2
-Nodes (9): dig_dns(), nslookup_query(), Perform a WHOIS query.          Args:         target: Domain name (e.g., example, Perform a WHOIS query.          Args:         target: Domain name (e.g., example, Query DNS records using dig.          Args:         domain: Domain name, Query DNS records using dig.          Args:         domain: Domain name, Query DNS records using nslookup.          Args:         domain: Domain to looku, Query DNS records using nslookup.          Args:         domain: Domain to looku (+1 more)
+Cohesion: 0.29
+Nodes (6): dig_dns(), nslookup_query(), Perform a WHOIS query.          Args:         target: Domain name (e.g., example, Query DNS records using dig.          Args:         domain: Domain name, Query DNS records using nslookup.          Args:         domain: Domain to looku, whois_lookup()
 
 ### Community 113 - "Community 113"
-Cohesion: 0.4
-Nodes (6): tlsx, tlsx, module, reason, ref, source
-
-### Community 115 - "Community 115"
 Cohesion: 0.29
-Nodes (4): ADAgent, agent_domain_ad(), Automated AD operations., Automated AD operations.
+Nodes (8): reason, ref, future_arsenal_candidates, dnsx, tlsx, module, ref, source
+
+### Community 114 - "Community 114"
+Cohesion: 0.15
+Nodes (7): Tests for verified tool manifests., Tools like hydra exit non-zero for --help but still print help text., A binary that exits non-zero with no output is genuinely broken., A timeout should not mark an installed binary as missing., test_verify_accepts_nonzero_exit_with_output(), test_verify_handles_timeout(), test_verify_rejects_nonzero_exit_no_output()
 
 ### Community 116 - "Community 116"
-Cohesion: 0.1
-Nodes (19): ArtifactReadInputs, ListRunsInputs, Validated inputs for shikari_explain_tool., Validated inputs for shikari_get_run / shikari_cancel_run., Validated inputs for shikari_list_runs., Validated inputs for shikari_list_verified_tools / shikari_verify_tool_profile., Validated inputs for shikari_run_verified_tool / shikari_submit_verified_tool., Validated inputs for shikari_read_artifact. (+11 more)
+Cohesion: 0.05
+Nodes (38): AccessToken, ConstantTimeTokenVerifier, get_auth_provider(), Return the FastMCP auth provider for HTTP transports.      STDIO inherits securi, Token verifier that uses constant-time comparison to prevent timing attacks., Return the auth provider for HTTP transports.      STDIO inherits security from, ArtifactReadInputs, _get_known_profiles() (+30 more)
 
 ### Community 117 - "Community 117"
-Cohesion: 0.29
-Nodes (8): 429 Rate Limit Exceeded, code:bash (# Check installation), "Command not found: shikari", "Command not found: shikari-mcp", HTTP connection refused, No tools showing up, Permission denied on tool execution, Troubleshooting
+Cohesion: 0.22
+Nodes (10): 429 Rate Limit Exceeded, Claude Desktop strips the HTTP config, code:bash (# Check installation), "Command not found: shikari", "Command not found: shikari-mcp", HTTP connection refused, No tools showing up, Permission denied on tool execution (+2 more)
 
 ### Community 118 - "Community 118"
-Cohesion: 0.13
-Nodes (20): artifact_path(), artifact_reference(), Persist command output locally and return an artifact reference., Allocate a stable path inside Shikari's configured artifact directory., Persist JSON artifact data., Return metadata for an existing artifact., Persist JSON artifact data., Read a bounded artifact segment without allowing paths outside storage. (+12 more)
+Cohesion: 0.19
+Nodes (12): artifact_path(), artifact_reference(), Persist command output locally and return an artifact reference., Allocate a stable path inside Shikari's configured artifact directory., Return metadata for an existing artifact., Persist JSON artifact data., Read a bounded artifact segment without allowing paths outside storage., read_artifact() (+4 more)
 
 ### Community 119 - "Community 119"
-Cohesion: 0.1
-Nodes (18): create_rate_limiter(), RateLimitMiddleware, Factory that returns a configured rate limiter class, or None if disabled., Simple token bucket for one client., Try to consume one token. Returns True if allowed., ASGI middleware that enforces per-IP token-bucket rate limiting.      Default: 6, Extract client IP, respecting X-Forwarded-For behind a reverse proxy., Periodically evict stale buckets to prevent memory growth. (+10 more)
+Cohesion: 0.06
+Nodes (30): ASGIApp, HostOriginSecurityMiddleware, _matches(), ASGI security middleware for Shikari's Streamable HTTP endpoint., Reject unexpected Host and Origin headers to prevent DNS rebinding., create_rate_limiter(), RateLimitMiddleware, Factory that returns a configured rate limiter class, or None if disabled. (+22 more)
 
 ### Community 120 - "Community 120"
-Cohesion: 0.12
-Nodes (12): In stdio mode, non-generated tools should be available., In stdio mode, non-generated tools should be available., In HTTP+local mode, non-generated tools should be available., In HTTP+local mode, non-generated tools should be available., In HTTP+local mode, non-generated tools should be available., In HTTP without --local, LOCAL tools should be blocked., In HTTP without --local, LOCAL tools should be blocked., In HTTP without --local, LOCAL tools should be blocked. (+4 more)
+Cohesion: 0.07
+Nodes (26): Set the global configuration (used by CLI flag overrides)., Set the global configuration (used by CLI flag overrides)., set_config(), Tests for bounded, confined artifact access., test_artifact_path_escape_is_rejected(), test_artifact_path_sanitizes_run_id(), Tests for the tool registry — auto-discovery, scope filtering, and registration., In stdio mode, non-generated tools should be available. (+18 more)
 
 ### Community 121 - "Community 121"
-Cohesion: 0.53
-Nodes (6): sliver_start - Sliver C2 framework server, dnscat2_start - DNSCat2 DNS tunneling server, netexec_smb - NetExec/CrackMapExec SMB lateral movement, generate_systemd_service - systemd service persistence generator, post_exploitation module exports, linpeas_run - LinPEAS privilege escalation enumeration
+Cohesion: 0.11
+Nodes (15): sliver_start - Sliver C2 framework server, dnscat2_start - DNSCat2 DNS tunneling server, netexec_smb - NetExec/CrackMapExec SMB lateral movement, generate_systemd_service - systemd service persistence generator, Start the sliver C2 server.          Args:         extra_args: Additional sliver, sliver_start(), dnscat2_start(), Run dnscat2 server.          Args:         domain: The domain to tunnel through (+7 more)
+
+### Community 122 - "Community 122"
+Cohesion: 0.21
+Nodes (10): Tool Profiles, install-go-tools.sh script, install-tools.sh script, install-wordlists.sh script, verify-tools.sh script, go_version_ok(), install_git_tool(), install_go() (+2 more)
 
 ### Community 123 - "Community 123"
-Cohesion: 0.17
-Nodes (12): module, reason, ref, source, future_arsenal_candidates, dnsx, generated_at, dnsx (+4 more)
+Cohesion: 0.33
+Nodes (5): generated_at, go_version, notes, profile, schema_version
 
 ### Community 124 - "Community 124"
-Cohesion: 0.4
-Nodes (6): mapcidr, mapcidr, module, reason, ref, source
+Cohesion: 0.40
+Nodes (5): mapcidr, module, reason, ref, source
 
 ### Community 125 - "Community 125"
-Cohesion: 0.4
-Nodes (6): uncover, uncover, module, reason, ref, source
+Cohesion: 0.40
+Nodes (5): uncover, module, reason, ref, source
 
 ### Community 126 - "Community 126"
-Cohesion: 0.08
-Nodes (25): package, source, package, source, package, source, package, source (+17 more)
+Cohesion: 0.05
+Nodes (39): package, source, package, source, package, source, package, source (+31 more)
 
 ### Community 127 - "Community 127"
-Cohesion: 0.33
-Nodes (4): msfvenom_generate(), Run MSFVenom.          Args:         payload: Metasploit payload (e.g., 'windows, Run Veil framework execution flags.          Args:         extra_args: Veil flag, veil_generate()
+Cohesion: 0.23
+Nodes (9): msfvenom_generate(), Run MSFVenom.          Args:         payload: Metasploit payload (e.g., 'windows, Run Veil framework execution flags.          Args:         extra_args: Veil flag, veil_generate(), Exploitation Category, msfvenom_generate function, payload_gen module, Payload Generation & AV Evasion (+1 more)
 
 ### Community 128 - "Community 128"
-Cohesion: 0.33
-Nodes (4): apkid_scan(), objection_run(), Run Objection.          Args:         package_cmd: The objection command to run, Run APKiD against an APK.          Args:         apk_path: Path to .apk file
+Cohesion: 0.25
+Nodes (8): apkid_scan function, Mobile Security Analysis, apkid_scan(), objection_run(), Run Objection.          Args:         package_cmd: The objection command to run, Run APKiD against an APK.          Args:         apk_path: Path to .apk file, mobile_security mobile_tools module, objection_run function
 
 ### Community 129 - "Community 129"
-Cohesion: 0.33
-Nodes (4): bettercap_run(), Run Bettercap on an interface.          Args:         interface: Interface to bi, Run Responder.          Args:         interface: Network interface to listen on, responder_run()
+Cohesion: 0.25
+Nodes (8): bettercap_run - Bettercap MITM framework, responder_run - Responder LLMNR/NBT-NS/MDNS poisoner, bettercap_run(), Run Bettercap on an interface.          Args:         interface: Interface to bi, Run Responder.          Args:         interface: Network interface to listen on, responder_run(), tcpdump_sniff - tcpdump packet capture, tshark_sniff - tshark protocol analysis
 
 ### Community 130 - "Community 130"
-Cohesion: 0.33
-Nodes (4): bsqlbf_run(), odat_scan(), Run bsqlbf.          Args:         url: Target URL         extra_args: Additiona, Run ODAT against Oracle DB.          Args:         target: Target IP         mod
+Cohesion: 0.23
+Nodes (9): bsqlbf_run function, Database Injection Attack Category, bsqlbf_run(), odat_scan(), Run bsqlbf.          Args:         url: Target URL         extra_args: Additiona, Run ODAT against Oracle DB.          Args:         target: Target IP         mod, database_scanners module, odat_scan function (+1 more)
 
 ### Community 131 - "Community 131"
 Cohesion: 0.33
 Nodes (6): Input sanitization and validation, sanitize_input function, validate_path function, validate_port function, validate_target function, validate_url function
 
 ### Community 132 - "Community 132"
-Cohesion: 0.29
-Nodes (6): aws_cli_run(), pacu_run(), Interact with an AWS environment.          Args:         service: AWS service (e, Interact with an AWS environment.          Args:         service: AWS service (e, Run the Pacu AWS exploitation framework.          Args:         session_name: Na, Run the Pacu AWS exploitation framework.          Args:         session_name: Na
+Cohesion: 0.40
+Nodes (4): aws_cli_run(), pacu_run(), Interact with an AWS environment.          Args:         service: AWS service (e, Run the Pacu AWS exploitation framework.          Args:         session_name: Na
 
 ### Community 133 - "Community 133"
 Cohesion: 0.12
 Nodes (16): bloodhound_collect(), certipy_find(), enum4linux_ng(), impacket_getuserspns(), impacket_secretsdump(), kerbrute_userenum(), ldap_search(), nxc_smb_enum() (+8 more)
 
 ### Community 134 - "Community 134"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (5): Graphify Knowledge Graph System, Agent Graphify Instructions (Root), Graphify OpenCode Plugin, OpenCode Configuration, OpenCode Package Dependencies
 
-### Community 135 - "Community 135"
-Cohesion: 0.6
-Nodes (5): bettercap_run - Bettercap MITM framework, responder_run - Responder LLMNR/NBT-NS/MDNS poisoner, network_attacks module exports, tcpdump_sniff - tcpdump packet capture, tshark_sniff - tshark protocol analysis
-
 ### Community 136 - "Community 136"
-Cohesion: 0.29
-Nodes (6): Run tcpdump to capture network packets.          Args:         interface: Networ, Run tcpdump to capture network packets.          Args:         interface: Networ, Run tshark for deeper packet analysis.          Args:         interface: Interfa, Run tshark for deeper packet analysis.          Args:         interface: Interfa, tcpdump_sniff(), tshark_sniff()
+Cohesion: 0.40
+Nodes (4): Run tcpdump to capture network packets.          Args:         interface: Networ, Run tshark for deeper packet analysis.          Args:         interface: Interfa, tcpdump_sniff(), tshark_sniff()
 
 ### Community 137 - "Community 137"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (4): msfvenom_generate(), msfvenom_list(), Generate Metasploit payloads.          Args:         payload: Metasploit payload, List available options in msfvenom.          Args:         list_type: What to li
 
 ### Community 138 - "Community 138"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 139 - "Community 139"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 140 - "Community 140"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 141 - "Community 141"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 142 - "Community 142"
-Cohesion: 0.4
-Nodes (4): masscan_scan(), nmap_scan(), Run Nmap against a target.          Args:         target: IP or domain to scan, Run Masscan against a target network.      Args:         target: CIDR or IP
-
-### Community 143 - "Community 143"
-Cohesion: 0.4
-Nodes (4): Run SSLScan against a target IP or domain.          Args:         target: The ta, Run testssl.sh against a target.          Args:         target: The target IP or, sslscan_scan(), testssl_scan()
+Cohesion: 0.13
+Nodes (12): droopescan_scan(), Run WPScan against a target WordPress site.          Args:         url: Target W, Run Droopescan against a target CMS.          Args:         url: Target CMS URL, wpscan_scan(), masscan_scan(), nmap_scan(), Run Nmap against a target.          Args:         target: IP or domain to scan, Run Masscan against a target network.      Args:         target: CIDR or IP (+4 more)
 
 ### Community 144 - "Community 144"
-Cohesion: 0.6
+Cohesion: 0.60
 Nodes (5): Dry-run verification pattern, fake_bin_dir pytest fixture, Dry run integration tests with fake binaries, dry_run_verified_tool tests, dry_run_verified_tool function
 
 ### Community 145 - "Community 145"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (5): Tool quality (GENERATED/EXPERIMENTAL) concept, ToolMetadata class, ToolQuality enum, ToolScope enum, ToolMetadata tests
 
 ### Community 146 - "Community 146"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (5): Recon tool manifest profile, DNSX Query tool entry, MapCIDR Expand tool entry, Masscan tool entry, Uncover Search tool entry
 
 ### Community 147 - "Community 147"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 148 - "Community 148"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 149 - "Community 149"
@@ -1779,31 +960,23 @@ Cohesion: 0.04
 Nodes (44): 1. Verified Tool Manifest, 2. Tool Runtime Contract, 3. Policy Engine, 4. Auth and Deployment, 5. AI-Native Interface, Agent Redesign, Architecture Target, Bash Installer Plan (+36 more)
 
 ### Community 151 - "Community 151"
-Cohesion: 0.12
-Nodes (17): module, ref, source, module, ref, source, go_tools, dalfox (+9 more)
+Cohesion: 0.22
+Nodes (9): module, ref, source, go_tools, ffuf, gobuster, module, ref (+1 more)
 
 ### Community 152 - "Community 152"
-Cohesion: 0.05
-Nodes (43): Accessibility, Available Domains, Available Stacks, code:bash (python3 --version || python --version), code:bash (python3 .agent/.shared/ui-ux-pro-max/scripts/search.py "<key), code:bash (python3 .agent/.shared/ui-ux-pro-max/scripts/search.py "beau), code:bash (# Get UX guidelines for animation and accessibility), code:bash (python3 .agent/.shared/ui-ux-pro-max/scripts/search.py "layo) (+35 more)
+Cohesion: 0.06
+Nodes (38): Accessibility, Available Domains, Available Stacks, code:bash (python3 --version || python --version), code:bash (python3 .agent/.shared/ui-ux-pro-max/scripts/search.py "<key), code:bash (# Get UX guidelines for animation and accessibility), code:bash (python3 .agent/.shared/ui-ux-pro-max/scripts/search.py "layo), code:bash (# ASCII box (default) - best for terminal display) (+30 more)
 
 ### Community 153 - "Community 153"
-Cohesion: 0.5
+Cohesion: 0.50
 Nodes (4): httpx, module, ref, source
 
-### Community 154 - "Community 154"
-Cohesion: 0.5
-Nodes (4): gobuster, module, ref, source
-
-### Community 155 - "Community 155"
-Cohesion: 0.13
-Nodes (12): Tests for the tool registry — auto-discovery, scope filtering, and registration., @shikari_tool should register the function in the global registry., The decorated function should have _shikari_metadata attribute., @shikari_tool should register the function in the global registry., @shikari_tool should register the function in the global registry., Reset to default stdio config before each test., The decorated function should have _shikari_metadata attribute., The decorated function should have _shikari_metadata attribute. (+4 more)
-
 ### Community 156 - "Community 156"
-Cohesion: 0.5
+Cohesion: 0.50
 Nodes (4): naabu, module, ref, source
 
 ### Community 157 - "Community 157"
-Cohesion: 0.5
+Cohesion: 0.50
 Nodes (4): Cloud tool manifest profile, Checkov Scan tool entry, Gitleaks Scan tool entry, Semgrep Scan tool entry
 
 ### Community 158 - "Community 158"
@@ -1819,20 +992,16 @@ Cohesion: 0.67
 Nodes (3): _default_config pytest fixture, set_config import, ShikariConfig import
 
 ### Community 161 - "Community 161"
-Cohesion: 0.06
-Nodes (31): Advanced MCP Server Patterns, API Key via Environment Variable (simplest), Authentication & Security, Bearer Token Auth (HTTP transports), code:python (from typing import TypedDict), code:python (from mcp.server.fastmcp import Context, FastMCP), code:dockerfile (FROM python:3.11-slim), code:python (if __name__ == "__main__":) (+23 more)
+Cohesion: 0.12
+Nodes (16): MCP Middleware Patterns, Advanced MCP Server Patterns, code:python (from typing import TypedDict), code:python (from mcp.server.fastmcp import Context, FastMCP), code:python (import asyncio), code:python (import mcp.types as types), code:python (@mcp.tool(structured_output=False)), code:python (from fastmcp import FastMCP, Image  # preferred) (+8 more)
 
 ### Community 162 - "Community 162"
 Cohesion: 0.67
 Nodes (3): altdns - Altdns subdomain permutation discovery, gobuster_dns - Gobuster DNS subdomain enumeration, puredns - Puredns subdomain bruteforcing
 
 ### Community 163 - "Community 163"
-Cohesion: 1.0
+Cohesion: 1.00
 Nodes (3): dig_dns - DNS lookup via dig, nslookup_query - DNS query via nslookup, whois_lookup - WHOIS domain lookup
-
-### Community 166 - "Community 166"
-Cohesion: 0.5
-Nodes (3): generate_systemd_service(), Echo a systemd configuration.          Args:         service_name: Name of the s, Echo a systemd configuration.          Args:         service_name: Name of the s
 
 ### Community 168 - "Community 168"
 Cohesion: 0.67
@@ -1847,16 +1016,20 @@ Cohesion: 0.67
 Nodes (3): Future arsenal candidates, Go tools lock entries, ProjectDiscovery tool references
 
 ### Community 172 - "Community 172"
-Cohesion: 0.18
-Nodes (14): _as_path(), _blocked_metadata_target(), check_blocked_metadata_targets(), _deny(), explain_policy(), _matches_allowlist(), Explain current local policy settings., Re-resolve targets and return the first blocked metadata IP, or None.      Used (+6 more)
+Cohesion: 0.27
+Nodes (10): _as_path(), _blocked_metadata_target(), check_blocked_metadata_targets(), _deny(), _matches_allowlist(), Re-resolve targets and return the first blocked metadata IP, or None.      Used, Resolve hostname with timeout. Returns set of IPs; empty on failure/timeout., _resolve_host() (+2 more)
+
+### Community 173 - "Community 173"
+Cohesion: 0.12
+Nodes (13): beef_start function, browser_exploitation module, exploit_tools module, beef_start(), Start the BeEF daemon in the background.          Args:         extra_args: Any, msfconsole_run(), Run msfconsole with a resource script string.          Args:         resource_sc, Run setoolkit.          Args:         extra_args: Additional flags for setoolkit (+5 more)
 
 ### Community 174 - "Community 174"
-Cohesion: 0.02
-Nodes (103): execute_command(), Execute an external command without shell interpretation.      String commands a, Execute an external command without shell interpretation.      String commands a, Run setoolkit.          Args:         extra_args: Additional flags for setoolkit, setoolkit_run(), Start the sliver C2 server.          Args:         extra_args: Additional sliver, sliver_start(), dnscat2_start() (+95 more)
+Cohesion: 0.06
+Nodes (15): Execute a command-oriented plan and return step outputs., Context, execute_command(), Execute an external command without shell interpretation.      String commands a, Execute an external command without shell interpretation.      String commands a, Tests for the command executor., test_basic_command(), test_binary_not_found() (+7 more)
 
 ### Community 175 - "Community 175"
-Cohesion: 0.29
-Nodes (4): agent_workflow_ir(), IRAgent, Automated IR operations., Automated IR operations.
+Cohesion: 0.33
+Nodes (5): agent_workflow_ir tool entry point, agent_workflow_ir(), IRAgent, Extract findings from agent execution results., Automated IR operations.
 
 ### Community 176 - "Community 176"
 Cohesion: 0.07
@@ -1872,59 +1045,47 @@ Nodes (26): 10. Concurrency configuration is not enforced, 1. The "1200+ tools" 
 
 ### Community 318 - "Community 318"
 Cohesion: 0.29
-Nodes (7): Basic HTTP, code:json ({), code:json ({), code:bash (# Basic HTTP server), HTTPS with Self-Signed Certificate, Remote HTTP Configuration, Starting the HTTP Server
+Nodes (7): Basic HTTP, code:json ({), code:bash (# Basic HTTP server), HTTPS / TLS, Remote HTTP Configuration, Reverse proxy example (Caddy), Starting the HTTP Server
 
 ### Community 319 - "Community 319"
 Cohesion: 0.22
 Nodes (8): holehe_check(), maigret_search(), Search for a username across hundreds of social networks.      Args:         use, Search for a username across popular social networks and sites.      Args:, Check if an email address is registered on various online platforms.      Args:, Check email address or username availability on online platforms.      Args:, sherlock_search(), socialscan_check()
 
-### Community 320 - "Community 320"
-Cohesion: 0.29
-Nodes (4): agent_domain_cloud(), CloudAgent, Automated Cloud operations., Automated Cloud operations.
-
-### Community 321 - "Community 321"
-Cohesion: 0.29
-Nodes (4): agent_domain_mobile(), MobileAgent, Automated Mobile operations., Automated Mobile operations.
-
 ### Community 322 - "Community 322"
-Cohesion: 0.29
-Nodes (7): Claude Desktop, code:json ({), code:json ({), code:json ({), Local (stdio), With Active Tools Enabled, With Compatibility Wrappers Enabled
+Cohesion: 0.25
+Nodes (8): Claude Desktop, code:json ({), code:json ({), code:json ({), HTTPS with self-signed certificate, Local stdio, Remote HTTP via mcp-remote bridge, With Active Tools Enabled
 
 ### Community 323 - "Community 323"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (4): exiftool_gps(), exiftool_metadata(), Extract all metadata tags from a file using exiftool.      Args:         file: P, Extract GPS coordinates from a media file using exiftool.      Args:         fil
 
 ### Community 324 - "Community 324"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (4): description, profile, schema_version, tools
 
-### Community 326 - "Community 326"
-Cohesion: 0.67
-Nodes (3): package, source, greynoise
-
 ### Community 329 - "Community 329"
-Cohesion: 0.4
-Nodes (6): code:json ({), code:json ({), Cursor, Local (stdio), Local (stdio), Using uv (recommended)
+Cohesion: 0.29
+Nodes (7): code:json ({), code:json ({), Cursor, Local (stdio), Local stdio, Streamable HTTP remote, Using uv (recommended)
 
 ### Community 334 - "Community 334"
-Cohesion: 0.4
-Nodes (5): code:json ({), code:json ({), Using Copilot MCP Configuration, Using Workspace Configuration, VS Code (GitHub Copilot)
+Cohesion: 0.25
+Nodes (8): code:json ({), code:json ({), Local stdio, Streamable HTTP remote, Using Copilot MCP Configuration, Using Workspace Configuration, VS Code (GitHub Copilot), With Compatibility Wrappers Enabled
 
 ### Community 337 - "Community 337"
-Cohesion: 0.4
-Nodes (5): code:json ({), code:json ({), Codex (OpenAI), Configuration, Using Docker
+Cohesion: 0.40
+Nodes (5): code:json ({), Codex (OpenAI), Local stdio, Streamable HTTP remote, Using Docker
 
 ### Community 341 - "Community 341"
-Cohesion: 0.4
-Nodes (4): Expected Tools, MCP Client Configuration Guide, Table of Contents, Verification
+Cohesion: 0.25
+Nodes (8): Common Configuration Snippets, Expected Tools, MCP Client Configuration Guide, Quick Compatibility Matrix, stdio (local), Streamable HTTP (remote), Table of Contents, Verification
 
 ### Community 342 - "Community 342"
-Cohesion: 0.67
-Nodes (4): Cline, code:json ({), Configuration, Configuration
+Cohesion: 0.40
+Nodes (6): Cline, code:json ({), Configuration, Configuration, Local stdio, Streamable HTTP remote
 
 ### Community 343 - "Community 343"
-Cohesion: 0.67
-Nodes (4): code:json ({), Configuration, Configuration, Windsurf (Codeium)
+Cohesion: 0.33
+Nodes (7): code:json ({), code:json ({), Configuration, Configuration, Local stdio, Streamable HTTP remote, Windsurf (Codeium)
 
 ### Community 344 - "Community 344"
 Cohesion: 0.67
@@ -1937,10 +1098,6 @@ Nodes (14): checkov_iac_scan(), dive_image(), grype_image_scan(), grype_scan(), 
 ### Community 480 - "Community 480"
 Cohesion: 0.13
 Nodes (14): dalfox_xss_scan(), Scan TLS/SSL configuration using sslscan.      Args:         target: Target host, Probe TLS settings using tlsx with JSON output.      Args:         target: Targe, Run WPScan against a WordPress site to enumerate plugins, themes, and users., Fingerprint a web target using WhatWeb.      Args:         target: Target IP, do, Detect whether a web server is behind a WAF and identify it.      Args:, Scan a URL for cross-site scripting vulnerabilities using Dalfox.      Args:, Run testssl.sh to assess TLS/SSL security.      Args:         target: Target hos (+6 more)
-
-### Community 481 - "Community 481"
-Cohesion: 0.19
-Nodes (13): _get_known_profiles(), PolicyExplainInputs, Validated inputs for shikari_policy_explain., validate_inputs(), validate_path(), validate_profile(), validate_run_id(), validate_template() (+5 more)
 
 ### Community 483 - "Community 483"
 Cohesion: 0.15
@@ -1955,12 +1112,8 @@ Cohesion: 0.18
 Nodes (10): binwalk_firmware_extract(), binwalk_firmware_scan(), iot_port_scan(), mqtt_publish_probe(), mqtt_subscribe(), Scan for common IoT and SCADA protocol ports on a target.      Args:         tar, Scan a firmware image for embedded filesystems and signatures using binwalk., Extract embedded filesystems from a firmware image using binwalk.      Args: (+2 more)
 
 ### Community 511 - "Community 511"
-Cohesion: 0.24
-Nodes (10): arjun_param_mine(), ffuf_api_fuzz(), kiterunner_api_scan(), nuclei_api_scan(), Discover HTTP parameters for a given API endpoint using Arjun.      Args:, Scan API routes using Kiterunner.      Args:         url: Target API base URL, Scan API endpoints for vulnerabilities using Nuclei.      Args:         url: Tar, Fuzz API endpoints using FFUF.      Args:         url: Target API base URL with (+2 more)
-
-### Community 513 - "Community 513"
-Cohesion: 0.25
-Nodes (6): ConstantTimeTokenVerifier, get_auth_provider(), Return the FastMCP auth provider for HTTP transports.      STDIO inherits securi, Token verifier that uses constant-time comparison to prevent timing attacks., Return the auth provider for HTTP transports.      STDIO inherits security from, TokenVerifier
+Cohesion: 0.06
+Nodes (39): arjun_param_mine(), ffuf_api_fuzz(), kiterunner_api_scan(), nuclei_api_scan(), Discover HTTP parameters for a given API endpoint using Arjun.      Args:, Scan API routes using Kiterunner.      Args:         url: Target API base URL, Scan API endpoints for vulnerabilities using Nuclei.      Args:         url: Tar, Fuzz API endpoints using FFUF.      Args:         url: Target API base URL with (+31 more)
 
 ### Community 522 - "Community 522"
 Cohesion: 0.22
@@ -1988,15 +1141,15 @@ Nodes (25): Agent Selection Matrix, Available Agents (17 total), ⏸️ CHECKPOI
 
 ### Community 695 - "Community 695"
 Cohesion: 0.08
-Nodes (32): Architecture at a Glance, code:mermaid (flowchart TB), code:mermaid (flowchart LR), code:bash (uv run shikari-mcp \), code:bash (cp .env.docker.example .env  # Set a strong SHIKARI_API_KEY), code:bash (docker build -t shikari-mcp:local -f docker/Dockerfile .), code:bash (uv run pytest tests -q), code:bash (git clone https://github.com/Zaeem20/ShikariMCP.git) (+24 more)
+Nodes (32): Architecture at a Glance, Credits, Docker, Documentation, Install, License, Non-Blocking Execution, Quick Start (+24 more)
 
 ### Community 696 - "Community 696"
-Cohesion: 0.13
-Nodes (12): audit_event(), Write a compact JSONL audit event when auditing is enabled., Write a compact JSONL audit event when auditing is enabled., ManagedRun, _now(), Background execution manager for long-running MCP tool calls., Cancel all active runs during server shutdown or test cleanup., Replace the process-local manager. Intended for isolated test/server setup. (+4 more)
+Cohesion: 0.14
+Nodes (15): audit_event(), Write a compact JSONL audit event when auditing is enabled., get_run_manager(), ManagedRun, _now(), Background execution manager for long-running MCP tool calls., Cancel all active runs during server shutdown or test cleanup., Replace the process-local manager. Intended for isolated test/server setup. (+7 more)
 
 ### Community 697 - "Community 697"
 Cohesion: 0.11
-Nodes (19): ref, source, ref, source, source_tools, nikto, seclists, sqlmap (+11 more)
+Nodes (18): ref, source, ref, source, source_tools, nikto, seclists, sqlmap (+10 more)
 
 ### Community 698 - "Community 698"
 Cohesion: 0.11
@@ -2014,13 +1167,9 @@ Nodes (17): Build Verification, Code Quality, code:bash (# Update version in pyp
 Cohesion: 0.29
 Nodes (6): dnsx_resolve(), Run theHarvester to gather emails, subdomains, IPs, and URLs.      Args:, Look up an IP address on Shodan for open ports, services, and banners.      Args, Resolve DNS records for a domain using dnsx.      Args:         domain: Target d, shodan_lookup(), theharvester_run()
 
-### Community 702 - "Community 702"
-Cohesion: 0.29
-Nodes (6): Run wafw00f to identify WAFs.          Args:         url: Target URL         ext, Run WhatWeb to fingerprint web technologies.          Args:         url: Target, Run wappalyzer CLI.          Args:         url: Target URL         extra_args: A, wafw00f_scan(), wappalyzer_cli_scan(), whatweb_scan()
-
 ### Community 703 - "Community 703"
-Cohesion: 0.13
-Nodes (14): code:python (# server.py), code:python (# server.py), code:python (# server.py), code:block4 (my-server/), code:python (# tools/search.py), code:python (# server.py), code:toml ([project]), Debugging Checklist (+6 more)
+Cohesion: 0.12
+Nodes (18): Lifespan Management, Notion MCP Integration, Server Composition Pattern, Development Rules and Prompts, Python MCP Server Skill, code:python (# server.py), code:python (# server.py), code:block4 (my-server/) (+10 more)
 
 ### Community 704 - "Community 704"
 Cohesion: 0.14
@@ -2034,73 +1183,41 @@ Nodes (13): Adding a New Agent, Adding a New Tool, CI, code:bash (git clone http
 Cohesion: 0.14
 Nodes (13): Done, Modern Arsenal Candidates, Not P0, P0 - Finish Local-First Foundation, P1 - Manifest-Driven Execution, P2 - Parsers and Evidence, P3 - Agent Upgrade, P4 - Practical Local Safety Controls (+5 more)
 
-### Community 707 - "Community 707"
-Cohesion: 0.21
-Nodes (8): HostOriginSecurityMiddleware, _matches(), ASGI security middleware for Shikari's Streamable HTTP endpoint., Reject unexpected Host and Origin headers to prevent DNS rebinding., Tests for Streamable HTTP Host and Origin validation., test_empty_policy_denies(), test_exact_and_wildcard_port_matches(), test_host_prefix_confusion_is_rejected()
-
-### Community 708 - "Community 708"
-Cohesion: 0.67
-Nodes (3): package, source, h8mail
-
-### Community 709 - "Community 709"
-Cohesion: 0.08
-Nodes (25): discover_tools(), get_tool_summary(), Get a summary of registered tools by category., Get a summary of registered tools by category., Auto-discover tool and agent modules.      Importing a module triggers @shikari_, Auto-discover tool and agent modules.      Importing a module triggers @shikari_, Register discovered tools with the MCP server.      Tools blocked by policy (gen, Register discovered tools with the MCP server.      Tools blocked by policy (gen (+17 more)
-
 ### Community 710 - "Community 710"
 Cohesion: 0.18
 Nodes (10): After Planning, code:block1 (CONTEXT:), code:block2 ([OK] Plan created: docs/PLAN-{slug}.md), code:block3 (/plan e-commerce site with cart), 🔴 CRITICAL RULES, Expected Output, Naming Examples, /plan - Project Planning Mode (+2 more)
 
 ### Community 711 - "Community 711"
-Cohesion: 0.14
-Nodes (20): Agent System, Architecture, Background Job System, code:mermaid (flowchart LR), code:mermaid (sequenceDiagram), code:mermaid (flowchart LR), code:mermaid (flowchart LR), code:mermaid (flowchart TB) (+12 more)
+Cohesion: 0.22
+Nodes (13): Architecture, Background Job System, code:mermaid (flowchart LR), code:mermaid (sequenceDiagram), code:mermaid (flowchart TB), code:mermaid (flowchart LR), Core Components, HTTP Security Stack (+5 more)
 
 ### Community 712 - "Community 712"
-Cohesion: 0.21
+Cohesion: 0.23
 Nodes (13): Build And Verify, code:mermaid (flowchart TB), code:bash (cp .env.docker.example .env), code:bash (docker build -t shikari-mcp:local -f docker/Dockerfile .), code:dotenv (SHIKARI_ENABLE_ACTIVE_TOOLS=true), code:dotenv (SHIKARI_RATE_LIMIT_RPS=120    # Increase for trusted network), code:text (/app/.shikari/audit.jsonl), Compose (+5 more)
 
 ### Community 713 - "Community 713"
-Cohesion: 0.29
-Nodes (4): agent_domain_webapp(), Automated WebApp operations., Automated WebApp operations., WebAppAgent
+Cohesion: 0.15
+Nodes (36): BaseAgent, Base class for all ShikariMCP AI subagents.      Each agent follows a structured, audit_event function, BaseAgent, build_default_plan, Append-only audit event logging, ADAgent, agent_domain_ad() (+28 more)
 
 ### Community 714 - "Community 714"
-Cohesion: 0.2
+Cohesion: 0.20
 Nodes (9): Behavior, code:markdown (## 🔍 Debug: [Issue]), code:block2, code:block3 (/debug login not working), /debug - Systematic Problem Investigation, Examples, Key Principles, Output Format (+1 more)
 
 ### Community 715 - "Community 715"
 Cohesion: 0.07
-Nodes (31): Cloud Profile (3 tools), code:mermaid (flowchart TD), code:bash (# Install the core profile (12 tools)), code:bash (# OSINT tools (pipx isolates each tool in its own environmen), code:bash (# ProjectDiscovery suite), code:bash (# Explain a tool's purpose, parameters, and command structur), code:bash (# Preview a catalog wrapper command), Core Integrations (+23 more)
+Nodes (32): API Keys and Environment-Specific Tools, Cloud Profile (3 tools), code:mermaid (flowchart TD), code:bash (# Install the core profile (12 tools)), code:bash (# OSINT tools (pipx isolates each tool in its own environmen), code:bash (# ProjectDiscovery suite), code:bash (# Explain a tool's purpose, parameters, and command structur), code:bash (# Preview a catalog wrapper command) (+24 more)
 
 ### Community 716 - "Community 716"
 Cohesion: 0.22
 Nodes (8): Behavior, /brainstorm - Structured Idea Exploration, code:markdown (## 🧠 Brainstorm: [Topic]), code:block2 (/brainstorm authentication system), Examples, Key Principles, Output Format, Purpose
 
-### Community 717 - "Community 717"
-Cohesion: 0.4
-Nodes (4): droopescan_scan(), Run WPScan against a target WordPress site.          Args:         url: Target W, Run Droopescan against a target CMS.          Args:         url: Target CMS URL, wpscan_scan()
-
-### Community 718 - "Community 718"
-Cohesion: 0.14
-Nodes (12): hashcat_crack(), hashcat_show(), john_crack(), john_show(), Run Hashcat to crack hashes.          Args:         hash_file: Path to the file, Run Hashcat to crack hashes.          Args:         hash_file: Path to the file, Run John the Ripper.          Args:         hash_file: Path to the hash file, Run John the Ripper.          Args:         hash_file: Path to the hash file (+4 more)
-
 ### Community 719 - "Community 719"
 Cohesion: 0.25
 Nodes (7): Caution, code:block1 ("To add admin panel:), code:block2 (/enhance add dark mode), /enhance - Update Application, Steps:, Task, Usage Examples
 
-### Community 720 - "Community 720"
-Cohesion: 0.4
-Nodes (4): nikto_scan(), nuclei_scan(), Run Nikto against a web server.          Args:         url: The full URL to scan, Run Nuclei with specified tags and templates.          Args:         url: Target
-
-### Community 721 - "Community 721"
-Cohesion: 0.4
-Nodes (4): arjun_scan(), kiterunner_scan(), Run Arjun to find hidden HTTP parameters.          Args:         url: Target URL, Run Kiterunner to discover API endpoints.          Args:         url: Target URL
-
 ### Community 722 - "Community 722"
 Cohesion: 0.15
 Nodes (12): Agents, code:mermaid (flowchart TD), code:mermaid (flowchart LR), Defensive Agents (5), Domain-Specific Agents (10), Execution Model, Feature Flag Mapping, Infrastructure Agents (8) (+4 more)
-
-### Community 723 - "Community 723"
-Cohesion: 0.4
-Nodes (4): ffuf_scan(), Run FFUF directory and file discovery.          Args:         url: Target URL wi, Run Wfuzz against a target.          Args:         url: Target URL         paylo, wfuzz_scan()
 
 ### Community 724 - "Community 724"
 Cohesion: 0.29
@@ -2114,10 +1231,6 @@ Nodes (6): Before Starting, code:block1 (/create blog site), /create - Create Ap
 Cohesion: 0.29
 Nodes (6): code:block1 (=== Project Status ===), Example Output, /status - Show Status, Task, Technical, What It Shows
 
-### Community 727 - "Community 727"
-Cohesion: 0.4
-Nodes (4): Run SQLMap against a URL.          Args:         url: Target URL         risk: R, Run XSStrike against a URL.          Args:         url: Target URL         extra, sqlmap_scan(), xsstrike_scan()
-
 ### Community 728 - "Community 728"
 Cohesion: 0.29
 Nodes (6): Closed Findings, Remaining Operational Limits, Research Basis, ShikariMCP Production Readiness Report, Validation, Verdict
@@ -2127,15 +1240,15 @@ Cohesion: 0.33
 Nodes (5): 1. Always Check Installed Skills, 2. Always Reference the Implementation Plan, 3. Always Use Notion MCP Server, 4. Always Work on ShikariMCP, Mandatory Rules for ShikariMCP Development
 
 ### Community 730 - "Community 730"
-Cohesion: 0.4
-Nodes (4): CLI, Configuration, Environment Variables, Proxy Configuration
+Cohesion: 0.40
+Nodes (5): CLI, Configuration, Environment Variables, Proxy Configuration, Single-User Self-Hosted Defaults
 
 ### Community 731 - "Community 731"
-Cohesion: 0.5
-Nodes (4): module, ref, source, gitleaks
+Cohesion: 0.50
+Nodes (4): module, source, gitleaks, ref
 
 ### Community 732 - "Community 732"
-Cohesion: 0.5
+Cohesion: 0.50
 Nodes (4): subfinder, module, ref, source
 
 ### Community 734 - "Community 734"
@@ -2146,53 +1259,41 @@ Nodes (6): chisel_tunnel(), linpeas_enum(), Run LinPEAS to enumerate the local s
 Cohesion: 0.29
 Nodes (6): masscan_full(), nmap_vuln_scan(), nuclei_exposure_scan(), Run masscan across all 65535 TCP ports with JSON output.      Args:         targ, Run Nmap with version detection and vulnerability scanning scripts.      Args:, Run Nuclei with exposure and misconfiguration templates.      Args:         targ
 
-### Community 736 - "Community 736"
-Cohesion: 0.4
-Nodes (4): hydra_brute(), medusa_brute(), Run Hydra against a network service.          Args:         target: Target IP or, Run Medusa.          Args:         target: Target IP or domain         service:
-
 ### Community 738 - "Community 738"
-Cohesion: 0.33
-Nodes (3): parse_sse(), Live integration test for ShikariMCP HTTP transport., Extract JSON from SSE or plain JSON response.
+Cohesion: 0.18
+Nodes (12): parse_sse(), Live integration test for ShikariMCP HTTP transport., Extract JSON from SSE or plain JSON response., Initialize an MCP session and return session headers., session(), test_bad_profile_validation(), test_initialize(), test_input_validation_bad_tool_id() (+4 more)
 
 ### Community 741 - "Community 741"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (4): garak_scan(), modelscan_scan(), Run a Garak vulnerability scan against a language model.      Probes include pro, Scan a machine learning model file or directory for known security issues.
 
 ### Community 742 - "Community 742"
-Cohesion: 0.4
+Cohesion: 0.40
 Nodes (4): arpspoof_run(), ettercap_mitm(), Run ARP spoofing to intercept traffic between a target and host.      Args:, Run Ettercap in ARP poisoning MITM mode.      Args:         iface: Network inter
 
-### Community 744 - "Community 744"
-Cohesion: 0.67
-Nodes (3): package, source, maigret
-
-### Community 746 - "Community 746"
-Cohesion: 0.67
-Nodes (3): sherlock, package, source
-
-### Community 748 - "Community 748"
-Cohesion: 0.67
-Nodes (3): volatility3, package, source
+### Community 804 - "Community 804"
+Cohesion: 0.12
+Nodes (8): Basic command execution should work., Command should capture multi-line output., String command should be parsed correctly., Missing binary should return error code 127., Empty command should return error., Commands exceeding timeout should be killed., Non-zero exit code should be captured., TestExecuteCommand
 
 ## Knowledge Gaps
-- **695 isolated node(s):** `schema_version`, `generated_at`, `profile`, `go_version`, `notes` (+690 more)
+- **682 isolated node(s):** `$schema`, `plugin`, `@opencode-ai/plugin`, `shikari`, `install-go-tools.sh script` (+677 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **789 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **73 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `execute_command()` connect `Community 174` to `Community 1`, `Community 3`, `Community 6`, `Community 8`, `Community 10`, `Community 11`, `Community 13`, `Community 14`, `Community 16`, `Community 17`, `Community 18`, `Community 26`, `Community 30`, `Community 31`, `Community 36`, `Community 37`, `Community 42`, `Community 43`, `Community 48`, `Community 49`, `Community 50`, `Community 51`, `Community 53`, `Community 54`, `Community 61`, `Community 63`, `Community 66`, `Community 67`, `Community 69`, `Community 70`, `Community 71`, `Community 72`, `Community 73`, `Community 74`, `Community 75`, `Community 76`, `Community 77`, `Community 78`, `Community 79`, `Community 80`, `Community 81`, `Community 82`, `Community 83`, `Community 84`, `Community 85`, `Community 86`, `Community 87`, `Community 88`, `Community 89`, `Community 90`, `Community 91`, `Community 92`, `Community 93`, `Community 94`, `Community 95`, `Community 96`, `Community 97`, `Community 98`, `Community 99`, `Community 100`, `Community 101`, `Community 102`, `Community 103`, `Community 104`, `Community 106`, `Community 107`, `Community 108`, `Community 109`, `Community 112`, `Community 115`, `Community 118`, `Community 127`, `Community 128`, `Community 129`, `Community 130`, `Community 132`, `Community 133`, `Community 136`, `Community 137`, `Community 142`, `Community 143`, `Community 167`, `Community 173`, `Community 175`, `Community 179`, `Community 185`, `Community 186`, `Community 187`, `Community 188`, `Community 189`, `Community 190`, `Community 191`, `Community 192`, `Community 193`, `Community 194`, `Community 195`, `Community 196`, `Community 197`, `Community 198`, `Community 199`, `Community 200`, `Community 201`, `Community 202`, `Community 203`, `Community 204`, `Community 205`, `Community 206`, `Community 207`, `Community 208`, `Community 209`, `Community 210`, `Community 211`, `Community 212`, `Community 213`, `Community 214`, `Community 215`, `Community 216`, `Community 217`, `Community 218`, `Community 219`, `Community 220`, `Community 221`, `Community 222`, `Community 223`, `Community 224`, `Community 225`, `Community 226`, `Community 227`, `Community 228`, `Community 229`, `Community 230`, `Community 231`, `Community 232`, `Community 233`, `Community 234`, `Community 235`, `Community 236`, `Community 237`, `Community 238`, `Community 239`, `Community 240`, `Community 241`, `Community 242`, `Community 243`, `Community 244`, `Community 245`, `Community 246`, `Community 247`, `Community 248`, `Community 249`, `Community 250`, `Community 251`, `Community 252`, `Community 253`, `Community 254`, `Community 255`, `Community 256`, `Community 257`, `Community 258`, `Community 259`, `Community 260`, `Community 261`, `Community 262`, `Community 263`, `Community 264`, `Community 265`, `Community 266`, `Community 267`, `Community 268`, `Community 269`, `Community 270`, `Community 271`, `Community 272`, `Community 273`, `Community 274`, `Community 275`, `Community 276`, `Community 277`, `Community 278`, `Community 279`, `Community 280`, `Community 281`, `Community 282`, `Community 283`, `Community 284`, `Community 285`, `Community 286`, `Community 287`, `Community 288`, `Community 289`, `Community 290`, `Community 291`, `Community 292`, `Community 293`, `Community 294`, `Community 295`, `Community 296`, `Community 297`, `Community 298`, `Community 299`, `Community 300`, `Community 301`, `Community 302`, `Community 303`, `Community 304`, `Community 305`, `Community 306`, `Community 307`, `Community 308`, `Community 309`, `Community 310`, `Community 311`, `Community 312`, `Community 313`, `Community 314`, `Community 315`, `Community 316`, `Community 317`, `Community 319`, `Community 320`, `Community 321`, `Community 323`, `Community 325`, `Community 327`, `Community 328`, `Community 330`, `Community 331`, `Community 332`, `Community 333`, `Community 335`, `Community 336`, `Community 338`, `Community 339`, `Community 340`, `Community 345`, `Community 346`, `Community 347`, `Community 348`, `Community 349`, `Community 350`, `Community 351`, `Community 352`, `Community 353`, `Community 354`, `Community 355`, `Community 356`, `Community 357`, `Community 358`, `Community 359`, `Community 360`, `Community 361`, `Community 362`, `Community 363`, `Community 364`, `Community 365`, `Community 366`, `Community 367`, `Community 368`, `Community 369`, `Community 370`, `Community 371`, `Community 372`, `Community 373`, `Community 374`, `Community 375`, `Community 376`, `Community 377`, `Community 378`, `Community 379`, `Community 380`, `Community 381`, `Community 382`, `Community 383`, `Community 384`, `Community 385`, `Community 386`, `Community 387`, `Community 388`, `Community 389`, `Community 390`, `Community 391`, `Community 392`, `Community 393`, `Community 394`, `Community 395`, `Community 396`, `Community 397`, `Community 398`, `Community 399`, `Community 400`, `Community 401`, `Community 402`, `Community 403`, `Community 404`, `Community 405`, `Community 406`, `Community 407`, `Community 408`, `Community 409`, `Community 410`, `Community 411`, `Community 412`, `Community 413`, `Community 414`, `Community 416`, `Community 417`, `Community 418`, `Community 419`, `Community 420`, `Community 421`, `Community 422`, `Community 423`, `Community 424`, `Community 425`, `Community 426`, `Community 427`, `Community 428`, `Community 429`, `Community 430`, `Community 431`, `Community 432`, `Community 433`, `Community 434`, `Community 435`, `Community 436`, `Community 437`, `Community 438`, `Community 439`, `Community 440`, `Community 441`, `Community 442`, `Community 443`, `Community 444`, `Community 445`, `Community 446`, `Community 447`, `Community 448`, `Community 449`, `Community 450`, `Community 451`, `Community 452`, `Community 453`, `Community 454`, `Community 455`, `Community 456`, `Community 457`, `Community 458`, `Community 459`, `Community 460`, `Community 461`, `Community 462`, `Community 463`, `Community 464`, `Community 465`, `Community 466`, `Community 467`, `Community 468`, `Community 470`, `Community 471`, `Community 472`, `Community 473`, `Community 474`, `Community 475`, `Community 476`, `Community 477`, `Community 478`, `Community 479`, `Community 480`, `Community 482`, `Community 483`, `Community 484`, `Community 485`, `Community 486`, `Community 487`, `Community 488`, `Community 489`, `Community 490`, `Community 491`, `Community 492`, `Community 493`, `Community 494`, `Community 495`, `Community 496`, `Community 497`, `Community 498`, `Community 499`, `Community 500`, `Community 501`, `Community 502`, `Community 503`, `Community 504`, `Community 505`, `Community 506`, `Community 507`, `Community 508`, `Community 509`, `Community 510`, `Community 511`, `Community 512`, `Community 514`, `Community 515`, `Community 516`, `Community 517`, `Community 518`, `Community 519`, `Community 520`, `Community 521`, `Community 522`, `Community 523`, `Community 524`, `Community 525`, `Community 526`, `Community 527`, `Community 528`, `Community 529`, `Community 530`, `Community 531`, `Community 532`, `Community 533`, `Community 534`, `Community 535`, `Community 536`, `Community 537`, `Community 538`, `Community 539`, `Community 540`, `Community 541`, `Community 542`, `Community 543`, `Community 544`, `Community 545`, `Community 546`, `Community 547`, `Community 548`, `Community 549`, `Community 550`, `Community 551`, `Community 552`, `Community 553`, `Community 554`, `Community 555`, `Community 556`, `Community 557`, `Community 559`, `Community 560`, `Community 561`, `Community 562`, `Community 563`, `Community 564`, `Community 565`, `Community 566`, `Community 567`, `Community 568`, `Community 569`, `Community 570`, `Community 571`, `Community 572`, `Community 573`, `Community 574`, `Community 575`, `Community 576`, `Community 577`, `Community 578`, `Community 579`, `Community 580`, `Community 581`, `Community 582`, `Community 583`, `Community 584`, `Community 585`, `Community 586`, `Community 587`, `Community 588`, `Community 589`, `Community 590`, `Community 591`, `Community 592`, `Community 593`, `Community 594`, `Community 595`, `Community 596`, `Community 597`, `Community 598`, `Community 599`, `Community 600`, `Community 601`, `Community 602`, `Community 603`, `Community 604`, `Community 605`, `Community 606`, `Community 607`, `Community 608`, `Community 609`, `Community 610`, `Community 611`, `Community 612`, `Community 613`, `Community 614`, `Community 615`, `Community 616`, `Community 617`, `Community 618`, `Community 619`, `Community 620`, `Community 621`, `Community 622`, `Community 623`, `Community 624`, `Community 625`, `Community 626`, `Community 627`, `Community 628`, `Community 629`, `Community 630`, `Community 631`, `Community 632`, `Community 633`, `Community 634`, `Community 635`, `Community 636`, `Community 637`, `Community 638`, `Community 639`, `Community 640`, `Community 641`, `Community 642`, `Community 643`, `Community 644`, `Community 645`, `Community 646`, `Community 647`, `Community 648`, `Community 649`, `Community 650`, `Community 651`, `Community 652`, `Community 653`, `Community 654`, `Community 655`, `Community 656`, `Community 657`, `Community 658`, `Community 659`, `Community 660`, `Community 661`, `Community 662`, `Community 663`, `Community 664`, `Community 665`, `Community 666`, `Community 667`, `Community 668`, `Community 669`, `Community 670`, `Community 671`, `Community 672`, `Community 673`, `Community 674`, `Community 675`, `Community 676`, `Community 677`, `Community 678`, `Community 679`, `Community 680`, `Community 681`, `Community 682`, `Community 683`, `Community 684`, `Community 685`, `Community 686`, `Community 687`, `Community 688`, `Community 689`, `Community 690`, `Community 691`, `Community 696`, `Community 701`, `Community 702`, `Community 713`, `Community 717`, `Community 718`, `Community 720`, `Community 721`, `Community 723`, `Community 724`, `Community 727`, `Community 733`, `Community 734`, `Community 735`, `Community 736`, `Community 739`, `Community 740`, `Community 741`, `Community 742`, `Community 743`, `Community 745`, `Community 747`, `Community 749`, `Community 750`, `Community 751`, `Community 752`, `Community 753`, `Community 754`, `Community 755`, `Community 756`, `Community 757`, `Community 758`, `Community 759`, `Community 760`, `Community 761`, `Community 762`, `Community 763`, `Community 764`, `Community 765`, `Community 766`, `Community 767`, `Community 768`, `Community 769`, `Community 770`, `Community 771`, `Community 772`, `Community 773`, `Community 774`, `Community 775`, `Community 776`, `Community 777`, `Community 778`, `Community 779`, `Community 780`, `Community 781`, `Community 782`, `Community 783`, `Community 784`, `Community 785`, `Community 786`, `Community 787`, `Community 788`, `Community 790`, `Community 792`, `Community 793`, `Community 795`, `Community 796`, `Community 801`, `Community 802`, `Community 803`, `Community 809`, `Community 811`, `Community 814`, `Community 819`, `Community 820`, `Community 821`, `Community 822`, `Community 823`, `Community 824`, `Community 825`, `Community 826`, `Community 827`, `Community 828`, `Community 829`, `Community 830`, `Community 831`, `Community 832`, `Community 833`, `Community 834`, `Community 835`, `Community 836`, `Community 837`, `Community 838`, `Community 839`, `Community 840`, `Community 841`, `Community 842`, `Community 843`, `Community 844`, `Community 845`, `Community 846`, `Community 847`, `Community 848`, `Community 849`, `Community 850`, `Community 851`, `Community 852`, `Community 853`, `Community 854`, `Community 855`, `Community 856`, `Community 857`, `Community 858`, `Community 859`, `Community 860`, `Community 861`, `Community 862`, `Community 863`, `Community 864`, `Community 865`, `Community 866`, `Community 867`, `Community 868`, `Community 869`, `Community 870`, `Community 871`, `Community 872`, `Community 873`, `Community 874`, `Community 875`, `Community 876`, `Community 877`, `Community 878`, `Community 879`, `Community 880`, `Community 881`, `Community 882`, `Community 883`, `Community 884`, `Community 885`, `Community 886`, `Community 887`, `Community 888`, `Community 889`, `Community 890`, `Community 891`, `Community 892`, `Community 893`, `Community 894`, `Community 895`, `Community 896`, `Community 897`, `Community 898`, `Community 899`, `Community 900`, `Community 901`, `Community 902`, `Community 903`, `Community 904`, `Community 905`, `Community 906`, `Community 907`, `Community 908`, `Community 909`, `Community 910`, `Community 911`, `Community 912`, `Community 913`, `Community 914`, `Community 915`, `Community 916`, `Community 917`, `Community 918`, `Community 919`, `Community 920`, `Community 921`, `Community 922`, `Community 923`, `Community 924`, `Community 925`, `Community 930`, `Community 935`, `Community 938`, `Community 939`, `Community 940`, `Community 941`, `Community 942`, `Community 943`, `Community 944`, `Community 945`, `Community 946`, `Community 947`, `Community 948`, `Community 949`, `Community 950`, `Community 951`, `Community 952`, `Community 953`, `Community 954`, `Community 955`, `Community 956`, `Community 957`, `Community 958`, `Community 959`, `Community 960`, `Community 961`, `Community 962`, `Community 963`, `Community 964`, `Community 965`, `Community 966`, `Community 967`?**
-  _High betweenness centrality (0.409) - this node is a cross-community bridge._
-- **Why does `get_config()` connect `Community 118` to `Community 32`, `Community 513`, `Community 709`, `Community 39`, `Community 172`, `Community 13`, `Community 174`, `Community 696`, `Community 119`, `Community 56`, `Community 28`, `Community 30`?**
-  _High betweenness centrality (0.059) - this node is a cross-community bridge._
-- **Why does `run_verified_tool()` connect `Community 30` to `Community 39`, `Community 172`, `Community 696`, `Community 174`, `Community 18`, `Community 21`, `Community 118`, `Community 56`, `Community 24`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
-- **Are the 1318 inferred relationships involving `execute_command()` (e.g. with `.execute_plan()` and `.execute()`) actually correct?**
-  _`execute_command()` has 1318 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 126 inferred relationships involving `validate_target()` (e.g. with `nxc_smb_enum()` and `bloodhound_collect()`) actually correct?**
-  _`validate_target()` has 126 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 51 inferred relationships involving `BaseAgent` (e.g. with `AnomalyDetectAgent` and `ContainmentAgent`) actually correct?**
-  _`BaseAgent` has 51 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 55 inferred relationships involving `ToolScope` (e.g. with `AnomalyDetectAgent` and `ContainmentAgent`) actually correct?**
-  _`ToolScope` has 55 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `execute_command()` connect `Community 174` to `Community 128`, `Community 129`, `Community 130`, `Community 132`, `Community 133`, `Community 6`, `Community 136`, `Community 137`, `Community 522`, `Community 511`, `Community 13`, `Community 142`, `Community 14`, `Community 529`, `Community 534`, `Community 535`, `Community 537`, `Community 30`, `Community 804`, `Community 43`, `Community 173`, `Community 49`, `Community 50`, `Community 51`, `Community 54`, `Community 696`, `Community 60`, `Community 61`, `Community 701`, `Community 319`, `Community 63`, `Community 66`, `Community 323`, `Community 67`, `Community 325`, `Community 724`, `Community 474`, `Community 734`, `Community 735`, `Community 480`, `Community 483`, `Community 741`, `Community 742`, `Community 107`, `Community 493`, `Community 112`, `Community 118`, `Community 121`, `Community 509`, `Community 127`?**
+  _High betweenness centrality (0.280) - this node is a cross-community bridge._
+- **Why does `ShikariConfig` connect `Community 39` to `Community 9`, `Community 13`, `Community 23`, `Community 24`, `Community 27`, `Community 28`, `Community 30`, `Community 32`, `Community 34`, `Community 35`, `Community 804`, `Community 174`, `Community 696`, `Community 56`, `Community 62`, `Community 711`, `Community 74`, `Community 116`, `Community 118`, `Community 120`?**
+  _High betweenness centrality (0.145) - this node is a cross-community bridge._
+- **Why does `Dual Transport Architecture` connect `Community 23` to `Community 65`, `Community 34`, `Community 39`, `Community 111`?**
+  _High betweenness centrality (0.083) - this node is a cross-community bridge._
+- **Are the 313 inferred relationships involving `execute_command()` (e.g. with `bloodhound_collect()` and `certipy_find()`) actually correct?**
+  _`execute_command()` has 313 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 122 inferred relationships involving `validate_target()` (e.g. with `bloodhound_collect()` and `certipy_find()`) actually correct?**
+  _`validate_target()` has 122 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 57 inferred relationships involving `ShikariConfig` (e.g. with `Dual Transport Architecture` and `Safety Controls`) actually correct?**
+  _`ShikariConfig` has 57 INFERRED edges - model-reasoned connections that need verification._
+- **What connects `$schema`, `plugin`, `@opencode-ai/plugin` to the rest of the system?**
+  _1342 weakly-connected nodes found - possible documentation gaps or missing edges._
