@@ -9,6 +9,7 @@ import shlex
 import shutil
 import signal
 import subprocess
+import sys
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
@@ -59,6 +60,18 @@ class ExecutionResult:
         }
 
 
+def _resolve_binary(binary: str) -> str:
+    """Return the full path to a binary, searching PATH and the active venv."""
+    path = shutil.which(binary)
+    if path is not None:
+        return path
+    venv_bin = Path(sys.prefix) / "bin"
+    candidate = venv_bin / binary
+    if candidate.is_file() and os.access(candidate, os.X_OK):
+        return str(candidate)
+    return binary
+
+
 async def execute_command(
     command: str | list[str],
     timeout: int = 300,
@@ -85,7 +98,8 @@ async def execute_command(
     if not args:
         return ExecutionResult(stdout="", stderr="Error: Empty command", return_code=1)
 
-    binary = args[0]
+    binary = _resolve_binary(args[0])
+    args[0] = binary
     effective_timeout = min(timeout, config.default_timeout) if config.default_timeout else timeout
     logger.info("Executing: %s (timeout: %ss)", binary, effective_timeout)
     audit_event(
@@ -395,7 +409,13 @@ def check_binary_sync(binary: str, refresh: bool = False) -> bool:
 
 @lru_cache(maxsize=512)
 def _check_binary_cached(binary: str) -> bool:
-    return shutil.which(binary) is not None
+    if shutil.which(binary) is not None:
+        return True
+    # Also search the active virtual environment's bin directory so tools
+    # installed into the same venv as ShikariMCP are discovered automatically.
+    venv_bin = Path(sys.prefix) / "bin"
+    candidate = venv_bin / binary
+    return candidate.is_file() and os.access(candidate, os.X_OK)
 
 
 def clear_binary_cache() -> None:

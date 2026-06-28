@@ -1,4 +1,4 @@
-# ShikariMCP - manifest-driven verified tool runner
+# ShikariMCP - manifest-driven tool runner
 
 from __future__ import annotations
 
@@ -48,7 +48,7 @@ class ToolRunResult(BaseModel):
     next_suggestions: list[str] = Field(default_factory=list)
 
 
-def dry_run_verified_tool(
+def dry_run_tool(
     tool_id: str,
     inputs: dict[str, Any],
     profile: str = "core",
@@ -70,7 +70,7 @@ def dry_run_verified_tool(
     }
 
 
-async def run_verified_tool(
+async def run_tool(
     tool_id: str,
     inputs: dict[str, Any],
     profile: str = "core",
@@ -146,7 +146,7 @@ async def run_verified_tool(
 
     stdout_path = artifact_path(run_id, f"{tool.id}_stdout", _artifact_kind(preview.output_format))
     stderr_path = artifact_path(run_id, f"{tool.id}_stderr", "stderr")
-    audit_event("verified_tool_start", run_id=run_id, tool=tool.id, profile=profile)
+    audit_event("tool_start", run_id=run_id, tool=tool.id, profile=profile)
     start = time.monotonic()
     result = await execute_command(
         preview.argv,
@@ -157,7 +157,7 @@ async def run_verified_tool(
     )
     duration_ms = int((time.monotonic() - start) * 1000)
     status = "success" if result.success else "failed"
-    errors = [] if result.success else [result.stderr or f"Tool exited {result.return_code}"]
+    errors = [] if result.success else [result.output or f"Tool exited {result.return_code}"]
     artifacts = [
         artifact_reference(
             stdout_path,
@@ -222,7 +222,7 @@ async def run_verified_tool(
         next_suggestions=_next_suggestions(tool, status),
     ).model_dump()
     audit_event(
-        "verified_tool_finish",
+        "tool_finish",
         run_id=run_id,
         tool=tool.id,
         status=status,
@@ -331,7 +331,7 @@ def _execution_preflight_error(
         return f"Tool '{tool.binary}' is not installed or not on PATH."
 
     placeholders = _template_placeholders(template)
-    for key in ("wordlist", "file", "request_file", "rules", "hash_file", "users", "passwords"):
+    for key in ("wordlist", "file", "request_file", "rules", "hash_file"):
         if key not in placeholders or not inputs.get(key):
             continue
         path = Path(str(inputs[key])).expanduser()

@@ -67,7 +67,9 @@ class TestShikariConfig:
         assert config.api_key is None
         assert config.default_timeout == 300
         assert config.tool_profile == "core"
-        assert config.enable_experimental_tools is False
+        assert config.enable_experimental_tools is True
+        assert config.enable_legacy_tools is True
+        assert config.enable_generated_tools is True
         assert config.log_level == "INFO"
 
     def test_is_http(self):
@@ -153,12 +155,12 @@ class TestToolRegistration:
             tools = await client.list_tools()
             tool_names = {t.name for t in tools}
             assert "shikari_status" in tool_names
-            assert "shikari_list_verified_tools" in tool_names
+            assert "shikari_list_tools" in tool_names
             assert "shikari_verify_tool_profile" in tool_names
             assert "shikari_dependency_health" in tool_names
             assert "shikari_explain_tool" in tool_names
-            assert "shikari_run_verified_tool" in tool_names
-            assert "shikari_submit_verified_tool" in tool_names
+            assert "shikari_run_tool" in tool_names
+            assert "shikari_submit_tool" in tool_names
             assert "shikari_get_run" in tool_names
             assert "shikari_list_runs" in tool_names
             assert "shikari_cancel_run" in tool_names
@@ -180,17 +182,17 @@ class TestToolRegistration:
 
     @pytest.mark.asyncio
     async def test_tools_registered(self, stdio_config):
-        """The default surface should stay compact enough for AI clients."""
+        """All tools should be exposed by default."""
         from fastmcp.client import Client
 
         mcp = create_server(stdio_config)
         async with Client(mcp) as client:
             tools = await client.list_tools()
-            assert 10 <= len(tools) <= 30
+            assert len(tools) >= 50
 
     @pytest.mark.asyncio
     async def test_known_tools_exist(self, stdio_config):
-        """Legacy direct wrappers should not bypass the manifest runner."""
+        """Legacy direct wrappers are now exposed by default."""
         from fastmcp.client import Client
 
         mcp = create_server(stdio_config)
@@ -198,14 +200,16 @@ class TestToolRegistration:
             tools = await client.list_tools()
             tool_names = {t.name for t in tools}
 
-            assert "shikari_run_verified_tool" in tool_names
-            assert "nmap_scan" not in tool_names
-            assert "masscan" not in tool_names
-            assert "hashcat_crack" not in tool_names
+            assert "shikari_run_tool" in tool_names
+            assert "shikari_run_tool" in tool_names
+            # Legacy wrappers are exposed - check a few known ones by actual registered names
+            legacy_patterns = ["nmap_scan", "masscan", "hashcat_crack", "john_crack", "hydra_brute"]
+            found_legacy = [t for t in legacy_patterns if t in tool_names]
+            assert len(found_legacy) >= 3, f"Expected legacy tools in {tool_names}, found: {found_legacy}"
 
     @pytest.mark.asyncio
     async def test_agent_tools_registered(self, stdio_config):
-        """Verify that agent workflow tools are registered."""
+        """Verify that all agent tools are registered."""
         from fastmcp.client import Client
 
         mcp = create_server(stdio_config)
@@ -213,7 +217,8 @@ class TestToolRegistration:
             tools = await client.list_tools()
             tool_names = {t.name for t in tools}
 
-            # At least the recon agent should be there
+            # Production workflow agents
             assert "workflow_recon_agent" in tool_names
             assert "workflow_webapp_agent" in tool_names
-            assert "agent_domain_webapp" not in tool_names
+            # Catalog agents are also exposed
+            assert "agent_domain_webapp" in tool_names

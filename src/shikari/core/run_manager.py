@@ -11,7 +11,7 @@ from typing import Any
 from shikari.config import get_config
 from shikari.core.artifacts import write_json_artifact
 from shikari.core.audit import audit_event
-from shikari.core.tool_runner import run_verified_tool
+from shikari.core.tool_runner import run_tool
 
 
 def _now() -> str:
@@ -136,7 +136,7 @@ class RunManager:
         timeout = get_config().default_timeout or 300
         try:
             result = await asyncio.wait_for(
-                run_verified_tool(
+                run_tool(
                     tool_id=managed.tool_id,
                     inputs=managed.inputs,
                     profile=managed.profile,

@@ -12,11 +12,11 @@ from shikari.core import run_manager
 async def test_submit_returns_before_run_finishes(monkeypatch, tmp_path):
     gate = asyncio.Event()
 
-    async def fake_run_verified_tool(**kwargs):
+    async def fake_run_tool(**kwargs):
         await gate.wait()
         return {"run_id": kwargs["run_id"], "status": "success"}
 
-    monkeypatch.setattr(run_manager, "run_verified_tool", fake_run_verified_tool)
+    monkeypatch.setattr(run_manager, "run_tool", fake_run_tool)
     set_config(ShikariConfig(artifact_dir=str(tmp_path), audit_enabled=False))
     manager = run_manager.RunManager()
 
@@ -34,10 +34,10 @@ async def test_submit_returns_before_run_finishes(monkeypatch, tmp_path):
 
 @pytest.mark.asyncio
 async def test_cancel_marks_run_cancelled(monkeypatch, tmp_path):
-    async def fake_run_verified_tool(**kwargs):
+    async def fake_run_tool(**kwargs):
         await asyncio.sleep(30)
 
-    monkeypatch.setattr(run_manager, "run_verified_tool", fake_run_verified_tool)
+    monkeypatch.setattr(run_manager, "run_tool", fake_run_tool)
     set_config(ShikariConfig(artifact_dir=str(tmp_path), audit_enabled=False))
     manager = run_manager.RunManager()
 

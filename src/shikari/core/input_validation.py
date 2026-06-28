@@ -29,7 +29,7 @@ _TOOL_ID_RE = re.compile(r"^[a-zA-Z0-9_-]{1,128}$")
 
 
 class ToolRunInputs(BaseModel):
-    """Validated inputs for shikari_run_verified_tool / shikari_submit_verified_tool."""
+    """Validated inputs for shikari_run_tool / shikari_submit_tool."""
 
     tool_id: str = Field(..., min_length=1, max_length=128, description="Tool identifier")
     inputs: dict[str, Any] = Field(
@@ -157,7 +157,7 @@ class PolicyExplainInputs(BaseModel):
 
 
 class ToolListInputs(BaseModel):
-    """Validated inputs for shikari_list_verified_tools / shikari_verify_tool_profile."""
+    """Validated inputs for shikari_list_tools / shikari_verify_tool_profile."""
 
     profile: str | None = Field(default=None, max_length=64)
 

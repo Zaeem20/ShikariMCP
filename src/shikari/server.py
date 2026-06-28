@@ -23,7 +23,7 @@ from shikari.core.tool_manifest import (
     manifest_public_catalog,
     verify_tool_profile,
 )
-from shikari.core.tool_runner import dry_run_verified_tool, run_verified_tool
+from shikari.core.tool_runner import dry_run_tool, run_tool
 
 from shikari.core.input_validation import (
     ArtifactReadInputs,
@@ -54,7 +54,7 @@ def create_server(config: ShikariConfig) -> FastMCP:
         mask_error_details=True,
         strict_input_validation=True,
         instructions=(
-            "ShikariMCP exposes verified security tooling through MCP with "
+            "ShikariMCP exposes security tooling through MCP with "
             "scope-aware execution, dependency health, audit logging, and "
             "safe-by-default HTTP deployment controls. Use only for systems "
             "you own or are explicitly authorized to test."
@@ -93,9 +93,9 @@ def create_server(config: ShikariConfig) -> FastMCP:
         }
 
     @mcp.tool()
-    async def shikari_list_verified_tools(profile: str | None = None) -> dict:
+    async def shikari_list_tools(profile: str | None = None) -> dict:
         """
-        List the manifest-backed verified tools for a profile.
+        List the manifest-backed tools for a profile.
         """
         v = ToolListInputs(profile=profile)
         return manifest_public_catalog(v.profile or get_config().tool_profile)
@@ -127,7 +127,7 @@ def create_server(config: ShikariConfig) -> FastMCP:
         return explain_tool(v.tool_id, v.profile or get_config().tool_profile)
 
     @mcp.tool()
-    async def shikari_run_verified_tool(
+    async def shikari_run_tool(
         tool_id: str,
         inputs: dict,
         profile: str | None = None,
@@ -141,7 +141,7 @@ def create_server(config: ShikariConfig) -> FastMCP:
             tool_id=tool_id, inputs=inputs, profile=profile,
             template=template, dry_run=dry_run,
         )
-        return await run_verified_tool(
+        return await run_tool(
             tool_id=v.tool_id,
             inputs=v.inputs,
             profile=v.profile or get_config().tool_profile,
@@ -150,7 +150,7 @@ def create_server(config: ShikariConfig) -> FastMCP:
         )
 
     @mcp.tool()
-    async def shikari_submit_verified_tool(
+    async def shikari_submit_tool(
         tool_id: str,
         inputs: dict,
         profile: str | None = None,
@@ -210,10 +210,7 @@ def create_server(config: ShikariConfig) -> FastMCP:
         return explain_policy(v.inputs)
 
     logger.info("Discovering tools...")
-    if config.enable_legacy_tools or config.enable_experimental_tools:
-        discover_tools()
-    else:
-        discover_tools(packages=["shikari.agents.workflow"])
+    discover_tools()
     tool_count = register_tools_with_mcp(mcp)
     logger.info("Server ready with %s exposed tools", tool_count)
 
@@ -424,7 +421,7 @@ def run_tools_cli(argv: list[str]) -> int:
     explain_parser.add_argument("--profile", default="core", help="Tool profile to inspect")
     explain_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
 
-    dry_run_parser = subparsers.add_parser("dry-run", help="Build a verified tool command")
+    dry_run_parser = subparsers.add_parser("dry-run", help="Build a tool command preview")
     dry_run_parser.add_argument("tool_id", help="Tool id or binary name")
     dry_run_parser.add_argument("--profile", default="core", help="Tool profile to inspect")
     dry_run_parser.add_argument("--template", default="safe", help="Command template name")
@@ -437,7 +434,7 @@ def run_tools_cli(argv: list[str]) -> int:
     )
     dry_run_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
 
-    run_parser = subparsers.add_parser("run", help="Run a verified tool")
+    run_parser = subparsers.add_parser("run", help="Run a tool")
     run_parser.add_argument("tool_id", help="Tool id or binary name")
     run_parser.add_argument("--profile", default="core", help="Tool profile to inspect")
     run_parser.add_argument("--template", default="safe", help="Command template name")
@@ -501,7 +498,7 @@ def run_tools_cli(argv: list[str]) -> int:
 
     if args.command == "dry-run":
         inputs = _parse_key_values(args.input)
-        result = dry_run_verified_tool(args.tool_id, inputs, args.profile, args.template)
+        result = dry_run_tool(args.tool_id, inputs, args.profile, args.template)
         if args.json:
             print(json.dumps(result, indent=2, sort_keys=True))
         else:
@@ -529,7 +526,7 @@ def run_tools_cli(argv: list[str]) -> int:
             ]
         set_config(config)
         result = asyncio.run(
-            run_verified_tool(
+            run_tool(
                 args.tool_id,
                 inputs,
                 profile=args.profile,

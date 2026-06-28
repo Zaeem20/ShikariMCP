@@ -114,6 +114,8 @@ def explain_policy(inputs: dict | None = None) -> dict:
         "target_allowlist": config.target_allowlist,
         "blocked_metadata_ips": sorted(str(ip) for ip in METADATA_IPS),
         "blocked_metadata_hostnames": sorted(METADATA_HOSTNAMES),
+        "rate_limit_rps": config.rate_limit_rps,
+        "rate_limit_burst": config.rate_limit_burst,
         "inputs": inputs or {},
     }
 

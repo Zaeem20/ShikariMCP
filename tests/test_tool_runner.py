@@ -3,11 +3,11 @@
 import pytest
 
 from shikari.config import ShikariConfig, set_config
-from shikari.core.tool_runner import dry_run_verified_tool, run_verified_tool
+from shikari.core.tool_runner import dry_run_tool, run_tool
 
 
 def test_dry_run_builds_nmap_command():
-    result = dry_run_verified_tool("nmap_scan", {"target": "scanme.nmap.org"})
+    result = dry_run_tool("nmap_scan", {"target": "scanme.nmap.org"})
 
     assert result["tool"]["id"] == "nmap_scan"
     assert result["command"]["argv"] == [
@@ -24,13 +24,13 @@ def test_dry_run_builds_nmap_command():
 
 def test_dry_run_reports_missing_input():
     with pytest.raises(ValueError, match="Missing required input"):
-        dry_run_verified_tool("nmap_scan", {})
+        dry_run_tool("nmap_scan", {})
 
 
 def test_common_target_aliases_are_normalized():
-    httpx = dry_run_verified_tool("httpx_probe", {"target": "https://example.com"})
-    trivy = dry_run_verified_tool("trivy_scan", {"target": "."})
-    ffuf = dry_run_verified_tool(
+    httpx = dry_run_tool("httpx_probe", {"target": "https://example.com"})
+    trivy = dry_run_tool("trivy_scan", {"target": "."})
+    ffuf = dry_run_tool(
         "ffuf_fuzz",
         {"target": "https://example.com/FUZZ"},
     )
@@ -43,18 +43,18 @@ def test_common_target_aliases_are_normalized():
 
 def test_input_option_prefix_is_rejected():
     with pytest.raises(ValueError, match="option prefix"):
-        dry_run_verified_tool("nmap_scan", {"target": "--script=unsafe"})
+        dry_run_tool("nmap_scan", {"target": "--script=unsafe"})
 
 
 def test_output_file_is_allocated_for_file_output():
-    result = dry_run_verified_tool("nikto_scan", {"target": "https://example.com"})
+    result = dry_run_tool("nikto_scan", {"target": "https://example.com"})
     output_index = result["command"]["argv"].index("-output") + 1
     assert result["command"]["argv"][output_index].endswith(".json")
 
 
 def test_output_file_cannot_escape_artifact_directory(tmp_path):
     outside = tmp_path / "outside.json"
-    result = dry_run_verified_tool(
+    result = dry_run_tool(
         "nikto_scan",
         {
             "target": "https://example.com",
@@ -66,8 +66,8 @@ def test_output_file_cannot_escape_artifact_directory(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_run_verified_tool_defaults_to_dry_run():
-    result = await run_verified_tool("whois_lookup", {"target": "example.com"})
+async def test_run_tool_defaults_to_dry_run():
+    result = await run_tool("whois_lookup", {"target": "example.com"})
 
     assert result["status"] == "dry_run"
     assert result["tool"] == "whois_lookup"
@@ -75,9 +75,20 @@ async def test_run_verified_tool_defaults_to_dry_run():
 
 
 @pytest.mark.asyncio
-async def test_run_verified_tool_blocks_active_without_flag():
-    set_config(ShikariConfig())
-    result = await run_verified_tool(
+async def test_run_tool_allows_active_by_default():
+    result = await run_tool(
+        "nmap_scan",
+        {"target": "scanme.nmap.org"},
+        dry_run=False,
+    )
+
+    assert result["status"] == "success"
+
+
+@pytest.mark.asyncio
+async def test_run_tool_blocks_active_when_disabled():
+    set_config(ShikariConfig(enable_active_tools=False))
+    result = await run_tool(
         "nmap_scan",
         {"target": "scanme.nmap.org"},
         dry_run=False,

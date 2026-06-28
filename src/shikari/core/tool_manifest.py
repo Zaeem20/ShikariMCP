@@ -3,12 +3,27 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
+import sys
 from importlib import resources
+from pathlib import Path
 from typing import Any
 
 from pydantic import BaseModel, Field
+
+
+def _resolve_binary(binary: str) -> str | None:
+    """Locate a binary on PATH or in the active virtual environment's bin dir."""
+    path = shutil.which(binary)
+    if path is not None:
+        return path
+    venv_bin = Path(sys.prefix) / "bin"
+    candidate = venv_bin / binary
+    if candidate.is_file() and os.access(candidate, os.X_OK):
+        return str(candidate)
+    return None
 
 
 class ToolInstallSpec(BaseModel):
@@ -157,7 +172,7 @@ def _tool_notes(tool: ToolManifestEntry) -> list[str]:
 
 
 def _verify_tool(tool: ToolManifestEntry, timeout: int) -> ToolVerification:
-    binary_path = shutil.which(tool.binary)
+    binary_path = _resolve_binary(tool.binary)
     if binary_path is None:
         return ToolVerification(
             id=tool.id,
@@ -167,9 +182,12 @@ def _verify_tool(tool: ToolManifestEntry, timeout: int) -> ToolVerification:
             error="binary not found on PATH",
         )
 
+    # Resolve the binary through PATH or the active venv so installed tools are
+    # actually executed even when the server is launched outside an activated shell.
+    argv = [binary_path, *tool.version_command[1:]]
     try:
         completed = subprocess.run(
-            tool.version_command,
+            argv,
             capture_output=True,
             text=True,
             timeout=timeout,
