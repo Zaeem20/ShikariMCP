@@ -10,6 +10,10 @@ def parse_json(raw: str) -> ParsedOutput:
     if not raw.strip():
         return parsed
 
+    if "api key not found" in raw.lower():
+        parsed.errors.append("GreyNoise API key not found. Set GREYNOISE_API_KEY or run 'greynoise setup'.")
+        return parsed
+
     try:
         data = json.loads(raw)
     except json.JSONDecodeError:

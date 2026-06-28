@@ -53,6 +53,7 @@ class ParsedOutput(BaseModel):
     endpoints: list[Endpoint] = Field(default_factory=list)
     findings: list[Finding] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)
+    errors: list[str] = Field(default_factory=list)
 
     def to_runner_fields(self) -> dict[str, list[dict[str, Any]]]:
         return {
