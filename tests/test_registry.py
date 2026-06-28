@@ -60,7 +60,17 @@ class TestToolMetadata:
         assert "nmap_scan" in msg
         assert "--local" in msg
 
-    def test_experimental_disabled_by_default(self):
+    def test_experimental_enabled_by_default(self):
+        meta = ToolMetadata(
+            "catalog_agent",
+            "agent_domain",
+            scope=ToolScope.LOCAL,
+            quality=ToolQuality.EXPERIMENTAL,
+        )
+        assert meta.is_available() is True
+
+    def test_experimental_can_be_disabled(self):
+        set_config(ShikariConfig(enable_experimental_tools=False))
         meta = ToolMetadata(
             "catalog_agent",
             "agent_domain",
@@ -69,16 +79,6 @@ class TestToolMetadata:
         )
         assert meta.is_available() is False
         assert "experimental wrapper disabled" in meta.availability_reason()
-
-    def test_experimental_can_be_enabled(self):
-        set_config(ShikariConfig(enable_experimental_tools=True))
-        meta = ToolMetadata(
-            "catalog_agent",
-            "agent_domain",
-            scope=ToolScope.LOCAL,
-            quality=ToolQuality.EXPERIMENTAL,
-        )
-        assert meta.is_available() is True
 
 
 # ---------------------------------------------------------------------------

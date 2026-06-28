@@ -10,16 +10,16 @@ def _tool(tool_id: str):
     return next(tool for tool in manifest.tools if tool.id == tool_id)
 
 
-def test_active_tool_blocked_by_default():
+def test_active_tool_allowed_by_default():
     result = evaluate_tool_policy(_tool("nmap_scan"), {"target": "example.com"}, ShikariConfig())
+    assert result["allowed"] is True
+
+
+def test_active_tool_blocked_when_disabled():
+    config = ShikariConfig(enable_active_tools=False)
+    result = evaluate_tool_policy(_tool("nmap_scan"), {"target": "example.com"}, config)
     assert result["allowed"] is False
     assert "enable-active-tools" in result["reason"]
-
-
-def test_active_tool_allowed_with_flag():
-    config = ShikariConfig(enable_active_tools=True)
-    result = evaluate_tool_policy(_tool("nmap_scan"), {"target": "example.com"}, config)
-    assert result["allowed"] is True
 
 
 def test_target_allowlist_blocks_unknown_target():

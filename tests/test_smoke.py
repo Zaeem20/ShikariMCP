@@ -20,9 +20,9 @@ async def test_server_tools_and_status():
         # Verify our health check tool is available
         assert "shikari_status" in tools_dict
         
-        assert "shikari_list_verified_tools" in tools_dict
-        assert "shikari_submit_verified_tool" in tools_dict
-        assert "nmap_scan" not in tools_dict
+        assert "shikari_list_tools" in tools_dict
+        assert "shikari_submit_tool" in tools_dict
+        assert "nmap_scan" in tools_dict
 
         # Call the status tool
         result = await client.call_tool("shikari_status", {})
