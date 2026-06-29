@@ -271,7 +271,7 @@ def _report_agent(target: str) -> list[dict[str, Any]]:
 def _attacksurface_agent(target: str) -> list[dict[str, Any]]:
     return [
         _step("subdomain_enum", "subfinder", ["subfinder", "-d", target, "-silent"]),
-        _step("alive_check", "httpx", ["httpx", "-u", target, "-title", "-tech-detect"]),
+        _step("alive_check", "httpx", ["httpx", "-silent", "-u", target, "-title", "-tech-detect"]),
         _step("service_scan", "nmap", ["nmap", "-sV", "--top-ports", "1000", target]),
     ]
 

@@ -193,7 +193,13 @@ This keeps your tool list small. Load only what you need, unload when finished."
         expects (e.g. {target: '10.0.0.1'} for nmap_scan).
         """
         v = ToolExplainInputs(tool_id=tool_id, profile=profile)
-        return explain_tool(v.tool_id, v.profile or get_config().tool_profile)
+        try:
+            return explain_tool(v.tool_id, v.profile or get_config().tool_profile)
+        except ValueError as exc:
+            return {
+                "error": str(exc),
+                "hint": f"Use shikari_search_tools('{v.tool_id}') to find the correct tool and profile.",
+            }
 
     @mcp.tool(
         annotations=ToolAnnotations(readOnlyHint=False, destructiveHint=True, openWorldHint=True),

@@ -42,6 +42,16 @@ def search_tools(query: str, profile: str | None = None, limit: int = 20) -> lis
                 " ".join(tool.target_types),
             ]).lower()
             if query_lower in haystack:
+                # Check policy gates for this tool
+                config = get_config()
+                policy_gates: list[str] = []
+                if not config.enable_active_tools and "active_network" in tool.capabilities:
+                    policy_gates.append("enable_active_tools")
+                if not config.enable_offensive_tools and set(tool.capabilities) & {"exploitation", "post_exploitation", "payload_generation", "mitm", "wireless"}:
+                    policy_gates.append("enable_offensive_tools")
+                if not config.enable_credential_tools and "credential_attack" in tool.capabilities:
+                    policy_gates.append("enable_credential_tools")
+
                 results.append({
                     "tool_id": tool.id,
                     "display_name": tool.display_name,
@@ -52,6 +62,9 @@ def search_tools(query: str, profile: str | None = None, limit: int = 20) -> lis
                     "quality": tool.quality,
                     "source": "manifest",
                     "target_types": tool.target_types,
+                    "available": len(policy_gates) == 0,
+                    "policy_gates": policy_gates,
+                    "runnable_via": "manifest",
                 })
                 seen.add(tool.id)
     except Exception:
@@ -73,6 +86,7 @@ def search_tools(query: str, profile: str | None = None, limit: int = 20) -> lis
                 " ".join(metadata.capabilities or []),
             ]).lower()
             if query_lower in haystack:
+                available = metadata.is_available()
                 results.append({
                     "tool_id": name,
                     "display_name": name,
@@ -84,6 +98,9 @@ def search_tools(query: str, profile: str | None = None, limit: int = 20) -> lis
                     "quality": metadata.quality.value if metadata.quality else "verified",
                     "source": "wrapper",
                     "target_types": [],
+                    "available": available,
+                    "policy_gates": [metadata.availability_reason()] if not available else [],
+                    "runnable_via": "direct",
                 })
                 seen.add(name)
     except Exception:

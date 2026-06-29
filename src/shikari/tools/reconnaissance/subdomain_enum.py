@@ -88,7 +88,7 @@ async def httpx_probe(
         tech_detect: Detect technologies (Wappalyzer)
     """
     target = validate_target(target)
-    cmd = ["httpx", "-u", target]
+    cmd = ["httpx", "-silent", "-u", target]
     if ports:
         cmd.extend(["-p", ports])
     if status_code:

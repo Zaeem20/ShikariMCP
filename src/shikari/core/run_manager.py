@@ -280,6 +280,8 @@ class RunManager:
             status = "failed"
         elif "**Status:** Degraded" in report_str:
             status = "degraded"
+        elif report_str.startswith("Tool '") and "is unavailable" in report_str:
+            status = "blocked"
         else:
             status = "success"
         return {
