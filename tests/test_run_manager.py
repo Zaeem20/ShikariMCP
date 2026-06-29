@@ -105,3 +105,42 @@ async def test_submit_agent_propagates_failure_status():
 
     del _tool_functions["fake_failing_agent"]
     del _tool_registry["fake_failing_agent"]
+
+
+@pytest.mark.asyncio
+async def test_submit_returns_estimated_duration():
+    """submit() should include estimated_duration_seconds from the manifest."""
+    set_config(ShikariConfig(audit_enabled=False))
+    run_manager.reset_run_manager()
+
+    rm = run_manager.get_run_manager()
+    result = await rm.submit("whois_lookup", {"target": "example.com"}, "core")
+    assert "estimated_duration_seconds" in result
+    assert result["estimated_duration_seconds"] is not None
+    assert "poll_after_seconds" in result
+    # poll_after should be capped at 30s, not the full estimated duration
+    assert result["poll_after_seconds"] <= 30
+    assert result["poll_after_seconds"] > 0
+
+
+@pytest.mark.asyncio
+async def test_poll_after_seconds_is_zero_when_terminal():
+    """poll_after_seconds should be 0 when the run is complete."""
+    set_config(ShikariConfig(audit_enabled=False))
+    run_manager.reset_run_manager()
+
+    async def fake_run_tool(**kwargs):
+        return {"run_id": kwargs["run_id"], "status": "success"}
+
+    import shikari.core.run_manager as rm_mod
+    original = rm_mod.run_tool
+    rm_mod.run_tool = fake_run_tool
+
+    rm = run_manager.get_run_manager()
+    result = await rm.submit("whois_lookup", {"target": "example.com"}, "core")
+    await asyncio.sleep(0.1)
+    run = await rm.get(result["run_id"])
+    assert run["status"] == "success"
+    assert run["poll_after_seconds"] == 0
+
+    rm_mod.run_tool = original
