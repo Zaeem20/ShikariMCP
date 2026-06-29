@@ -18,6 +18,22 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _estimate_duration(tool_id: str, profile: str, template: str) -> int | None:
+    """Look up the manifest command template timeout for a tool."""
+    try:
+        from shikari.core.tool_manifest import load_tool_manifest
+
+        manifest = load_tool_manifest(profile)
+        for tool in manifest.tools:
+            if tool.id == tool_id or tool.binary == tool_id:
+                cmd_template = tool.command_templates.get(template)
+                if cmd_template:
+                    return cmd_template.timeout
+        return None
+    except Exception:
+        return None
+
+
 @dataclass
 class ManagedRun:
     run_id: str
@@ -26,6 +42,7 @@ class ManagedRun:
     template: str
     inputs: dict[str, Any]
     agent_name: str | None = None
+    estimated_duration_seconds: int | None = None
     status: str = "queued"
     created_at: str = field(default_factory=_now)
     started_at: str | None = None
@@ -33,6 +50,36 @@ class ManagedRun:
     result: dict[str, Any] | None = None
     error: str = ""
     task: asyncio.Task[None] | None = field(default=None, repr=False)
+
+    def poll_after_seconds(self) -> int:
+        """How many seconds the LLM should wait before polling again.
+
+        Uses short capped intervals instead of the full timeout so the LLM
+        catches fast-completing jobs quickly without excessive polling on
+        long ones. The manifest timeout is the maximum, not the expected
+        duration — most tools finish well before their timeout.
+        """
+        terminal = {"success", "failed", "degraded", "blocked", "cancelled", "timeout"}
+        if self.status in terminal:
+            return 0
+        if self.estimated_duration_seconds is None:
+            return 10
+        # Cap poll interval at 30s so fast tools are caught quickly.
+        # Use 1/4 of the estimated duration as the initial check-in,
+        # bounded to [10, 30] seconds.
+        max_interval = 30
+        if self.status == "queued":
+            return min(max(self.estimated_duration_seconds // 4, 10), max_interval)
+        if self.started_at:
+            try:
+                started = datetime.fromisoformat(self.started_at)
+                elapsed = (datetime.now(timezone.utc) - started).total_seconds()
+                remaining = max(self.estimated_duration_seconds - elapsed, 5)
+                # Poll at most every 30s, but don't exceed remaining time.
+                return min(int(remaining), max_interval)
+            except Exception:
+                pass
+        return 10
 
     def public(self, include_result: bool = True) -> dict[str, Any]:
         payload = {
@@ -42,6 +89,8 @@ class ManagedRun:
             "profile": self.profile,
             "template": self.template,
             "status": self.status,
+            "estimated_duration_seconds": self.estimated_duration_seconds,
+            "poll_after_seconds": self.poll_after_seconds(),
             "created_at": self.created_at,
             "started_at": self.started_at,
             "completed_at": self.completed_at,
@@ -73,12 +122,14 @@ class RunManager:
                     "Background run capacity reached. Retrieve or cancel existing runs before submitting more."
                 )
             run_id = str(uuid.uuid4())
+            estimate = _estimate_duration(tool_id, profile, template)
             managed = ManagedRun(
                 run_id=run_id,
                 tool_id=tool_id,
                 profile=profile,
                 template=template,
                 inputs=dict(inputs),
+                estimated_duration_seconds=estimate,
             )
             self._runs[run_id] = managed
             managed.task = asyncio.create_task(self._execute(managed), name=f"shikari-run-{run_id}")
@@ -105,6 +156,7 @@ class RunManager:
                 template="",
                 inputs=dict(inputs),
                 agent_name=agent_name,
+                estimated_duration_seconds=600,  # agents typically take 5-15 min
             )
             self._runs[run_id] = managed
             managed.task = asyncio.create_task(self._execute(managed), name=f"shikari-agent-{run_id}")

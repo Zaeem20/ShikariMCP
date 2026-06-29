@@ -20,6 +20,13 @@ from shikari.core.registry import discover_tools, get_tool_health, register_tool
 from shikari.core.run_manager import get_run_manager
 from shikari.core.tool_search import search_tools as _search_tools
 
+from shikari.core.dynamic_loader import (
+    get_categories as _get_categories,
+    get_loaded_categories as _get_loaded_categories,
+    load_category as _load_category,
+    unload_category as _unload_category,
+)
+
 from shikari.core.tool_manifest import (
     explain_tool,
     list_tool_profiles,
@@ -63,8 +70,9 @@ WORKFLOW FOR RUNNING TOOLS:
 2. Get input schema: call shikari_explain_tool(tool_id) to see required parameters
 3. Run a tool:
    - Quick scans (<30s): shikari_run_tool(tool_id, inputs, dry_run=False)
-   - Long scans (>30s): shikari_submit_tool(tool_id, inputs) → returns run_id
-4. Poll for results: shikari_get_run(run_id) — repeat until status is terminal
+   - Long scans (>30s): shikari_submit_tool(tool_id, inputs) → returns run_id + poll_after_seconds
+4. Poll for results: shikari_get_run(run_id) — wait at least poll_after_seconds before each poll.
+   When poll_after_seconds is 0, the run is complete and results are included.
 5. Read full output: shikari_read_artifact(path) if result has artifact paths
 6. Cancel: shikari_cancel_run(run_id)
 
@@ -73,15 +81,22 @@ forensics (3), offensive (3), full (50)
 
 EXAMPLE — nmap scan of 10.0.0.1:
   shikari_submit_tool(tool_id="nmap_scan", inputs={"target": "10.0.0.1"})
-  → {"run_id": "abc-123", "status": "queued"}
+  → {"run_id": "abc-123", "estimated_duration_seconds": 300, "poll_after_seconds": 30}
+  (wait 30 seconds, then poll)
   shikari_get_run(run_id="abc-123")
-  → {"status": "running"} (poll again)
+  → {"status": "running", "poll_after_seconds": 30} (still running, wait 30s)
   shikari_get_run(run_id="abc-123")
-  → {"status": "success", "result": {"findings": [...], "raw_output": "..."}}
+  → {"status": "success", "poll_after_seconds": 0, "result": {"findings": [...], "raw_output": "..."}}
 
 SAFETY: Target allowlist, metadata endpoint blocking, and active/offensive tool
 gates are enforced automatically. Use --all-tools or individual --enable-*-tools
-flags to opt in to additional tool categories.""",
+flags to opt in to additional tool categories.
+
+DYNAMIC CATEGORY LOADING:
+- shikari_list_categories() — see all available tool categories
+- shikari_load_category("osint") — load OSINT tools as direct MCP tools
+- shikari_unload_category("osint") — remove them when done
+This keeps your tool list small. Load only what you need, unload when finished.""",
         auth=get_auth_provider(),
     )
 
@@ -115,6 +130,7 @@ flags to opt in to additional tool categories.""",
             "audit_enabled": config.audit_enabled,
             "background_run_capacity": config.max_background_runs,
             "tools": get_tool_health(include_dependencies=False),
+            "loaded_categories": list(_get_loaded_categories().keys()),
         }
 
     @mcp.tool(
@@ -218,11 +234,11 @@ flags to opt in to additional tool categories.""",
         template: str = "safe",
     ) -> dict:
         """
-        Submit a long-running scan as a background job. Returns a run_id
-        immediately. Poll with shikari_get_run(run_id) until status is
-        'success' or 'failed'. Cancel with shikari_cancel_run(run_id).
-        Prefer this over shikari_run_tool for scans that take more than
-        a few seconds.
+        Submit a long-running scan as a background job. Returns a run_id,
+        estimated_duration_seconds, and poll_after_seconds immediately.
+        Wait at least poll_after_seconds before calling shikari_get_run.
+        Cancel with shikari_cancel_run(run_id). Prefer this over
+        shikari_run_tool for scans that take more than a few seconds.
         """
         v = ToolRunInputs(
             tool_id=tool_id, inputs=inputs, profile=profile,
@@ -242,9 +258,9 @@ flags to opt in to additional tool categories.""",
         """
         Submit a workflow agent for background execution. Agents run multi-step
         workflows (e.g., recon: subfinder -> httpx -> nmap) and take 5-15 minutes.
-        Returns a run_id immediately. Poll with shikari_get_run(run_id) until
-        status is 'success' or 'failed'. Use shikari_list_agents to discover
-        available agent names.
+        Returns a run_id and poll_after_seconds immediately. Wait at least
+        poll_after_seconds before calling shikari_get_run. Use shikari_list_agents
+        to discover available agent names.
         """
         return await get_run_manager().submit_agent(
             agent_name=agent_name,
@@ -283,11 +299,12 @@ flags to opt in to additional tool categories.""",
     )
     async def shikari_get_run(run_id: str) -> dict:
         """
-        Get status and results for a background run. If status is 'running',
-        poll again. If status is terminal ('success', 'failed', 'degraded',
-        'timeout', 'cancelled'), the result contains findings, assets,
-        services, endpoints, raw_output, and artifact paths. Call
-        shikari_read_artifact(path) to read full artifact content.
+        Get status and results for a background run. The response includes
+        poll_after_seconds — wait at least that many seconds before polling
+        again to avoid wasting tokens. If status is terminal ('success',
+        'failed', 'degraded', 'timeout', 'cancelled'), poll_after_seconds is 0
+        and the result contains findings, raw_output, and artifact paths.
+        Call shikari_read_artifact(path) to read full artifact content.
         """
         v = RunQueryInputs(run_id=run_id)
         return await get_run_manager().get(v.run_id)
@@ -341,6 +358,59 @@ flags to opt in to additional tool categories.""",
         """
         v = PolicyExplainInputs(inputs=inputs)
         return explain_policy(v.inputs)
+
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=False),
+    )
+    async def shikari_list_categories() -> dict:
+        """
+        List all tool categories available for dynamic loading. Returns each
+        category with total_tools, available_tools, and loaded status.
+
+        STEP 1: Call this to see which categories exist
+        STEP 2: Call shikari_load_category(category) to activate tools you need
+        STEP 3: When done, call shikari_unload_category(category) to clean up
+
+        This keeps your tool list small and focused. Only load categories you
+        actively need. Use shikari_search_tools for cross-category discovery.
+        """
+        categories = _get_categories()
+        loaded = _get_loaded_categories()
+        return {
+            "count": len(categories),
+            "loaded_categories": list(loaded.keys()),
+            "categories": categories,
+        }
+
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=False, destructiveHint=False, openWorldHint=False),
+    )
+    async def shikari_load_category(category: str) -> dict:
+        """
+        Dynamically load a category of tools, making them directly callable as
+        MCP tools. This adds the tools to your tool list and notifies the client.
+
+        STEP 1: Call shikari_list_categories to see available categories
+        STEP 2: Call shikari_load_category("osint") to load OSINT tools
+        STEP 3: The tools are now available as direct MCP tool calls
+        STEP 4: When done, call shikari_unload_category("osint") to remove them
+
+        Only load categories you need to keep your tool list manageable.
+        Safety gates are still enforced — tools blocked by policy will not load.
+        """
+        return _load_category(mcp, category)
+
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=False, destructiveHint=False, openWorldHint=False),
+    )
+    async def shikari_unload_category(category: str) -> dict:
+        """
+        Remove a previously loaded category of tools from the MCP tool list.
+        This helps keep your tool list clean after you're done with a category.
+
+        Only categories loaded via shikari_load_category can be unloaded.
+        """
+        return _unload_category(mcp, category)
 
     logger.info("Discovering tools...")
     discover_tools()
