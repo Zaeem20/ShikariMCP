@@ -24,3 +24,4 @@ artifacts/
 .agent/
 .env
 .omo/
+.slim/deepwork/

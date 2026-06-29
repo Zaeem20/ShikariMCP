@@ -29,14 +29,14 @@
 | `SHIKARI_ARTIFACT_DIR` | `.shikari/artifacts` | Confined artifact directory |
 | `SHIKARI_DEFAULT_WORDLIST` | SecLists common | Default ffuf/Gobuster wordlist |
 | `SHIKARI_TOOL_PROFILE` | `core` | Manifest profile |
-| `SHIKARI_ENABLE_LEGACY_TOOLS` | `true` | Expose direct compatibility wrappers |
-| `SHIKARI_ENABLE_GENERATED_TOOLS` | `true` | Expose generated wrappers with legacy mode |
-| `SHIKARI_ENABLE_EXPERIMENTAL_TOOLS` | `true` | Expose experimental agents/wrappers |
+| `SHIKARI_ENABLE_LEGACY_TOOLS` | `false` | Expose direct compatibility wrappers |
+| `SHIKARI_ENABLE_GENERATED_TOOLS` | `false` | Expose generated wrappers with legacy mode |
+| `SHIKARI_ENABLE_EXPERIMENTAL_TOOLS` | `false` | Expose experimental agents/wrappers |
 | `SHIKARI_REQUIRE_TOOL_DEPENDENCIES` | `false` | Hide wrappers with missing binaries |
-| `SHIKARI_ENABLE_ACTIVE_TOOLS` | `true` | Permit active scans |
+| `SHIKARI_ENABLE_ACTIVE_TOOLS` | `false` | Permit active scans |
 | `SHIKARI_ENABLE_REMOTE_ACTIVE_TOOLS` | `false` | Permit active scans over remote HTTP |
-| `SHIKARI_ENABLE_OFFENSIVE_TOOLS` | `true` | Permit offensive profile operations |
-| `SHIKARI_ENABLE_CREDENTIAL_TOOLS` | `true` | Permit credential testing tools |
+| `SHIKARI_ENABLE_OFFENSIVE_TOOLS` | `false` | Permit offensive profile operations |
+| `SHIKARI_ENABLE_CREDENTIAL_TOOLS` | `false` | Permit credential testing tools |
 | `SHIKARI_TARGET_ALLOWLIST` | empty | Authorized domains, CIDRs, or path roots |
 | `SHIKARI_AUDIT_ENABLED` | `true` | Write JSONL audit events |
 | `SHIKARI_AUDIT_LOG_PATH` | `.shikari/audit.jsonl` | Audit log path |
@@ -60,21 +60,49 @@ Key HTTP flags:
 | `--http-stateless` | `SHIKARI_HTTP_STATELESS` | Disable session state |
 | `--http-allowed-hosts H` | `SHIKARI_HTTP_ALLOWED_HOSTS` | Comma-separated Host patterns |
 | `--http-allowed-origins O` | `SHIKARI_HTTP_ALLOWED_ORIGINS` | Comma-separated Origin patterns |
+| `--all-tools` | — | Enable all tool categories (shortcut for all `--enable-*-tools` flags) |
 
 HTTP fails closed without an API key. Local-scope tools remain unavailable over remote HTTP even when active tools are enabled.
 
-## Single-User Self-Hosted Defaults
+## Quick Start Configurations
 
-For a standalone Kali workstation, all tool categories are enabled by default so every tool and agent is available immediately. If you run ShikariMCP in a shared or remote environment, set the following variables to restore the safer defaults:
+### Maximum Safety (Default)
+All tool categories are disabled by default. Only gateway tools and production agents are exposed:
 
 ```bash
-SHIKARI_ENABLE_LEGACY_TOOLS=false
-SHIKARI_ENABLE_GENERATED_TOOLS=false
-SHIKARI_ENABLE_EXPERIMENTAL_TOOLS=false
-SHIKARI_ENABLE_ACTIVE_TOOLS=false
-SHIKARI_ENABLE_OFFENSIVE_TOOLS=false
-SHIKARI_ENABLE_CREDENTIAL_TOOLS=false
-SHIKARI_REQUIRE_TOOL_DEPENDENCIES=true
+uv run shikari-mcp --transport stdio
+```
+
+### Full Access (All Tools)
+Enable all tool categories at once:
+
+```bash
+uv run shikari-mcp --all-tools --tool-profile full --transport stdio
+```
+
+### Selective Opt-In
+Enable specific categories:
+
+```bash
+uv run shikari-mcp \
+  --enable-legacy-tools \
+  --enable-active-tools \
+  --enable-offensive-tools \
+  --target-allowlist "example.com,10.10.0.0/16" \
+  --transport stdio
+```
+
+### Shared/Remote Deployment
+Lock down for multi-user environments:
+
+```bash
+uv run shikari-mcp \
+  --transport http \
+  --host 0.0.0.0 \
+  --port 8080 \
+  --api-key "your-secret-key" \
+  --require-tool-dependencies \
+  --target-allowlist "allowed.example.com"
 ```
 
 ## Proxy Configuration

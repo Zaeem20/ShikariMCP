@@ -353,13 +353,19 @@ Expected core tools include:
 
 | Tool | Purpose |
 |------|---------|
-| `shikari_status` | Server status and tool counts |
+| `shikari_status` | Server status, config flags, loaded categories |
+| `shikari_search_tools` | Search tool catalog (returns `available`, `policy_gates`, `runnable_via`) |
 | `shikari_run_tool` | Execute a manifest-backed tool |
 | `shikari_submit_tool` | Submit a background job |
 | `shikari_get_run` | Poll a background job |
 | `shikari_list_tools` | List manifest-backed tools for a profile |
+| `shikari_list_agents` | List available workflow agents |
+| `shikari_submit_agent` | Submit a workflow agent |
+| `shikari_list_categories` | List tool categories for dynamic loading |
+| `shikari_load_category` | Load a category of tools |
+| `shikari_unload_category` | Unload a category |
 | `shikari_policy_explain` | Show active safety gates |
-| `nmap_scan`, `subfinder_enum`, `httpx_probe`, `nuclei_scan` | Common wrapper tools |
+| `nmap_scan`, `subfinder_enum`, `httpx_probe`, `nuclei_scan` | Common wrapper tools (when loaded) |
 
 ---
 

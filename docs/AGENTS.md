@@ -97,6 +97,23 @@ flowchart LR
 
 **Scope note:** All 51 agents are currently annotated as `ToolScope.LOCAL` — they run CLI tools on the local machine and are unavailable in remote HTTP mode.
 
+### MCP Agent Tools
+
+Agents are exposed to MCP clients via these tools:
+
+| Tool | Purpose |
+|------|---------|
+| `shikari_list_agents` | List available agents with categories, descriptions, and required binaries |
+| `shikari_submit_agent` | Submit an agent for background execution — returns `run_id` and `poll_after_seconds` |
+| `shikari_get_run` | Poll agent status and retrieve results |
+
+Example workflow:
+```
+1. shikari_list_agents() → find agent names
+2. shikari_submit_agent(agent_name="recon_agent", inputs={"target": "10.0.0.1"})
+3. shikari_get_run(run_id="...") → poll until status is terminal
+```
+
 ---
 
 ## Workflow Agents (13)

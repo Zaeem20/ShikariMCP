@@ -6,7 +6,7 @@ This document explains how ShikariMCP is structured, how requests flow through t
 
 ![ShikariMCP Architecture](../assets/shikari-mcp-architecture.png)
 
-The diagram above shows the full request flow: AI clients connect via stdio or Streamable HTTP, pass through the HTTP middleware stack (rate limiter → Host/Origin validation → API key auth), reach the MCP Tool Router (12 MCP tools), then flow through input validation, the policy engine (risk-class gating, target allowlist, cloud metadata block + DNS TOCTOU re-check), the Tool Runner (manifest → command → execute → parse), and finally to external security binaries. Background jobs are managed by the Run Manager. All events are written to the JSONL audit log. Tool sources span three tiers: 50 manifest-backed tools, 305 `@shikari_tool` wrappers, and 51 agents.
+The diagram above shows the full request flow: AI clients connect via stdio or Streamable HTTP, pass through the HTTP middleware stack (rate limiter → Host/Origin validation → API key auth), reach the MCP Tool Router (18 MCP tools), then flow through input validation, the policy engine (risk-class gating, target allowlist, cloud metadata block + DNS TOCTOU re-check), the Tool Runner (manifest → command → execute → parse), and finally to external security binaries. Background jobs are managed by the Run Manager. All events are written to the JSONL audit log. Tool sources span three tiers: 50 manifest-backed tools, 305 `@shikari_tool` wrappers, and 51 agents.
 
 ## Project Structure
 
@@ -29,6 +29,8 @@ ShikariMCP/
 │   │   ├── artifacts.py           #   Bounded output storage
 │   │   ├── audit.py               #   JSONL audit logging
 │   │   ├── input_validation.py    #   Pydantic models for MCP boundary validation
+│   │   ├── tool_search.py         #   Cross-catalog search with availability status
+│   │   ├── dynamic_loader.py      #   On-demand category loading for progressive disclosure
 │   │   └── validator.py           #   Input sanitization (legacy wrappers)
 │   │
 │   ├── manifests/tools/           # Profile manifests (7 profiles, 50 tools)
@@ -103,7 +105,7 @@ ShikariMCP/
 │       ├── wireless/              #   3 wrappers: aircrack-ng, wifite, reaver
 │       └── ...                    #   + remaining categories
 │
-├── tests/                         # 152 pytest unit tests
+├── tests/                         # 188 pytest unit tests
 ├── scripts/                       # Installer, verifier, deploy, smoke-test
 │   ├── install-tools.sh           #   Profile-based binary installer
 │   ├── verify-tools.sh            #   Binary verification
@@ -136,6 +138,17 @@ Tools are auto-discovered from `src/shikari/tools/` by scanning for functions de
 | `quality` | `VERIFIED`, `EXPERIMENTAL`, `GENERATED` | Trust tier |
 
 The registry filters tools based on transport mode and runtime configuration. In single-user, self-hosted mode all tool categories are discovered by default: manifest profiles, all 35 wrapper catalog categories, and the 4 production workflow agents. Use `--disable-legacy-tools` to hide wrappers or `--enable-experimental-tools` to expose the 47 catalog agents.
+
+### Dynamic Category Loading
+
+The dynamic loader (`src/shikari/core/dynamic_loader.py`) enables progressive disclosure — LLMs load only the tool categories they need, keeping the active tool list small. When a category is loaded via `shikari_load_category`, tools are registered with the MCP server and `notifications/tools/list_changed` is emitted automatically.
+
+| Function | Purpose |
+|----------|---------|
+| `get_categories()` | List all wrapper tool categories with counts |
+| `load_category(mcp, category)` | Register tools in a category as MCP tools |
+| `unload_category(mcp, category)` | Remove a category's tools |
+| `_build_annotations(meta)` | Build ToolAnnotations from tool capabilities |
 
 ### Manifest System
 

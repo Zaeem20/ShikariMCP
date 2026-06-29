@@ -385,7 +385,7 @@ uv sync --group dev
 ### Running tests
 
 ```bash
-uv run pytest tests -q                    # Unit tests (152)
+uv run pytest tests -q                    # Unit tests (188)
 uv run ruff check src tests               # Lint
 uv run shikari-mcp tools verify --profile core --json  # Binary verification
 ```

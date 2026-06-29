@@ -408,3 +408,24 @@ Several OSINT and threat-intel tools require API keys or a suitable runtime envi
 | `volatility3_scan` | valid memory dump (raw crash/pmem format) |
 
 Tools installed into the same virtual environment as ShikariMCP (e.g., via `pip install` or `pipx` injected into the venv) are discovered automatically, even when the server is launched outside an activated shell.
+
+---
+
+## Dynamic Category Loading
+
+Use `shikari_list_categories`, `shikari_load_category`, and `shikari_unload_category` to load tool categories on-demand. This keeps your MCP tool list small while giving access to the full catalog.
+
+### Search Result Fields
+
+`shikari_search_tools` returns these fields for each tool:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `tool_id` | string | Tool identifier |
+| `display_name` | string | Human-readable name |
+| `category` | string | Tool category |
+| `capabilities` | list | Risk-class capabilities |
+| `source` | `"manifest"` or `"wrapper"` | Tool source type |
+| `available` | bool | Whether the tool passes current policy gates |
+| `policy_gates` | list | Flags required to enable this tool (empty if available) |
+| `runnable_via` | `"manifest"` or `"direct"` | How to execute: `shikari_run_tool` vs direct MCP call |
