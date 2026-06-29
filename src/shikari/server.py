@@ -9,6 +9,7 @@ import logging
 import sys
 
 from fastmcp import FastMCP
+from mcp.types import ToolAnnotations
 
 from shikari import __version__
 from shikari.config import ShikariConfig, TransportMode, get_config, set_config
@@ -17,6 +18,8 @@ from shikari.core.auth import get_auth_provider
 from shikari.core.policy import explain_policy
 from shikari.core.registry import discover_tools, get_tool_health, register_tools_with_mcp
 from shikari.core.run_manager import get_run_manager
+from shikari.core.tool_search import search_tools as _search_tools
+
 from shikari.core.tool_manifest import (
     explain_tool,
     list_tool_profiles,
@@ -53,16 +56,38 @@ def create_server(config: ShikariConfig) -> FastMCP:
         version=__version__,
         mask_error_details=True,
         strict_input_validation=True,
-        instructions=(
-            "ShikariMCP exposes security tooling through MCP with "
-            "scope-aware execution, dependency health, audit logging, and "
-            "safe-by-default HTTP deployment controls. Use only for systems "
-            "you own or are explicitly authorized to test."
-        ),
+        instructions="""ShikariMCP — Security Operations MCP Server
+
+WORKFLOW FOR RUNNING TOOLS:
+1. Discover tools: call shikari_search_tools(query) or shikari_list_tools(profile)
+2. Get input schema: call shikari_explain_tool(tool_id) to see required parameters
+3. Run a tool:
+   - Quick scans (<30s): shikari_run_tool(tool_id, inputs, dry_run=False)
+   - Long scans (>30s): shikari_submit_tool(tool_id, inputs) → returns run_id
+4. Poll for results: shikari_get_run(run_id) — repeat until status is terminal
+5. Read full output: shikari_read_artifact(path) if result has artifact paths
+6. Cancel: shikari_cancel_run(run_id)
+
+AVAILABLE PROFILES: core (12 tools), osint (18), web (7), recon (4), cloud (3),
+forensics (3), offensive (3), full (50)
+
+EXAMPLE — nmap scan of 10.0.0.1:
+  shikari_submit_tool(tool_id="nmap_scan", inputs={"target": "10.0.0.1"})
+  → {"run_id": "abc-123", "status": "queued"}
+  shikari_get_run(run_id="abc-123")
+  → {"status": "running"} (poll again)
+  shikari_get_run(run_id="abc-123")
+  → {"status": "success", "result": {"findings": [...], "raw_output": "..."}}
+
+SAFETY: Target allowlist, metadata endpoint blocking, and active/offensive tool
+gates are enforced automatically. Use --all-tools or individual --enable-*-tools
+flags to opt in to additional tool categories.""",
         auth=get_auth_provider(),
     )
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=False),
+    )
     async def shikari_status() -> dict:
         """
         Get server status, transport policy, dependency health, and tool counts.
@@ -92,18 +117,38 @@ def create_server(config: ShikariConfig) -> FastMCP:
             "tools": get_tool_health(include_dependencies=False),
         }
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=False),
+    )
     async def shikari_list_tools(profile: str | None = None) -> dict:
         """
-        List the manifest-backed tools for a profile.
+        List all manifest-backed tools for a profile. Returns tool_ids,
+        categories, capabilities, and target types. Call this or
+        shikari_search_tools to discover available tools before running them.
         """
         v = ToolListInputs(profile=profile)
         return manifest_public_catalog(v.profile or get_config().tool_profile)
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=False),
+    )
+    async def shikari_search_tools(query: str, limit: int = 20) -> dict:
+        """
+        Search the tool catalog by keyword. Call this FIRST if you don't know
+        which tool to use. Matches tool names, descriptions, categories, and
+        capabilities. Returns compact summaries — call shikari_explain_tool
+        for full input schema and command details.
+        """
+        results = await asyncio.to_thread(_search_tools, query, None, limit)
+        return {"query": query, "count": len(results), "tools": results}
+
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=True),
+    )
     async def shikari_verify_tool_profile(profile: str | None = None) -> dict:
         """
-        Check which manifest-backed tool binaries are installed on this machine.
+        Check which tool binaries are installed on this machine. Returns
+        installed/missing status and version info per tool.
         """
         v = ToolListInputs(profile=profile)
         return await asyncio.to_thread(
@@ -111,31 +156,45 @@ def create_server(config: ShikariConfig) -> FastMCP:
             v.profile or get_config().tool_profile,
         )
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=False),
+    )
     async def shikari_dependency_health() -> dict:
         """
-        Scan installed binaries for exposed wrappers without blocking the event loop.
+        Scan installed binaries and report which wrapper tools have their
+        dependencies available. Returns counts by category and quality.
         """
         return await asyncio.to_thread(get_tool_health, True)
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=False),
+    )
     async def shikari_explain_tool(tool_id: str, profile: str | None = None) -> dict:
         """
-        Explain a manifest-backed tool, including command templates and safety notes.
+        Get the full input schema, command template, and safety notes for a
+        specific tool. Pass a tool_id from shikari_list_tools or
+        shikari_search_tools. Returns the exact input parameters the tool
+        expects (e.g. {target: '10.0.0.1'} for nmap_scan).
         """
         v = ToolExplainInputs(tool_id=tool_id, profile=profile)
         return explain_tool(v.tool_id, v.profile or get_config().tool_profile)
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=False, destructiveHint=True, openWorldHint=True),
+    )
     async def shikari_run_tool(
         tool_id: str,
         inputs: dict,
         profile: str | None = None,
         template: str = "safe",
-        dry_run: bool = True,
+        dry_run: bool = False,
     ) -> dict:
         """
-        Build or run a manifest-backed tool. Defaults to dry-run for safety.
+        Execute a manifest-backed tool. Use shikari_list_tools or
+        shikari_search_tools first to get valid tool_id values. Set
+        dry_run=True to preview the command without executing. For scans
+        expected to take more than a few seconds, use shikari_submit_tool
+        instead (non-blocking). Safety policy is enforced regardless.
         """
         v = ToolRunInputs(
             tool_id=tool_id, inputs=inputs, profile=profile,
@@ -149,7 +208,9 @@ def create_server(config: ShikariConfig) -> FastMCP:
             dry_run=v.dry_run,
         )
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=False, destructiveHint=True, openWorldHint=True),
+    )
     async def shikari_submit_tool(
         tool_id: str,
         inputs: dict,
@@ -157,10 +218,11 @@ def create_server(config: ShikariConfig) -> FastMCP:
         template: str = "safe",
     ) -> dict:
         """
-        Submit a manifest-backed tool as a background run and return immediately.
-
-        Prefer this for scans expected to take more than a few seconds. Poll with
-        shikari_get_run and cancel with shikari_cancel_run.
+        Submit a long-running scan as a background job. Returns a run_id
+        immediately. Poll with shikari_get_run(run_id) until status is
+        'success' or 'failed'. Cancel with shikari_cancel_run(run_id).
+        Prefer this over shikari_run_tool for scans that take more than
+        a few seconds.
         """
         v = ToolRunInputs(
             tool_id=tool_id, inputs=inputs, profile=profile,
@@ -173,38 +235,109 @@ def create_server(config: ShikariConfig) -> FastMCP:
             template=v.template,
         )
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=False, destructiveHint=True, openWorldHint=True),
+    )
+    async def shikari_submit_agent(agent_name: str, inputs: dict) -> dict:
+        """
+        Submit a workflow agent for background execution. Agents run multi-step
+        workflows (e.g., recon: subfinder -> httpx -> nmap) and take 5-15 minutes.
+        Returns a run_id immediately. Poll with shikari_get_run(run_id) until
+        status is 'success' or 'failed'. Use shikari_list_agents to discover
+        available agent names.
+        """
+        return await get_run_manager().submit_agent(
+            agent_name=agent_name,
+            inputs=inputs,
+        )
+
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=False),
+    )
+    async def shikari_list_agents() -> dict:
+        """
+        List available workflow agents that can be submitted via
+        shikari_submit_agent. Returns agent names, categories, descriptions,
+        and required binaries. Agents not listed here may be gated behind
+        --enable-experimental-tools or --enable-offensive-tools flags.
+        """
+        from shikari.core.registry import get_tool_registry
+
+        registry = get_tool_registry()
+        agents = []
+        for name, meta in registry.items():
+            if meta.category.startswith("agent_") or meta.category == "workflow":
+                agents.append({
+                    "name": name,
+                    "category": meta.category,
+                    "description": meta.description or "",
+                    "scope": meta.scope.value if meta.scope else "both",
+                    "quality": meta.quality.value if meta.quality else "verified",
+                    "requires_binaries": meta.requires_binaries or [],
+                    "available": meta.is_available(),
+                })
+        return {"count": len(agents), "agents": agents}
+
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=False),
+    )
     async def shikari_get_run(run_id: str) -> dict:
-        """Get status and structured results for a background run."""
+        """
+        Get status and results for a background run. If status is 'running',
+        poll again. If status is terminal ('success', 'failed', 'degraded',
+        'timeout', 'cancelled'), the result contains findings, assets,
+        services, endpoints, raw_output, and artifact paths. Call
+        shikari_read_artifact(path) to read full artifact content.
+        """
         v = RunQueryInputs(run_id=run_id)
         return await get_run_manager().get(v.run_id)
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=False),
+    )
     async def shikari_list_runs(limit: int = 20) -> dict:
-        """List recent background runs without embedding their full results."""
+        """
+        List recent background runs (without full results). Use to find
+        active or completed run_ids.
+        """
         v = ListRunsInputs(limit=limit)
         return await get_run_manager().list(v.limit)
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=False, destructiveHint=False, openWorldHint=True),
+    )
     async def shikari_cancel_run(run_id: str) -> dict:
-        """Cancel a queued or running background tool and terminate its process tree."""
+        """
+        Cancel a queued or running background scan. Terminates the process
+        tree. The run will transition to 'cancelled' status.
+        """
         v = RunQueryInputs(run_id=run_id)
         return await get_run_manager().cancel(v.run_id)
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=False),
+    )
     async def shikari_read_artifact(
         path: str,
         offset: int = 0,
         max_chars: int = 20000,
     ) -> dict:
-        """Read a bounded segment from a Shikari artifact."""
+        """
+        Read content from a Shikari artifact file. Use this when a tool
+        result contains artifact paths — the full output is stored there,
+        not in the run result. Supports pagination via offset/max_chars.
+        """
         v = ArtifactReadInputs(path=path, offset=offset, max_chars=max_chars)
         return await asyncio.to_thread(read_artifact, v.path, v.offset, v.max_chars)
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=False),
+    )
     async def shikari_policy_explain(inputs: dict | None = None) -> dict:
         """
-        Explain local safety gates and target allowlist settings.
+        Explain local safety gates: target allowlist, active tool policy,
+        offensive tool policy, and transport restrictions. Call this if a
+        tool was blocked or to understand what targets are authorized.
         """
         v = PolicyExplainInputs(inputs=inputs)
         return explain_policy(v.inputs)
@@ -292,6 +425,11 @@ def parse_args() -> ShikariConfig:
         help="Allow credential attack tools.",
     )
     parser.add_argument(
+        "--all-tools",
+        action="store_true",
+        help="Enable all tool categories (legacy, experimental, generated, active, offensive, credential). Shortcut for all --enable-*-tools flags.",
+    )
+    parser.add_argument(
         "--target-allowlist",
         help="Comma-separated authorized domains, hosts, IPs, CIDRs, or paths.",
     )
@@ -370,6 +508,13 @@ def parse_args() -> ShikariConfig:
     if args.enable_offensive_tools:
         config.enable_offensive_tools = True
     if args.enable_credential_tools:
+        config.enable_credential_tools = True
+    if args.all_tools:
+        config.enable_legacy_tools = True
+        config.enable_generated_tools = True
+        config.enable_experimental_tools = True
+        config.enable_active_tools = True
+        config.enable_offensive_tools = True
         config.enable_credential_tools = True
     if args.target_allowlist:
         config.target_allowlist = [

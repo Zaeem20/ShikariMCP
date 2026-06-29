@@ -70,19 +70,20 @@ class ShikariConfig:
     max_background_runs: int = 100
     max_input_chars: int = 1_000_000
     max_targets_per_run: int = 5000
+    inline_output_chars: int = 8192  # max chars of raw output to include in ToolRunResult
     tool_profile: str = "core"
     artifact_dir: str = ".shikari/artifacts"
     default_wordlist: str = "/opt/wordlists/SecLists/Discovery/Web-Content/common.txt"
 
     # Safety policy
-    enable_legacy_tools: bool = True
-    enable_generated_tools: bool = True
-    enable_experimental_tools: bool = True
+    enable_legacy_tools: bool = False
+    enable_generated_tools: bool = False
+    enable_experimental_tools: bool = False
     require_tool_dependencies: bool = False
     enable_remote_active_tools: bool = False
-    enable_active_tools: bool = True
-    enable_offensive_tools: bool = True
-    enable_credential_tools: bool = True
+    enable_active_tools: bool = False
+    enable_offensive_tools: bool = False
+    enable_credential_tools: bool = False
     target_allowlist: list[str] = field(default_factory=list)
     audit_enabled: bool = True
     audit_log_path: str = ".shikari/audit.jsonl"
@@ -118,20 +119,21 @@ class ShikariConfig:
             max_background_runs=_env_int("SHIKARI_MAX_BACKGROUND_RUNS", 100),
             max_input_chars=_env_int("SHIKARI_MAX_INPUT_CHARS", 1_000_000),
             max_targets_per_run=_env_int("SHIKARI_MAX_TARGETS_PER_RUN", 5000),
+            inline_output_chars=_env_int("SHIKARI_INLINE_OUTPUT_CHARS", 8192),
             tool_profile=os.getenv("SHIKARI_TOOL_PROFILE", "core"),
             artifact_dir=os.getenv("SHIKARI_ARTIFACT_DIR", ".shikari/artifacts"),
             default_wordlist=os.getenv(
                 "SHIKARI_DEFAULT_WORDLIST",
                 "/opt/wordlists/SecLists/Discovery/Web-Content/common.txt",
             ),
-            enable_legacy_tools=_env_bool("SHIKARI_ENABLE_LEGACY_TOOLS", True),
-            enable_generated_tools=_env_bool("SHIKARI_ENABLE_GENERATED_TOOLS", True),
-            enable_experimental_tools=_env_bool("SHIKARI_ENABLE_EXPERIMENTAL_TOOLS", True),
+            enable_legacy_tools=_env_bool("SHIKARI_ENABLE_LEGACY_TOOLS", False),
+            enable_generated_tools=_env_bool("SHIKARI_ENABLE_GENERATED_TOOLS", False),
+            enable_experimental_tools=_env_bool("SHIKARI_ENABLE_EXPERIMENTAL_TOOLS", False),
             require_tool_dependencies=_env_bool("SHIKARI_REQUIRE_TOOL_DEPENDENCIES", False),
             enable_remote_active_tools=_env_bool("SHIKARI_ENABLE_REMOTE_ACTIVE_TOOLS", False),
-            enable_active_tools=_env_bool("SHIKARI_ENABLE_ACTIVE_TOOLS", True),
-            enable_offensive_tools=_env_bool("SHIKARI_ENABLE_OFFENSIVE_TOOLS", True),
-            enable_credential_tools=_env_bool("SHIKARI_ENABLE_CREDENTIAL_TOOLS", True),
+            enable_active_tools=_env_bool("SHIKARI_ENABLE_ACTIVE_TOOLS", False),
+            enable_offensive_tools=_env_bool("SHIKARI_ENABLE_OFFENSIVE_TOOLS", False),
+            enable_credential_tools=_env_bool("SHIKARI_ENABLE_CREDENTIAL_TOOLS", False),
             target_allowlist=_env_list("SHIKARI_TARGET_ALLOWLIST"),
             audit_enabled=_env_bool("SHIKARI_AUDIT_ENABLED", True),
             audit_log_path=os.getenv("SHIKARI_AUDIT_LOG_PATH", ".shikari/audit.jsonl"),

@@ -25,6 +25,7 @@ class ManagedRun:
     profile: str
     template: str
     inputs: dict[str, Any]
+    agent_name: str | None = None
     status: str = "queued"
     created_at: str = field(default_factory=_now)
     started_at: str | None = None
@@ -37,6 +38,7 @@ class ManagedRun:
         payload = {
             "run_id": self.run_id,
             "tool_id": self.tool_id,
+            "agent_name": self.agent_name,
             "profile": self.profile,
             "template": self.template,
             "status": self.status,
@@ -81,6 +83,32 @@ class RunManager:
             self._runs[run_id] = managed
             managed.task = asyncio.create_task(self._execute(managed), name=f"shikari-run-{run_id}")
             audit_event("run_submitted", run_id=run_id, tool=tool_id, profile=profile)
+            return managed.public(include_result=False)
+
+    async def submit_agent(
+        self,
+        agent_name: str,
+        inputs: dict[str, Any],
+    ) -> dict[str, Any]:
+        """Submit an agent for background execution."""
+        async with self._lock:
+            self._prune_locked()
+            if len(self._runs) >= get_config().max_background_runs:
+                raise RuntimeError(
+                    "Background run capacity reached. Retrieve or cancel existing runs before submitting more."
+                )
+            run_id = str(uuid.uuid4())
+            managed = ManagedRun(
+                run_id=run_id,
+                tool_id=agent_name,  # reuse tool_id field for tracking
+                profile="",
+                template="",
+                inputs=dict(inputs),
+                agent_name=agent_name,
+            )
+            self._runs[run_id] = managed
+            managed.task = asyncio.create_task(self._execute(managed), name=f"shikari-agent-{run_id}")
+            audit_event("run_submitted", run_id=run_id, tool=agent_name, profile="agent")
             return managed.public(include_result=False)
 
     async def get(self, run_id: str) -> dict[str, Any]:
@@ -135,17 +163,23 @@ class RunManager:
         # runaway execution even when the manifest specifies a longer timeout.
         timeout = get_config().default_timeout or 300
         try:
-            result = await asyncio.wait_for(
-                run_tool(
-                    tool_id=managed.tool_id,
-                    inputs=managed.inputs,
-                    profile=managed.profile,
-                    template=managed.template,
-                    dry_run=False,
-                    run_id=managed.run_id,
-                ),
-                timeout=timeout,
-            )
+            if managed.agent_name:
+                result = await asyncio.wait_for(
+                    self._execute_agent(managed),
+                    timeout=timeout,
+                )
+            else:
+                result = await asyncio.wait_for(
+                    run_tool(
+                        tool_id=managed.tool_id,
+                        inputs=managed.inputs,
+                        profile=managed.profile,
+                        template=managed.template,
+                        dry_run=False,
+                        run_id=managed.run_id,
+                    ),
+                    timeout=timeout,
+                )
             managed.result = result
             managed.status = str(result.get("status", "failed"))
         except asyncio.TimeoutError:
@@ -173,6 +207,34 @@ class RunManager:
                 status=managed.status,
                 error=managed.error,
             )
+
+    async def _execute_agent(self, managed: ManagedRun) -> dict[str, Any]:
+        """Execute an agent by name from the tool registry."""
+        from shikari.tools._base import get_tool_functions
+
+        agent_name = managed.agent_name
+        assert agent_name is not None  # only called when agent_name is set
+        functions = get_tool_functions()
+        func = functions.get(agent_name)
+        if func is None:
+            raise ValueError(f"Agent '{agent_name}' not found in registry")
+
+        # Call the agent function with inputs as kwargs and ctx=None.
+        # The wrapper returns result.to_report() — a string containing
+        # "**Status:** Success/Failed/Degraded". Parse it to propagate status.
+        report = await func(**managed.inputs, ctx=None)
+        report_str = report if isinstance(report, str) else str(report)
+        if "**Status:** Failed" in report_str:
+            status = "failed"
+        elif "**Status:** Degraded" in report_str:
+            status = "degraded"
+        else:
+            status = "success"
+        return {
+            "agent": managed.agent_name,
+            "status": status,
+            "report": report_str,
+        }
 
     def _prune_locked(self) -> None:
         max_runs = get_config().max_background_runs

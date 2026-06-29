@@ -75,7 +75,7 @@ async def run_tool(
     inputs: dict[str, Any],
     profile: str = "core",
     template: str = "safe",
-    dry_run: bool = True,
+    dry_run: bool = False,
     run_id: str | None = None,
 ) -> dict[str, Any]:
     """Run a manifest-backed tool and return a structured result."""
@@ -217,7 +217,7 @@ async def run_tool(
         endpoints=parsed_fields.get("endpoints", []),
         findings=parsed_fields.get("findings", []),
         artifacts=artifacts,
-        raw_output="",
+        raw_output=(result.output or "")[: get_config().inline_output_chars],
         errors=errors,
         next_suggestions=_next_suggestions(tool, status),
     ).model_dump()
