@@ -61,6 +61,7 @@ class TestToolMetadata:
         assert "--local" in msg
 
     def test_experimental_enabled_by_default(self):
+        set_config(ShikariConfig(enable_experimental_tools=True))
         meta = ToolMetadata(
             "catalog_agent",
             "agent_domain",

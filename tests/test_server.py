@@ -67,9 +67,9 @@ class TestShikariConfig:
         assert config.api_key is None
         assert config.default_timeout == 300
         assert config.tool_profile == "core"
-        assert config.enable_experimental_tools is True
-        assert config.enable_legacy_tools is True
-        assert config.enable_generated_tools is True
+        assert config.enable_experimental_tools is False
+        assert config.enable_legacy_tools is False
+        assert config.enable_generated_tools is False
         assert config.log_level == "INFO"
 
     def test_is_http(self):
@@ -182,25 +182,43 @@ class TestToolRegistration:
 
     @pytest.mark.asyncio
     async def test_tools_registered(self, stdio_config):
-        """All tools should be exposed by default."""
+        """All tools should be exposed when safety gates are enabled."""
         from fastmcp.client import Client
 
-        mcp = create_server(stdio_config)
+        config = ShikariConfig(
+            transport=TransportMode.STDIO,
+            enable_legacy_tools=True,
+            enable_generated_tools=True,
+            enable_experimental_tools=True,
+            enable_active_tools=True,
+            enable_offensive_tools=True,
+            enable_credential_tools=True,
+        )
+        set_config(config)
+        mcp = create_server(config)
         async with Client(mcp) as client:
             tools = await client.list_tools()
             assert len(tools) >= 50
 
     @pytest.mark.asyncio
     async def test_known_tools_exist(self, stdio_config):
-        """Legacy direct wrappers are now exposed by default."""
+        """Legacy direct wrappers are exposed when legacy tools are enabled."""
         from fastmcp.client import Client
 
-        mcp = create_server(stdio_config)
+        config = ShikariConfig(
+            transport=TransportMode.STDIO,
+            enable_legacy_tools=True,
+            enable_experimental_tools=True,
+            enable_active_tools=True,
+            enable_offensive_tools=True,
+            enable_credential_tools=True,
+        )
+        set_config(config)
+        mcp = create_server(config)
         async with Client(mcp) as client:
             tools = await client.list_tools()
             tool_names = {t.name for t in tools}
 
-            assert "shikari_run_tool" in tool_names
             assert "shikari_run_tool" in tool_names
             # Legacy wrappers are exposed - check a few known ones by actual registered names
             legacy_patterns = ["nmap_scan", "masscan", "hashcat_crack", "john_crack", "hydra_brute"]
@@ -209,10 +227,18 @@ class TestToolRegistration:
 
     @pytest.mark.asyncio
     async def test_agent_tools_registered(self, stdio_config):
-        """Verify that all agent tools are registered."""
+        """Verify that all agent tools are registered when experimental tools are enabled."""
         from fastmcp.client import Client
 
-        mcp = create_server(stdio_config)
+        config = ShikariConfig(
+            transport=TransportMode.STDIO,
+            enable_experimental_tools=True,
+            enable_active_tools=True,
+            enable_offensive_tools=True,
+            enable_credential_tools=True,
+        )
+        set_config(config)
+        mcp = create_server(config)
         async with Client(mcp) as client:
             tools = await client.list_tools()
             tool_names = {t.name for t in tools}

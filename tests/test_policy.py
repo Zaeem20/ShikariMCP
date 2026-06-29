@@ -10,9 +10,15 @@ def _tool(tool_id: str):
     return next(tool for tool in manifest.tools if tool.id == tool_id)
 
 
-def test_active_tool_allowed_by_default():
-    result = evaluate_tool_policy(_tool("nmap_scan"), {"target": "example.com"}, ShikariConfig())
+def test_active_tool_allowed_when_enabled():
+    config = ShikariConfig(enable_active_tools=True)
+    result = evaluate_tool_policy(_tool("nmap_scan"), {"target": "example.com"}, config)
     assert result["allowed"] is True
+
+
+def test_active_tool_blocked_by_default():
+    result = evaluate_tool_policy(_tool("nmap_scan"), {"target": "example.com"}, ShikariConfig())
+    assert result["allowed"] is False
 
 
 def test_active_tool_blocked_when_disabled():

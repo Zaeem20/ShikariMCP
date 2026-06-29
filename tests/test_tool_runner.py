@@ -66,8 +66,8 @@ def test_output_file_cannot_escape_artifact_directory(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_run_tool_defaults_to_dry_run():
-    result = await run_tool("whois_lookup", {"target": "example.com"})
+async def test_run_tool_dry_run_preview():
+    result = await run_tool("whois_lookup", {"target": "example.com"}, dry_run=True)
 
     assert result["status"] == "dry_run"
     assert result["tool"] == "whois_lookup"
@@ -75,14 +75,25 @@ async def test_run_tool_defaults_to_dry_run():
 
 
 @pytest.mark.asyncio
+async def test_run_tool_defaults_to_execute():
+    """run_tool() should default to dry_run=False (actually execute)."""
+    result = await run_tool("whois_lookup", {"target": "example.com"})
+    assert result["status"] != "dry_run"
+
+
+@pytest.mark.asyncio
 async def test_run_tool_allows_active_by_default():
+    set_config(ShikariConfig(enable_active_tools=True))
     result = await run_tool(
         "nmap_scan",
         {"target": "scanme.nmap.org"},
         dry_run=False,
     )
 
-    assert result["status"] == "success"
+    # Policy should allow it (not blocked); actual execution may fail if
+    # the nmap binary is not installed on the test machine.
+    assert result["status"] != "blocked"
+    assert result["status"] in {"success", "failed", "degraded"}
 
 
 @pytest.mark.asyncio

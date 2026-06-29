@@ -8,7 +8,7 @@ from shikari.config import ShikariConfig, set_config
 @pytest.mark.asyncio
 async def test_server_tools_and_status():
     """Verify that the FastMCP server correctly registers tools and handles basic calls."""
-    config = ShikariConfig()
+    config = ShikariConfig(enable_legacy_tools=True, enable_active_tools=True)
     set_config(config)
     mcp = create_server(config)
 

@@ -2,6 +2,7 @@
 
 import os
 import shutil
+import sys
 import tempfile
 from pathlib import Path
 
@@ -24,8 +25,13 @@ def fake_bin_dir():
     ]
     for tool in tools:
         script = Path(tmp) / tool
-        script.write_text("#!/bin/bash\necho '{\"status\": \"ok\"}'\n")
-        script.chmod(0o755)
+        if sys.platform == "win32":
+            # On Windows, create .bat files so shutil.which finds them
+            script = Path(tmp) / f"{tool}.bat"
+            script.write_text("@echo off\necho {\"status\": \"ok\"}\n")
+        else:
+            script.write_text("#!/bin/bash\necho '{\"status\": \"ok\"}'\n")
+            script.chmod(0o755)
     yield tmp
     shutil.rmtree(tmp)
 
@@ -33,7 +39,8 @@ def fake_bin_dir():
 @pytest.fixture(autouse=True)
 def patch_path(fake_bin_dir):
     old_path = os.environ.get("PATH", "")
-    os.environ["PATH"] = f"{fake_bin_dir}:{old_path}"
+    sep = ";" if sys.platform == "win32" else ":"
+    os.environ["PATH"] = f"{fake_bin_dir}{sep}{old_path}"
     yield
     os.environ["PATH"] = old_path
 
@@ -105,17 +112,19 @@ class TestDryRunWithFakeBinaries:
 @pytest.mark.asyncio
 class TestRunWithFakeBinaries:
     async def test_whois_run_dry_run_mode(self):
-        result = await run_tool("whois_lookup", {"target": "example.com"})
+        result = await run_tool("whois_lookup", {"target": "example.com"}, dry_run=True)
         assert result["status"] == "dry_run"
         assert result["tool"] == "whois_lookup"
 
     async def test_nmap_allowed_with_active_flag_default(self):
+        set_config(ShikariConfig(enable_active_tools=True))
         result = await run_tool(
             "nmap_scan",
             {"target": "scanme.nmap.org"},
             dry_run=False,
         )
         assert result["status"] in ("success", "degraded")
+        assert len(result["raw_output"]) > 0
 
     async def test_nmap_blocked_when_active_disabled(self):
         set_config(ShikariConfig(enable_active_tools=False))
@@ -128,7 +137,7 @@ class TestRunWithFakeBinaries:
         assert "enable-active-tools" in result["errors"][0]
 
     async def test_run_returns_command_info(self):
-        result = await run_tool("httpx_probe", {"target": "example.com"})
+        result = await run_tool("httpx_probe", {"target": "example.com"}, dry_run=True)
         assert result["status"] == "dry_run"
         assert "command" in result
         assert "argv" in result["command"]
