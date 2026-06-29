@@ -1,16 +1,16 @@
-# Graph Report - ShikariMCP  (2026-06-28)
+# Graph Report - ShikariMCP  (2026-06-29)
 
 ## Corpus Check
-- 263 files · ~175,906 words
+- 288 files · ~194,012 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 3346 nodes · 5626 edges · 339 communities (266 shown, 73 thin omitted)
-- Extraction: 76% EXTRACTED · 24% INFERRED · 0% AMBIGUOUS · INFERRED: 1332 edges (avg confidence: 0.77)
+- 3745 nodes · 6732 edges · 376 communities (277 shown, 99 thin omitted)
+- Extraction: 80% EXTRACTED · 20% INFERRED · 0% AMBIGUOUS · INFERRED: 1370 edges (avg confidence: 0.77)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ece24983`
+- Built from commit: `0e1989b3`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -171,6 +171,7 @@
 - [[_COMMUNITY_Community 164|Community 164]]
 - [[_COMMUNITY_Community 165|Community 165]]
 - [[_COMMUNITY_Community 168|Community 168]]
+- [[_COMMUNITY_Community 169|Community 169]]
 - [[_COMMUNITY_Community 170|Community 170]]
 - [[_COMMUNITY_Community 171|Community 171]]
 - [[_COMMUNITY_Community 172|Community 172]]
@@ -185,6 +186,43 @@
 - [[_COMMUNITY_Community 182|Community 182]]
 - [[_COMMUNITY_Community 183|Community 183]]
 - [[_COMMUNITY_Community 184|Community 184]]
+- [[_COMMUNITY_Community 186|Community 186]]
+- [[_COMMUNITY_Community 187|Community 187]]
+- [[_COMMUNITY_Community 188|Community 188]]
+- [[_COMMUNITY_Community 189|Community 189]]
+- [[_COMMUNITY_Community 190|Community 190]]
+- [[_COMMUNITY_Community 191|Community 191]]
+- [[_COMMUNITY_Community 192|Community 192]]
+- [[_COMMUNITY_Community 193|Community 193]]
+- [[_COMMUNITY_Community 194|Community 194]]
+- [[_COMMUNITY_Community 195|Community 195]]
+- [[_COMMUNITY_Community 196|Community 196]]
+- [[_COMMUNITY_Community 197|Community 197]]
+- [[_COMMUNITY_Community 198|Community 198]]
+- [[_COMMUNITY_Community 199|Community 199]]
+- [[_COMMUNITY_Community 200|Community 200]]
+- [[_COMMUNITY_Community 201|Community 201]]
+- [[_COMMUNITY_Community 202|Community 202]]
+- [[_COMMUNITY_Community 203|Community 203]]
+- [[_COMMUNITY_Community 204|Community 204]]
+- [[_COMMUNITY_Community 205|Community 205]]
+- [[_COMMUNITY_Community 206|Community 206]]
+- [[_COMMUNITY_Community 207|Community 207]]
+- [[_COMMUNITY_Community 208|Community 208]]
+- [[_COMMUNITY_Community 209|Community 209]]
+- [[_COMMUNITY_Community 210|Community 210]]
+- [[_COMMUNITY_Community 211|Community 211]]
+- [[_COMMUNITY_Community 212|Community 212]]
+- [[_COMMUNITY_Community 213|Community 213]]
+- [[_COMMUNITY_Community 214|Community 214]]
+- [[_COMMUNITY_Community 215|Community 215]]
+- [[_COMMUNITY_Community 216|Community 216]]
+- [[_COMMUNITY_Community 217|Community 217]]
+- [[_COMMUNITY_Community 218|Community 218]]
+- [[_COMMUNITY_Community 219|Community 219]]
+- [[_COMMUNITY_Community 220|Community 220]]
+- [[_COMMUNITY_Community 221|Community 221]]
+- [[_COMMUNITY_Community 222|Community 222]]
 - [[_COMMUNITY_Community 318|Community 318]]
 - [[_COMMUNITY_Community 319|Community 319]]
 - [[_COMMUNITY_Community 322|Community 322]]
@@ -193,11 +231,9 @@
 - [[_COMMUNITY_Community 325|Community 325]]
 - [[_COMMUNITY_Community 329|Community 329]]
 - [[_COMMUNITY_Community 334|Community 334]]
-- [[_COMMUNITY_Community 337|Community 337]]
 - [[_COMMUNITY_Community 341|Community 341]]
 - [[_COMMUNITY_Community 342|Community 342]]
 - [[_COMMUNITY_Community 343|Community 343]]
-- [[_COMMUNITY_Community 344|Community 344]]
 - [[_COMMUNITY_Community 474|Community 474]]
 - [[_COMMUNITY_Community 480|Community 480]]
 - [[_COMMUNITY_Community 483|Community 483]]
@@ -225,7 +261,6 @@
 - [[_COMMUNITY_Community 705|Community 705]]
 - [[_COMMUNITY_Community 706|Community 706]]
 - [[_COMMUNITY_Community 710|Community 710]]
-- [[_COMMUNITY_Community 711|Community 711]]
 - [[_COMMUNITY_Community 712|Community 712]]
 - [[_COMMUNITY_Community 713|Community 713]]
 - [[_COMMUNITY_Community 714|Community 714]]
@@ -299,16 +334,16 @@
 - [[_COMMUNITY_Community 1149|Community 1149]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `execute_command()` - 334 edges
-2. `validate_target()` - 130 edges
-3. `ShikariConfig` - 81 edges
-4. `BaseAgent` - 67 edges
-5. `ToolScope` - 61 edges
-6. `_step()` - 53 edges
-7. `build_default_plan()` - 51 edges
-8. `shikari_tool decorator` - 41 edges
-9. `set_config()` - 37 edges
-10. `ParsedOutput` - 36 edges
+1. `execute_command()` - 335 edges
+2. `validate_target()` - 131 edges
+3. `ShikariConfig` - 90 edges
+4. `BaseAgent` - 68 edges
+5. `ToolScope` - 62 edges
+6. `_step()` - 54 edges
+7. `build_default_plan()` - 52 edges
+8. `set_config()` - 46 edges
+9. `shikari_tool decorator` - 41 edges
+10. `ParsedOutput` - 37 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `AgentResult` --implements--> `Structured Output Design Principle`  [INFERRED]
@@ -321,13 +356,6 @@
   src/shikari/config.py → docs/CONFIGURATION.md
 - `shikari_policy_explain MCP Tool` --implements--> `Safety Controls`  [INFERRED]
   src/shikari/server.py → docs/ARCHITECTURE.md
-
-## Import Cycles
-- 1-file cycle: `tests/test_smoke.py -> tests/test_smoke.py`
-- 1-file cycle: `src/shikari/tools/exploitation/__init__.py -> src/shikari/tools/exploitation/__init__.py`
-- 1-file cycle: `src/shikari/tools/post_exploitation/__init__.py -> src/shikari/tools/post_exploitation/__init__.py`
-- 1-file cycle: `src/shikari/tools/vulnerability_scanning/__init__.py -> src/shikari/tools/vulnerability_scanning/__init__.py`
-- 1-file cycle: `src/shikari/tools/web_application/__init__.py -> src/shikari/tools/web_application/__init__.py`
 
 ## Hyperedges (group relationships)
 - **ShikariMCP Core Architecture** — concept_shikari_mcp, concept_server_py, concept_registry_py, concept_executor_py, concept_auth_py, concept_base_tool [EXTRACTED 1.00]
@@ -437,95 +465,91 @@
 - **Go Tool Version Pins** — tools_lock_go_tools, tools_lock_projectdiscovery [EXTRACTED 1.00]
 - **Tool Category Registration Tests** — test_recon_tools_exist, test_password_tools_exist, test_webapp_tools_exist, test_agent_tools_exist, registry_get_tool_registry [EXTRACTED 1.00]
 
-## Communities (339 total, 73 thin omitted)
+## Communities (376 total, 99 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.10
-Nodes (32): API Testing Tools (api_testing.py), Authentication Testing Tools (auth_testing.py), shikari_tool decorator, Binary Analysis Tools (binary_analysis.py), CMS Exploitation Tools (cms_exploitation.py), CMS Scanners (cms_scanners.py), API Enumeration, Authentication / JWT Testing (+24 more)
+Cohesion: 0.13
+Nodes (19): API Testing Tools (api_testing.py), Authentication Testing Tools (auth_testing.py), API Enumeration, Authentication / JWT Testing, Web Fuzzing / Directory Discovery, Injection Attacks (SQLi, XSS), Web Application Testing, Wireless / RF Attacks (+11 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.16
-Nodes (11): parse_json(), Parse Arjun parameter mining JSON output., _extract_gps(), parse_gps(), parse_json(), Build a short summary from key EXIF tags., _summarize_tags(), parse_json() (+3 more)
+Cohesion: 0.12
+Nodes (9): parse_json(), Parse Arjun parameter mining JSON output., Asset, parse_csv(), parse_jsonl(), _classify_line(), parse_text(), Return 'email', 'host', 'url', or None based on content heuristics. (+1 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.13
 Nodes (14): code:mermaid (flowchart TB), Contributing to ShikariMCP, Integration Tiers at a Glance, Pull Request Checklist, Bug Reports, Code of Conduct, code:block2 (src/shikari/), code:bash (# 1. Create a feature branch) (+6 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.14
-Nodes (14): API Key via Environment Variable (simplest), Authentication & Security, Bearer Token Auth (HTTP transports), code:dockerfile (FROM python:3.11-slim), code:python (if __name__ == "__main__":), code:toml (# fly.toml), code:bash (fly launch), code:python (import os) (+6 more)
+Cohesion: 0.22
+Nodes (9): code:dockerfile (FROM python:3.11-slim), code:python (if __name__ == "__main__":), code:python (import os), code:toml (# fly.toml), code:bash (fly launch), Deployment, Docker (Streamable HTTP transport), Environment Variables Pattern (+1 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.06
-Nodes (28): workflow_bugbounty_agent tool entry point, Bug Bounty Pipeline (subfinder->httpx->nuclei), agent_workflow_compliance tool entry point, workflow_ctf_agent tool entry point, CTF Challenge Type Detection, Custom Plan Execution Pattern, Findings Analysis Pattern, workflow_pentest_agent tool entry point (+20 more)
+Cohesion: 0.11
+Nodes (14): workflow_bugbounty_agent tool entry point, Bug Bounty Pipeline (subfinder->httpx->nuclei), Custom Plan Execution Pattern, Findings Analysis Pattern, workflow_pentest_agent tool entry point, Pentest Pipeline (nmap->nuclei), BugBountyAgent, Bug bounty reconnaissance and low-noise template testing. (+6 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.30
-Nodes (17): dirb function, enum4linux function, execute_command function, ffuf function, gobuster_dir function, ldapsearch function, nbtscan function, network_enum module (+9 more)
+Cohesion: 0.25
+Nodes (20): beef_start function, dirb function, enum4linux function, execute_command function, ffuf function, gobuster_dir function, ldapsearch function, msfconsole_run function (+12 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.04
-Nodes (73): Validate a target (IP, domain, or CIDR).     Returns the cleaned target string., validate_target(), enum4linux(), ftp_anon(), ike_scan(), ldapsearch(), nbtscan(), onesixtyone() (+65 more)
+Cohesion: 0.07
+Nodes (52): Validate a target (IP, domain, or CIDR).     Returns the cleaned target string., validate_target(), cmseek(), dirb(), dirsearch(), droopescan(), feroxbuster(), ffuf() (+44 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.23
-Nodes (8): BaseModel, severity(), Evidence, Finding, parse_json(), parse_jsonl(), parse_text(), parse_json()
+Cohesion: 0.15
+Nodes (9): BaseModel, parse_json(), Parse Censys host view JSON., Endpoint, Evidence, Service, parse_json(), parse_text() (+1 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.15
-Nodes (8): parse_json(), Parse Checkov JSON output., parse_tool_output(), Load and run a parser by dotted reference., ParsedOutput, parse_json(), Parse Semgrep JSON output., parse_json()
+Cohesion: 0.12
+Nodes (7): parse_jsonl(), Parse Dalfox JSONL output., parse_tool_output(), Load and run a parser by dotted reference., parse_text(), ParsedOutput, parse_xml()
 
 ### Community 9 - "Community 9"
-Cohesion: 0.04
-Nodes (48): discover_tools(), Auto-discover tool and agent modules.      Importing a module triggers @shikari_, Register discovered tools with the MCP server.      Tools blocked by policy (gen, register_tools_with_mcp(), agent_domain_database(), Run the DatabaseAgent., Run the DatabaseAgent., agent_domain_iotscada() (+40 more)
-
-### Community 10 - "Community 10"
-Cohesion: 0.17
-Nodes (8): parse_json(), Parse Censys host view JSON., parse_json(), Parse masscan JSON output (-oJ)., Service, parse_xml(), parse_json(), Parse Shodan host lookup JSON.
+Cohesion: 0.08
+Nodes (31): create_server(), Create and configure the MCP server., Create and configure the MCP server., Create and configure the MCP server., Create and configure the MCP server., http_config(), http_local_config(), Tests for ShikariMCP server creation, transport config, and tool registration. (+23 more)
 
 ### Community 11 - "Community 11"
-Cohesion: 0.29
-Nodes (6): agent_offensive_privesc(), PrivEscAgent, Run the PrivEscAgent., Run the PrivEscAgent., Automated PrivEsc operations., agent_offensive_privesc tool entry point
+Cohesion: 0.06
+Nodes (35): Changes made:, Changes made:, Changes made:, Confirmed Root Causes (from research + code reads), Critical (immediate fixes), Deepwork: MCP Tool Discovery & Autonomous LLM Behavior, File References (read, not duplicated here), Files created: (+27 more)
 
 ### Community 12 - "Community 12"
 Cohesion: 0.17
-Nodes (6): get_tool_health(), Return production-oriented health for registered tools., clear_tool_registry(), get_duplicate_tools(), Return duplicate tool aliases created during registration., Clear the global registry. Primarily useful for tests.
+Nodes (18): Enum, clear_tool_registry(), get_duplicate_tools(), get_tool_functions(), _infer_quality(), is_experimental(), is_generated(), Defines where a tool can run. (+10 more)
 
 ### Community 13 - "Community 13"
-Cohesion: 0.05
-Nodes (36): BinaryIO, check_binary(), _check_binary_cached(), check_binary_sync(), clear_binary_cache(), _execution_semaphore(), ExecutionResult, _open_output_file() (+28 more)
+Cohesion: 0.14
+Nodes (21): BinaryIO, _check_binary_cached(), clear_binary_cache(), _open_output_file(), output(), _process_group_options(), Drain a process stream while keeping only bounded text in memory., Drain a process stream while keeping only bounded text in memory. (+13 more)
 
 ### Community 14 - "Community 14"
-Cohesion: 0.05
-Nodes (62): OSINT (Open Source Intelligence), Secret / Credential Detection, OSINT Gathering Auto-Generated (osint_gathering.py), OSINT Search Tools (osint.py), Reconnaissance Module Exports (__init__.py), assetfinder_run(), httpx_probe(), Run Assetfinder.          Args:         domain: Target domain         subs_only: (+54 more)
+Cohesion: 0.09
+Nodes (37): Secret / Credential Detection, Reconnaissance Module Exports (__init__.py), assetfinder_run(), httpx_probe(), Run Assetfinder.          Args:         domain: Target domain         subs_only:, Run HTTPX against a single target (for piping, extra_args or bash is needed)., Run waybackurls.          Args:         domain: Target domain         extra_args, waybackurls_get() (+29 more)
 
 ### Community 15 - "Community 15"
-Cohesion: 0.08
-Nodes (52): _ad_agent(), _anomalydetect_agent(), _attacksurface_agent(), _blueteam_agent(), _cloud_agent(), _codereview_agent(), _compliance_agent(), _configmanager_agent() (+44 more)
+Cohesion: 0.11
+Nodes (53): _ad_agent(), _anomalydetect_agent(), _attacksurface_agent(), _blueteam_agent(), _cloud_agent(), _codereview_agent(), _compliance_agent(), _configmanager_agent() (+45 more)
 
 ### Community 16 - "Community 16"
-Cohesion: 0.29
-Nodes (4): Execute a manifest-backed plan and return structured step results., Extract newline-separated targets from a structured run result., Execute a manifest-backed plan and return structured step results., Extract newline-separated targets from a structured run result.          Caps ou
+Cohesion: 0.09
+Nodes (21): discover_tools(), get_tool_health(), get_tool_summary(), Get a summary of registered tools by category., Return production-oriented health for registered tools., Auto-discover tool and agent modules.      Importing a module triggers @shikari_, Register discovered tools with the MCP server.      Tools blocked by policy (gen, register_tools_with_mcp() (+13 more)
 
 ### Community 17 - "Community 17"
-Cohesion: 0.29
-Nodes (7): 4. Creating a New Manifest Profile, code:bash (uv run shikari-mcp --transport stdio --tool-profile myprofil), code:json ({), Step 1: Add a manifest entry, Step 1: Create the profile JSON, Step 2: Add to the `full` profile, Step 3: Use it
+Cohesion: 0.25
+Nodes (8): 4. Creating a New Manifest Profile, code:json ({), code:bash (uv run shikari-mcp --transport stdio --tool-profile myprofil), code:json ({), Step 1: Add a manifest entry, Step 1: Create the profile JSON, Step 2: Add to the `full` profile, Step 3: Use it
 
 ### Community 18 - "Community 18"
-Cohesion: 0.09
-Nodes (19): ABC, AgentResult, execute(), plan(), Create an execution plan â€” a list of steps to perform.          Each step is a, Execute the plan, running tools in order and passing results between steps., Analyze raw results and extract findings.         Override in subclasses for cus, Structured result from an agent execution. (+11 more)
+Cohesion: 0.07
+Nodes (29): ABC, AgentPhase, AgentResult, BaseAgent, execute(), plan(), Create an execution plan â€” a list of steps to perform.          Each step is, Execute the plan, running tools in order and passing results between steps. (+21 more)
 
 ### Community 19 - "Community 19"
-Cohesion: 0.12
-Nodes (11): iter_json_lines(), Yield JSON objects from JSONL output, skipping malformed lines., parse_jsonl(), parse_text(), parse_jsonl(), parse_jsonl(), Endpoint, parse_jsonl() (+3 more)
+Cohesion: 0.11
+Nodes (8): iter_json_lines(), Yield JSON objects from JSONL output, skipping malformed lines., severity(), parse_jsonl(), parse_jsonl(), parse_jsonl(), parse_jsonl(), parse_json()
 
 ### Community 20 - "Community 20"
-Cohesion: 0.20
+Cohesion: 0.2
 Nodes (10): 1. Adding a Manifest Tool (Recommended), code:json ("argv": ["nmap", "-oX", "-", "-sV", "{target}"]), code:json ("argv": ["ffuf", "-u", "{url}/FUZZ", "-w", "{wordlist}", "-o), code:python (from __future__ import annotations), code:python (for name in ("core", "recon", "web", "cloud", "forensics", "), code:bash (# Verify the manifest loads), Placeholder syntax, Step 2: Write a parser (optional but recommended) (+2 more)
 
 ### Community 21 - "Community 21"
-Cohesion: 0.10
-Nodes (28): explain_policy(), Explain current local policy settings., Explain current local policy settings., dumps_verification(), explain_tool(), list_tool_profiles(), load_tool_manifest(), manifest_public_catalog() (+20 more)
+Cohesion: 0.14
+Nodes (25): dumps_verification(), explain_tool(), list_tool_profiles(), load_tool_manifest(), manifest_public_catalog(), Return packaged tool profile names., Verify binaries and version commands for a manifest profile., Return an AI/client-friendly catalog without running external binaries. (+17 more)
 
 ### Community 22 - "Community 22"
 Cohesion: 0.24
@@ -536,11 +560,11 @@ Cohesion: 0.29
 Nodes (10): API Key Authentication, Authentication Middleware, CI/CD Pipeline, Docker Deployment Profiles, Dual Transport Architecture, Command Executor Module, Tool Registry Module, Main Server Entry Point (+2 more)
 
 ### Community 24 - "Community 24"
-Cohesion: 0.15
-Nodes (17): dry_run_tool(), dry_run_verified_tool(), Build a manifest command without executing it., _runner_notes(), TestDryRunWithFakeBinaries, Tests for manifest-driven tool command building., test_common_target_aliases_are_normalized(), test_dry_run_builds_nmap_command() (+9 more)
+Cohesion: 0.16
+Nodes (16): dry_run_tool(), dry_run_verified_tool(), Build a manifest command without executing it., TestDryRunWithFakeBinaries, Tests for manifest-driven tool command building., run_tool() should default to dry_run=False (actually execute)., test_common_target_aliases_are_normalized(), test_dry_run_builds_nmap_command() (+8 more)
 
 ### Community 25 - "Community 25"
-Cohesion: 0.10
+Cohesion: 0.1
 Nodes (19): artifacts, assets, command, argv, output_format, redacted, stdin, timeout (+11 more)
 
 ### Community 26 - "Community 26"
@@ -548,8 +572,8 @@ Cohesion: 0.29
 Nodes (7): Before Submitting, code:block10 (feat: add gobuster directory brute-force tool), code:markdown (## What), PR Description Template, PR Title Format, Pull Request Process, Review Process
 
 ### Community 27 - "Community 27"
-Cohesion: 0.13
-Nodes (24): aws_cli_run - arbitrary AWS CLI command executor, pacu_run - Pacu AWS exploitation framework wrapper, cloud_security package init - re-exports cloud tools, Cloud security tools - AWS, container, K8s scanning, kube_hunter_scan - Kubernetes security scanner wrapper, scoutsuite_run - multi-cloud security audit wrapper, trivy_scan - container/artifact security scanner wrapper, @shikari_tool should register the function in the global registry. (+16 more)
+Cohesion: 0.1
+Nodes (28): aws_cli_run - arbitrary AWS CLI command executor, pacu_run - Pacu AWS exploitation framework wrapper, cloud_security package init - re-exports cloud tools, Cloud security tools - AWS, container, K8s scanning, kube_hunter_scan - Kubernetes security scanner wrapper, scoutsuite_run - multi-cloud security audit wrapper, trivy_scan - container/artifact security scanner wrapper, Tests for the tool registry — auto-discovery, scope filtering, and registration. (+20 more)
 
 ### Community 28 - "Community 28"
 Cohesion: 0.13
@@ -560,24 +584,24 @@ Cohesion: 0.14
 Nodes (19): Reconnaissance workflow pattern, Web application workflow pattern, Core tool manifest profile, ReconAgent class, workflow_recon_agent function, ffuf Fuzz tool entry, Gobuster Directory Scan tool entry, httpx Probe tool entry (+11 more)
 
 ### Community 30 - "Community 30"
-Cohesion: 0.20
-Nodes (20): CommandTemplate, ToolManifestEntry, _artifact_kind(), _build_preview(), _execution_preflight_error(), _find_tool(), _format_value(), _get_template() (+12 more)
+Cohesion: 0.23
+Nodes (23): CommandTemplate, ToolManifestEntry, _artifact_kind(), _build_preview(), _execution_preflight_error(), _find_tool(), _format_value(), _get_template() (+15 more)
 
 ### Community 31 - "Community 31"
 Cohesion: 0.29
 Nodes (7): code:bash (# Full suite), code:python (def test_my_tool_registered(self):), code:python (def test_my_agent_registered(self):), Running Tests, Test Structure, Testing, Writing Tests for Your Contribution
 
 ### Community 32 - "Community 32"
-Cohesion: 0.12
-Nodes (16): AgentPhase, Phases of agent execution workflow., Enum, _env_bool(), _env_float(), _env_int(), _env_list(), from_env() (+8 more)
+Cohesion: 0.21
+Nodes (15): auth_enabled(), _env_bool(), _env_float(), _env_int(), _env_list(), from_env(), is_http(), is_remote() (+7 more)
 
 ### Community 33 - "Community 33"
-Cohesion: 0.33
-Nodes (4): Red-team planning workflow.      This agent no longer fabricates brute-force or, Prepare an authorized red-team scenario plan., RedTeamAgent, workflow_redteam_agent()
+Cohesion: 0.16
+Nodes (24): execute_command(), Execute an external command without shell interpretation.      String commands a, Execute an external command without shell interpretation.      String commands, enum4linux(), ftp_anon(), ike_scan(), ldapsearch(), nbtscan() (+16 more)
 
 ### Community 34 - "Community 34"
-Cohesion: 0.29
-Nodes (4): Local-First Design Principle, Scope System (LOCAL/REMOTE/BOTH), Tool Catalog Model (Verified/Manifest/Generated tiers), Release Checklist
+Cohesion: 0.23
+Nodes (5): Local-First Design Principle, Scope System (LOCAL/REMOTE/BOTH), Structured Output Design Principle, Tool Catalog Model (Verified/Manifest/Generated tiers), Release Checklist
 
 ### Community 35 - "Community 35"
 Cohesion: 0.17
@@ -596,12 +620,12 @@ Cohesion: 0.15
 Nodes (15): write_artifact function, write_json_artifact function, Manifest-driven verified tool execution, Forensics tool manifest profile, Offensive tool manifest profile, Hashcat Offline Crack tool entry, John Offline Crack tool entry, ToolManifest model (+7 more)
 
 ### Community 39 - "Community 39"
-Cohesion: 0.13
-Nodes (23): evaluate_tool_policy(), Return allow/block policy decision for one tool invocation., Return allow/block policy decision for one tool invocation., True if running HTTP without --local flag (cloud deployment)., Auth is required for HTTP transport., True when an HTTP auth provider should be installed., Central configuration for the ShikariMCP server., ShikariConfig (+15 more)
+Cohesion: 0.15
+Nodes (31): _as_path(), _blocked_metadata_target(), check_blocked_metadata_targets(), _deny(), evaluate_tool_policy(), explain_policy(), _matches_allowlist(), Explain current local policy settings. (+23 more)
 
 ### Community 40 - "Community 40"
-Cohesion: 0.19
-Nodes (13): Normalized Output Models (Asset/Service/Endpoint/Finding), Policy Engine, Production Readiness Criteria, Agent System, code:mermaid (flowchart LR), code:mermaid (flowchart LR), Execution Flow, Manifest System (+5 more)
+Cohesion: 0.11
+Nodes (28): Normalized Output Models (Asset/Service/Endpoint/Finding), Policy Engine, Production Readiness Criteria, Agent System, Architecture, Background Job System, code:block1 (ShikariMCP/), code:mermaid (sequenceDiagram) (+20 more)
 
 ### Community 41 - "Community 41"
 Cohesion: 0.19
@@ -612,7 +636,7 @@ Cohesion: 0.33
 Nodes (6): Code style, code:bash (git clone https://github.com/Zaeem20/ShikariMCP.git), code:bash (uv run pytest tests -q                    # Unit tests (152)), Development Setup, Project structure, Running tests
 
 ### Community 43 - "Community 43"
-Cohesion: 0.15
+Cohesion: 0.2
 Nodes (12): aws_cli_s3(), azure_tenant(), cloud_enum(), pacu(), Multi-cloud OSINT tool, AWS exploitation framework, Multi-Cloud Security Auditing Tool, Scan for open Amazon S3 buckets and dump contents (+4 more)
 
 ### Community 44 - "Community 44"
@@ -627,20 +651,24 @@ Nodes (11): assets, endpoints, findings, metadata, hosts_discovered, services_id
 Cohesion: 0.17
 Nodes (11): assets, endpoints, findings, metadata, live_hosts, target, tool, tools_executed (+3 more)
 
+### Community 47 - "Community 47"
+Cohesion: 0.28
+Nodes (11): Tests for structured tool output parsers., test_ffuf_json_parser(), test_httpx_jsonl_parser(), test_katana_jsonl_parser(), test_naabu_jsonl_parser(), test_nmap_xml_parser(), test_nuclei_jsonl_parser(), test_sqlmap_text_parser() (+3 more)
+
 ### Community 48 - "Community 48"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (5): 2. Adding a Wrapper Tool, Capability gating, code:python (from shikari.tools._base import shikari_tool, ToolScope), Create a wrapper file, Wrapper rules
 
 ### Community 49 - "Community 49"
-Cohesion: 0.18
+Cohesion: 0.23
 Nodes (10): Search Exploit-DB for vulnerabilities.          Args:         query: Terms to se, Search Exploit-DB specifically for a CVE.          Args:         cve_id: CVE to, Read the contents of an Exploit-DB entry.          Args:         edb_id: The Exp, Copy an exploit script from Exploit-DB to your local space.          Args:, Read an Nmap XML output file and run searchsploit against its discovered service, searchsploit_cve(), searchsploit_examine(), searchsploit_mirror() (+2 more)
 
 ### Community 50 - "Community 50"
-Cohesion: 0.18
+Cohesion: 0.23
 Nodes (10): masscan(), nmap_scan(), ping_sweep(), Run RustScan for fast port discovery + automatic Nmap service detection.      Ar, Perform a ping sweep to discover live hosts on a network.      Args:         tar, Trace the network path to a target.      Args:         target: Target IP or doma, Run an Nmap scan against a target.      Args:         target: Target IP, domain,, Run a masscan scan for ultra-fast port discovery.      Args:         target: Tar (+2 more)
 
 ### Community 51 - "Community 51"
-Cohesion: 0.18
+Cohesion: 0.23
 Nodes (10): censys_search(), dig_lookup(), Query Censys for host information.      Args:         target: Target IP or domai, Perform a WHOIS lookup on a domain or IP.      Args:         target: Domain name, Perform a DNS lookup using dig.      Args:         target: Domain name to query, Run theHarvester for OSINT gathering.      Args:         target: Target domain, Query Shodan for information about a target IP.      Args:         target: Targe, shodan_search() (+2 more)
 
 ### Community 52 - "Community 52"
@@ -648,11 +676,11 @@ Cohesion: 0.18
 Nodes (11): shikari.parsers module, ffuf JSON parser test, httpx JSONL parser test, katana JSONL parser test, naabu JSONL parser test, nmap XML parser test, nuclei JSONL parser test, sqlmap text parser test (+3 more)
 
 ### Community 53 - "Community 53"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (5): Code Style & Conventions, code:python (# Standard library), General, Imports, Naming Conventions
 
 ### Community 54 - "Community 54"
-Cohesion: 0.18
+Cohesion: 0.19
 Nodes (14): binwalk_extract function, exiftool_read function, Digital Forensics & Steganography, binwalk_extract(), exiftool_read(), Run Volatility plugins against memory dumps.          Args:         image_file:, Run ExifTool to extract metadata.          Args:         file_path: Target file, Run Steghide to extract payloads.          Args:         file_path: Target image (+6 more)
 
 ### Community 55 - "Community 55"
@@ -660,8 +688,8 @@ Cohesion: 0.36
 Nodes (8): ShikariConfig class, TransportMode enum, FastMCP Client class, create_server function, ShikariConfig tests, Server creation tests, Tool registration tests via MCP client, Smoke test for server and tools
 
 ### Community 56 - "Community 56"
-Cohesion: 0.40
-Nodes (5): parse_args(), Parse CLI arguments into ShikariConfig., Parse CLI arguments into ShikariConfig., Parse CLI arguments into ShikariConfig., Parse CLI arguments into ShikariConfig.
+Cohesion: 0.11
+Nodes (20): main(), parse_args(), _parse_key_values(), Parse CLI arguments into ShikariConfig., Parse CLI arguments into ShikariConfig., Parse CLI arguments into ShikariConfig., Parse CLI arguments into ShikariConfig., Parse CLI arguments into ShikariConfig. (+12 more)
 
 ### Community 57 - "Community 57"
 Cohesion: 0.24
@@ -672,23 +700,23 @@ Cohesion: 0.22
 Nodes (9): Manifest-driven tool command building, Run verified tool integration tests, Public catalog test, Core manifest load test, explain_tool test, verify_tool_profile tests, run_verified_tool tests, shikari.core.tool_manifest module (+1 more)
 
 ### Community 59 - "Community 59"
-Cohesion: 0.67
+Cohesion: 0.6
 Nodes (3): smoke-test.sh script, check(), PARSER_FUNCS
 
 ### Community 60 - "Community 60"
-Cohesion: 0.10
+Cohesion: 0.1
 Nodes (24): hashcat_crack - Hashcat hash cracking, hashcat_show - Show Hashcat cracked passwords, john_crack - John the Ripper cracking, john_show - Show John cracked passwords, hydra_brute - Hydra online brute force, medusa_brute - Medusa online brute force, hashcat_crack(), hashcat_show() (+16 more)
 
 ### Community 61 - "Community 61"
-Cohesion: 0.29
+Cohesion: 0.27
 Nodes (7): Reverse Engineering Module Exports (__init__.py), checksec_run(), radare2_analyze(), Run Radare2 via script/batch mode.          Args:         file_path: Target bina, Run checksec.          Args:         file_path: Target binary         extra_args, qu1cksc0pe_analyze(), Run Qu1cksc0pe against a target file.          Args:         file_path: Path to
 
 ### Community 62 - "Community 62"
-Cohesion: 0.06
-Nodes (26): get_tool_summary(), Get a summary of registered tools by category., Smoke tests for reconnaissance tool wrappers., Discover tools once for the entire module., Verify that known reconnaissance tools are registered., All recon tools should have non-empty descriptions., All registered recon tools should have callable functions., Verify that password attack tools are registered. (+18 more)
+Cohesion: 0.11
+Nodes (15): Smoke tests for reconnaissance tool wrappers., Discover tools once for the entire module., Verify that known reconnaissance tools are registered., All recon tools should have non-empty descriptions., All registered recon tools should have callable functions., Verify that password attack tools are registered., Verify web application tools are registered., Verify that agent workflow tools are registered as MCP tools. (+7 more)
 
 ### Community 63 - "Community 63"
-Cohesion: 0.22
+Cohesion: 0.27
 Nodes (8): amass_enum(), assetfinder(), httpx_probe(), Find related domains and subdomains using assetfinder.      Args:         target, Discover subdomains using subfinder (passive sources).      Args:         target, Run OWASP Amass for subdomain enumeration and attack surface mapping.      Args:, Probe HTTP services using httpx.      Args:         target: Target domain, IP, o, subfinder()
 
 ### Community 64 - "Community 64"
@@ -700,112 +728,116 @@ Cohesion: 0.45
 Nodes (11): Plan-Execute-Analyze-Report Pattern, Base Agent Class, Defensive Agents, Domain-Specific Agents, Infrastructure Agents, Intelligence Agents, Offensive Agents, AI Subagent Architecture (+3 more)
 
 ### Community 66 - "Community 66"
-Cohesion: 0.31
+Cohesion: 0.33
 Nodes (6): kube_hunter_scan(), Run Trivy scanner.          Args:         target: Target image name, repo, or fi, Run ScoutSuite for cloud environment assessment.          Args:         provider, Run Kube-Hunter.          Args:         target: IP or CIDR to scan         remot, scoutsuite_run(), trivy_scan()
 
 ### Community 67 - "Community 67"
-Cohesion: 0.27
-Nodes (8): Wireless / RF Attacks, Wireless Module Exports, aircrack_ng_run(), Run Aircrack-ng on a capture file.          Args:         file_path: Path to the, Run Wifite.          Args:         extra_args: Additional flags like '--wpa' or, Run Reaver to attack WPS pins.          Args:         interface: Wireless interf, reaver_run(), wifite_run()
+Cohesion: 0.12
+Nodes (23): OSINT (Open Source Intelligence), emailharvester(), gitrob(), h8mail(), holehe(), metagoofil(), photon(), Information gathering tool designed for extracting metadata (+15 more)
 
 ### Community 68 - "Community 68"
 Cohesion: 0.25
 Nodes (8): Web tool manifest profile, Arjun Parameter Discovery tool entry, Dalfox XSS Scan tool entry, SSLScan tool entry, testssl.sh Scan tool entry, TLSX Scan tool entry, Wafw00f WAF Detection tool entry, WhatWeb Scan tool entry
 
 ### Community 69 - "Community 69"
-Cohesion: 0.10
-Nodes (27): BaseAgent, Defensive agent plan-execute-analyze pattern, agent_defensive_anomalydetect(), AnomalyDetectAgent, Run the AnomalyDetectAgent., Run the AnomalyDetectAgent., Automated AnomalyDetect operations., agent_defensive_containment() (+19 more)
+Cohesion: 0.09
+Nodes (50): audit_event function, BaseAgent, shikari_tool decorator, BaseAgent, build_default_plan, Append-only audit event logging, Passive Reconnaissance, Subdomain Enumeration (+42 more)
 
 ### Community 70 - "Community 70"
-Cohesion: 0.50
+Cohesion: 0.5
 Nodes (4): code:bash (# 1. Fork the repository on GitHub), Getting Started, Prerequisites, Setup
 
 ### Community 71 - "Community 71"
-Cohesion: 0.50
-Nodes (4): module, ref, source, dalfox
+Cohesion: 0.24
+Nodes (10): module, ref, source, module, reason, ref, source, dnsx (+2 more)
 
 ### Community 72 - "Community 72"
-Cohesion: 0.50
-Nodes (4): katana, module, ref, source
+Cohesion: 0.13
+Nodes (14): agent_name, completed_at, created_at, error, profile, result, agent, report (+6 more)
 
 ### Community 73 - "Community 73"
-Cohesion: 0.50
-Nodes (4): nuclei, module, ref, source
+Cohesion: 0.22
+Nodes (5): ExecutionResult, Result of a tool execution., Result of a tool execution., Combined output, preferring stdout., TestExecutionResult
 
 ### Community 74 - "Community 74"
-Cohesion: 0.50
-Nodes (3): _default_config(), ShikariMCP test configuration., Ensure tests always start with a clean default config.
+Cohesion: 0.23
+Nodes (11): Fuzzy search across the ShikariMCP tool catalog.  Searches both manifest-backed, Search the tool catalog by case-insensitive substring match.      Matches agains, search_tools(), Tests for the tool search module., test_search_case_insensitive(), test_search_empty_query_returns_empty(), test_search_matches_capability(), test_search_matches_category() (+3 more)
+
+### Community 75 - "Community 75"
+Cohesion: 0.07
+Nodes (28): Set the global configuration (used by CLI flag overrides)., True if running HTTP without --local flag (cloud deployment)., True if running HTTP without --local flag (cloud deployment)., Auth is required for HTTP transport., Auth is required for HTTP transport., True when an HTTP auth provider should be installed., True when an HTTP auth provider should be installed., Set the global configuration (used by CLI flag overrides). (+20 more)
+
+### Community 77 - "Community 77"
+Cohesion: 0.17
+Nodes (12): check_binary(), check_binary_sync(), _execution_semaphore(), Return a process-wide semaphore honoring the current config., Check if a binary exists on the system., Return a process-wide semaphore honoring the current config., Synchronous binary lookup for registration and status reporting., Return a process-wide semaphore honoring the current config. (+4 more)
 
 ### Community 78 - "Community 78"
-Cohesion: 0.50
-Nodes (3): agent_domain_wireless(), Run the WirelessAgent., Run the WirelessAgent.
+Cohesion: 0.3
+Nodes (10): Tests for the command executor., test_basic_command(), test_binary_not_found(), test_cancellation_terminates_child_process_tree(), test_command_with_output(), test_empty_command(), test_large_output_is_bounded_and_preserved(), test_nonzero_exit() (+2 more)
 
 ### Community 79 - "Community 79"
-Cohesion: 0.07
-Nodes (41): Infrastructure agent plan-execute-analyze pattern, agent_infrastructure_configmanager(), ConfigManagerAgent, Run the ConfigManagerAgent., Run the ConfigManagerAgent., Automated ConfigManager operations., agent_infrastructure_decisionengine(), DecisionEngineAgent (+33 more)
+Cohesion: 0.03
+Nodes (41): agent_defensive_anomalydetect(), Run the AnomalyDetectAgent., Run the AnomalyDetectAgent., agent_defensive_containment(), Run the ContainmentAgent., Run the ContainmentAgent., agent_defensive_forensics(), Run the ForensicsAgent. (+33 more)
+
+### Community 83 - "Community 83"
+Cohesion: 0.11
+Nodes (8): parse_json(), parse_text(), Parse John the Ripper crack output., Finding, parse_text(), parse_json(), parse_json(), Parse wafw00f JSON output.
+
+### Community 84 - "Community 84"
+Cohesion: 0.24
+Nodes (11): CMS Exploitation Tools (cms_exploitation.py), CMS Scanners (cms_scanners.py), CMS Vulnerability Scanning, SSL/TLS Analysis, Technology Detection / Fingerprinting, Vulnerability Scanning, Network Scanners (network_scanners.py), SSL/TLS Scanners (ssl_tls_scanners.py) (+3 more)
 
 ### Community 87 - "Community 87"
-Cohesion: 0.05
-Nodes (35): agent_intelligence_attacksurface tool entry point, agent_intelligence_cveintel tool entry point, Default Plan Execution Pattern, agent_intelligence_exploitgen tool entry point, Intelligence Agent Category, agent_intelligence_attacksurface(), AttackSurfaceAgent, Run the AttackSurfaceAgent. (+27 more)
+Cohesion: 0.06
+Nodes (31): agent_intelligence_attacksurface tool entry point, agent_intelligence_cveintel tool entry point, Default Plan Execution Pattern, Intelligence Agent Category, agent_intelligence_attacksurface(), AttackSurfaceAgent, Run the AttackSurfaceAgent., Extract findings from agent execution results. (+23 more)
 
 ### Community 90 - "Community 90"
-Cohesion: 0.29
-Nodes (6): agent_intelligence_iocextractor(), IOCExtractorAgent, Run the IOCExtractorAgent., Run the IOCExtractorAgent., Automated IOCExtractor operations., agent_intelligence_iocextractor tool entry point
+Cohesion: 0.22
+Nodes (7): agent_intelligence_iocextractor(), IOCExtractorAgent, Run the IOCExtractorAgent., Extract findings from agent execution results., Run the IOCExtractorAgent., Automated IOCExtractor operations., agent_intelligence_iocextractor tool entry point
 
 ### Community 91 - "Community 91"
-Cohesion: 0.25
+Cohesion: 0.22
 Nodes (7): agent_intelligence_riskscoring(), Run the RiskScoringAgent., Extract findings from agent execution results., Run the RiskScoringAgent., Automated RiskScoring operations., RiskScoringAgent, agent_intelligence_riskscoring tool entry point
 
 ### Community 93 - "Community 93"
-Cohesion: 0.25
+Cohesion: 0.22
 Nodes (7): agent_intelligence_threatmodeling(), Run the ThreatModelingAgent., Extract findings from agent execution results., Run the ThreatModelingAgent., Automated ThreatModeling operations., ThreatModelingAgent, agent_intelligence_threatmodeling tool entry point
 
-### Community 94 - "Community 94"
-Cohesion: 0.25
-Nodes (7): agent_intelligence_vulncorrelator(), Run the VulnCorrelatorAgent., Extract findings from agent execution results., Run the VulnCorrelatorAgent., Automated VulnCorrelator operations., VulnCorrelatorAgent, agent_intelligence_vulncorrelator tool entry point
-
 ### Community 95 - "Community 95"
-Cohesion: 0.25
-Nodes (7): agent_intelligence_zerodayresearch(), Run the ZeroDayResearchAgent., Extract findings from agent execution results., Run the ZeroDayResearchAgent., Automated ZeroDayResearch operations., ZeroDayResearchAgent, agent_intelligence_zerodayresearch tool entry point
+Cohesion: 0.22
+Nodes (7): agent_workflow_compliance tool entry point, agent_workflow_compliance(), ComplianceAgent, Run the ComplianceAgent., Extract findings from agent execution results., Run the ComplianceAgent., Automated Compliance operations.
 
 ### Community 96 - "Community 96"
-Cohesion: 0.08
-Nodes (22): agent_offensive_credharvest tool entry point, agent_offensive_evasion tool entry point, Offensive Agent Category, agent_offensive_credharvest(), CredHarvestAgent, Run the CredHarvestAgent., Extract findings from agent execution results., Run the CredHarvestAgent. (+14 more)
+Cohesion: 0.22
+Nodes (7): agent_offensive_credharvest tool entry point, agent_offensive_credharvest(), CredHarvestAgent, Run the CredHarvestAgent., Extract findings from agent execution results., Run the CredHarvestAgent., Automated CredHarvest operations.
 
 ### Community 98 - "Community 98"
-Cohesion: 0.25
-Nodes (7): agent_offensive_lateralmovement tool entry point, agent_offensive_lateralmovement(), LateralMovementAgent, Run the LateralMovementAgent., Extract findings from agent execution results., Run the LateralMovementAgent., Automated LateralMovement operations.
+Cohesion: 0.08
+Nodes (20): agent_offensive_evasion tool entry point, agent_offensive_lateralmovement tool entry point, Offensive Agent Category, agent_offensive_evasion(), EvasionAgent, Run the EvasionAgent., Run the EvasionAgent., Automated Evasion operations. (+12 more)
 
 ### Community 100 - "Community 100"
-Cohesion: 0.03
-Nodes (32): Create summary findings for assets, services, and endpoints., build_default_plan(), _note_step(), Build a concrete, executable plan for every shipped agent.      Each plan is a l, Operator-guidance only step (reserved for genuinely no-op cases)., _recon_plan(), Any, Extract findings from agent execution results. (+24 more)
+Cohesion: 0.08
+Nodes (3): build_default_plan(), Build a concrete, executable plan for every shipped agent.      Each plan is a l, Any
 
 ### Community 101 - "Community 101"
-Cohesion: 0.25
-Nodes (7): agent_workflow_blueteam tool entry point, agent_workflow_blueteam(), BlueTeamAgent, Run the BlueTeamAgent., Extract findings from agent execution results., Run the BlueTeamAgent., Automated BlueTeam operations.
+Cohesion: 0.08
+Nodes (18): agent_workflow_blueteam tool entry point, workflow_ctf_agent tool entry point, CTF Challenge Type Detection, agent_workflow_ir tool entry point, Workflow Agent Category, agent_workflow_blueteam(), BlueTeamAgent, Run the BlueTeamAgent. (+10 more)
 
 ### Community 102 - "Community 102"
-Cohesion: 0.25
+Cohesion: 0.22
 Nodes (7): agent_workflow_codereview tool entry point, agent_workflow_codereview(), CodeReviewAgent, Run the CodeReviewAgent., Extract findings from agent execution results., Run the CodeReviewAgent., Automated CodeReview operations.
 
 ### Community 105 - "Community 105"
-Cohesion: 0.29
+Cohesion: 0.28
 Nodes (4): Reconnaissance workflow with proper stdin handoff., Run an automated reconnaissance workflow against a target domain., ReconAgent, workflow_recon_agent()
 
 ### Community 106 - "Community 106"
-Cohesion: 0.25
-Nodes (7): agent_workflow_purpleteam tool entry point, agent_workflow_purpleteam(), PurpleTeamAgent, Run the PurpleTeamAgent., Extract findings from agent execution results., Run the PurpleTeamAgent., Automated PurpleTeam operations.
+Cohesion: 0.28
+Nodes (6): agent_workflow_purpleteam tool entry point, agent_workflow_purpleteam(), PurpleTeamAgent, Run the PurpleTeamAgent., Run the PurpleTeamAgent., Automated PurpleTeam operations.
 
 ### Community 107 - "Community 107"
-Cohesion: 0.10
+Cohesion: 0.13
 Nodes (20): censys_host_view(), censys_query(), greynoise_ip_lookup(), greynoise_quick_check(), Scan a URL against VirusTotal.      Args:         url: Target URL to scan., Scan an IP address against VirusTotal.      Args:         ip: Target IP address., Scan a domain against VirusTotal.      Args:         domain: Target domain (e.g., Look up an IP address on Shodan for open ports, services, and banners.      Args (+12 more)
-
-### Community 108 - "Community 108"
-Cohesion: 0.25
-Nodes (6): agent_workflow_threathunt(), Run the ThreatHuntAgent., Extract findings from agent execution results., Run the ThreatHuntAgent., Automated ThreatHunt operations., ThreatHuntAgent
-
-### Community 109 - "Community 109"
-Cohesion: 0.25
-Nodes (6): agent_workflow_vulnmanagement(), Run the VulnManagementAgent., Extract findings from agent execution results., Run the VulnManagementAgent., Automated VulnManagement operations., VulnManagementAgent
 
 ### Community 110 - "Community 110"
 Cohesion: 0.24
@@ -816,27 +848,27 @@ Cohesion: 0.46
 Nodes (8): Base Tool Infrastructure, Dynamic Tool Registry, FastMCP Framework, HexStrike AI Comparison, ShikariMCP Project, Security Tool Categories, Tool Scope Awareness, Contributing Guide
 
 ### Community 112 - "Community 112"
-Cohesion: 0.29
+Cohesion: 0.32
 Nodes (6): dig_dns(), nslookup_query(), Perform a WHOIS query.          Args:         target: Domain name (e.g., example, Query DNS records using dig.          Args:         domain: Domain name, Query DNS records using nslookup.          Args:         domain: Domain to looku, whois_lookup()
 
 ### Community 113 - "Community 113"
-Cohesion: 0.29
-Nodes (8): reason, ref, future_arsenal_candidates, dnsx, tlsx, module, ref, source
+Cohesion: 0.22
+Nodes (13): future_arsenal_candidates, mapcidr, tlsx, mapcidr, tlsx, module, reason, ref (+5 more)
 
 ### Community 114 - "Community 114"
-Cohesion: 0.15
-Nodes (7): Tests for verified tool manifests., Tools like hydra exit non-zero for --help but still print help text., A binary that exits non-zero with no output is genuinely broken., A timeout should not mark an installed binary as missing., test_verify_accepts_nonzero_exit_with_output(), test_verify_handles_timeout(), test_verify_rejects_nonzero_exit_no_output()
+Cohesion: 0.23
+Nodes (12): Tests for verified tool manifests., Tools like hydra exit non-zero for --help but still print help text., A binary that exits non-zero with no output is genuinely broken., A timeout should not mark an installed binary as missing., test_core_manifest_loads(), test_explain_tool_by_id_and_binary(), test_public_catalog_has_no_runtime_checks(), test_verify_accepts_nonzero_exit_with_output() (+4 more)
 
 ### Community 116 - "Community 116"
 Cohesion: 0.05
-Nodes (38): AccessToken, ConstantTimeTokenVerifier, get_auth_provider(), Return the FastMCP auth provider for HTTP transports.      STDIO inherits securi, Token verifier that uses constant-time comparison to prevent timing attacks., Return the auth provider for HTTP transports.      STDIO inherits security from, ArtifactReadInputs, _get_known_profiles() (+30 more)
+Nodes (39): AccessToken, ConstantTimeTokenVerifier, get_auth_provider(), Return the FastMCP auth provider for HTTP transports.      STDIO inherits securi, Token verifier that uses constant-time comparison to prevent timing attacks., Return the auth provider for HTTP transports.      STDIO inherits security from, ArtifactReadInputs, _get_known_profiles() (+31 more)
 
 ### Community 117 - "Community 117"
-Cohesion: 0.22
-Nodes (10): 429 Rate Limit Exceeded, Claude Desktop strips the HTTP config, code:bash (# Check installation), "Command not found: shikari", "Command not found: shikari-mcp", HTTP connection refused, No tools showing up, Permission denied on tool execution (+2 more)
+Cohesion: 0.17
+Nodes (13): 429 Rate Limit Exceeded, Claude Desktop strips the HTTP config, code:json ({), code:bash (uv run shikari-mcp --transport stdio), code:bash (shikari-mcp --transport http --rate-limit-rps 120 --rate-lim), "Command not found: shikari", "Command not found: shikari-mcp", HTTP connection refused (+5 more)
 
 ### Community 118 - "Community 118"
-Cohesion: 0.19
+Cohesion: 0.21
 Nodes (12): artifact_path(), artifact_reference(), Persist command output locally and return an artifact reference., Allocate a stable path inside Shikari's configured artifact directory., Return metadata for an existing artifact., Persist JSON artifact data., Read a bounded artifact segment without allowing paths outside storage., read_artifact() (+4 more)
 
 ### Community 119 - "Community 119"
@@ -844,111 +876,111 @@ Cohesion: 0.06
 Nodes (30): ASGIApp, HostOriginSecurityMiddleware, _matches(), ASGI security middleware for Shikari's Streamable HTTP endpoint., Reject unexpected Host and Origin headers to prevent DNS rebinding., create_rate_limiter(), RateLimitMiddleware, Factory that returns a configured rate limiter class, or None if disabled. (+22 more)
 
 ### Community 120 - "Community 120"
-Cohesion: 0.07
-Nodes (26): Set the global configuration (used by CLI flag overrides)., Set the global configuration (used by CLI flag overrides)., set_config(), Tests for bounded, confined artifact access., test_artifact_path_escape_is_rejected(), test_artifact_path_sanitizes_run_id(), Tests for the tool registry — auto-discovery, scope filtering, and registration., In stdio mode, non-generated tools should be available. (+18 more)
+Cohesion: 0.13
+Nodes (11): In stdio mode, non-generated tools should be available., In stdio mode, non-generated tools should be available., In HTTP+local mode, non-generated tools should be available., In HTTP+local mode, non-generated tools should be available., In HTTP+local mode, non-generated tools should be available., In HTTP without --local, LOCAL tools should be blocked., In HTTP without --local, LOCAL tools should be blocked., REMOTE scope tools should be available regardless of transport. (+3 more)
 
 ### Community 121 - "Community 121"
-Cohesion: 0.11
+Cohesion: 0.09
 Nodes (15): sliver_start - Sliver C2 framework server, dnscat2_start - DNSCat2 DNS tunneling server, netexec_smb - NetExec/CrackMapExec SMB lateral movement, generate_systemd_service - systemd service persistence generator, Start the sliver C2 server.          Args:         extra_args: Additional sliver, sliver_start(), dnscat2_start(), Run dnscat2 server.          Args:         domain: The domain to tunnel through (+7 more)
 
 ### Community 122 - "Community 122"
-Cohesion: 0.21
-Nodes (10): Tool Profiles, install-go-tools.sh script, install-tools.sh script, install-wordlists.sh script, verify-tools.sh script, go_version_ok(), install_git_tool(), install_go() (+2 more)
+Cohesion: 0.23
+Nodes (11): Tool Profiles, install-go-tools.sh script, install-tools.sh script, install-wordlists.sh script, verify-tools.sh script, go_version_ok(), install_git_tool(), install_go() (+3 more)
 
 ### Community 123 - "Community 123"
 Cohesion: 0.33
 Nodes (5): generated_at, go_version, notes, profile, schema_version
 
 ### Community 124 - "Community 124"
-Cohesion: 0.40
-Nodes (5): mapcidr, module, reason, ref, source
+Cohesion: 0.22
+Nodes (7): agent_intelligence_exploitgen tool entry point, agent_intelligence_exploitgen(), ExploitGenAgent, Run the ExploitGenAgent., Extract findings from agent execution results., Run the ExploitGenAgent., Automated ExploitGen operations.
 
 ### Community 125 - "Community 125"
-Cohesion: 0.40
-Nodes (5): uncover, module, reason, ref, source
+Cohesion: 0.47
+Nodes (6): uncover, uncover, module, reason, ref, source
 
 ### Community 126 - "Community 126"
 Cohesion: 0.05
-Nodes (39): package, source, package, source, package, source, package, source (+31 more)
+Nodes (40): package, source, package, source, package, source, package, source (+32 more)
 
 ### Community 127 - "Community 127"
 Cohesion: 0.23
 Nodes (9): msfvenom_generate(), Run MSFVenom.          Args:         payload: Metasploit payload (e.g., 'windows, Run Veil framework execution flags.          Args:         extra_args: Veil flag, veil_generate(), Exploitation Category, msfvenom_generate function, payload_gen module, Payload Generation & AV Evasion (+1 more)
 
 ### Community 128 - "Community 128"
-Cohesion: 0.25
+Cohesion: 0.26
 Nodes (8): apkid_scan function, Mobile Security Analysis, apkid_scan(), objection_run(), Run Objection.          Args:         package_cmd: The objection command to run, Run APKiD against an APK.          Args:         apk_path: Path to .apk file, mobile_security mobile_tools module, objection_run function
 
 ### Community 129 - "Community 129"
-Cohesion: 0.25
+Cohesion: 0.26
 Nodes (8): bettercap_run - Bettercap MITM framework, responder_run - Responder LLMNR/NBT-NS/MDNS poisoner, bettercap_run(), Run Bettercap on an interface.          Args:         interface: Interface to bi, Run Responder.          Args:         interface: Network interface to listen on, responder_run(), tcpdump_sniff - tcpdump packet capture, tshark_sniff - tshark protocol analysis
 
 ### Community 130 - "Community 130"
 Cohesion: 0.23
-Nodes (9): bsqlbf_run function, Database Injection Attack Category, bsqlbf_run(), odat_scan(), Run bsqlbf.          Args:         url: Target URL         extra_args: Additiona, Run ODAT against Oracle DB.          Args:         target: Target IP         mod, database_scanners module, odat_scan function (+1 more)
+Nodes (9): bsqlbf_run function, Database Injection Attack Category, bsqlbf_run(), odat_scan(), Run bsqlbf.          Args:         url: Target URL         extra_args: Addit, Run ODAT against Oracle DB.          Args:         target: Target IP, database_scanners module, odat_scan function (+1 more)
 
 ### Community 131 - "Community 131"
 Cohesion: 0.33
 Nodes (6): Input sanitization and validation, sanitize_input function, validate_path function, validate_port function, validate_target function, validate_url function
 
 ### Community 132 - "Community 132"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): aws_cli_run(), pacu_run(), Interact with an AWS environment.          Args:         service: AWS service (e, Run the Pacu AWS exploitation framework.          Args:         session_name: Na
 
 ### Community 133 - "Community 133"
-Cohesion: 0.12
+Cohesion: 0.16
 Nodes (16): bloodhound_collect(), certipy_find(), enum4linux_ng(), impacket_getuserspns(), impacket_secretsdump(), kerbrute_userenum(), ldap_search(), nxc_smb_enum() (+8 more)
 
 ### Community 134 - "Community 134"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (5): Graphify Knowledge Graph System, Agent Graphify Instructions (Root), Graphify OpenCode Plugin, OpenCode Configuration, OpenCode Package Dependencies
 
 ### Community 136 - "Community 136"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): Run tcpdump to capture network packets.          Args:         interface: Networ, Run tshark for deeper packet analysis.          Args:         interface: Interfa, tcpdump_sniff(), tshark_sniff()
 
 ### Community 137 - "Community 137"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): msfvenom_generate(), msfvenom_list(), Generate Metasploit payloads.          Args:         payload: Metasploit payload, List available options in msfvenom.          Args:         list_type: What to li
 
 ### Community 138 - "Community 138"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 139 - "Community 139"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 140 - "Community 140"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 141 - "Community 141"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 142 - "Community 142"
-Cohesion: 0.13
-Nodes (12): droopescan_scan(), Run WPScan against a target WordPress site.          Args:         url: Target W, Run Droopescan against a target CMS.          Args:         url: Target CMS URL, wpscan_scan(), masscan_scan(), nmap_scan(), Run Nmap against a target.          Args:         target: IP or domain to scan, Run Masscan against a target network.      Args:         target: CIDR or IP (+4 more)
+Cohesion: 0.4
+Nodes (4): masscan_scan(), nmap_scan(), Run Nmap against a target.          Args:         target: IP or domain to scan, Run Masscan against a target network.      Args:         target: CIDR or IP
 
 ### Community 144 - "Community 144"
-Cohesion: 0.60
+Cohesion: 0.6
 Nodes (5): Dry-run verification pattern, fake_bin_dir pytest fixture, Dry run integration tests with fake binaries, dry_run_verified_tool tests, dry_run_verified_tool function
 
 ### Community 145 - "Community 145"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (5): Tool quality (GENERATED/EXPERIMENTAL) concept, ToolMetadata class, ToolQuality enum, ToolScope enum, ToolMetadata tests
 
 ### Community 146 - "Community 146"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (5): Recon tool manifest profile, DNSX Query tool entry, MapCIDR Expand tool entry, Masscan tool entry, Uncover Search tool entry
 
 ### Community 147 - "Community 147"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 148 - "Community 148"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 149 - "Community 149"
@@ -960,23 +992,23 @@ Cohesion: 0.04
 Nodes (44): 1. Verified Tool Manifest, 2. Tool Runtime Contract, 3. Policy Engine, 4. Auth and Deployment, 5. AI-Native Interface, Agent Redesign, Architecture Target, Bash Installer Plan (+36 more)
 
 ### Community 151 - "Community 151"
-Cohesion: 0.22
-Nodes (9): module, ref, source, go_tools, ffuf, gobuster, module, ref (+1 more)
+Cohesion: 0.15
+Nodes (13): go_tools, gobuster, katana, nuclei, module, ref, source, module (+5 more)
 
 ### Community 152 - "Community 152"
-Cohesion: 0.06
-Nodes (38): Accessibility, Available Domains, Available Stacks, code:bash (python3 --version || python --version), code:bash (python3 .agent/.shared/ui-ux-pro-max/scripts/search.py "<key), code:bash (# Get UX guidelines for animation and accessibility), code:bash (python3 .agent/.shared/ui-ux-pro-max/scripts/search.py "layo), code:bash (# ASCII box (default) - best for terminal display) (+30 more)
+Cohesion: 0.05
+Nodes (43): Accessibility, Available Domains, Available Stacks, code:bash (python3 --version || python --version), code:bash (python3 .agent/.shared/ui-ux-pro-max/scripts/search.py "<key), code:bash (python3 .agent/.shared/ui-ux-pro-max/scripts/search.py "beau), code:bash (# Get UX guidelines for animation and accessibility), code:bash (python3 .agent/.shared/ui-ux-pro-max/scripts/search.py "layo) (+35 more)
 
 ### Community 153 - "Community 153"
-Cohesion: 0.50
+Cohesion: 0.5
 Nodes (4): httpx, module, ref, source
 
 ### Community 156 - "Community 156"
-Cohesion: 0.50
+Cohesion: 0.5
 Nodes (4): naabu, module, ref, source
 
 ### Community 157 - "Community 157"
-Cohesion: 0.50
+Cohesion: 0.5
 Nodes (4): Cloud tool manifest profile, Checkov Scan tool entry, Gitleaks Scan tool entry, Semgrep Scan tool entry
 
 ### Community 158 - "Community 158"
@@ -1000,7 +1032,7 @@ Cohesion: 0.67
 Nodes (3): altdns - Altdns subdomain permutation discovery, gobuster_dns - Gobuster DNS subdomain enumeration, puredns - Puredns subdomain bruteforcing
 
 ### Community 163 - "Community 163"
-Cohesion: 1.00
+Cohesion: 1.0
 Nodes (3): dig_dns - DNS lookup via dig, nslookup_query - DNS query via nslookup, whois_lookup - WHOIS domain lookup
 
 ### Community 168 - "Community 168"
@@ -1016,20 +1048,20 @@ Cohesion: 0.67
 Nodes (3): Future arsenal candidates, Go tools lock entries, ProjectDiscovery tool references
 
 ### Community 172 - "Community 172"
-Cohesion: 0.27
-Nodes (10): _as_path(), _blocked_metadata_target(), check_blocked_metadata_targets(), _deny(), _matches_allowlist(), Re-resolve targets and return the first blocked metadata IP, or None.      Used, Resolve hostname with timeout. Returns set of IPs; empty on failure/timeout., _resolve_host() (+2 more)
+Cohesion: 0.22
+Nodes (7): agent_intelligence_threatintel(), Run the ThreatIntelAgent., Extract findings from agent execution results., Run the ThreatIntelAgent., Automated ThreatIntel operations., ThreatIntelAgent, agent_intelligence_threatintel tool entry point
 
 ### Community 173 - "Community 173"
 Cohesion: 0.12
-Nodes (13): beef_start function, browser_exploitation module, exploit_tools module, beef_start(), Start the BeEF daemon in the background.          Args:         extra_args: Any, msfconsole_run(), Run msfconsole with a resource script string.          Args:         resource_sc, Run setoolkit.          Args:         extra_args: Additional flags for setoolkit (+5 more)
+Nodes (10): browser_exploitation module, exploit_tools module, beef_start(), Start the BeEF daemon in the background.          Args:         extra_args: Any, msfconsole_run(), Run msfconsole with a resource script string.          Args:         resource_sc, Run setoolkit.          Args:         extra_args: Additional flags for setoolkit, setoolkit_run() (+2 more)
 
 ### Community 174 - "Community 174"
-Cohesion: 0.06
-Nodes (15): Execute a command-oriented plan and return step outputs., Context, execute_command(), Execute an external command without shell interpretation.      String commands a, Execute an external command without shell interpretation.      String commands a, Tests for the command executor., test_basic_command(), test_binary_not_found() (+7 more)
+Cohesion: 0.07
+Nodes (15): Context, Red-team planning workflow.      This agent no longer fabricates brute-force or, Prepare an authorized red-team scenario plan., RedTeamAgent, workflow_redteam_agent(), agent_workflow_threathunt(), Run the ThreatHuntAgent., Run the ThreatHuntAgent. (+7 more)
 
 ### Community 175 - "Community 175"
-Cohesion: 0.33
-Nodes (5): agent_workflow_ir tool entry point, agent_workflow_ir(), IRAgent, Extract findings from agent execution results., Automated IR operations.
+Cohesion: 0.22
+Nodes (7): agent_offensive_payloadcraft(), PayloadCraftAgent, Run the PayloadCraftAgent., Extract findings from agent execution results., Run the PayloadCraftAgent., Automated PayloadCraft operations., agent_offensive_payloadcraft tool entry point
 
 ### Community 176 - "Community 176"
 Cohesion: 0.07
@@ -1043,96 +1075,132 @@ Nodes (26): 10. Testing, 11. Common Patterns & Pitfalls, 1. Project Setup, 2. Mi
 Cohesion: 0.07
 Nodes (26): 10. Concurrency configuration is not enforced, 1. The "1200+ tools" claim is mostly not real yet, 2. HTTP auth exists but can be absent in the most dangerous mode, 3. `requires_binaries` is passed but ignored, 4. Many wrappers use shell features that the executor cannot run, 5. Scope classification is too permissive, 6. Agents are mostly mock/no-op, 7. Tool output parsing is mostly absent (+18 more)
 
-### Community 318 - "Community 318"
+### Community 186 - "Community 186"
+Cohesion: 0.25
+Nodes (7): assets, endpoints, errors, findings, metadata, raw_preview, services
+
+### Community 187 - "Community 187"
+Cohesion: 0.25
+Nodes (7): assets, endpoints, errors, findings, metadata, raw_preview, services
+
+### Community 188 - "Community 188"
+Cohesion: 0.25
+Nodes (7): assets, endpoints, errors, findings, metadata, raw_preview, services
+
+### Community 189 - "Community 189"
+Cohesion: 0.25
+Nodes (7): assets, endpoints, errors, findings, metadata, raw_preview, services
+
+### Community 190 - "Community 190"
+Cohesion: 0.25
+Nodes (7): assets, endpoints, errors, findings, metadata, raw_preview, services
+
+### Community 191 - "Community 191"
+Cohesion: 0.25
+Nodes (7): assets, endpoints, errors, findings, metadata, raw_preview, services
+
+### Community 192 - "Community 192"
+Cohesion: 0.57
+Nodes (5): _extract_gps(), parse_gps(), parse_json(), Build a short summary from key EXIF tags., _summarize_tags()
+
+### Community 193 - "Community 193"
 Cohesion: 0.29
-Nodes (7): Basic HTTP, code:json ({), code:bash (# Basic HTTP server), HTTPS / TLS, Remote HTTP Configuration, Reverse proxy example (Caddy), Starting the HTTP Server
+Nodes (7): API Key via Environment Variable (simplest), Authentication & Security, Bearer Token Auth (HTTP transports), code:python (import os), code:python (from fastmcp import FastMCP), code:python (from fastmcp import FastMCP), Middleware
+
+### Community 194 - "Community 194"
+Cohesion: 0.4
+Nodes (4): Run SSLScan against a target IP or domain.          Args:         target: The ta, Run testssl.sh against a target.          Args:         target: The target IP or, sslscan_scan(), testssl_scan()
+
+### Community 195 - "Community 195"
+Cohesion: 0.4
+Nodes (5): Binary Analysis Tools (binary_analysis.py), Binary Security Analysis, Malware Analysis, Reverse Engineering, Malware Analysis Tools (malware_analysis.py)
+
+### Community 199 - "Community 199"
+Cohesion: 0.5
+Nodes (4): module, ref, source, ffuf
+
+### Community 318 - "Community 318"
+Cohesion: 0.22
+Nodes (10): Basic HTTP, code:bash (export SHIKARI_API_KEY="your-api-key"), code:toml ([mcp_servers.shikari-mcp]), code:bash (# Basic HTTP), code:Caddyfile (shikari.example.com {), HTTPS / TLS, HTTPS with self-signed certificate, Remote HTTP Configuration (+2 more)
 
 ### Community 319 - "Community 319"
-Cohesion: 0.22
+Cohesion: 0.27
 Nodes (8): holehe_check(), maigret_search(), Search for a username across hundreds of social networks.      Args:         use, Search for a username across popular social networks and sites.      Args:, Check if an email address is registered on various online platforms.      Args:, Check email address or username availability on online platforms.      Args:, sherlock_search(), socialscan_check()
 
 ### Community 322 - "Community 322"
-Cohesion: 0.25
-Nodes (8): Claude Desktop, code:json ({), code:json ({), code:json ({), HTTPS with self-signed certificate, Local stdio, Remote HTTP via mcp-remote bridge, With Active Tools Enabled
+Cohesion: 0.22
+Nodes (11): Claude Desktop, code:json ({), code:json ({), code:json ({), Common Configuration Snippets, Local stdio, stdio (local), Streamable HTTP (remote) (+3 more)
 
 ### Community 323 - "Community 323"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): exiftool_gps(), exiftool_metadata(), Extract all metadata tags from a file using exiftool.      Args:         file: P, Extract GPS coordinates from a media file using exiftool.      Args:         fil
 
 ### Community 324 - "Community 324"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): description, profile, schema_version, tools
 
 ### Community 329 - "Community 329"
-Cohesion: 0.29
-Nodes (7): code:json ({), code:json ({), Cursor, Local (stdio), Local stdio, Streamable HTTP remote, Using uv (recommended)
+Cohesion: 0.33
+Nodes (7): code:json ({), code:json ({), Cursor, Local (stdio), Local stdio, Remote HTTP via mcp-remote bridge, Using uv (recommended)
 
 ### Community 334 - "Community 334"
-Cohesion: 0.25
-Nodes (8): code:json ({), code:json ({), Local stdio, Streamable HTTP remote, Using Copilot MCP Configuration, Using Workspace Configuration, VS Code (GitHub Copilot), With Compatibility Wrappers Enabled
-
-### Community 337 - "Community 337"
-Cohesion: 0.40
-Nodes (5): code:json ({), Codex (OpenAI), Local stdio, Streamable HTTP remote, Using Docker
+Cohesion: 0.33
+Nodes (6): code:json ({), code:json ({), Local stdio, Streamable HTTP remote, Using Copilot MCP Configuration, VS Code (GitHub Copilot)
 
 ### Community 341 - "Community 341"
-Cohesion: 0.25
-Nodes (8): Common Configuration Snippets, Expected Tools, MCP Client Configuration Guide, Quick Compatibility Matrix, stdio (local), Streamable HTTP (remote), Table of Contents, Verification
+Cohesion: 0.33
+Nodes (5): Expected Tools, MCP Client Configuration Guide, Quick Compatibility Matrix, Table of Contents, Verification
 
 ### Community 342 - "Community 342"
-Cohesion: 0.40
-Nodes (6): Cline, code:json ({), Configuration, Configuration, Local stdio, Streamable HTTP remote
+Cohesion: 0.29
+Nodes (8): Cline, code:toml ([mcp_servers.shikari-mcp]), code:json ({), code:json ({), Configuration, Configuration, Local stdio, Streamable HTTP remote
 
 ### Community 343 - "Community 343"
-Cohesion: 0.33
-Nodes (7): code:json ({), code:json ({), Configuration, Configuration, Local stdio, Streamable HTTP remote, Windsurf (Codeium)
-
-### Community 344 - "Community 344"
-Cohesion: 0.67
-Nodes (3): _classify_line(), parse_text(), Return 'email', 'host', 'url', or None based on content heuristics.
+Cohesion: 0.19
+Nodes (13): code:toml ([mcp_servers.shikari-mcp]), code:json ({), code:json ({), code:json ({), Codex (OpenAI), Configuration, Configuration, Local stdio (+5 more)
 
 ### Community 474 - "Community 474"
-Cohesion: 0.13
+Cohesion: 0.17
 Nodes (14): checkov_iac_scan(), dive_image(), grype_image_scan(), grype_scan(), kube_bench_run(), kube_hunter_cluster_scan(), Generate a Software Bill of Materials (SBOM) for a local directory.      Args:, Scan Infrastructure as Code files for security misconfigurations.      Args: (+6 more)
 
 ### Community 480 - "Community 480"
-Cohesion: 0.13
+Cohesion: 0.17
 Nodes (14): dalfox_xss_scan(), Scan TLS/SSL configuration using sslscan.      Args:         target: Target host, Probe TLS settings using tlsx with JSON output.      Args:         target: Targe, Run WPScan against a WordPress site to enumerate plugins, themes, and users., Fingerprint a web target using WhatWeb.      Args:         target: Target IP, do, Detect whether a web server is behind a WAF and identify it.      Args:, Scan a URL for cross-site scripting vulnerabilities using Dalfox.      Args:, Run testssl.sh to assess TLS/SSL security.      Args:         target: Target hos (+6 more)
 
 ### Community 483 - "Community 483"
-Cohesion: 0.15
+Cohesion: 0.2
 Nodes (12): hashcat_example_hashes(), hashid_identify(), openssl_digest(), openssl_x509_inspect(), Display example hashes for all supported hashcat hash modes., Identify the type of a given hash using hashid.      Args:         hash: The tar, Compute a digest (hash) of a file using OpenSSL.      Args:         file: Path t, Parse and display detailed information about an X.509 certificate.      Args: (+4 more)
 
 ### Community 493 - "Community 493"
-Cohesion: 0.18
+Cohesion: 0.23
 Nodes (10): bandit_scan(), gitleaks_detect(), gosec_scan(), Run Semgrep static analysis on a codebase.      Args:         path: Path to the, Run Bandit security linter on Python code.      Args:         path: Path to the, Run Gosec security analysis on Go source code.      Args:         path: Path to, Scan a filesystem for leaked secrets and credentials using TruffleHog.      Args, Detect hardcoded secrets in a git repository using Gitleaks.      Args: (+2 more)
 
 ### Community 509 - "Community 509"
-Cohesion: 0.18
+Cohesion: 0.23
 Nodes (10): binwalk_firmware_extract(), binwalk_firmware_scan(), iot_port_scan(), mqtt_publish_probe(), mqtt_subscribe(), Scan for common IoT and SCADA protocol ports on a target.      Args:         tar, Scan a firmware image for embedded filesystems and signatures using binwalk., Extract embedded filesystems from a firmware image using binwalk.      Args: (+2 more)
 
 ### Community 511 - "Community 511"
-Cohesion: 0.06
-Nodes (39): arjun_param_mine(), ffuf_api_fuzz(), kiterunner_api_scan(), nuclei_api_scan(), Discover HTTP parameters for a given API endpoint using Arjun.      Args:, Scan API routes using Kiterunner.      Args:         url: Target API base URL, Scan API endpoints for vulnerabilities using Nuclei.      Args:         url: Tar, Fuzz API endpoints using FFUF.      Args:         url: Target API base URL with (+31 more)
+Cohesion: 0.05
+Nodes (43): arjun_param_mine(), ffuf_api_fuzz(), kiterunner_api_scan(), nuclei_api_scan(), Discover HTTP parameters for a given API endpoint using Arjun.      Args:, Scan API routes using Kiterunner.      Args:         url: Target API base URL, Scan API endpoints for vulnerabilities using Nuclei.      Args:         url: Tar, Fuzz API endpoints using FFUF.      Args:         url: Target API base URL with (+35 more)
 
 ### Community 522 - "Community 522"
-Cohesion: 0.22
+Cohesion: 0.27
 Nodes (8): nmap_xml_to_html(), pandoc_convert(), Convert a document from one format to another using Pandoc.      Generates a tab, Render an HTML file to a PDF document using WeasyPrint.      Args:         input, Convert an HTML file to PDF using wkhtmltopdf with local file access enabled., Transform an Nmap XML output file into an HTML report using xsltproc.      Args:, weasyprint_pdf(), wkhtmltopdf_render()
 
 ### Community 529 - "Community 529"
-Cohesion: 0.29
+Cohesion: 0.32
 Nodes (6): mythril_analyze(), Run Slither static analysis on a Solidity file or project directory.      Args:, Run Mythril security analysis on an Ethereum smart contract.      Args:, List all available detectors and printers in Slither., slither_analyze(), slither_checklist()
 
 ### Community 534 - "Community 534"
-Cohesion: 0.29
+Cohesion: 0.32
 Nodes (6): msfvenom_list_encoders(), msfvenom_list_payloads(), List all available MSFvenom payloads., List all available MSFvenom encoders., Generate a payload using the Unicorn magic toolkit.      Note: Unicorn (https://, unicorn_generate()
 
 ### Community 535 - "Community 535"
-Cohesion: 0.29
+Cohesion: 0.32
 Nodes (6): nmap_exploit_db(), nmap_vuln_scripts(), Search Exploit-DB for vulnerabilities matching a free-form query.      Args:, Scan a target with Nmap's vulnerability detection script category.      Args:, Scan a target with Nmap's exploit script category.      Args:         target: Ta, searchsploit_query()
 
 ### Community 537 - "Community 537"
-Cohesion: 0.29
+Cohesion: 0.32
 Nodes (6): apktool_decompile(), jadx_decompile(), mobsf_scan(), Decompile an Android APK using Apktool.      Args:         apk: Path to the APK, Decompile an Android APK to Java source using JADX.      Args:         apk: Path, Run MobSF static analysis on a mobile app binary.      Args:         apk: Path t
 
 ### Community 694 - "Community 694"
@@ -1140,16 +1208,16 @@ Cohesion: 0.08
 Nodes (25): Agent Selection Matrix, Available Agents (17 total), ⏸️ CHECKPOINT: User Approval, code:block1 (After PLAN.md is complete, ASK:), code:block2 (□ Security     → security-auditor, penetration-tester), code:block3 (Use the project-planner agent to create PLAN.md), code:block4 (Invoke agents in PARALLEL:), code:block5 (Use the project-planner agent to create PLAN.md:) (+17 more)
 
 ### Community 695 - "Community 695"
-Cohesion: 0.08
-Nodes (32): Architecture at a Glance, Credits, Docker, Documentation, Install, License, Non-Blocking Execution, Quick Start (+24 more)
+Cohesion: 0.06
+Nodes (48): Architecture at a Glance, Credits, Docker, Documentation, Install, License, Non-Blocking Execution, Quick Start (+40 more)
 
 ### Community 696 - "Community 696"
-Cohesion: 0.14
-Nodes (15): audit_event(), Write a compact JSONL audit event when auditing is enabled., get_run_manager(), ManagedRun, _now(), Background execution manager for long-running MCP tool calls., Cancel all active runs during server shutdown or test cleanup., Replace the process-local manager. Intended for isolated test/server setup. (+7 more)
+Cohesion: 0.11
+Nodes (20): audit_event(), Write a compact JSONL audit event when auditing is enabled., get_run_manager(), ManagedRun, _now(), Background execution manager for long-running MCP tool calls., Cancel all active runs during server shutdown or test cleanup., Cancel all active runs during server shutdown or test cleanup. (+12 more)
 
 ### Community 697 - "Community 697"
-Cohesion: 0.11
-Nodes (18): ref, source, ref, source, source_tools, nikto, seclists, sqlmap (+10 more)
+Cohesion: 0.12
+Nodes (16): ref, source, ref, source, source_tools, nikto, seclists, sqlmap (+8 more)
 
 ### Community 698 - "Community 698"
 Cohesion: 0.11
@@ -1164,12 +1232,12 @@ Cohesion: 0.11
 Nodes (17): Build Verification, Code Quality, code:bash (# Update version in pyproject.toml), code:bash (# Build the production core image), code:bash (# Fresh install test), Documentation, Emergency Rollback, GitHub Release (+9 more)
 
 ### Community 701 - "Community 701"
-Cohesion: 0.29
+Cohesion: 0.32
 Nodes (6): dnsx_resolve(), Run theHarvester to gather emails, subdomains, IPs, and URLs.      Args:, Look up an IP address on Shodan for open ports, services, and banners.      Args, Resolve DNS records for a domain using dnsx.      Args:         domain: Target d, shodan_lookup(), theharvester_run()
 
 ### Community 703 - "Community 703"
-Cohesion: 0.12
-Nodes (18): Lifespan Management, Notion MCP Integration, Server Composition Pattern, Development Rules and Prompts, Python MCP Server Skill, code:python (# server.py), code:python (# server.py), code:block4 (my-server/) (+10 more)
+Cohesion: 0.11
+Nodes (19): Lifespan Management, Notion MCP Integration, Server Composition Pattern, Development Rules and Prompts, Python MCP Server Skill, code:python (# server.py), code:python (# server.py), code:python (# server.py) (+11 more)
 
 ### Community 704 - "Community 704"
 Cohesion: 0.14
@@ -1187,20 +1255,16 @@ Nodes (13): Done, Modern Arsenal Candidates, Not P0, P0 - Finish Local-First Fou
 Cohesion: 0.18
 Nodes (10): After Planning, code:block1 (CONTEXT:), code:block2 ([OK] Plan created: docs/PLAN-{slug}.md), code:block3 (/plan e-commerce site with cart), 🔴 CRITICAL RULES, Expected Output, Naming Examples, /plan - Project Planning Mode (+2 more)
 
-### Community 711 - "Community 711"
-Cohesion: 0.22
-Nodes (13): Architecture, Background Job System, code:mermaid (flowchart LR), code:mermaid (sequenceDiagram), code:mermaid (flowchart TB), code:mermaid (flowchart LR), Core Components, HTTP Security Stack (+5 more)
-
 ### Community 712 - "Community 712"
-Cohesion: 0.23
+Cohesion: 0.21
 Nodes (13): Build And Verify, code:mermaid (flowchart TB), code:bash (cp .env.docker.example .env), code:bash (docker build -t shikari-mcp:local -f docker/Dockerfile .), code:dotenv (SHIKARI_ENABLE_ACTIVE_TOOLS=true), code:dotenv (SHIKARI_RATE_LIMIT_RPS=120    # Increase for trusted network), code:text (/app/.shikari/audit.jsonl), Compose (+5 more)
 
 ### Community 713 - "Community 713"
-Cohesion: 0.15
-Nodes (36): BaseAgent, Base class for all ShikariMCP AI subagents.      Each agent follows a structured, audit_event function, BaseAgent, build_default_plan, Append-only audit event logging, ADAgent, agent_domain_ad() (+28 more)
+Cohesion: 0.05
+Nodes (41): ADAgent, agent_domain_ad(), Automated AD operations., Domain agent plan-execute-analyze pattern, agent_domain_cloud(), CloudAgent, Automated Cloud operations., agent_domain_database() (+33 more)
 
 ### Community 714 - "Community 714"
-Cohesion: 0.20
+Cohesion: 0.2
 Nodes (9): Behavior, code:markdown (## 🔍 Debug: [Issue]), code:block2, code:block3 (/debug login not working), /debug - Systematic Problem Investigation, Examples, Key Principles, Output Format (+1 more)
 
 ### Community 715 - "Community 715"
@@ -1220,7 +1284,7 @@ Cohesion: 0.15
 Nodes (12): Agents, code:mermaid (flowchart TD), code:mermaid (flowchart LR), Defensive Agents (5), Domain-Specific Agents (10), Execution Model, Feature Flag Mapping, Infrastructure Agents (8) (+4 more)
 
 ### Community 724 - "Community 724"
-Cohesion: 0.29
+Cohesion: 0.32
 Nodes (6): hashcat_crack_hash(), hydra_brute_force(), john_crack_hash(), Crack password hashes using hashcat with a specified hash mode and wordlist., Crack password hashes using John the Ripper with a wordlist.      Args:, Run Hydra to brute-force credentials against a network service.      Args:
 
 ### Community 725 - "Community 725"
@@ -1240,35 +1304,35 @@ Cohesion: 0.33
 Nodes (5): 1. Always Check Installed Skills, 2. Always Reference the Implementation Plan, 3. Always Use Notion MCP Server, 4. Always Work on ShikariMCP, Mandatory Rules for ShikariMCP Development
 
 ### Community 730 - "Community 730"
-Cohesion: 0.40
-Nodes (5): CLI, Configuration, Environment Variables, Proxy Configuration, Single-User Self-Hosted Defaults
+Cohesion: 0.29
+Nodes (6): CLI, code:bash (SHIKARI_ENABLE_LEGACY_TOOLS=false), Configuration, Environment Variables, Proxy Configuration, Single-User Self-Hosted Defaults
 
 ### Community 731 - "Community 731"
-Cohesion: 0.50
-Nodes (4): module, source, gitleaks, ref
+Cohesion: 0.29
+Nodes (7): module, ref, source, gitleaks, testssl.sh, ref, source
 
 ### Community 732 - "Community 732"
-Cohesion: 0.50
+Cohesion: 0.5
 Nodes (4): subfinder, module, ref, source
 
 ### Community 734 - "Community 734"
-Cohesion: 0.29
+Cohesion: 0.32
 Nodes (6): chisel_tunnel(), linpeas_enum(), Run LinPEAS to enumerate the local system for privilege escalation vectors., Connect to a Chisel server for SOCKS proxying or port forwarding.      Args:, Create a Sliver C2 implant from an existing profile.      Args:         profile:, sliver_implant()
 
 ### Community 735 - "Community 735"
-Cohesion: 0.29
+Cohesion: 0.32
 Nodes (6): masscan_full(), nmap_vuln_scan(), nuclei_exposure_scan(), Run masscan across all 65535 TCP ports with JSON output.      Args:         targ, Run Nmap with version detection and vulnerability scanning scripts.      Args:, Run Nuclei with exposure and misconfiguration templates.      Args:         targ
 
 ### Community 738 - "Community 738"
-Cohesion: 0.18
-Nodes (12): parse_sse(), Live integration test for ShikariMCP HTTP transport., Extract JSON from SSE or plain JSON response., Initialize an MCP session and return session headers., session(), test_bad_profile_validation(), test_initialize(), test_input_validation_bad_tool_id() (+4 more)
+Cohesion: 0.24
+Nodes (13): parse_sse(), Live integration test for ShikariMCP HTTP transport., Extract JSON from SSE or plain JSON response., Initialize an MCP session and return session headers., session(), test_authentication_rejection(), test_bad_profile_validation(), test_initialize() (+5 more)
 
 ### Community 741 - "Community 741"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): garak_scan(), modelscan_scan(), Run a Garak vulnerability scan against a language model.      Probes include pro, Scan a machine learning model file or directory for known security issues.
 
 ### Community 742 - "Community 742"
-Cohesion: 0.40
+Cohesion: 0.4
 Nodes (4): arpspoof_run(), ettercap_mitm(), Run ARP spoofing to intercept traffic between a target and host.      Args:, Run Ettercap in ARP poisoning MITM mode.      Args:         iface: Network inter
 
 ### Community 804 - "Community 804"
@@ -1276,24 +1340,24 @@ Cohesion: 0.12
 Nodes (8): Basic command execution should work., Command should capture multi-line output., String command should be parsed correctly., Missing binary should return error code 127., Empty command should return error., Commands exceeding timeout should be killed., Non-zero exit code should be captured., TestExecuteCommand
 
 ## Knowledge Gaps
-- **682 isolated node(s):** `$schema`, `plugin`, `@opencode-ai/plugin`, `shikari`, `install-go-tools.sh script` (+677 more)
+- **742 isolated node(s):** `schema_version`, `generated_at`, `profile`, `go_version`, `notes` (+737 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **73 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **99 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `execute_command()` connect `Community 174` to `Community 128`, `Community 129`, `Community 130`, `Community 132`, `Community 133`, `Community 6`, `Community 136`, `Community 137`, `Community 522`, `Community 511`, `Community 13`, `Community 142`, `Community 14`, `Community 529`, `Community 534`, `Community 535`, `Community 537`, `Community 30`, `Community 804`, `Community 43`, `Community 173`, `Community 49`, `Community 50`, `Community 51`, `Community 54`, `Community 696`, `Community 60`, `Community 61`, `Community 701`, `Community 319`, `Community 63`, `Community 66`, `Community 323`, `Community 67`, `Community 325`, `Community 724`, `Community 474`, `Community 734`, `Community 735`, `Community 480`, `Community 483`, `Community 741`, `Community 742`, `Community 107`, `Community 493`, `Community 112`, `Community 118`, `Community 121`, `Community 509`, `Community 127`?**
-  _High betweenness centrality (0.280) - this node is a cross-community bridge._
-- **Why does `ShikariConfig` connect `Community 39` to `Community 9`, `Community 13`, `Community 23`, `Community 24`, `Community 27`, `Community 28`, `Community 30`, `Community 32`, `Community 34`, `Community 35`, `Community 804`, `Community 174`, `Community 696`, `Community 56`, `Community 62`, `Community 711`, `Community 74`, `Community 116`, `Community 118`, `Community 120`?**
-  _High betweenness centrality (0.145) - this node is a cross-community bridge._
-- **Why does `Dual Transport Architecture` connect `Community 23` to `Community 65`, `Community 34`, `Community 39`, `Community 111`?**
-  _High betweenness centrality (0.083) - this node is a cross-community bridge._
-- **Are the 313 inferred relationships involving `execute_command()` (e.g. with `bloodhound_collect()` and `certipy_find()`) actually correct?**
+- **Why does `execute_command()` connect `Community 33` to `Community 128`, `Community 129`, `Community 130`, `Community 0`, `Community 132`, `Community 133`, `Community 6`, `Community 136`, `Community 137`, `Community 522`, `Community 13`, `Community 14`, `Community 142`, `Community 529`, `Community 18`, `Community 534`, `Community 535`, `Community 537`, `Community 30`, `Community 804`, `Community 43`, `Community 172`, `Community 173`, `Community 174`, `Community 175`, `Community 49`, `Community 50`, `Community 51`, `Community 54`, `Community 696`, `Community 60`, `Community 701`, `Community 61`, `Community 319`, `Community 63`, `Community 66`, `Community 323`, `Community 67`, `Community 325`, `Community 194`, `Community 73`, `Community 713`, `Community 75`, `Community 77`, `Community 78`, `Community 724`, `Community 87`, `Community 90`, `Community 91`, `Community 474`, `Community 93`, `Community 734`, `Community 95`, `Community 96`, `Community 735`, `Community 98`, `Community 483`, `Community 480`, `Community 101`, `Community 102`, `Community 741`, `Community 742`, `Community 106`, `Community 107`, `Community 493`, `Community 127`, `Community 112`, `Community 118`, `Community 121`, `Community 124`, `Community 509`, `Community 511`?**
+  _High betweenness centrality (0.271) - this node is a cross-community bridge._
+- **Why does `ShikariConfig` connect `Community 75` to `Community 9`, `Community 16`, `Community 23`, `Community 24`, `Community 27`, `Community 28`, `Community 32`, `Community 34`, `Community 35`, `Community 804`, `Community 39`, `Community 40`, `Community 696`, `Community 56`, `Community 62`, `Community 73`, `Community 78`, `Community 116`, `Community 120`?**
+  _High betweenness centrality (0.165) - this node is a cross-community bridge._
+- **Why does `Dual Transport Architecture` connect `Community 23` to `Community 65`, `Community 34`, `Community 75`, `Community 111`?**
+  _High betweenness centrality (0.082) - this node is a cross-community bridge._
+- **Are the 313 inferred relationships involving `execute_command()` (e.g. with `.execute_plan()` and `.execute()`) actually correct?**
   _`execute_command()` has 313 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 122 inferred relationships involving `validate_target()` (e.g. with `bloodhound_collect()` and `certipy_find()`) actually correct?**
+- **Are the 122 inferred relationships involving `validate_target()` (e.g. with `nxc_smb_enum()` and `bloodhound_collect()`) actually correct?**
   _`validate_target()` has 122 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 57 inferred relationships involving `ShikariConfig` (e.g. with `Dual Transport Architecture` and `Safety Controls`) actually correct?**
-  _`ShikariConfig` has 57 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `$schema`, `plugin`, `@opencode-ai/plugin` to the rest of the system?**
-  _1342 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `schema_version`, `generated_at`, `profile` to the rest of the system?**
+  _1418 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Community 0` be split into smaller, more focused modules?**
+  _Cohesion score 0.13 - nodes in this community are weakly interconnected._
